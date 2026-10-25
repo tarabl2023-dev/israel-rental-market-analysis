@@ -104,7 +104,10 @@
   .combo-list li b { font-weight: 700; }
   .combo-list li span { font-size: 12px; color: var(--ink-3); text-align: right; }
   .combo-list li.empty { cursor: default; color: var(--ink-3); background: none; }
-  .f-transport select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; cursor: pointer; }
+  .f-transport select, .f-hood select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; cursor: pointer; max-width: 230px; }
+  .f-hood select:focus { outline: none; }
+  .f-hood[hidden] { display: none; }
+  .seg button[data-shabbat="1"][aria-pressed="true"] { background: var(--teal); }
   .f-transport select:focus { outline: none; }
   .stepper { display: flex; align-items: center; gap: 10px; }
   .stepper button {
@@ -459,6 +462,10 @@
         <small id="rooms-hint"></small>
       </div>
     </div>
+    <div class="f-box f-hood" id="f-hood">
+      <label for="hood">Area in the city</label>
+      <select id="hood"></select>
+    </div>
     <div class="f-box f-transport">
       <label for="transport">Transport</label>
       <select id="transport">
@@ -554,6 +561,16 @@
                 <button type="button" data-level="budget">Budget</button><button type="button" data-level="comfortable">Comfortable</button><button type="button" data-level="luxury">Luxury</button>
               </div></div>
             <div class="cc"><span><label for="compare">Compare with</label></span><select id="compare"></select></div>
+            <div class="cc"><span id="shabbat-label">Shabbat</span>
+              <div class="seg" role="group" aria-labelledby="shabbat-label">
+                <button type="button" data-shabbat="0">Not included</button><button type="button" data-shabbat="1">I keep Shabbat</button>
+              </div></div>
+            <div class="cc" id="cc-guests"><span id="guests-label">Guests each Shabbat</span>
+              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests">&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests">+</button></div></div>
+            <div class="cc" id="cc-meals"><span id="meals-label">Meals you host</span>
+              <div class="seg" role="group" aria-labelledby="meals-label">
+                <button type="button" data-meals="1">Friday night</button><button type="button" data-meals="2">Friday + lunch</button>
+              </div></div>
           </div>
           <div class="cost-head">
             <div><div class="lbl">Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div></div>
@@ -644,6 +661,7 @@
           <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ.</p>
           <p><strong>Public transport.</strong> Station counts are train stations, light-rail stops and Haifa's Carmelit underground stations inside each city's boundary, from OpenStreetMap. Stations named after a city but just over its border (such as Kfar Saba–Nordau) count for that city. There's no official Israeli data on how rents change near stations. Studies of <em>sale</em> prices find homes near Tel Aviv's light rail rose faster (<a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Globes</a>), so the transport choice applies a rule of thumb: about +5% rent within walking distance of a station, and about −5% further out if you drive.</p>
           <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Cities use their own sub-district (Herzliya uses Tel Aviv's, Ra'anana and Kfar Saba use Sharon's), and other towns use their district. Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
+          <p><strong>Shabbat.</strong> In the CBS survey, households that keep Shabbat spend about the same on groceries per person as secular ones overall (about ₪1,100 a month at 2026 prices). They spend more on Shabbat foods (about ₪27 more per person a month) and much less eating out. So the Shabbat line adds that ₪27 per person, plus the cost of feeding the guests you host.</p>
           <p>Rent figures exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities, which the cost breakdown adds separately.</p>
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
@@ -661,6 +679,10 @@
             <strong>CBS Household Expenditure Survey 2021, Table 10 (by sub-district)</strong>
             Average monthly household spending on each category in each sub-district of Israel.
             <span class="links"><a href="https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t10.xls" target="_blank" rel="noopener noreferrer">Original table (Excel)</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_hes_2021_table10.csv" target="_blank" rel="noopener noreferrer">Data file used</a></span></li>
+          <li><span class="used">Shabbat meals and hosting</span>
+            <strong>CBS Household Expenditure Survey 2021, Table 13 (Jewish households by level of religiosity)</strong>
+            Spending per person on Shabbat foods (bread and challah, meat, fish, sweets, soft drinks, wine) in households that keep Shabbat (religious and traditional) compared with secular ones.
+            <span class="links"><a href="https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t13.xls" target="_blank" rel="noopener noreferrer">Original table (Excel)</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_hes_2021_table13.csv" target="_blank" rel="noopener noreferrer">Data file used</a></span></li>
           <li><span class="used">Bringing 2021 costs to 2026 prices</span>
             <strong>CBS Consumer Price Index, by main group</strong>
             Change in prices from 2021 to 2026 for food, fruit &amp; veg, housing upkeep, health, education &amp; entertainment, transport &amp; communication, and the general index.
@@ -669,6 +691,10 @@
             <strong>OpenStreetMap (via the Overpass API)</strong>
             Every station and stop in Israel, with the municipality it sits in. © OpenStreetMap contributors, Open Database Licence.
             <span class="links"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap licence</a><a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener noreferrer">Overpass API</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/osm_rail_stations.csv" target="_blank" rel="noopener noreferrer">Data file used</a></span></li>
+          <li><span class="used">Yad2 search links</span>
+            <strong>Yad2 region, area and city codes</strong>
+            Yad2 needs its own region and area codes as well as the city code, otherwise it opens a default region. City codes match CBS locality codes. The list comes from the open-source <a href="https://github.com/ron-levi/yad2-analyzer" target="_blank" rel="noopener noreferrer">yad2-analyzer</a> project (Dec 2025).
+            <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/yad2_locations.csv" target="_blank" rel="noopener noreferrer">Codes used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/neighbourhoods.csv" target="_blank" rel="noopener noreferrer">Neighbourhood list</a></span></li>
           <li><span class="used">Public transport monthly pass</span>
             <strong>Rav-Kav Online: monthly contracts</strong>
             Nationwide monthly pass ₪315 (all transport except trains); periphery bus-only pass ₪139.
@@ -694,6 +720,8 @@
             <li>Lifestyle: eating out, leisure and clothing ×0.75 (budget) or ×1.5 (luxury).</li>
             <li>Education with children: twice the survey average, which includes households without children.</li>
             <li>Ra'anana uses Kfar Saba's rents, and smaller towns use their district's, because CBS doesn't publish them.</li>
+            <li>Areas in a city: which neighbourhoods are beach-side, pricier or cheaper is a local guide, not official data. Choosing one adjusts rent by about +15% (pricier, or by the beach), 0% (around average) or −10% (cheaper).</li>
+            <li>Shabbat hosting: each guest at a hosted meal costs about ₪37, which is three times an average person-meal of groceries (CBS national groceries ÷ 90 meals a month), over about 4.3 Shabbatot a month.</li>
           </ul>
         </div>
       </section>
@@ -724,7 +752,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="rent-data.js?v=2026q2-6"></script>
-<script src="living-data.js?v=1"></script>
+<script src="living-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
@@ -774,7 +802,11 @@
     kids: saved.kids >= 0 && saved.kids <= 5 ? saved.kids : 0,
     level: ["budget", "comfortable", "luxury"].includes(saved.level) ? saved.level : null,
     compare: byName[saved.compare] ? saved.compare : "Israel",
-    showStations: saved.showStations === true
+    showStations: saved.showStations === true,
+    hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else area name
+    shabbat: saved.shabbat === true,
+    guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
+    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2
   };
   if (state.town) state.area = LD.costs.otherTowns[state.town];
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
@@ -856,6 +888,22 @@
     return parts.join(long ? " · " : " ");
   }
 
+  // ---- Areas within a city ----
+  // Price hints are a local guide (not official data) and nudge the rent by a rule of thumb
+  const AREA_ADJ = { higher: 0.15, around: 0, lower: -0.10 };
+  const HINT_TEXT = { higher: "usually pricier than the city average", around: "around the city average", lower: "usually cheaper than the city average" };
+  function hoodsOf(cityName) { return (!state.town && LD.areas[cityName]) || []; }
+  function currentHood(cityName) {
+    const list = hoodsOf(cityName);
+    if (!state.hood || !list.length) return null;
+    if (state.hood === "__beach") {
+      const beach = list.filter((h) => h.beach);
+      return beach.length ? { en: "By the beach", he: "ליד הים", beach: true, hint: "higher", hood: null, members: beach } : null;
+    }
+    return list.find((h) => h.en === state.hood) || null;
+  }
+  const areaAdj = (hood) => (hood ? AREA_ADJ[hood.hint] || 0 : 0);
+
   // ---- Cost of living model ----
   const STD_PERSONS = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6];   // CBS equivalence scale
   const LIFESTYLE = { budget: 0.75, comfortable: 1, luxury: 1.5 };           // applied to eating out, leisure, clothing
@@ -869,7 +917,8 @@
     ["education", "Education", "#4a1fc4"],
     ["leisure", "Sport, fitness & entertainment", "#ff8fbf"],
     ["health", "Health (private insurance, dental)", "#6fd6cb"],
-    ["clothing", "Clothing & personal care", "#b9b2cc"]
+    ["clothing", "Clothing & personal care", "#b9b2cc"],
+    ["shabbat", "Shabbat meals & hosting", "#ffa94d"]
   ];
   function regionFor(areaName, town) {
     if (town) return LD.costs.otherTowns[town];
@@ -891,12 +940,13 @@
     if (B) return ["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || "budget";
     return state.noLimit ? "luxury" : "comfortable";
   }
-  function costFor(areaName, town, band, level) {
+  function costFor(areaName, town, band, level, hood = null) {
     const R = LD.costs.regions[regionFor(areaName, town)];
     const people = Math.min(9, state.adults + state.kids);
     const sp = STD_PERSONS[people];
     const life = LIFESTYLE[level];
-    const rent = bandOf(byName[areaName], band).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]);
+    const rent = bandOf(byName[areaName], band).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]) * (1 + areaAdj(hood));
+    const sh = LD.costs.shabbat;
     const car = state.transport === "car";
     const v = {
       rent,
@@ -908,7 +958,9 @@
       education: state.kids ? R.education * sp * 2 : 0,
       leisure: R.leisure * sp * life,
       health: R.health * sp,
-      clothing: R.clothing * sp * life
+      clothing: R.clothing * sp * life,
+      // Shabbat: extra Shabbat foods for the household (CBS, observant vs secular) + guests at hosted meals
+      shabbat: state.shabbat ? sh.extraPerStd * sp + state.guests * state.shabbatMeals * 4.33 * sh.guestMeal : 0
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
@@ -1044,10 +1096,13 @@
     $("metrics").innerHTML = parts.join("");
 
     const adj = RENT_ADJ[state.transport];
-    let adjMsg = "";
-    if (adj > 0) adjMsg = "<i>+5%</i> Near a train or light-rail station: about " + fmt(round50(avg * (1 + adj))) + "/month";
-    else if (adj < 0) adjMsg = "<i>−5%</i> Further from public transport (you'll drive): about " + fmt(round50(avg * (1 + adj))) + "/month";
-    $("hero-adj").innerHTML = adjMsg;
+    const hood = currentHood(area.name);
+    const hAdj = areaAdj(hood);
+    const bits = [];
+    if (hood) bits.push((hAdj ? "<i>" + (hAdj > 0 ? "+" : "−") + Math.abs(Math.round(hAdj * 100)) + "%</i> " : "") + esc(hood.en) + ": " + HINT_TEXT[hood.hint]);
+    if (adj > 0) bits.push("<i>+5%</i> near a train or light-rail station");
+    else if (adj < 0) bits.push("<i>−5%</i> further from public transport");
+    $("hero-adj").innerHTML = bits.length ? bits.join(" · ") + " → about <b>" + fmt(round50(avg * (1 + adj) * (1 + hAdj))) + "</b>/month" : "";
 
     const level = fitLevel(avg);            // what the budget covers
     const chosen = currentLevel(avg);       // what the person picked (or the budget's level)
@@ -1105,7 +1160,7 @@
     const maxRent = Math.max(...measured.map((c) => bandOf(c, band).rent));
     const rows = cities.map((c) => {
       const b = bandOf(c, band);
-      return { c, b, total: costFor(c.name, null, band, currentLevel(b.rent)).total, stops: stopCount(transitOf(c.name)) };
+      return { c, b, total: costFor(c.name, null, band, currentLevel(b.rent), c.name === state.area ? currentHood(c.name) : null).total, stops: stopCount(transitOf(c.name)) };
     });
     const s = state.sort;
     rows.sort((x, y) =>
@@ -1177,10 +1232,13 @@
     const r = state.rooms;
     $("guide-title").textContent = "How to search for " + roomsText(r) + " in " + (isTown ? area.name : state.town || "your town");
 
+    const hood = isTown ? currentHood(area.name) : null;
+    const placeHe = hood ? (hood.beach && !hood.hood && hood.members ? cityHe + " ליד הים" : hood.he + ", " + cityHe) : cityHe;
+    const placeEn = hood ? hood.en + ", " + cityEn : cityEn;
     const phrases = [
-      ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + cityHe, true],
-      ["English", roomsShort(r) + " room apartment for rent in " + cityEn, false],
-      ["Facebook", "דירות להשכרה ב" + cityHe, true]
+      ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + placeHe, true],
+      ["English", roomsShort(r) + " room apartment for rent in " + placeEn, false],
+      ["Facebook", "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " + cityHe : cityHe), true]
     ];
     $("guide-phrases").innerHTML = phrases.map(([lang, text, rtl]) =>
       '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + lang + "</span>" +
@@ -1194,6 +1252,9 @@
     const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? "any" : r + STEP;
     const rows = [
       ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : state.town || "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
+      ...(hood ? [["Neighbourhood", "שכונה",
+        hood.members ? hood.members.map((m) => he(m.he)).join(", ") : he(hood.he) + " (" + esc(hood.en) + ")",
+        hood.members ? "Tick these beach-side neighbourhoods on the site." : hood.hood ? "The Yad2 button already opens this neighbourhood." : "Type it into the site's location box after the city."]] : []),
       ["Rooms", "חדרים", r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r, "Widen it to " + lo + " - " + hi + " to see more homes."],
       ["Price per month", "מחיר", price[0], price[1]],
       ["Property type", "סוג נכס", he("דירה") + " (apartment)", "For luxury also try " + he("דירת גן") + " (garden flat) and " + he("פנטהאוז") + "."]
@@ -1207,6 +1268,9 @@
         '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " · your level" : "") + "</h4>" +
         KEYWORDS[k].map(kwBtn).join("") + "</div>").join("") +
       '<div class="kw-group any"><h4>For your transport choice</h4><div class="kw-wrap">' + TRANSIT_KW[state.transport].map(kwBtn).join("") + "</div></div>" +
+      ((hood && hood.beach) || state.shabbat ? '<div class="kw-group any"><h4>For your area and needs</h4><div class="kw-wrap">' +
+        [...(hood && hood.beach ? [["קרוב לים", "near the beach"], ["נוף לים", "sea view"]] : []),
+         ...(state.shabbat ? [["קרוב לבית כנסת", "near a synagogue"], ["שבת", "Shabbat (e.g. Shabbat lift)"]] : [])].map(kwBtn).join("") + "</div></div>" : "") +
       '<div class="kw-group any"><h4>Useful at any level</h4><div class="kw-wrap">' + ALWAYS.map(kwBtn).join("") + "</div></div>";
   }
 
@@ -1216,10 +1280,15 @@
   const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
   function siteLinks(area) {
     const city = !state.town && area.cbsCode ? area : null;
-    const fbQuery = city ? "דירות להשכרה ב" + (SEARCH_NAME[city.name] || city.hebrew) : "apartments for rent " + (state.town || "");
+    const hood = city ? currentHood(city.name) : null;
+    // Yad2 needs its region (topArea) and area codes as well as the city, otherwise it opens a default region
+    const y = LD.yad2[city ? city.name : state.town || ""];
+    let yad2 = "https://www.yad2.co.il/realestate/rent";
+    if (y) yad2 += "?topArea=" + y.topArea + "&area=" + y.area + "&city=" + y.city + (hood && hood.hood ? "&neighborhood=" + hood.hood : "");
+    const cityHe = city ? (SEARCH_NAME[city.name] || city.hebrew) : "";
+    const fbQuery = city ? "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " : "") + cityHe : "apartments for rent " + (state.town || "");
     return {
-      city,
-      yad2: city ? "https://www.yad2.co.il/realestate/rent?city=" + city.cbsCode : "https://www.yad2.co.il/realestate/rent",
+      city, hood, yad2, yad2Town: !city && !!y,
       madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
       facebook: "https://www.facebook.com/search/groups/?q=" + encodeURIComponent(fbQuery.trim())
     };
@@ -1239,9 +1308,13 @@
     $("go-title").textContent = place ? "Go straight to the listings in " + place : "Go straight to the listings";
     $("go-row").innerHTML = [["Yad2", L.yad2, "#6c3cf0"], ["Madlan", L.madlan, "#ff3d8b"], ["Facebook groups", L.facebook, "#0a9d90"]]
       .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + n + " " + EXT + "</a>").join("");
+    const where = L.hood ? L.hood.en + ", " + L.city.name : L.city ? L.city.name : state.town;
     $("go-note").textContent = L.city
-      ? "Opens " + L.city.name + "'s rental listings in a new tab. Then set " + roomsText(state.rooms) + " and your price on the site, using the filters below."
+      ? "Opens " + L.city.name + "'s rental listings in a new tab" + (L.hood && L.hood.hood ? " (Yad2 opens " + L.hood.en + " directly)" : L.hood ? ". On the site, add the neighbourhood " + (L.hood.members ? "names" : "\u201c" + L.hood.he + "\u201d") + " in the location box" : "") +
+        ". Then set " + roomsText(state.rooms) + " and your price, using the filters below."
+      : L.yad2Town ? "Yad2 opens " + state.town + "'s listings; on the other sites pick " + state.town + " in the search, then use the filters below."
       : "Opens the site's rental search in a new tab. Pick " + (state.town || "your town") + " there, then use the filters below.";
+    if (where) $("go-title").textContent = "Go straight to the listings in " + where;
     $("site-list").innerHTML = SITES.map(([name, domain, desc, color, link, local]) => {
       const hl = local && local.includes(area.name);
       const url = L[link] || link;
@@ -1258,7 +1331,8 @@
   [...cities].sort((a, b) => a.name.localeCompare(b.name)).forEach((c) => cmpSel.append(new Option(c.name, c.name)));
   function renderCosts(area, band, avg) {
     const level = currentLevel(avg);
-    const here = costFor(area.name, state.town, band, level);
+    const hood = currentHood(area.name);
+    const here = costFor(area.name, state.town, band, level, hood);
     const cmpName = state.compare === area.name && !state.town ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
     const there = costFor(cmpName, null, band, level);
     const placeName = state.town || (area.type === "National" ? "Israel" : area.name);
@@ -1271,7 +1345,12 @@
     document.querySelectorAll(".seg [data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === level)));
     cmpSel.value = cmpName;
 
-    $("cost-title").textContent = "What it will really cost in " + placeName;
+    $("cost-title").textContent = "What it will really cost in " + (hood ? hood.en + ", " : "") + placeName;
+    document.querySelectorAll("[data-shabbat]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.shabbat === "1") === state.shabbat)));
+    document.querySelectorAll("[data-meals]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.meals === state.shabbatMeals)));
+    $("cc-guests").hidden = $("cc-meals").hidden = !state.shabbat;
+    $("guests-value").textContent = state.guests;
+    $("guests-down").disabled = state.guests <= 0; $("guests-up").disabled = state.guests >= 12;
     $("ct-amount").innerHTML = fmt(here.total) + " <small>/ month</small>";
     $("ct-sub").textContent = people + (people === 1 ? " person" : " people") + " · " + roomsText(state.rooms) + " · " +
       level[0].toUpperCase() + level.slice(1) + " lifestyle · " + { rail: "near a station", bus: "public transport", car: "with a car" }[state.transport];
@@ -1285,9 +1364,12 @@
 
     $("col-a").textContent = placeName; $("col-b").textContent = cmpLabel;
     const hint = {
-      rent: TIERS[level] && level[0].toUpperCase() + level.slice(1) + " level" + (RENT_ADJ[state.transport] ? (RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : ""),
+      rent: TIERS[level] && level[0].toUpperCase() + level.slice(1) + " level" + (RENT_ADJ[state.transport] ? (RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : "") +
+        (areaAdj(hood) ? ", " + (areaAdj(hood) > 0 ? "+" : "−") + Math.abs(Math.round(areaAdj(hood) * 100)) + "% for " + hood.en : ""),
       transport: state.transport === "car" ? "Typical car costs: fuel, insurance, upkeep" : state.adults + " × Rav-Kav nationwide monthly pass (₪" + LD.costs.passes.national + ")",
       education: "Schools, kindergarten, after-school activities",
+      shabbat: "Shabbat foods for your household (+₪" + Math.round(LD.costs.shabbat.extraPerStd) + " per person, CBS)" +
+        (state.guests ? " + " + state.guests + " guest" + (state.guests > 1 ? "s" : "") + " × " + state.shabbatMeals + " meal" + (state.shabbatMeals > 1 ? "s" : "") + " × ₪" + LD.costs.shabbat.guestMeal + ", about 4.3 Shabbatot a month" : ""),
       leisure: "Gym, classes, events, outings",
       groceries: "Supermarket food, fruit & veg"
     };
@@ -1306,6 +1388,22 @@
       " (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.";
   }
 
+  // ---- Area-in-city picker ----
+  const hoodSel = $("hood");
+  function renderHoodPicker(area) {
+    const list = hoodsOf(area.name);
+    $("f-hood").hidden = !list.length;
+    if (!list.length) return;
+    const opts = ['<option value="">Anywhere in ' + esc(area.name) + "</option>"];
+    if (list.some((h) => h.beach)) opts.push('<option value="__beach">🏖 By the beach</option>');
+    for (const h of list) opts.push('<option value="' + esc(h.en) + '">' + (h.beach ? "🏖 " : "") + esc(h.en) + " · " + esc(h.he) +
+      (h.hint === "higher" ? " (pricier)" : h.hint === "lower" ? " (cheaper)" : "") + "</option>");
+    hoodSel.innerHTML = opts.join("");
+    if (state.hood && !currentHood(area.name)) state.hood = "";
+    hoodSel.value = state.hood;
+  }
+  hoodSel.addEventListener("change", () => { state.hood = hoodSel.value; persist(); render(); });
+
   // ---- Main render ----
   function render() {
     const area = byName[state.area];
@@ -1319,6 +1417,7 @@
     $("legend-title").textContent = "Avg rent · " + band + " rooms";
     $("legend-over").hidden = !effBudget();
 
+    renderHoodPicker(area);
     renderHero(area, band, b);
     renderCosts(area, band, b.rent);
     renderGuide(area, band, b.rent);
@@ -1329,6 +1428,7 @@
 
   function select(name, opts = {}) {
     if (!opts.keepTown) state.town = null;
+    if (name !== state.area) state.hood = "";
     state.area = name; persist(); render();
     if (document.activeElement !== areaInput) areaInput.value = placeLabel();
     if (opts.fly !== false) flyToArea(byName[name]);
@@ -1370,6 +1470,10 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
   });
   $("auto-level").addEventListener("click", () => { state.level = null; persist(); render(); });
+  document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => { state.shabbat = b.dataset.shabbat === "1"; persist(); render(); }));
+  document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
+  $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
+  $("guests-up").addEventListener("click", () => bump("guests", 1, 0, 12));
   cmpSel.addEventListener("change", () => { state.compare = cmpSel.value; persist(); render(); });
   $("allin").addEventListener("click", () => { const p = $("cost-panel"); p.open = true; p.scrollIntoView({ behavior: "smooth", block: "start" }); });
   $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });

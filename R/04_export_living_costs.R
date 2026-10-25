@@ -4,6 +4,9 @@
 # Inputs : data/raw/osm_rail_stations.csv     (OpenStreetMap train / light rail / metro stops)
 #          data/raw/cbs_hes_2021_table10.csv  (CBS Household Expenditure Survey 2021, Table 10)
 #          data/raw/cbs_cpi_factors.csv       (CBS price-index change 2021 -> 2026 by group)
+#          data/raw/cbs_hes_2021_table13.csv  (CBS Household Expenditure Survey 2021, Table 13, by religiosity)
+#          data/raw/yad2_locations.csv        (Yad2 region / area / city codes for search links)
+#          data/raw/neighbourhoods.csv        (areas within each city for the area picker)
 # Output : docs/living-data.js  (loaded by docs/index.html)
 
 library(tidyverse)
@@ -204,6 +207,72 @@ other_towns <- tribble(
   "Mevaseret Zion",    "Jerusalem District"
 )
 
+# ---- Shabbat ----------------------------------------------------------------
+
+# Per standard person, households that keep Shabbat (religious + traditional)
+# compared with secular ones, at 2026 prices
+shabbat_raw <- read_csv("data/raw/cbs_hes_2021_table13.csv", show_col_types = FALSE,
+                        col_types = cols(.default = "c")) |>
+  pivot_longer(-item, names_to = "group", values_to = "raw") |>
+  mutate(value = as.numeric(str_remove_all(raw, "[()]"))) |>
+  select(-raw) |>
+  pivot_wider(names_from = item, values_from = value)
+
+shabbat_items <- c("Bread, cereals and pastry products", "Meat and poultry", "Fish",
+                   "Sugar and sugar products", "Soft drinks", "Alcoholic beverages")
+
+per_std <- shabbat_raw |>
+  transmute(
+    group,
+    households = `Households in population (thousands)`,
+    std = `Average standard persons in household`,
+    shabbat_foods = rowSums(across(all_of(shabbat_items))) / std * f(120050),
+    groceries = (`Food (excl. vegetables and fruit)` - `Meals away from home`) * f(120050) / std +
+      `Vegetables and fruit` * f(120040) / std,
+    eating_out = `Meals away from home` * f(120050) / std
+  )
+
+keepers <- per_std |>
+  filter(group %in% c("religious", "traditional")) |>
+  summarise(across(c(shabbat_foods, groceries, eating_out), \(x) weighted.mean(x, households * std)))
+secular <- filter(per_std, group == "secular")
+
+# Hosting: a guest at a Shabbat meal, costed at three times an average
+# person-meal of groceries (national groceries per standard person / 90 meals)
+person_meal <- regions$Israel$groceries / 90
+
+shabbat <- list(
+  extraPerStd = round(max(0, keepers$shabbat_foods - secular$shabbat_foods), 1),
+  groceriesPerStd = list(keepers = round(keepers$groceries, 1), secular = round(secular$groceries, 1)),
+  eatingOutPerStd = list(keepers = round(keepers$eating_out, 1), secular = round(secular$eating_out, 1)),
+  guestMeal = round(person_meal * 3),
+  personMeal = round(person_meal, 1)
+)
+message(sprintf("Shabbat: +%.0f NIS per standard person on Shabbat foods; guest meal %d NIS",
+                shabbat$extraPerStd, shabbat$guestMeal))
+
+# ---- Yad2 links and neighbourhoods ------------------------------------------
+
+yad2 <- read_csv("data/raw/yad2_locations.csv", show_col_types = FALSE)
+city_yad2 <- tibble(area = names(city_region)) |>
+  mutate(yad2_city = c(
+    "Jerusalem" = 3000, "Beit Shemesh" = 2610, "Tel Aviv" = 5000, "Herzliya" = 6400, "Ramat Gan" = 8600,
+    "Bnei Brak" = 6100, "Holon" = 6600, "Bat Yam" = 6200, "Kfar Saba" = 6900, "Ra'anana" = 8700,
+    "Netanya" = 7400, "Petah Tikva" = 7900, "Rishon LeZion" = 8300, "Rehovot" = 8400, "Haifa" = 4000,
+    "Hadera" = 6500, "Ashdod" = 70, "Ashkelon" = 7100, "Be'er Sheva" = 9000)[area]) |>
+  bind_rows(tribble(
+    ~area, ~yad2_city,
+    "Givatayim", 6300, "Ramat HaSharon", 2650, "Hod HaSharon", 9700, "Rosh HaAyin", 2640,
+    "Ness Ziona", 7200, "Yavne", 2660, "Tiberias", 6700, "Safed", 8000, "Karmiel", 1139,
+    "Nahariya", 9100, "Akko", 7600, "Eilat", 2600, "Ofakim", 31, "Dimona", 2200,
+    "Mevaseret Zion", 1015, "Afula", 7700, "Or Akiva", 1020
+  )) |>
+  inner_join(yad2, by = "yad2_city")
+stopifnot(all(names(city_region) %in% city_yad2$area))
+
+neighbourhoods <- read_csv("data/raw/neighbourhoods.csv", show_col_types = FALSE,
+                           col_types = cols(yad2_hood = "c"))
+
 flagged <- hes |>
   filter(rough | filled, region != "judea_samaria",
          item %in% c("Meals away from home", "Culture, sport and entertainment events",
@@ -216,6 +285,15 @@ payload <- list(
     t <- filter(transit, city == c)
     list(train = t$train, lightRail = t$light_rail, metro = t$metro)
   }),
+  yad2 = map(set_names(city_yad2$area), \(a) {
+    r <- filter(city_yad2, area == a)
+    list(topArea = r$yad2_top_area, area = r$yad2_area, city = r$yad2_city)
+  }),
+  areas = map(set_names(unique(neighbourhoods$city)), \(c) {
+    neighbourhoods |>
+      filter(city == c) |>
+      transmute(en = area_en, he = area_he, beach = beach == 1, hint = price_hint, hood = na_if(yad2_hood, ""))
+  }),
   stations = stations |>
     filter(!is.na(lat)) |>
     transmute(n = name, k = kind, c = city, la = round(lat, 5), lo = round(lon, 5)),
@@ -225,6 +303,7 @@ payload <- list(
     cityRegion = as.list(city_region),
     otherTowns = as.list(deframe(other_towns)),
     passes = list(national = 315, periphery = 139),
+    shabbat = shabbat,
     source = paste("CBS Household Expenditure Survey 2021 (Table 10, by sub-district),",
                    "brought to 2026 prices with the CBS price index for each group.")
   )
