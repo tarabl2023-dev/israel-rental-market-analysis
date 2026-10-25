@@ -264,6 +264,7 @@
   .kw.on span { color: rgba(255,255,255,.85); }
   .go-incl { font-size: 12.5px; color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: var(--surface-2); }
   .go-incl b { color: var(--ink); }
+  .link-mode { margin-top: 10px; background: var(--surface-2); flex-wrap: wrap; }
   .kw bdi { font-weight: 800; }
   .kw span { color: var(--ink-3); font-size: 12.5px; }
   .tip { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
@@ -605,6 +606,9 @@
           <div class="step">
             <div class="step-num" style="background:var(--ink)">↗</div>
             <div class="step-body"><h3 id="go-title">Go straight to the listings</h3><div class="go-row" id="go-row"></div>
+              <div class="seg link-mode" role="group" aria-label="How strict the links are">
+                <button type="button" data-linkmode="all">All my filters</button><button type="button" data-linkmode="basic">Rooms &amp; budget only</button><button type="button" data-linkmode="city">Just the city</button>
+              </div>
               <p class="go-note" id="go-note"></p><p class="go-incl" id="go-incl"></p></div>
           </div>
           <div class="step">
@@ -816,6 +820,7 @@
     level: ["budget", "comfortable", "luxury"].includes(saved.level) ? saved.level : null,
     compare: byName[saved.compare] ? saved.compare : "Israel",
     showStations: saved.showStations === true,
+    linkMode: ["all", "basic", "city"].includes(saved.linkMode) ? saved.linkMode : "all",   // how strict the site links are
     features: Array.isArray(saved.features) ? saved.features.filter((w) => typeof w === "string").slice(0, 20) : [],
     hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else area name
     shabbat: saved.shabbat === true,
@@ -1317,24 +1322,26 @@
     "Ness Ziona": "ness-ziona", "Modi'in": "modiin-maccabim-reut", "Kiryat Bialik": "kiryat-bialik", "Kiryat Ata": "kiryat-ata",
     "Kiryat Motzkin": "kiryat-motzkin", "Kiryat Yam": "kiryat-yam", "Lod": "lod", "Ramla": "ramla", "Nesher": "nesher",
     "Yavne": "yavne", "Kiryat Shmona": "qiryat-shemona" };
-  function priceCap(area) {
-    if (state.noLimit) return null;
-    if (state.budget) return Math.round(state.budget);
-    const avg = bandOf(area, bandFor(state.rooms)).rent;
-    return round50(avg * TIERS[currentLevel(avg)].hi);
+  // Only cap the price when the person gave a budget, so the links don't come back empty
+  function priceCap() {
+    if (state.noLimit || !state.budget || state.linkMode === "city") return null;
+    return Math.round(state.budget);
   }
   function siteLinks(area) {
     const city = !state.town && area.cbsCode ? area : null;
     const hood = city ? currentHood(city.name) : null;
-    const r = state.rooms, maxP = priceCap(area);
-    const feats = state.features.map((w) => FEATURES[w]).filter(Boolean);
+    // Rooms: half a room either side, since listings are often 3.5 or 4.5 rather than exactly 4
+    const r = state.rooms, maxP = priceCap();
+    const useRooms = state.linkMode !== "city";
+    const rMin = Math.max(1, r - 0.5), rMax = r >= MAX_ROOMS ? 12 : r + 0.5;
+    const feats = state.linkMode === "all" ? state.features.map((w) => FEATURES[w]).filter(Boolean) : [];
     // Yad2 needs its region (topArea) and area codes as well as the city, otherwise it opens a default region
     const y = LD.yad2[city ? city.name : state.town || ""];
     let yad2 = "https://www.yad2.co.il/realestate/rent";
     if (y) {
       const q = ["topArea=" + y.topArea, "area=" + y.area, "city=" + y.city];
       if (hood && hood.hood) q.push("neighborhood=" + hood.hood);
-      q.push("rooms=" + (r >= MAX_ROOMS ? "6-12" : r + "-" + r));
+      if (useRooms) q.push("rooms=" + rMin + "-" + rMax);
       if (maxP) q.push("price=-1-" + maxP);
       [...new Set(feats.map((f) => f.yad2).filter(Boolean))].forEach((k) => q.push(k + "=1"));
       yad2 += "?" + q.join("&");
@@ -1342,24 +1349,26 @@
     // Komo: its search form's own field names
     let komo = "https://www.komo.co.il/code/rent/";
     if (city) {
-      const q = ["nehes=1", "cityName=" + encodeURIComponent(city.hebrew).replace(/%20/g, "+"), "fromRooms=" + Math.min(r, 6)];
-      if (r < MAX_ROOMS) q.push("toRooms=" + r);
+      const q = ["nehes=1", "cityName=" + encodeURIComponent(city.hebrew).replace(/%20/g, "+")];
+      if (useRooms) { q.push("fromRooms=" + rMin); if (r < MAX_ROOMS) q.push("toRooms=" + rMax); }
       if (maxP) q.push("toPrice=" + maxP);
       [...new Set(feats.map((f) => f.komo).filter(Boolean))].forEach((k) => q.push(k + "=1"));
       komo = "https://www.komo.co.il/code/nadlan/apartments-for-rent.asp?" + q.join("&");
     }
     const om = ONMAP[city ? city.name : state.town || ""];
-    const onmap = om ? "https://www.onmap.co.il/search/homes/rent/" + om + "/rooms_" + Math.min(Math.floor(r), 6) +
+    // OnMap takes whole-room ranges ("rooms_3-5" = 3, 4 or 5 rooms)
+    const omRooms = useRooms ? "/rooms_" + Math.floor(rMin) + "-" + Math.min(6, Math.ceil(rMax)) : "";
+    const onmap = om ? "https://www.onmap.co.il/search/homes/rent/" + om + omRooms +
       (maxP ? "/price_0-" + maxP : "") + (feats.some((f) => f.onmap) ? "/types_penthouse" : "") : "https://www.onmap.co.il/search/homes/rent";
     const homeless = city ? "https://www.homeless.co.il/rent/city=" + encodeURIComponent(SEARCH_NAME[city.name] || city.hebrew) : "https://www.homeless.co.il/rent/";
     const cityHe = city ? (SEARCH_NAME[city.name] || city.hebrew) : "";
-    const fbQuery = city ? "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " : "") + cityHe + (state.features.length ? " " + state.features.slice(0, 2).join(" ") : "")
-      : "apartments for rent " + (state.town || "");
+    const fbPlace = city ? cityHe : state.town || "";
+    const fbQuery = 'site:facebook.com/groups "דירות להשכרה" ' + (fbPlace ? '"' + fbPlace + '"' : "");
     return {
       city, hood, yad2, yad2Town: !city && !!y, komo, onmap, homeless, maxP,
       janglo: "https://www.janglo.net/real-estate-rentals/apartments",
       madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
-      facebook: "https://www.facebook.com/search/groups/?q=" + encodeURIComponent(fbQuery.trim())
+      facebook: "https://www.google.com/search?q=" + encodeURIComponent(fbQuery.trim())
     };
   }
   const SITES = [
@@ -1368,7 +1377,7 @@
     ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6", "komo"],
     ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff", "homeless"],
     ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a", "onmap"],
-    ["Facebook groups", "facebook.com", "Opens a group search for your city. " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90", "facebook"],
+    ["Facebook groups", "facebook.com", "Finds your city's Facebook rental groups (via Google, no login needed). " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90", "facebook"],
     ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh. Pick your region on the site.", "#e0a400", "janglo", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
   ];
   function renderSites(area) {
@@ -1378,10 +1387,15 @@
     $("go-row").innerHTML = [["Yad2", L.yad2, "#6c3cf0"], ["Komo", L.komo, "#0fb5a6"], ["OnMap", L.onmap, "#e0338a"], ["Madlan", L.madlan, "#ff3d8b"],
       ["Homeless", L.homeless, "#9b5cff"], ["Facebook groups", L.facebook, "#0a9d90"]]
       .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + n + " " + EXT + "</a>").join("");
-    const fl = state.features.filter((w) => FEATURES[w]);
-    const incl = [roomsText(state.rooms), L.maxP ? "up to " + fmt(L.maxP) + "/month" : "any price", ...fl.map((w) => he(esc(w)))];
+    document.querySelectorAll("[data-linkmode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.linkmode === state.linkMode)));
+    const fl = state.linkMode === "all" ? state.features.filter((w) => FEATURES[w]) : [];
+    const roomsTxt = state.rooms >= MAX_ROOMS ? "6+ rooms" : Math.max(1, state.rooms - 0.5) + "-" + (state.rooms + 0.5) + " rooms";
+    const incl = state.linkMode === "city" ? ["your city only"]
+      : [roomsTxt, L.maxP ? "up to " + fmt(L.maxP) + "/month" : "any price (enter a budget to cap it)", ...fl.map((w) => he(esc(w)))];
     $("go-incl").innerHTML = "<b>Included in the links:</b> " + incl.join(" · ") +
-      "<br>Yad2 and Komo get all of these" + (L.hood && L.hood.hood ? " (and the neighbourhood)" : "") + "; OnMap gets rooms and price; Homeless and Madlan open your city, so set the rest there.";
+      (state.linkMode === "city" ? "" : "<br>Yad2 and Komo get all of these" + (L.hood && L.hood.hood ? " (and the neighbourhood)" : "") + "; OnMap gets rooms and price; Homeless and Madlan open your city.") +
+      "<br><b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try " +
+      (state.linkMode === "all" ? "\u201cRooms & budget only\u201d" : state.linkMode === "basic" ? "\u201cJust the city\u201d" : "Yad2, which has the most listings") + ".";
     const where = L.hood ? L.hood.en + ", " + L.city.name : L.city ? L.city.name : state.town;
     $("go-note").textContent = L.city
       ? "Each button opens " + L.city.name + "'s rental listings in a new tab" + (L.hood && L.hood.hood ? " (Yad2 opens " + L.hood.en + " directly)" : L.hood ? ". Add the neighbourhood " + (L.hood.members ? "names" : "\u201c" + L.hood.he + "\u201d") + " in the site's location box" : "") + "."
@@ -1552,6 +1566,7 @@
     if (on && !was) toast("Shabbat meals added to your costs" + (state.guests ? "" : ". Add guests to include hosting."));
   }));
   document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
+  document.querySelectorAll("[data-linkmode]").forEach((b) => b.addEventListener("click", () => { state.linkMode = b.dataset.linkmode; persist(); render(); }));
   $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
   $("guests-up").addEventListener("click", () => bump("guests", 1, 0, 12));
   cmpSel.addEventListener("change", () => { state.compare = cmpSel.value; persist(); render(); });
