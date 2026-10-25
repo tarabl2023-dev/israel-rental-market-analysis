@@ -8,7 +8,7 @@ The project looks at how monthly rent varies by **city**, **district** and **dwe
 
 ### 🏠 [Try the interactive rent calculator →](https://tarabl2023-dev.github.io/israel-rental-market-analysis/)
 
-Pick a city (or district) and the number of rooms you need. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. Each city links straight to live rental listings on Yad2 and Madlan. Ra'anana is included as an estimate: CBS doesn't publish rents for towns under 100,000 residents, so it borrows neighbouring Kfar Saba's figures, and the page says so.
+Pick a city (or district) and the number of rooms you need. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check. Ra'anana is included as an estimate: CBS doesn't publish rents for towns under 100,000 residents, so it borrows neighbouring Kfar Saba's figures, and the page says so.
 
 ---
 

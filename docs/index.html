@@ -135,17 +135,48 @@
 
   .budget-verdict { margin-top: 14px; padding: 14px 16px; font-size: 15px; }
 
-  .listings { margin-top: 14px; padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
-  .listings h3 { margin: 0; font-size: 15px; flex: 1 1 220px; }
-  .listings h3 span { display: block; font-size: 13px; font-weight: 400; color: var(--text-3); margin-top: 2px; }
-  .listings .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .site-link {
-    display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px;
-    border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2);
-    color: var(--text); font-size: 14px; font-weight: 600; text-decoration: none;
+  .guide { margin-top: 14px; padding: 20px; }
+  .guide h2, .sites h2 { font-size: 18px; margin: 0 0 2px; }
+  .guide .sub, .sites .sub { color: var(--text-2); font-size: 14px; margin: 0 0 16px; }
+  .guide h3 { font-size: 14px; margin: 18px 0 8px; color: var(--text); }
+  .guide h3:first-of-type { margin-top: 0; }
+  .copy-line {
+    display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 8px;
+    padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2);
+    font: inherit; color: var(--text); text-align: start; cursor: pointer;
   }
-  .site-link:hover { border-color: var(--accent); background: var(--accent-soft); }
-  .site-link svg { width: 14px; height: 14px; stroke: var(--text-3); }
+  .copy-line:hover { border-color: var(--accent); }
+  .copy-line .txt { flex: 1; font-size: 16px; font-weight: 600; }
+  .copy-line .lang { font-size: 12px; color: var(--text-3); width: 52px; flex: none; }
+  .copy-line .act { font-size: 13px; color: var(--accent-ink); font-weight: 600; flex: none; }
+  .filters { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .filters th, .filters td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .filters th { font-weight: 600; width: 32%; }
+  .filters th bdi { display: block; font-weight: 400; color: var(--text-3); }
+  .filters td small { display: block; color: var(--text-3); }
+  .kw-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .kw-groups { grid-template-columns: 1fr; } }
+  .kw-group { padding: 12px; border-radius: 10px; background: var(--surface-2); }
+  .kw-group.active { outline: 2px solid var(--accent); }
+  .kw-group h4 { margin: 0 0 8px; font-size: 13px; color: var(--text-2); }
+  .kw { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 100%;
+        padding: 6px 8px; margin: 0 0 4px; border: 0; border-radius: 6px; background: var(--surface);
+        font: inherit; font-size: 14px; color: var(--text); cursor: pointer; text-align: start; }
+  .kw:hover { outline: 1px solid var(--accent); }
+  .kw bdi { font-weight: 600; }
+  .kw span { color: var(--text-3); font-size: 13px; }
+  .tip { font-size: 13px; color: var(--text-3); margin: 10px 0 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--text); color: var(--bg);
+           padding: 8px 14px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  .sites { margin-top: 14px; padding: 20px; }
+  .site-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 760px) { .site-list { grid-template-columns: 1fr; } }
+  .site-list li { padding: 12px 14px; border-radius: 10px; background: var(--surface-2); font-size: 14px; color: var(--text-2); }
+  .site-list li strong { display: block; color: var(--text); font-size: 15px; }
+  .site-list li .domain { color: var(--text-3); font-size: 13px; }
+  .site-list li.highlight { outline: 2px solid var(--accent); }
   .budget-verdict[hidden] { display: none; }
 
   /* ---- Comparison chart ---- */
@@ -240,11 +271,29 @@
     <div class="facts" id="facts"></div>
     <div class="note" id="note"></div>
     <div class="card budget-verdict" id="verdict" hidden></div>
-    <div class="card listings">
-      <h3 id="listings-title"></h3>
-      <div class="links" id="listings-links"></div>
-    </div>
   </section>
+
+  <section class="card guide" aria-labelledby="guide-title">
+    <h2 id="guide-title"></h2>
+    <p class="sub">Most Israeli rental sites are in Hebrew. Click any line to copy it, then paste it into the site's search box or a Facebook group search.</p>
+
+    <h3>1. Type this into the search box</h3>
+    <div id="guide-phrases"></div>
+
+    <h3>2. Set these filters</h3>
+    <table class="filters"><tbody id="guide-filters"></tbody></table>
+
+    <h3>3. Add keywords for the level you want</h3>
+    <div class="kw-groups" id="guide-keywords"></div>
+    <p class="tip">Tip: your browser can translate listings (right-click → Translate to English). Listings marked <bdi dir="rtl" lang="he">תיווך</bdi> come through an agent, who may charge a fee.</p>
+  </section>
+
+  <section class="card sites" aria-labelledby="sites-title">
+    <h2 id="sites-title">Where to look</h2>
+    <p class="sub">Check several sites: many landlords only post on one.</p>
+    <ul class="site-list" id="site-list"></ul>
+  </section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <section class="card compare" aria-labelledby="compare-title">
     <h2 id="compare-title"></h2>
@@ -268,7 +317,7 @@
     </ul>
     <p>Treat them as a starting point and check real listings (Yad2, Madlan, Komo) in the neighbourhoods you like. Prices vary a lot within a city: north Tel Aviv and south Tel Aviv are very different markets.</p>
     <p>Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band covers everything from 4.5 rooms to large penthouses, so its average is less precise. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). For those, the estimate uses the city's 2.5-3 room rent scaled by its district's price ratio.</p>
-    <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ, so check listings.</p>
+    <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ, so check real listings.</p>
     <p>Prices are estimates and exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
   </details>
 
@@ -279,7 +328,7 @@
 </div>
 
 <!-- Bump ?v= when the data is re-exported so browsers don't keep a stale copy -->
-<script src="rent-data.js?v=2026q2-3"></script>
+<script src="rent-data.js?v=2026q2-4"></script>
 <script>
 (function () {
   const D = window.RENT_DATA;
@@ -380,14 +429,14 @@
     $("facts").innerHTML = facts.join("");
 
     const notes = [];
-    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ". Check listings below for real prices.");
+    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ". Use the search guide below to check real prices.");
     else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
     if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
     if (area.type === "District" && area.name !== "Israel") notes.push("District figures average all towns in the district, including the big cities in it.");
     $("note").textContent = notes.join(" ");
 
     renderBudget(avg, band);
-    renderListings(area);
+    renderGuide(area, band, avg);
     renderBars(band);
   }
 
@@ -462,25 +511,97 @@
     }
   }
 
-  // ---- Where to find apartments ----
-  const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
-  function renderListings(area) {
-    const links = [];
-    if (area.cbsCode) {
-      // Yad2 takes the CBS locality code; Madlan takes "<hebrew-name>-ישראל"
-      links.push(["Yad2", "https://www.yad2.co.il/realestate/rent?city=" + area.cbsCode]);
-      links.push(["Madlan", "https://www.madlan.co.il/for-rent/" + encodeURIComponent(area.hebrew.replace(/ /g, "-") + "-ישראל")]);
-      $("listings-title").innerHTML = "Find apartments in " + area.name +
-        "<span>Opens live rental listings. Filter by rooms and price on the site.</span>";
-    } else {
-      links.push(["Yad2", "https://www.yad2.co.il/realestate/rent"]);
-      links.push(["Madlan", "https://www.madlan.co.il/"]);
-      $("listings-title").innerHTML = "Find apartments" +
-        "<span>Pick your town on the site, then filter by rooms and price.</span>";
-    }
-    $("listings-links").innerHTML = links.map(([name, url]) =>
-      '<a class="site-link" href="' + url + '" target="_blank" rel="noopener noreferrer">' + name + " " + EXT + "</a>").join("");
+  // ---- Search guide ----
+  const he = (t) => '<bdi dir="rtl" lang="he">' + t + "</bdi>";
+  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  // Shorter names people actually type (CBS uses the official long form)
+  const SEARCH_NAME = { "Tel Aviv": "תל אביב" };
+  const roomsHe = (r) => r >= MAX_ROOMS ? "6 חדרים ומעלה" : r === 1 ? "חדר" : r + " חדרים";
+  const KEYWORDS = {
+    budget: [["ללא תיווך", "no agent's fee"], ["יחידת דיור", "self-contained unit, often cheaper"],
+             ["גמיש במחיר", "price is negotiable"], ["דירה ישנה", "older flat"]],
+    comfortable: [["מעלית", "lift"], ["חניה", "parking"], ["משופצת", "renovated"], ["מזגנים", "air-conditioning"]],
+    luxury: [["ממ\"ד", "safe room"], ["בניין חדש", "new building"], ["מרפסת שמש", "sun balcony"], ["פנטהאוז", "penthouse"]]
+  };
+  const ALWAYS = [["כניסה מיידית", "available now"], ["מרוהטת", "furnished"], ["מותר בעלי חיים", "pets allowed"]];
+
+  function copy(text) {
+    const done = () => { const t = $("toast"); t.textContent = "Copied: " + text; t.classList.add("show"); clearTimeout(copy.t); copy.t = setTimeout(() => t.classList.remove("show"), 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => {});
+    else { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
   }
+
+  function renderGuide(area, band, avg) {
+    const isTown = !!area.hebrew;
+    const cityHe = isTown ? (SEARCH_NAME[area.name] || area.hebrew) : "[שם העיר]";
+    const cityEn = isTown ? area.name : "[your town]";
+    const r = state.rooms;
+    $("guide-title").textContent = "How to search for " + roomsText(r) + " in " + (isTown ? area.name : "your town");
+
+    const phrases = [
+      ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + cityHe, true],
+      ["English", (r >= MAX_ROOMS ? "6+" : r) + " room apartment for rent in " + cityEn, false],
+      ["Facebook", "דירות להשכרה ב" + cityHe, true]
+    ];
+    $("guide-phrases").innerHTML = phrases.map(([lang, text, rtl]) =>
+      '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + lang + '</span>' +
+      '<span class="txt"' + (rtl ? ' dir="rtl" lang="he"' : '') + '>' + esc(text) + '</span><span class="act">Copy</span></button>').join("");
+
+    // Price filter follows the budget if there is one, otherwise the comfortable range
+    let price;
+    if (state.noLimit) price = ["Leave empty", "No budget limit, so don't cap the price."];
+    else if (state.budget) price = ["Up to " + fmt(state.budget), "Your budget."];
+    else price = [fmt(round50(avg * TIERS.comfortable.lo)) + " - " + fmt(round50(avg * TIERS.comfortable.hi)),
+                  "The comfortable range. Budget: up to " + fmt(round50(avg * TIERS.budget.hi)) +
+                  ", luxury: from " + fmt(round50(avg * TIERS.luxury.lo)) + "."];
+    const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? "any" : r + STEP;
+    const rows = [
+      ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
+      ["Rooms", "חדרים", (r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r), "Widen it to " + lo + " - " + hi + " to see more homes."],
+      ["Price per month", "מחיר", price[0], price[1]],
+      ["Property type", "סוג נכס", he("דירה") + " (apartment)", "For luxury also try " + he("דירת גן") + " (garden flat) and " + he("פנטהאוז") + "."]
+    ];
+    $("guide-filters").innerHTML = rows.map(([en, h, val, note]) =>
+      "<tr><th>" + en + he(h) + "</th><td>" + val + (note ? "<small>" + note + "</small>" : "") + "</td></tr>").join("");
+
+    // Highlight the level the budget reaches (or comfortable by default)
+    let level = "comfortable";
+    if (state.noLimit) level = "luxury";
+    else if (state.budget) {
+      level = ["luxury", "comfortable", "budget"].find((k) => state.budget >= round50(avg * TIERS[k].mid)) || "budget";
+    }
+    const groups = [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
+      '<div class="kw-group' + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " (your level)" : "") + "</h4>" +
+      KEYWORDS[k].map(([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>").join("") +
+      "</div>");
+    groups.push('<div class="kw-group" style="grid-column:1/-1"><h4>Useful at any level</h4><div class="kw-groups">' +
+      ALWAYS.map(([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>").join("") +
+      "</div></div>");
+    $("guide-keywords").innerHTML = groups.join("");
+
+    renderSites(area);
+  }
+
+  const SITES = [
+    ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings."],
+    ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices."],
+    ["Komo", "komo.co.il", "Classifieds with many private landlords."],
+    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere."],
+    ["OnMap", "onmap.co.il", "Map-based search, with an English version."],
+    ["Facebook groups", "facebook.com", "Search the Facebook phrase above for your city's groups. \"דירות מפה לאוזן\" is a large group for flats without agents."],
+    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
+  ];
+  function renderSites(area) {
+    $("site-list").innerHTML = SITES.map(([name, domain, desc, local]) => {
+      const hl = local && local.includes(area.name);
+      return '<li' + (hl ? ' class="highlight"' : '') + '><strong>' + name + (hl ? " (good for " + area.name + ")" : "") + '</strong>' +
+        '<span class="domain">' + domain + '</span><br>' + desc.replace(/"([^"]*[֐-׿][^"]*)"/g, (m, t) => "“" + he(t) + "”") + '</li>';
+    }).join("");
+  }
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-copy]");
+    if (el) copy(el.getAttribute("data-copy"));
+  });
 
   // ---- Events ----
   sel.value = state.area;
