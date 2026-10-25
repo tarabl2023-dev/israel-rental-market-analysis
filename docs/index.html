@@ -298,6 +298,10 @@
   .cost-head .amt small { font-size: 15px; font-weight: 600; opacity: .85; }
   .cost-head .sub { font-size: 13px; opacity: .9; margin-top: 2px; }
   .cost-head .vs { text-align: right; font-size: 13px; font-weight: 600; }
+  .sh-badge { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 800; background: rgba(255,255,255,.22); padding: 4px 10px; border-radius: 999px; }
+  .sh-badge:empty { display: none; }
+  .cc .nudge { font-size: 11.5px; font-weight: 700; color: var(--accent); text-transform: none; letter-spacing: 0; }
+  .cc .nudge:empty { display: none; }
   .cost-head .vs b { display: block; font-size: 20px; font-weight: 800; }
   .cost-bar { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 14px 0 6px; gap: 2px; background: var(--surface-2); }
   .cost-bar i { display: block; height: 100%; }
@@ -566,14 +570,15 @@
                 <button type="button" data-shabbat="0">Not included</button><button type="button" data-shabbat="1">I keep Shabbat</button>
               </div></div>
             <div class="cc" id="cc-guests"><span id="guests-label">Guests each Shabbat</span>
-              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests">&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests">+</button></div></div>
+              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests">&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests">+</button></div>
+              <span class="nudge" id="guests-nudge"></span></div>
             <div class="cc" id="cc-meals"><span id="meals-label">Meals you host</span>
               <div class="seg" role="group" aria-labelledby="meals-label">
                 <button type="button" data-meals="1">Friday night</button><button type="button" data-meals="2">Friday + lunch</button>
               </div></div>
           </div>
           <div class="cost-head">
-            <div><div class="lbl">Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div></div>
+            <div><div class="lbl">Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div><div class="sh-badge" id="sh-badge"></div></div>
             <div class="vs" id="ct-vs"></div>
           </div>
           <div class="cost-bar" id="cost-bar" aria-hidden="true"></div>
@@ -1356,7 +1361,9 @@
       level[0].toUpperCase() + level.slice(1) + " lifestyle · " + { rail: "near a station", bus: "public transport", car: "with a car" }[state.transport];
     const diff = here.total - there.total;
     $("ct-vs").innerHTML = "vs " + esc(cmpLabel) + "<b>" + (diff === 0 ? "Same" : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</b>" +
-      (diff === 0 ? "" : diff > 0 ? "more a month" : "less a month");
+      (diff === 0 ? "" : diff > 0 ? "more a month" : "less a month") + (state.shabbat ? "<br>(both include Shabbat)" : "");
+    $("sh-badge").textContent = state.shabbat ? "🕯 Shabbat adds +" + fmt(here.shabbat) + " a month" : "";
+    $("guests-nudge").textContent = state.shabbat && !state.guests ? "Add guests to include hosting" : "";
     $("allin").innerHTML = "≈ " + fmt(here.total) + "/mo all-in →";
 
     $("cost-bar").innerHTML = COST_LINES.filter(([k]) => here[k] > 0)
@@ -1470,7 +1477,11 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
   });
   $("auto-level").addEventListener("click", () => { state.level = null; persist(); render(); });
-  document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => { state.shabbat = b.dataset.shabbat === "1"; persist(); render(); }));
+  document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => {
+    const on = b.dataset.shabbat === "1", was = state.shabbat;
+    state.shabbat = on; persist(); render();
+    if (on && !was) toast(state.guests ? "Shabbat added to your costs" : "Shabbat foods add ₪" + Math.round(LD.costs.shabbat.extraPerStd) + " per person. Add guests to include hosting.");
+  }));
   document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
   $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
   $("guests-up").addEventListener("click", () => bump("guests", 1, 0, 12));
