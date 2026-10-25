@@ -1,0 +1,210 @@
+osm_id,name_en,name_he,railway,station,lat,lon,municipality,municipality_wikidata
+13341910479,,שרידים של תחנת רכבת טורקית,station,,30.9382949,34.661839,Ramat Negev Regional Council,Q195968
+2930618425,Be'er Sheva Merkaz,באר שבע מרכז,station,,31.2430764,34.7983837,Be’er-Sheva,Q41843
+621348196,Beer Sheva North - University,באר שבע צפון-אוניברסיטה,station,,31.2618954,34.8093958,Be’er-Sheva,Q41843
+3982823163,Netivot,נתיבות,station,,31.4107487,34.5717114,Netivot,Q167649
+3988591607,Ofakim,אופקים,station,,31.3215098,34.6342302,Ofakim,Q167632
+5188605493,Lehavim Rahat,להבים רהט,station,,31.3698184,34.7981649,Lehavim,Q1589806
+3130051677,Dimona,דימונה,station,,31.0689229,35.0118331,Dimona,Q152396
+4482230311,Sderot,שדרות,station,,31.515774,34.5854269,Shaar HaNegev Regional Council,Q5426900
+2930618423,Ashkelon,אשקלון,station,,31.675934,34.6044924,Ashkelon,Q60956
+2930618427,Kiryat Gat,קריית גת,station,,31.6031494,34.7779274,Kiryat Gat,Q152406
+2930618422,Ashdod–Ad Halom–Metropol,תחנת הרכבת אשדוד – עד הלום – מטרופול,station,,31.7739421,34.666238,Ashdod,Q171639
+3086081414,Yavne - East,יבנה - מזרח,station,,31.8613359,34.7438915,Yavne,Q167677
+2930618421,Yavne - West,יבנה - מערב,station,,31.8911797,34.7312217,Yavne,Q167677
+4127965809,Kiryat Mal'akhi - Yoav,קריית מלאכי - יואב,station,,31.7469145,34.8225068,Yoav Regional Council,Q690444
+3090784765,Bet Shemesh,בית שמש,station,,31.7578195,34.9893645,Beit Shemesh,Q152449
+4127965810,Mazkeret Batya,מזכרת בתיה,station,,31.8421422,34.8563066,Mazkeret Batya,Q1914736
+2930682108,Biblical Zoo,"גן החיות התנ""כי",station,,31.7448338,35.1781123,Jerusalem,Q1218
+12629197346,Ora Junction,צומת אורה,tram_stop,,31.7570436,35.159985,Jerusalem,Q1218
+12629197347,Ora Junction,צומת אורה,tram_stop,,31.7570055,35.1599914,Jerusalem,Q1218
+12629201406,Kiryat Menahem,קריית מנחם,tram_stop,,31.7600312,35.1641138,Jerusalem,Q1218
+12629201407,Kiryat Menahem,קריית מנחם,tram_stop,,31.7600102,35.1641501,Jerusalem,Q1218
+10952058061,Henrietta Szold – East,הנרייטה סאלד – מזרח,tram_stop,,31.7598058,35.1679097,Jerusalem,Q1218
+12629201403,HaMifletset Playground,גן המפלצת,tram_stop,,31.762007,35.1716007,Jerusalem,Q1218
+12629201404,HaMifletset Playground,גן המפלצת,tram_stop,,31.7619747,35.171603,Jerusalem,Q1218
+12629201405,Henrietta Szold – East,הנרייטה סאלד – מזרח,tram_stop,,31.7598443,35.1679035,Jerusalem,Q1218
+12629197348,Medical School,בית הספר לרפואה,tram_stop,,31.7641846,35.1512283,Mate Yehuda Regional Council,Q799284
+12629197349,Medical School,בית הספר לרפואה,tram_stop,,31.7641534,35.1512539,Mate Yehuda Regional Council,Q799284
+12629197350,Hadassah Ein Kerem,הדסה עין כרם,tram_stop,,31.764719,35.1476823,Jerusalem,Q1218
+12629197351,Hadassah Ein Kerem,הדסה עין כרם,tram_stop,,31.7647137,35.1476381,Jerusalem,Q1218
+12629175601,Kiryat HaYovel – West,קריית היובל – מערב,tram_stop,,31.7669553,35.1744122,Jerusalem,Q1218
+12629175602,Kiryat HaYovel – West,קריית היובל – מערב,tram_stop,,31.7669526,35.1744602,Jerusalem,Q1218
+12629146699,Shmaryahu Levin,שמריהו לוין,tram_stop,,31.7687685,35.1776751,Jerusalem,Q1218
+12629146700,Shmaryahu Levin,שמריהו לוין,tram_stop,,31.768737,35.177664,Jerusalem,Q1218
+2930682106,Jerusalem Malcha,ירושלים מלחה,station,,31.7477545,35.1882146,Jerusalem,Q1218
+14106312634,Manahat (Malha),מנחת (מלחה),tram_stop,light_rail,31.7493222,35.1853507,Jerusalem,Q1218
+14106312635,Manahat (Malha),מנחת (מלחה),tram_stop,light_rail,31.7493003,35.1852863,Jerusalem,Q1218
+14110791429,Malha Sports Complex,קרית הספורט מלחה,tram_stop,light_rail,31.7519189,35.1926272,Jerusalem,Q1218
+14110791430,Malha Sports Complex,קרית הספורט מלחה,tram_stop,light_rail,31.751973,35.1926121,Jerusalem,Q1218
+14110791431,Ha'Ayal,האייל,tram_stop,light_rail,31.7528968,35.1880155,Jerusalem,Q1218
+14110791432,Ha'Ayal,האייל,tram_stop,light_rail,31.7528417,35.1880241,Jerusalem,Q1218
+14110759300,Gonenim,גוננים,tram_stop,light_rail,31.7522173,35.1989579,Jerusalem,Q1218
+14110811601,Gonenim,גוננים,tram_stop,light_rail,31.752234,35.198921,Jerusalem,Q1218
+14113464221,Gonenim,גוננים,tram_stop,light_rail,31.752251,35.1988556,Jerusalem,Q1218
+14110823307,Pat Jct,צומת פת,tram_stop,light_rail,31.7563462,35.1981531,Jerusalem,Q1218
+14110823308,Pat Jct,צומת פת,tram_stop,light_rail,31.75633,35.1981032,Jerusalem,Q1218
+14110805877,Giv'at Mordekhay,גבעת מרדכי,tram_stop,light_rail,31.761228,35.199898,Jerusalem,Q1218
+14110805878,Giv'at Mordekhay,גבעת מרדכי,tram_stop,light_rail,31.7612152,35.1998524,Jerusalem,Q1218
+890816223,Mount Herzl,הר הרצל,tram_stop,,31.770846,35.1815915,Jerusalem,Q1218
+2134114291,Mount Herzl,הר הרצל,tram_stop,,31.7708507,35.1815544,Jerusalem,Q1218
+14110228510,Betsal'el Bazak,בצלאל בזק,tram_stop,light_rail,31.7667915,35.1965236,Jerusalem,Q1218
+14110228511,Betsal'el Bazak,בצלאל בזק,tram_stop,light_rail,31.7668047,35.1965603,Jerusalem,Q1218
+14110785637,Hebrew Park,פארק העברית,tram_stop,light_rail,31.77223,35.1961177,Jerusalem,Q1218
+14110785638,Hebrew Park,פארק העברית,tram_stop,light_rail,31.7722221,35.196073,Jerusalem,Q1218
+890816220,Yefe Nof,יפה נוף,tram_stop,,31.7769417,35.1850177,Jerusalem,Q1218
+2134169412,Yefe Nof,יפה נוף,tram_stop,,31.7769632,35.1849912,Jerusalem,Q1218
+891041025,Denya Square,כיכר דניה,tram_stop,,31.7806007,35.1883363,Jerusalem,Q1218
+2134169413,Denya Square,כיכר דניה,tram_stop,,31.7806185,35.1882993,Jerusalem,Q1218
+1467060666,HeHaluts,החלוץ,tram_stop,,31.7827796,35.1916933,Jerusalem,Q1218
+2134177168,HeHaluts,החלוץ,tram_stop,,31.7828032,35.1916922,Jerusalem,Q1218
+14110785639,Safra University Campus,קריית האוניברסיטה ספרא,tram_stop,light_rail,31.7772441,35.1953447,Jerusalem,Q1218
+14110785640,Safra University Campus,קריית האוניברסיטה ספרא,tram_stop,light_rail,31.7772496,35.1953023,Jerusalem,Q1218
+14110785641,Giv'at Ram,גבעת רם,tram_stop,light_rail,31.7807563,35.197868,Jerusalem,Q1218
+14110785642,Giv'at Ram,גבעת רם,tram_stop,light_rail,31.7807613,35.197814,Jerusalem,Q1218
+890816167,Kiryat Moshe,קריית משה,tram_stop,,31.786215,35.1981807,Jerusalem,Q1218
+2134177170,Kiryat Moshe,קריית משה,tram_stop,,31.7862381,35.198147,Jerusalem,Q1218
+7144868421,Jerusalem - Yitzhak Navon,ירושלים - יצחק נבון,station,,31.7881125,35.2027658,Jerusalem,Q1218
+14110866503,Government Complex,קריית הממשלה,tram_stop,light_rail,31.7848414,35.2006506,Jerusalem,Q1218
+14110866504,Government Complex,קריית הממשלה,tram_stop,light_rail,31.784835,35.2007051,Jerusalem,Q1218
+14110954537,Binyene Ha'Uma ICC,בנייני האומה,tram_stop,light_rail,31.7878945,35.2035707,Jerusalem,Q1218
+14110954538,Binyene Ha'Uma ICC,בנייני האומה,tram_stop,light_rail,31.7878422,35.2035648,Jerusalem,Q1218
+890816109,Mahane Yehuda,מחנה יהודה,tram_stop,,31.7860265,35.2114182,Jerusalem,Q1218
+890816122,HaTurim,הטורים,tram_stop,,31.7879525,35.2068105,Jerusalem,Q1218
+1950512653,Mahane Yehuda,מחנה יהודה,tram_stop,,31.785991,35.2114149,Jerusalem,Q1218
+2134177169,HaTurim,הטורים,tram_stop,,31.7878838,35.2067528,Jerusalem,Q1218
+890816082,Jaffa – Center,יפו – מרכז,tram_stop,,31.7828704,35.218372,Jerusalem,Q1218
+890816085,HaDavidka,הדוידקה,tram_stop,,31.7845796,35.2152096,Jerusalem,Q1218
+1950512692,Jaffa – Center,יפו – מרכז,tram_stop,,31.782843,35.2183438,Jerusalem,Q1218
+2134183946,HaDavidka,הדוידקה,tram_stop,,31.7845535,35.2151779,Jerusalem,Q1218
+1803044365,City Hall,העירייה,tram_stop,,31.7796949,35.2238727,Jerusalem,Q1218
+5219680314,City Hall,העירייה,tram_stop,,31.7796668,35.2238431,Jerusalem,Q1218
+890816042,Shivtei Israel,שבטי ישראל,tram_stop,,31.7865394,35.2271748,Jerusalem,Q1218
+1405968969,Damascus Gate,שער שכם,tram_stop,,31.7824763,35.2278185,Jerusalem,Q1218
+1953146680,Damascus Gate,שער שכם,tram_stop,,31.7824901,35.227859,Jerusalem,Q1218
+2145419443,Shivtei Israel,שבטי ישראל,tram_stop,,31.7865337,35.2270768,Jerusalem,Q1218
+890816142,Central Station,תחנה מרכזית,tram_stop,,31.7884843,35.2025579,Jerusalem,Q1218
+1950480962,Central Station,תחנה מרכזית,tram_stop,,31.7884387,35.2025391,Jerusalem,Q1218
+891711983,Shim'on HaTsadik,שמעון הצדיק,tram_stop,,31.7930439,35.2263142,Jerusalem,Q1218
+2145419442,Shim'on HaTsadik,שמעון הצדיק,tram_stop,,31.7930415,35.2263537,Jerusalem,Q1218
+891017311,Ammunition Hill,גבעת התחמושת,tram_stop,,31.7991518,35.2320775,Jerusalem,Q1218
+1954717289,Ammunition Hill,גבעת התחמושת,tram_stop,,31.79917,35.2320451,Jerusalem,Q1218
+1464783365,Shu'afat,שועפאט,tram_stop,,31.8143818,35.2298934,Jerusalem,Q1218
+2146431601,Shu'afat,שועפאט,tram_stop,,31.8143228,35.2298495,Jerusalem,Q1218
+1467060695,Beit Hanina,בית חנינא,tram_stop,,31.8197736,35.2290747,Jerusalem,Q1218
+1957344810,Beit Hanina,בית חנינא,tram_stop,,31.8197293,35.2290738,Jerusalem,Q1218
+3566973254,Rechovot,"רחובות (ע""ש אהוד הדר)",station,,31.9091027,34.8069084,Rehovot,Q207350
+1848311111,,,station,,31.978208,34.743843,Rishon LeZion,Q201051
+2930618420,Rishon LeTsiyyon - Moshe Dayan,ראשון לציון - משה דיין,station,,31.9876999,34.7572847,Rishon LeZion,Q201051
+609582810,Rishon LeTsiyyon HaRishonim,ראשון לציון הראשונים,station,,31.948854,34.8030803,Rishon LeZion,Q201051
+11125350010,HaKomemiyut,הקוממיות,station,light_rail,32.0022588,34.7467523,Bat Yam,Q208725
+2930618419,Bat Yam - Komemiyyut,בת ים - קוממיות,station,,32.0008316,34.7593469,Holon,Q192213
+11125350011,HeAmal,העמל,station,light_rail,32.0058745,34.7489869,Bat Yam,Q208725
+11125350016,Kaf Tet BeNovember,"כ""ט בנובמבר",station,light_rail,32.0108317,34.7514884,Bat Yam,Q208725
+11125350025,Balfour,בלפור,station,light_rail,32.0174591,34.7447273,Bat Yam,Q208725
+11133645857,Jabotinsky,ז'בוטינסקי,station,light_rail,32.021706,34.74322,Bat Yam,Q208725
+11125350021,Yoseftal,יוספטל,station,light_rail,32.01539,34.7521506,Bat Yam,Q208725
+11125350024,Binyamin,בנימין,station,light_rail,32.0164126,34.7483364,Bat Yam,Q208725
+11133645854,Rothschild,רוטשילד,station,light_rail,32.0267279,34.7444659,Bat Yam,Q208725
+11125454962,HaAtzma'ut,העצמאות,station,light_rail,32.0281653,34.7489727,Bat Yam,Q208725
+11125454967,Mahrozet,מחרוזת,station,light_rail,32.0335751,34.751653,Tel-Aviv,Q33935
+3978658306,Holon - Wolfson,חולון - וולפסון,station,,32.0353136,34.7596909,Holon,Q192213
+11125454970,HaBesht,"הבעש""ט",station,light_rail,32.0387216,34.7558374,Tel-Aviv,Q33935
+11125454973,Isakov,איסקוב,station,light_rail,32.0421438,34.7570772,Tel-Aviv,Q33935
+11125454976,Ehrlich,ארליך,station,light_rail,32.0460687,34.7583647,Tel-Aviv,Q33935
+11132682253,Bloomfield Stadium,אצטדיון בלומפילד,station,light_rail,32.050258,34.7589515,Tel-Aviv,Q33935
+2930618418,Bat Yam - Yoseftal,בת ים - יוספטל,station,,32.0146109,34.7619817,Holon,Q192213
+3978658307,Holon Junction,צומת חולון,station,,32.0370402,34.7764147,Tel-Aviv,Q33935
+11132682256,Shalma,שלמה,station,light_rail,32.0544983,34.7595214,Tel-Aviv,Q33935
+11133645848,Elifelet,אליפלט,station,light_rail,32.058341,34.7627699,Tel-Aviv,Q33935
+3978658308,Tel Aviv - HaHagana,תל אביב - ההגנה,station,,32.0541496,34.7848015,Tel-Aviv,Q33935
+11124763767,Allenby,אלנבי,station,light_rail,32.0627053,34.7748797,Tel-Aviv,Q33935
+11133775525,Carlebach,קרליבך,station,light_rail,32.0655922,34.7832245,Tel-Aviv,Q33935
+11124781758,Yehudit,יהודית,station,light_rail,32.0703643,34.7886062,Tel-Aviv,Q33935
+2930618403,Tel Aviv Hashalom,תל אביב השלום,station,,32.0735594,34.7931642,Tel-Aviv,Q33935
+11124793538,Shaul HaMelech,שאול המלך,station,light_rail,32.0769175,34.7921548,Tel-Aviv,Q33935
+11124786622,Arlozoroff,ארלוזורוב,station,light_rail,32.081565,34.7965082,Tel-Aviv,Q33935
+2930618402,Tel Aviv Savidor Center,תל אביב סבידור מרכז,station,,32.0842437,34.7983117,Tel-Aviv,Q33935
+11133775519,Abba Hillel,אבא הלל,station,light_rail,32.0829046,34.8030338,Ramat Gan,Q192807
+11124798243,Bialik,ביאליק,station,light_rail,32.0867743,34.8120485,Ramat Gan,Q192807
+2930618401,Tel Aviv University,תל אביב אוניברסיטה,station,,32.1037064,34.8046101,Tel-Aviv,Q33935
+4903319585,Be'er Ya'akov,באר יעקב,station,,31.9324623,34.8305707,Beer Yaakov,Q2640170
+4060304995,Ramla,רמלה,station,,31.9292206,34.8767285,Ramla,Q221447
+461613375,Kfar Chabad,"כפר חב""ד",station,,31.9928956,34.8533234,Sdot Dan Regional Council,Q2305374
+4590837774,Lod,לוד,station,,31.9476434,34.8782183,Lod,Q207540
+3982698630,Lod - Gane Aviv,לוד - גני אביב,station,,31.9670281,34.8786797,Lod,Q207540
+2931455068,Pa'atai Modi'in,פאתי מודיעין,station,,31.8931196,34.9606982,Modiin-Maccabim-Reut,Q165867
+2931455067,Modi'in Center,מודיעין מרכז,station,,31.9010673,35.0057522,Modiin-Maccabim-Reut,Q165867
+3982712778,Ben Gurion Airport,נמל תעופה בן גוריון,station,,32.0004041,34.8704796,,
+11133775515,Ben Gurion,בן גוריון,station,light_rail,32.0909203,34.8233946,Bnei Brak,Q152467
+11133775512,Aharonovich,אהרונוביץ',station,light_rail,32.0927075,34.8381346,Bnei Brak,Q152467
+11125457547,Em HaMoshavot Bridge,גשר אם המושבות,station,light_rail,32.0988788,34.846268,Bnei Brak,Q152467
+11124725534,Shenkar,שנקר,station,light_rail,32.0926625,34.8533047,Petah Tikva,Q190828
+11124725530,Shaham,שחם,station,light_rail,32.0919406,34.861398,Petah Tikva,Q190828
+11124762412,Beilinson,בילינסון,station,light_rail,32.0914569,34.8667497,Petah Tikva,Q190828
+11124725529,Dankner,דנקנר,station,light_rail,32.0909542,34.872384,Petah Tikva,Q190828
+11124762409,Krol,קרול,station,light_rail,32.0919053,34.877512,Petah Tikva,Q190828
+11124762405,Pinsker,פינסקר,station,light_rail,32.0937354,34.8821238,Petah Tikva,Q190828
+11124762408,Petah Tikva CBS,תחנה מרכזית פתח תקווה,station,light_rail,32.0946492,34.8863929,Petah Tikva,Q190828
+3712563183,Bnei Brak–Ramat HaHayal,בני ברק – רמת החייל,station,,32.1028916,34.8305499,Bnei Brak,Q152467
+2930682112,Petah Tikva–Kiryat Aryeh,פתח תקווה - קריית אריה,station,,32.1062501,34.8628355,Petah Tikva,Q190828
+11125457549,Kiryat Aryeh light rail station,תחנה רכבת קלה - קריית אריה,station,light_rail,32.1064019,34.8626727,Petah Tikva,Q190828
+2930682113,Petah Tikva Segula,פתח תקווה – סגולה,station,,32.1118889,34.9010315,Petah Tikva,Q190828
+2914229359,Herzelia,הרצליה,station,,32.1639806,34.8175864,Herzliya,Q152491
+11264520000,Ra'anana West,רעננה מערב,station,,32.1799825,34.8508381,Herzliya,Q152491
+5705790741,Ra'anana South,רעננה – דרום,station,,32.1726542,34.8866033,Raanana,Q309164
+3982780858,Kfar Sava-Nordau (A.Kostyuk),כפר סבא-נורדאו,station,,32.1674727,34.9167978,Hod HaSharon,Q152379
+3982765958,Hod HaSharon - Sokolov,הוד השרון - סוקולוב,station,,32.1700045,34.9020123,Hod HaSharon,Q152379
+2930682115,Rosh Ha'Ayin-North,ראש העין - צפון,station,,32.120636,34.9344635,Drom HaSharon Regional Council,Q2249100
+2930618406,Beit Yehoshua,בית יהושע,station,,32.2626037,34.860233,Hof HaSharon Regional Council,Q389568
+4482054540,Netanya Sapir,נתניה – ספיר,station,,32.2796735,34.865508,Netanya,Q192225
+13964778722,Tira - Kokhav Ya'ir,טירה - כוכב יאיר,station,,32.2296621,34.9770135,Tira,Q167594
+13626956323,Shomron – Tayyiba,שומרון - טייבה,station,,32.2763367,34.9966016,Taibe,Q1022481
+3703591031,Netanya,נתניה,station,,32.3199544,34.8693256,Netanya,Q192225
+2906198781,Hadera West,חדרה מערב,station,,32.4383796,34.899335,Hadera,Q471886
+4528124569,Hadera East,חדרה מזרח,station,,32.4438302,34.9513175,Hadera,Q471886
+3703588164,Caesarea-Pardes Hana,קיסריה-פרדס חנה,station,,32.4852609,34.95417,Pardes Hana - Karkur,Q2475182
+4590837775,Binyamina,בנימינה,station,,32.5145534,34.9496293,Binyamina - Givat Ada,Q863890
+3988544984,Atlit,עתלית,station,,32.6927638,34.9402221,Hof HaCarmel Regional Council,Q1915911
+4440447731,Yokneam – Kfar Yehoshua,יקנעם - כפר יהושע,station,,32.6810411,35.125769,Jezreel Valley Regional Council,Q795067
+4440447730,Migdal HaEmek – Kfar Baruch,מגדל העמק - כפר ברוך,station,,32.6472074,35.2094541,Jezreel Valley Regional Council,Q795067
+2923878193,Haifa-Hof HaCarmel (Raziel),חיפה-חוף הכרמל (ע״ש רזיאל),station,,32.7935137,34.957457,Haifa,Q41621
+615947115,Carmel Center,מרכז הכרמל,station,funicular,32.8046778,34.9879087,Haifa,Q41621
+616484212,Masada,מסדה,station,funicular,32.8096602,34.9923834,Haifa,Q41621
+616484913,Bney Zion Hospital,"בי""ח בני ציון",station,funicular,32.8075717,34.9904997,Haifa,Q41621
+3729320319,HaNevi'im,הנביאים,station,funicular,32.8126212,34.9950428,Haifa,Q41621
+2930618410,Haifa Bat Galim,חיפה בת גלים,station,,32.8303401,34.9817594,Haifa,Q41621
+4208581362,Hadar – City Hall,הדר עירייה,station,funicular,32.8146561,34.9973112,Haifa,Q41621
+429882321,Haifa Center HaShmona,חיפה מרכז השמונה,station,,32.8223019,34.9973626,Haifa,Q41621
+616484210,Downtown,עיר תחתית,station,funicular,32.8174901,34.9997313,Haifa,Q41621
+4612295142,HaMifrats Central Station - HaEmek Line,מרכזית המפרץ - קו העמק,station,,32.7928083,35.0331437,Haifa,Q41621
+2930618411,HaMifrats Central Station,מרכזית המפרץ - קו החוף,station,,32.7938923,35.0370881,Haifa,Q41621
+2930618412,Hutzot Hamifratz,חוצות המפרץ,station,,32.8094005,35.0544169,Haifa,Q41621
+2930618413,Kiryat Haim,קרית חיים,station,,32.8248135,35.0642744,Haifa,Q41621
+2930618414,Kiryat Motzkin,קרית מוצקין,station,,32.8329575,35.0699238,Haifa,Q41621
+2930618415,Acre,עכו,station,,32.9281903,35.0830583,Acre,Q126084
+5082642028,Ahihud,אחיהוד,station,,32.9117258,35.1734392,Misgav Regional Council,Q1965822
+5202426525,Nahariya,נהריה,station,,33.0049493,35.0988288,Nahariah,Q167749
+1107348918,Giv'at HaMivtar,גבעת המבתר,tram_stop,,31.8054888,35.2342988,Jerusalem,Q1218
+1954751942,Giv'at HaMivtar,גבעת המבתר,tram_stop,,31.8054747,35.2342494,Jerusalem,Q1218
+1464782846,A-Sahal,א־סהל,tram_stop,,31.8112045,35.2328148,Jerusalem,Q1218
+2146431598,A-Sahal,א־סהל,tram_stop,,31.8111507,35.2327719,Jerusalem,Q1218
+1464782885,Yekutiel Adam,יקותיאל אדם,tram_stop,,31.8193053,35.2393084,Jerusalem,Q1218
+2146426244,Yekutiel Adam,יקותיאל אדם,tram_stop,,31.8193409,35.2392968,Jerusalem,Q1218
+1464782840,Pisgat Ze'ev – Center,פסגת זאב – מרכז,tram_stop,,31.8237567,35.2376034,Jerusalem,Q1218
+1957355924,Pisgat Ze'ev – Center,פסגת זאב – מרכז,tram_stop,,31.8237435,35.2376447,Jerusalem,Q1218
+1464782855,Sayeret Dukhifat,סיירת דוכיפת,tram_stop,,31.8260936,35.2402405,Jerusalem,Q1218
+2146431600,Sayeret Dukhifat,סיירת דוכיפת,tram_stop,,31.826109,35.2402008,Jerusalem,Q1218
+1464782839,Hel Ha'Avir,חיל האוויר,tram_stop,,31.8289858,35.2384121,Jerusalem,Q1218
+2146431599,Hel Ha'Avir,חיל האוויר,tram_stop,,31.8289183,35.2383939,Jerusalem,Q1218
+12629134304,Moshe Dayan – North,משה דיין – צפון,tram_stop,,31.8334422,35.2346646,Jerusalem,Q1218
+12629134305,Moshe Dayan – North,משה דיין – צפון,tram_stop,,31.8334411,35.2347061,Jerusalem,Q1218
+12629110575,Mazal Kashat,מזל קשת,tram_stop,,31.8372735,35.2341895,Jerusalem,Q1218
+12629110576,Mazal Kashat,מזל קשת,tram_stop,,31.837288,35.2341204,Jerusalem,Q1218
+12629110577,Yitzhak Tabenkin,יצחק טבנקין,tram_stop,,31.8380832,35.2373906,Jerusalem,Q1218
+12629110578,Yitzhak Tabenkin,יצחק טבנקין,tram_stop,,31.8381447,35.2373967,Jerusalem,Q1218
+12629134302,Neve Ya'akov – North,נווה יעקב – צפון,tram_stop,,31.8409811,35.2402018,Jerusalem,Q1218
+12629134303,Neve Ya'akov – North,נווה יעקב – צפון,tram_stop,,31.8409775,35.2402462,Jerusalem,Q1218
+4440444254,Beit Shean,בית שאן,station,,32.5150047,35.488526,Beit Shean,Q152368
+4440444255,Afula,"עפולה (ע""ש רפאל איתן)",station,,32.6215632,35.2952264,Afula,Q152462
+2942466195,Karmiel,כרמיאל,station,,32.9239174,35.2971355,Karmiel,Q152418

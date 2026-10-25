@@ -92,9 +92,21 @@
   }
   .f-box:focus-within { border-color: var(--primary); background: var(--surface); }
   .f-box > label, .f-box > .f-label { font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
-  .f-area { flex: 1 1 230px; }
-  .f-area select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; width: 100%; cursor: pointer; }
-  .f-area select:focus { outline: none; }
+  .f-area { flex: 1 1 260px; position: relative; }
+  .f-area input { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; width: 100%; }
+  .f-area input:focus { outline: none; }
+  .f-area input::placeholder { color: var(--ink-3); font-weight: 500; }
+  .combo-list {
+    position: absolute; left: -2px; right: -2px; top: calc(100% + 6px); z-index: 1200; margin: 0; padding: 6px; list-style: none;
+    background: var(--surface); border-radius: 12px; box-shadow: var(--shadow-md); border: 1px solid var(--line); max-height: 340px; overflow-y: auto;
+  }
+  .combo-list li { padding: 8px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .combo-list li[aria-selected="true"], .combo-list li:hover { background: var(--primary-soft); }
+  .combo-list li b { font-weight: 700; }
+  .combo-list li span { font-size: 12px; color: var(--ink-3); text-align: right; }
+  .combo-list li.empty { cursor: default; color: var(--ink-3); background: none; }
+  .f-transport select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; cursor: pointer; }
+  .f-transport select:focus { outline: none; }
   .stepper { display: flex; align-items: center; gap: 10px; }
   .stepper button {
     width: 28px; height: 28px; border-radius: 50%; border: 0; cursor: pointer;
@@ -126,6 +138,9 @@
     padding: 7px 12px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px;
   }
   .map-legend .sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .map-legend button { pointer-events: auto; border: 0; background: var(--surface); border-radius: 999px; box-shadow: var(--shadow-md);
+    padding: 7px 12px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .map-legend button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
   .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); padding: 24px; text-align: center; }
 
   .list-inner { padding: 20px 20px 40px; max-width: 900px; margin: 0 auto; }
@@ -180,6 +195,12 @@
   .tier .t-range { font-size: 13px; color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
   .tier .t-desc { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; padding-right: 54px; }
 
+  .hero-adj { margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
+  .hero-adj:empty { display: none; }
+  .hero-adj i { font-style: normal; font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--teal-soft); color: var(--teal); }
+  .allin { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 999px;
+           background: var(--accent-soft); color: var(--accent); border: 0; cursor: pointer; }
+  .price-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
   .verdict { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-size: 14.5px; display: flex; gap: 10px; align-items: flex-start; }
   .verdict svg { flex: none; width: 22px; height: 22px; margin-top: 1px; stroke: var(--primary); }
   .verdict[hidden] { display: none; }
@@ -244,6 +265,41 @@
   .site strong { display: block; font-size: 15px; }
   .site .domain { font-size: 12px; color: var(--ink-3); font-weight: 600; }
   .site p { margin: 3px 0 0; font-size: 13px; color: var(--ink-2); }
+  /* cost of living */
+  .cost-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .cc { background: var(--surface-2); border-radius: 12px; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+  .cc > span { font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .cc select { border: 0; background: transparent; font-weight: 700; cursor: pointer; padding: 0; }
+  .seg { display: inline-flex; background: var(--surface); border-radius: 10px; padding: 3px; gap: 2px; }
+  .seg button { border: 0; background: transparent; border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink-2); }
+  .seg button[aria-pressed="true"] { background: var(--primary); color: #fff; }
+  .seg button[data-level="budget"][aria-pressed="true"] { background: var(--teal); }
+  .seg button[data-level="luxury"][aria-pressed="true"] { background: var(--accent); }
+  .cost-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; padding: 16px; border-radius: 14px;
+               background: linear-gradient(120deg, var(--primary) 0%, #9b5cff 55%, var(--accent) 100%); color: #fff; }
+  .cost-head .lbl { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+  .cost-head .amt { font-size: clamp(30px, 4.6vw, 40px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .cost-head .amt small { font-size: 15px; font-weight: 600; opacity: .85; }
+  .cost-head .sub { font-size: 13px; opacity: .9; margin-top: 2px; }
+  .cost-head .vs { text-align: right; font-size: 13px; font-weight: 600; }
+  .cost-head .vs b { display: block; font-size: 20px; font-weight: 800; }
+  .cost-bar { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 14px 0 6px; gap: 2px; background: var(--surface-2); }
+  .cost-bar i { display: block; height: 100%; }
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+  .cost-table th { text-align: right; font-size: 11px; font-weight: 800; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; padding: 6px 0 6px 8px; border-bottom: 2px solid var(--line); }
+  .cost-table th:first-child { text-align: left; padding-left: 0; }
+  .cost-table td { padding: 9px 0 9px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  .cost-table td:first-child { text-align: left; padding-left: 0; white-space: normal; font-weight: 600; }
+  .cost-table td:first-child small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; }
+  .cost-table .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 0; }
+  .cost-table .more { color: #b4235a; }
+  .cost-table .less { color: var(--teal); }
+  .cost-table .muted { color: var(--ink-3); font-weight: 600; }
+  .cost-table tfoot td { border-bottom: 0; font-size: 15px; font-weight: 800; padding-top: 12px; }
+  @media (max-width: 560px) { .cost-table .colb { display: none; } }
+  .l-allin { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--accent); }
+  .l-transit { color: var(--ink-2); }
+
   .method-body p, .method-body li { color: var(--ink-2); font-size: 14px; }
   .method-body a { color: var(--primary); }
 
@@ -303,6 +359,7 @@
   .pin.over { background: var(--over); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
   .pin.est { background: var(--sun); color: #3a2a00; }
   .pin.hover { transform: translate(-50%, -100%) scale(1.12); }
+  .stn { border-radius: 50%; }
   .pin.selected { background: var(--accent); transform: translate(-50%, -100%) scale(1.22); box-shadow: 0 4px 16px rgba(255,61,139,.5); }
   .leaflet-container { font-family: "Plus Jakarta Sans", sans-serif; }
   .osm-tiles { filter: saturate(1.15); }
@@ -363,7 +420,9 @@
   <div class="filters" role="search" aria-label="Your search">
     <div class="f-box f-area">
       <label for="area">Where</label>
-      <select id="area"></select>
+      <input id="area" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="area-list"
+             autocomplete="off" spellcheck="false" placeholder="Type a city, e.g. Herzliya or הרצליה">
+      <ul class="combo-list" id="area-list" role="listbox" aria-label="Matching places" hidden></ul>
     </div>
     <div class="f-box f-rooms">
       <span class="f-label" id="rooms-label">Rooms</span>
@@ -373,6 +432,14 @@
         <button type="button" id="rooms-up" aria-label="More rooms">+</button>
         <small id="rooms-hint"></small>
       </div>
+    </div>
+    <div class="f-box f-transport">
+      <label for="transport">Transport</label>
+      <select id="transport">
+        <option value="rail">Walk to train / light rail</option>
+        <option value="bus">Bus is fine</option>
+        <option value="car">I'll drive</option>
+      </select>
     </div>
     <div class="f-box f-budget">
       <label for="budget">Max budget / month</label>
@@ -389,8 +456,12 @@
       <article class="hero" aria-live="polite">
         <div class="hero-media" id="hero-media"></div>
         <div class="hero-body">
-          <div class="hero-price" id="hero-price"></div>
+          <div class="price-row">
+            <div class="hero-price" id="hero-price"></div>
+            <button type="button" class="allin" id="allin" aria-controls="cost-panel"></button>
+          </div>
           <div class="hero-addr" id="hero-addr"></div>
+          <div class="hero-adj" id="hero-adj"></div>
           <div class="metrics" id="metrics"></div>
 
           <div class="tiers">
@@ -438,6 +509,38 @@
         </div>
       </article>
 
+      <details class="panel" id="cost-panel" open>
+        <summary>
+          <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18M7 6V4h10v2"/></svg></span>
+          <span><span id="cost-title">What it will really cost</span><small>Rent plus everyday living costs for your household</small></span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="panel-body">
+          <div class="cost-controls">
+            <div class="cc"><span id="adults-label">Adults</span>
+              <div class="stepper" role="group" aria-labelledby="adults-label"><button type="button" id="adults-down" aria-label="Fewer adults">&minus;</button><output id="adults-value">1</output><button type="button" id="adults-up" aria-label="More adults">+</button></div></div>
+            <div class="cc"><span id="kids-label">Children</span>
+              <div class="stepper" role="group" aria-labelledby="kids-label"><button type="button" id="kids-down" aria-label="Fewer children">&minus;</button><output id="kids-value">0</output><button type="button" id="kids-up" aria-label="More children">+</button></div></div>
+            <div class="cc"><span id="level-label">Lifestyle</span>
+              <div class="seg" role="group" aria-labelledby="level-label">
+                <button type="button" data-level="budget">Budget</button><button type="button" data-level="comfortable">Comfortable</button><button type="button" data-level="luxury">Luxury</button>
+              </div></div>
+            <div class="cc"><span><label for="compare">Compare with</label></span><select id="compare"></select></div>
+          </div>
+          <div class="cost-head">
+            <div><div class="lbl">Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div></div>
+            <div class="vs" id="ct-vs"></div>
+          </div>
+          <div class="cost-bar" id="cost-bar" aria-hidden="true"></div>
+          <table class="cost-table">
+            <thead><tr><th>Monthly cost</th><th id="col-a"></th><th class="colb" id="col-b"></th><th>Difference</th></tr></thead>
+            <tbody id="cost-rows"></tbody>
+            <tfoot><tr id="cost-foot"></tr></tfoot>
+          </table>
+          <p class="tip" id="cost-note"></p>
+        </div>
+      </details>
+
       <details class="panel" open>
         <summary>
           <span class="ico" style="background:var(--primary-soft);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
@@ -481,6 +584,8 @@
             <option value="price-desc">Price: high to low</option>
             <option value="price-asc">Price: low to high</option>
             <option value="growth">Fastest rising</option>
+            <option value="transit">Best public transport</option>
+            <option value="total">Lowest total cost</option>
             <option value="saved">Saved first</option>
           </select>
         </label>
@@ -504,13 +609,15 @@
           </ul>
           <p>Rents vary a lot within a city, so check real listings in the neighbourhoods you like. Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band runs from 4.5 rooms to large penthouses, so treat it as a rough guide. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). Those are estimated from the city's 2.5-3 room rent and its district's price ratio.</p>
           <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ.</p>
-          <p>Prices exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
+          <p><strong>Public transport.</strong> Station counts are train stations, light-rail stops and Haifa's Carmelit underground stations inside each city's boundary, from OpenStreetMap. Stations named after a city but just over its border (such as Kfar Saba–Nordau) count for that city. There's no official Israeli data on how rents change near stations. Studies of <em>sale</em> prices find homes near Tel Aviv's light rail rose faster (<a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Globes</a>), so the transport choice applies a rule of thumb: about +5% rent within walking distance of a station, and about −5% further out if you drive.</p>
+          <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Cities use their own sub-district (Herzliya uses Tel Aviv's, Ra'anana and Kfar Saba use Sharon's), and other towns use their district. Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
+          <p>Rent figures exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities, which the cost breakdown adds separately.</p>
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
       </details>
 
       <footer>
-        Data: Israel Central Bureau of Statistics, Price Statistics Monthly, Table 4.9. Map © OpenStreetMap contributors.
+        Data: Israel Central Bureau of Statistics (Price Statistics Monthly Table 4.9; Household Expenditure Survey 2021). Map and stations © OpenStreetMap contributors.
         Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
       </footer>
     </div>
@@ -523,6 +630,7 @@
       <div><span class="sw" style="background:var(--primary)"></span>City</div>
       <div><span class="sw" style="background:var(--accent)"></span>Selected</div>
       <div id="legend-over" hidden><span class="sw" style="background:var(--over)"></span>Over budget</div>
+      <button type="button" id="stations-btn" aria-pressed="false">🚆 Train &amp; light rail</button>
     </div>
   </aside>
 </main>
@@ -533,13 +641,15 @@
 </button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="rent-data.js?v=2026q2-5"></script>
+<script src="rent-data.js?v=2026q2-6"></script>
+<script src="living-data.js?v=1"></script>
 <script src="city-media.js?v=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
   const D = window.RENT_DATA;
   const M = window.CITY_MEDIA;
+  const LD = window.LIVING_DATA;
   const TIERS = {
     budget:      { mid: 0.80, lo: 0.70, hi: 0.90 },
     comfortable: { mid: 1.00, lo: 0.90, hi: 1.15 },
@@ -574,31 +684,146 @@
     rooms: saved.rooms >= MIN_ROOMS && saved.rooms <= MAX_ROOMS ? saved.rooms : 3,
     budget: saved.budget > 0 ? saved.budget : null,
     noLimit: saved.noLimit === true,
-    sort: ["price-desc", "price-asc", "growth", "saved"].includes(saved.sort) ? saved.sort : "price-desc",
-    favs: Array.isArray(saved.favs) ? saved.favs.filter((n) => byName[n]) : []
+    sort: ["price-desc", "price-asc", "growth", "saved", "transit", "total"].includes(saved.sort) ? saved.sort : "price-desc",
+    favs: Array.isArray(saved.favs) ? saved.favs.filter((n) => byName[n]) : [],
+    town: LD.costs.otherTowns[saved.town] ? saved.town : null,      // a typed town CBS has no rent for
+    transport: ["rail", "bus", "car"].includes(saved.transport) ? saved.transport : "bus",
+    adults: saved.adults >= 1 && saved.adults <= 4 ? saved.adults : 1,
+    kids: saved.kids >= 0 && saved.kids <= 5 ? saved.kids : 0,
+    level: ["budget", "comfortable", "luxury"].includes(saved.level) ? saved.level : null,
+    compare: byName[saved.compare] ? saved.compare : "Israel",
+    showStations: saved.showStations === true
   };
+  if (state.town) state.area = LD.costs.otherTowns[state.town];
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
   const effBudget = () => (state.noLimit ? null : state.budget);
 
-  // ---- Area picker, grouped by district ----
-  const sel = $("area");
-  const districts = [...new Set(cities.map((c) => c.district))].sort();
-  for (const d of districts) {
-    const g = document.createElement("optgroup");
-    g.label = d;
-    cities.filter((c) => c.district === d).forEach((c) => g.append(new Option(c.name, c.name)));
-    g.append(new Option("Elsewhere in " + d, d));
-    sel.append(g);
+  // ---- Typeable place search ----
+  // Everything a person might type: big cities (English or Hebrew), districts,
+  // Israel, and other towns that fall back to their district's figures
+  const norm = (t) => String(t).toLowerCase().replace(/[\u2019'`\-\s.]/g, "");
+  const places = [
+    ...cities.map((c) => ({ label: c.name, sub: c.district + (c.hebrew ? " · " + c.hebrew : ""), area: c.name, town: null, keys: [c.name, c.hebrew || ""] })),
+    ...D.areas.filter((a) => a.type === "District").map((a) => ({ label: a.name, sub: "Whole district average", area: a.name, town: null, keys: [a.name] })),
+    { label: "Israel", sub: "National average", area: "Israel", town: null, keys: ["Israel", "ישראל", "national"] },
+    ...Object.entries(LD.costs.otherTowns).map(([t, d]) => ({ label: t, sub: d + " · district estimate", area: d, town: t, keys: [t] }))
+  ];
+  const areaInput = $("area"), areaList = $("area-list");
+  let matches = [], active = -1;
+  const placeLabel = () => state.town || (state.area === "Israel" ? "Israel (national average)" : state.area);
+  function searchPlaces(q) {
+    const n = norm(q);
+    if (!n) return places.filter((p) => !p.town && cities.some((c) => c.name === p.area)).slice(0, 8);
+    const starts = [], contains = [];
+    for (const p of places) {
+      const ks = p.keys.map(norm);
+      if (ks.some((k) => k.startsWith(n))) starts.push(p); else if (ks.some((k) => k.includes(n))) contains.push(p);
+    }
+    return [...starts, ...contains].slice(0, 8);
   }
-  const other = document.createElement("optgroup");
-  other.label = "Other";
-  D.areas.filter((a) => a.type === "District" && !districts.includes(a.name))
-    .forEach((a) => other.append(new Option(a.name.replace(" District", "") + " (whole district)", a.name)));
-  other.append(new Option("Israel average", "Israel"));
-  sel.append(other);
+  function openList(q) {
+    matches = searchPlaces(q); active = matches.length ? 0 : -1;
+    areaList.innerHTML = matches.length
+      ? matches.map((p, i) => '<li role="option" id="opt-' + i + '" data-i="' + i + '" aria-selected="' + (i === active) + '"><b>' + esc(p.label) + "</b><span>" + esc(p.sub) + "</span></li>").join("")
+      : '<li class="empty" role="option" aria-disabled="true">No match. Try the nearest big city or pick its district.</li>';
+    areaList.hidden = false; areaInput.setAttribute("aria-expanded", "true");
+    areaInput.setAttribute("aria-activedescendant", active >= 0 ? "opt-" + active : "");
+  }
+  function closeList() { areaList.hidden = true; areaInput.setAttribute("aria-expanded", "false"); areaInput.removeAttribute("aria-activedescendant"); }
+  function choose(p) {
+    closeList();
+    state.town = p.town;
+    select(p.area, { keepTown: true });
+    areaInput.value = placeLabel();
+    areaInput.blur();
+  }
+  function moveActive(d) {
+    if (!matches.length) return;
+    active = (active + d + matches.length) % matches.length;
+    areaList.querySelectorAll("li").forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+    areaInput.setAttribute("aria-activedescendant", "opt-" + active);
+    const li = areaList.querySelector("#opt-" + active); if (li) li.scrollIntoView({ block: "nearest" });
+  }
+  areaInput.addEventListener("focus", () => { areaInput.select(); openList(""); });
+  areaInput.addEventListener("input", () => openList(areaInput.value));
+  areaInput.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); if (areaList.hidden) openList(areaInput.value); else moveActive(1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); moveActive(-1); }
+    else if (e.key === "Enter") { e.preventDefault(); if (active >= 0 && matches[active]) choose(matches[active]); }
+    else if (e.key === "Escape") { closeList(); areaInput.value = placeLabel(); areaInput.blur(); }
+  });
+  areaInput.addEventListener("blur", () => setTimeout(() => { closeList(); areaInput.value = placeLabel(); }, 150));
+  areaList.addEventListener("mousedown", (e) => {
+    const li = e.target.closest("li[data-i]");
+    if (li) { e.preventDefault(); choose(matches[+li.dataset.i]); }
+  });
 
   $("data-chip").textContent = "Official CBS data · " + quarterLabel(D.quarter);
   $("m-quarter").textContent = quarterLabel(D.quarter);
+
+  // ---- Public transport ----
+  const RENT_ADJ = { rail: 0.05, bus: 0, car: -0.05 };   // rule of thumb, see "How the estimates work"
+  const transitOf = (name) => LD.transit[name] || null;
+  const stopCount = (t) => (t ? t.train + t.lightRail + t.metro : 0);
+  function transitText(t, long) {
+    if (!t) return "";
+    const parts = [];
+    if (t.train) parts.push((long ? "<b>" + t.train + "</b> train" : "🚆 " + t.train));
+    if (t.lightRail) parts.push((long ? "<b>" + t.lightRail + "</b> light rail" : "🚊 " + t.lightRail));
+    if (t.metro) parts.push((long ? "<b>" + t.metro + "</b> Carmelit" : "🚇 " + t.metro));
+    return parts.join(long ? " · " : " ");
+  }
+
+  // ---- Cost of living model ----
+  const STD_PERSONS = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6];   // CBS equivalence scale
+  const LIFESTYLE = { budget: 0.75, comfortable: 1, luxury: 1.5 };           // applied to eating out, leisure, clothing
+  const COST_LINES = [
+    ["rent", "Rent", "#6c3cf0"],
+    ["arnona", "Arnona (municipal tax)", "#9b7bff"],
+    ["utilities", "Bills: electricity, water, gas, phone", "#c3b1ff"],
+    ["groceries", "Groceries", "#0fb5a6"],
+    ["eating_out", "Eating out & takeaway", "#ff3d8b"],
+    ["transport", "Transport", "#ffc83d"],
+    ["education", "Education", "#4a1fc4"],
+    ["leisure", "Sport, fitness & entertainment", "#ff8fbf"],
+    ["health", "Health (private insurance, dental)", "#6fd6cb"],
+    ["clothing", "Clothing & personal care", "#b9b2cc"]
+  ];
+  function regionFor(areaName, town) {
+    if (town) return LD.costs.otherTowns[town];
+    const a = byName[areaName];
+    if (a.type === "City") return LD.costs.cityRegion[a.name];
+    return a.type === "National" ? "Israel" : a.name;
+  }
+  function currentLevel(avg) {
+    if (state.level) return state.level;
+    const B = effBudget();
+    if (B) return ["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || "budget";
+    return state.noLimit ? "luxury" : "comfortable";
+  }
+  function costFor(areaName, town, band, level) {
+    const R = LD.costs.regions[regionFor(areaName, town)];
+    const people = Math.min(9, state.adults + state.kids);
+    const sp = STD_PERSONS[people];
+    const life = LIFESTYLE[level];
+    const rent = bandOf(byName[areaName], band).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]);
+    const car = state.transport === "car";
+    const v = {
+      rent,
+      arnona: R.arnona,
+      utilities: R.utilities * sp,
+      groceries: R.groceries * sp,
+      eating_out: R.eating_out * sp * life,
+      transport: car ? R.car : LD.costs.passes.national * state.adults,
+      education: state.kids ? R.education * sp * 2 : 0,
+      leisure: R.leisure * sp * life,
+      health: R.health * sp,
+      clothing: R.clothing * sp * life
+    };
+    for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
+    v.total = Object.values(v).reduce((a, b) => a + b, 0);
+    return v;
+  }
 
   // ---- Illustration for areas without a photo (districts, Israel) ----
   function skyline() {
@@ -651,6 +876,20 @@
       markers[c.name] = mk;
     }
   }
+  let stationLayer = null;
+  const STN_COLORS = { train: "#6c3cf0", light_rail: "#ff3d8b", metro: "#0fb5a6" };
+  const STN_NAMES = { train: "Train station", light_rail: "Light rail", metro: "Carmelit (metro)" };
+  function toggleStations(on) {
+    state.showStations = on; persist();
+    $("stations-btn").setAttribute("aria-pressed", String(on));
+    if (!map) return;
+    if (on && !stationLayer) {
+      stationLayer = L.layerGroup(LD.stations.map((st) =>
+        L.circleMarker([st.la, st.lo], { radius: st.k === "train" ? 6 : 4, color: "#fff", weight: 1.5, fillColor: STN_COLORS[st.k], fillOpacity: 1 })
+          .bindTooltip(st.n + " · " + STN_NAMES[st.k])));
+    }
+    if (stationLayer) { if (on) stationLayer.addTo(map); else stationLayer.remove(); }
+  }
   function updatePins(band) {
     const B = effBudget();
     for (const [name, mk] of Object.entries(markers)) {
@@ -664,7 +903,7 @@
   }
   function flyToArea(area) {
     if (!map) return;
-    const m = M.cities[area.name];
+    const m = !state.town && M.cities[area.name];
     if (m) map.flyTo([m.lat, m.lng], 12, { duration: 0.8 });
     else if (M.views[area.name]) { const v = M.views[area.name]; map.flyTo([v[0], v[1]], v[2], { duration: 0.8 }); }
   }
@@ -688,13 +927,14 @@
 
   // ---- Hero ----
   function renderHero(area, band, b) {
-    const media = M.cities[area.name];
+    const town = state.town;
+    const media = !town && M.cities[area.name];
     const avg = b.rent;
-    const kicker = area.type === "City" ? area.district : area.type === "National" ? "Nationwide" : "Whole district";
-    const title = area.type === "National" ? "All of Israel" : area.name;
+    const kicker = town ? area.name + " · district figures" : area.type === "City" ? area.district : area.type === "National" ? "Nationwide" : "Whole district";
+    const title = town || (area.type === "National" ? "All of Israel" : area.name);
     $("hero-media").innerHTML =
       (media ? '<img src="' + esc(media.photo) + '" alt="' + esc(area.name) + '" decoding="async">' : skyline()) +
-      '<div class="tags">' + tagHtml(tagsFor(area, band, b)) + "</div>" +
+      '<div class="tags">' + tagHtml(town ? [["est", "District estimate"]] : tagsFor(area, band, b)) + "</div>" +
       '<div class="hero-over"><div class="kicker">' + esc(kicker) + "</div><h1>" + esc(title) + "</h1></div>" +
       (media ? '<a class="credit" href="' + esc(media.source) + '" target="_blank" rel="noopener noreferrer">Photo: ' + esc(media.credit) + " · " + esc(media.license) + "</a>" : "");
 
@@ -708,7 +948,15 @@
     if (area.name !== "Israel") parts.push("<span><b>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</b> vs Israel</span>");
     if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> in a year</span>");
     if (b.se != null) parts.push("<span>±<b>" + fmt(1.96 * b.se) + "</b> margin</span>");
+    const tr = !town && transitOf(area.name);
+    if (tr) parts.push("<span>" + (stopCount(tr) ? transitText(tr, true) : "<b>No</b> rail stations") + "</span>");
     $("metrics").innerHTML = parts.join("");
+
+    const adj = RENT_ADJ[state.transport];
+    let adjMsg = "";
+    if (adj > 0) adjMsg = "<i>+5%</i> Near a train or light-rail station: about " + fmt(round50(avg * (1 + adj))) + "/month";
+    else if (adj < 0) adjMsg = "<i>−5%</i> Further from public transport (you'll drive): about " + fmt(round50(avg * (1 + adj))) + "/month";
+    $("hero-adj").innerHTML = adjMsg;
 
     const B = effBudget();
     const level = B ? (["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || null) : null;
@@ -721,6 +969,9 @@
     }
 
     const notes = [];
+    if (town) notes.push("CBS doesn't publish rents for " + town + ", so these figures use the " + area.name + " average. Rents in " + town + " may differ.");
+    if (state.transport === "rail" && tr && stopCount(tr) <= 2)
+      notes.push(area.name + " has only " + (stopCount(tr) === 1 ? "one rail station" : stopCount(tr) === 0 ? "no rail stations" : "two rail stations") + ", so fewer homes are within walking distance of one.");
     if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ".");
     else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
     if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
@@ -758,10 +1009,15 @@
   function renderFeed(band) {
     const B = effBudget();
     const maxRent = Math.max(...measured.map((c) => bandOf(c, band).rent));
-    const rows = cities.map((c) => ({ c, b: bandOf(c, band) }));
+    const rows = cities.map((c) => {
+      const b = bandOf(c, band);
+      return { c, b, total: costFor(c.name, null, band, currentLevel(b.rent)).total, stops: stopCount(transitOf(c.name)) };
+    });
     const s = state.sort;
     rows.sort((x, y) =>
       s === "price-asc" ? x.b.rent - y.b.rent :
+      s === "transit" ? y.stops - x.stops || y.b.rent - x.b.rent :
+      s === "total" ? x.total - y.total :
       s === "growth" ? (y.b.yoy ?? -1) - (x.b.yoy ?? -1) :
       s === "saved" ? (state.favs.includes(y.c.name) - state.favs.includes(x.c.name)) || y.b.rent - x.b.rent :
       y.b.rent - x.b.rent);
@@ -770,7 +1026,7 @@
     $("feed-sub").textContent = "Average monthly rent (comfortable level). Tap a city to see its prices.";
 
     const feed = $("feed");
-    feed.innerHTML = rows.map(({ c, b }) => {
+    feed.innerHTML = rows.map(({ c, b, total }) => {
       const m = M.cities[c.name] || {};
       const fav = state.favs.includes(c.name);
       const beds = bedCount(state.rooms);
@@ -783,10 +1039,12 @@
         "</div>" +
         '<div class="body">' +
           '<div class="l-price">' + fmt(b.rent) + "<small>/mo</small></div>" +
-          '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " rm</span><span>" + (beds ? beds + " bd" : "Studio") + "</span>" + yoy + "</div>" +
+          '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " rm</span><span>" + (beds ? beds + " bd" : "Studio") + "</span>" + yoy +
+          (stopCount(transitOf(c.name)) ? '<span class="l-transit" title="Train / light rail / Carmelit stations">' + transitText(transitOf(c.name), false) + "</span>" : "") + "</div>" +
           '<div class="l-addr">' + esc(c.name) + ", " + esc(c.district) + (c.proxyFor ? " · based on " + esc(c.proxyFor) : "") + "</div>" +
           '<div class="l-bar" title="Compared with the most expensive city"><i style="width:' + Math.min(100, b.rent / maxRent * 100).toFixed(1) + '%"></i>' +
           (B && B < maxRent ? '<b style="left:' + (B / maxRent * 100).toFixed(1) + '%" title="Your budget"></b>' : "") + "</div>" +
+          '<div class="l-allin">≈ ' + fmt(total) + "/mo all-in for your household</div>" +
         "</div></article>";
     }).join("");
     $("feed-end").textContent = "You've seen all " + cities.length + " cities";
@@ -811,14 +1069,19 @@
     luxury: [["ממ\"ד", "safe room"], ["בניין חדש", "new building"], ["מרפסת שמש", "sun balcony"], ["פנטהאוז", "penthouse"]]
   };
   const ALWAYS = [["כניסה מיידית", "available now"], ["מרוהטת", "furnished"], ["מותר בעלי חיים", "pets allowed"]];
+  const TRANSIT_KW = {
+    rail: [["קרוב לרכבת", "near the train"], ["קרוב לרכבת הקלה", "near the light rail"], ["קרוב לתחבורה ציבורית", "near public transport"]],
+    bus: [["קרוב לתחבורה ציבורית", "near public transport"], ["קרוב לתחנת אוטובוס", "near a bus stop"], ["מרכזי", "central"]],
+    car: [["חניה", "parking"], ["חניה בטאבו", "registered private parking"], ["שקט", "quiet area"]]
+  };
   const kwBtn = ([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>";
 
   function renderGuide(area, band, avg) {
-    const isTown = !!area.hebrew;
+    const isTown = !!area.hebrew && !state.town;
     const cityHe = isTown ? (SEARCH_NAME[area.name] || area.hebrew) : "[שם העיר]";
-    const cityEn = isTown ? area.name : "[your town]";
+    const cityEn = isTown ? area.name : state.town || "[your town]";
     const r = state.rooms;
-    $("guide-title").textContent = "How to search for " + roomsText(r) + " in " + (isTown ? area.name : "your town");
+    $("guide-title").textContent = "How to search for " + roomsText(r) + " in " + (isTown ? area.name : state.town || "your town");
 
     const phrases = [
       ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + cityHe, true],
@@ -836,7 +1099,7 @@
       "The comfortable range. Budget: up to " + fmt(round50(avg * TIERS.budget.hi)) + ", luxury: from " + fmt(round50(avg * TIERS.luxury.lo)) + "."];
     const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? "any" : r + STEP;
     const rows = [
-      ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
+      ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : state.town || "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
       ["Rooms", "חדרים", r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r, "Widen it to " + lo + " - " + hi + " to see more homes."],
       ["Price per month", "מחיר", price[0], price[1]],
       ["Property type", "סוג נכס", he("דירה") + " (apartment)", "For luxury also try " + he("דירת גן") + " (garden flat) and " + he("פנטהאוז") + "."]
@@ -851,6 +1114,7 @@
       [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
         '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " · your level" : "") + "</h4>" +
         KEYWORDS[k].map(kwBtn).join("") + "</div>").join("") +
+      '<div class="kw-group any"><h4>For your transport choice</h4><div class="kw-wrap">' + TRANSIT_KW[state.transport].map(kwBtn).join("") + "</div></div>" +
       '<div class="kw-group any"><h4>Useful at any level</h4><div class="kw-wrap">' + ALWAYS.map(kwBtn).join("") + "</div></div>";
   }
 
@@ -872,6 +1136,60 @@
     }).join("");
   }
 
+  // ---- What it will really cost ----
+  const cmpSel = $("compare");
+  cmpSel.append(new Option("Israel average", "Israel"));
+  [...cities].sort((a, b) => a.name.localeCompare(b.name)).forEach((c) => cmpSel.append(new Option(c.name, c.name)));
+  function renderCosts(area, band, avg) {
+    const level = currentLevel(avg);
+    const here = costFor(area.name, state.town, band, level);
+    const cmpName = state.compare === area.name && !state.town ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
+    const there = costFor(cmpName, null, band, level);
+    const placeName = state.town || (area.type === "National" ? "Israel" : area.name);
+    const cmpLabel = cmpName === "Israel" ? "Israel avg" : cmpName;
+    const people = state.adults + state.kids;
+
+    $("adults-value").textContent = state.adults; $("kids-value").textContent = state.kids;
+    $("adults-down").disabled = state.adults <= 1; $("adults-up").disabled = state.adults >= 4;
+    $("kids-down").disabled = state.kids <= 0; $("kids-up").disabled = state.kids >= 5;
+    document.querySelectorAll(".seg [data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === level)));
+    cmpSel.value = cmpName;
+
+    $("cost-title").textContent = "What it will really cost in " + placeName;
+    $("ct-amount").innerHTML = fmt(here.total) + " <small>/ month</small>";
+    $("ct-sub").textContent = people + (people === 1 ? " person" : " people") + " · " + roomsText(state.rooms) + " · " +
+      level[0].toUpperCase() + level.slice(1) + " lifestyle · " + { rail: "near a station", bus: "public transport", car: "with a car" }[state.transport];
+    const diff = here.total - there.total;
+    $("ct-vs").innerHTML = "vs " + esc(cmpLabel) + "<b>" + (diff === 0 ? "Same" : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</b>" +
+      (diff === 0 ? "" : diff > 0 ? "more a month" : "less a month");
+    $("allin").innerHTML = "≈ " + fmt(here.total) + "/mo all-in →";
+
+    $("cost-bar").innerHTML = COST_LINES.filter(([k]) => here[k] > 0)
+      .map(([k, label, color]) => '<i style="width:' + (here[k] / here.total * 100).toFixed(2) + "%;background:" + color + '" title="' + esc(label) + '"></i>').join("");
+
+    $("col-a").textContent = placeName; $("col-b").textContent = cmpLabel;
+    const hint = {
+      rent: TIERS[level] && level[0].toUpperCase() + level.slice(1) + " level" + (RENT_ADJ[state.transport] ? (RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : ""),
+      transport: state.transport === "car" ? "Typical car costs: fuel, insurance, upkeep" : state.adults + " × Rav-Kav nationwide monthly pass (₪" + LD.costs.passes.national + ")",
+      education: "Schools, kindergarten, after-school activities",
+      leisure: "Gym, classes, events, outings",
+      groceries: "Supermarket food, fruit & veg"
+    };
+    $("cost-rows").innerHTML = COST_LINES.filter(([k]) => here[k] > 0 || there[k] > 0).map(([k, label, color]) => {
+      const d = here[k] - there[k];
+      const cls = Math.abs(d) < 20 ? "muted" : d > 0 ? "more" : "less";
+      return "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(label) + (hint[k] ? "<small>" + esc(hint[k]) + "</small>" : "") + "</td>" +
+        "<td>" + fmt(here[k]) + '</td><td class="colb">' + fmt(there[k]) + '</td><td class="' + cls + '">' +
+        (Math.abs(d) < 20 ? "≈ same" : (d > 0 ? "+" : "−") + fmt(Math.abs(d))) + "</td></tr>";
+    }).join("");
+    $("cost-foot").innerHTML = "<td>Total</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
+      (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? "≈ same" : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
+
+    const region = regionFor(area.name, state.town);
+    $("cost-note").innerHTML = "Everyday costs: typical spending in the " + esc(LD.costs.regionNames[region] || region) +
+      " (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.";
+  }
+
   // ---- Main render ----
   function render() {
     const area = byName[state.area];
@@ -886,6 +1204,7 @@
     $("legend-over").hidden = !effBudget();
 
     renderHero(area, band, b);
+    renderCosts(area, band, b.rent);
     renderGuide(area, band, b.rent);
     renderSites(area);
     renderFeed(band);
@@ -893,7 +1212,9 @@
   }
 
   function select(name, opts = {}) {
-    state.area = name; sel.value = name; persist(); render();
+    if (!opts.keepTown) state.town = null;
+    state.area = name; persist(); render();
+    if (document.activeElement !== areaInput) areaInput.value = placeLabel();
     if (opts.fly !== false) flyToArea(byName[name]);
     if (opts.scroll) {
       if (window.innerWidth > 1000) $("pane-list").scrollTo({ top: 0, behavior: "smooth" });
@@ -913,8 +1234,22 @@
   }
 
   // ---- Events ----
-  sel.value = state.area;
-  sel.addEventListener("change", () => select(sel.value));
+  areaInput.value = placeLabel();
+  const trSel = $("transport");
+  trSel.value = state.transport;
+  trSel.addEventListener("change", () => {
+    state.transport = trSel.value; persist(); render();
+    if (state.transport === "rail" && !state.showStations) toggleStations(true);
+  });
+  $("stations-btn").addEventListener("click", () => toggleStations(!state.showStations));
+  const bump = (key, d, lo, hi) => { state[key] = Math.min(hi, Math.max(lo, state[key] + d)); persist(); render(); };
+  $("adults-down").addEventListener("click", () => bump("adults", -1, 1, 4));
+  $("adults-up").addEventListener("click", () => bump("adults", 1, 1, 4));
+  $("kids-down").addEventListener("click", () => bump("kids", -1, 0, 5));
+  $("kids-up").addEventListener("click", () => bump("kids", 1, 0, 5));
+  document.querySelectorAll(".seg [data-level]").forEach((btn) => btn.addEventListener("click", () => { state.level = btn.dataset.level; persist(); render(); }));
+  cmpSel.addEventListener("change", () => { state.compare = cmpSel.value; persist(); render(); });
+  $("allin").addEventListener("click", () => { const p = $("cost-panel"); p.open = true; p.scrollIntoView({ behavior: "smooth", block: "start" }); });
   $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });
   $("rooms-up").addEventListener("click", () => { state.rooms = Math.min(MAX_ROOMS, state.rooms + STEP); persist(); render(); });
   const budgetEl = $("budget");
@@ -975,6 +1310,7 @@
 
   initMap();
   render();
+  if (state.showStations || state.transport === "rail") toggleStations(true);
   flyToArea(byName[state.area]);
 })();
 </script>

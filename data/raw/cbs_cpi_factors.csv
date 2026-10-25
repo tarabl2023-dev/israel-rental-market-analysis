@@ -1,0 +1,9 @@
+cpi_code,group,factor_2021_to_2026,note
+120010,Consumer Price Index - General,1.1800,"CBS linkage calculator, index May 2021 -> Jul 2026"
+120050,"Food, excluding vegetables and fruit",1.2139,"CBS linkage calculator, index May 2021 -> Jul 2026"
+120040,Vegetables and fruit,1.1444,"CBS linkage calculator, index May 2021 -> Jul 2026"
+120520,Dwellings maintenance,1.1905,"CBS linkage calculator, index May 2021 -> Jul 2026"
+121230,Health,1.1528,"CBS linkage calculator, index May 2021 -> Jul 2026"
+121050,"Education, culture and entertainment",1.1477,"CBS linkage calculator, index May 2021 -> Jul 2026"
+121320,Transport and communication,1.2007,"CBS linkage calculator, index May 2021 -> Jul 2026"
+120850,Clothing and footwear,1.1800,"Clothing CPI is seasonal (July sales give 0.687), so the general CPI factor is used instead"
