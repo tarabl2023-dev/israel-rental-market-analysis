@@ -7,7 +7,7 @@
 <meta name="description" content="Find what it costs to rent in Israel's cities: budget, comfortable and luxury prices by city and number of rooms, on an interactive map. Based on official CBS data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
   /* Palette: violet (primary) + hot pink (accent) + teal, with a sunny yellow */
@@ -58,12 +58,19 @@
   html, body { margin: 0; }
   body {
     background: var(--bg); color: var(--ink);
-    font: 15px/1.5 "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font: 15px/1.5 "Plus Jakarta Sans", "Rubik", "Noto Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   button, input, select { font: inherit; color: inherit; }
   :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-  [lang="he"] { font-family: "Plus Jakarta Sans", "Arial Hebrew", Arial, sans-serif; }
+  [lang="he"] { font-family: "Rubik", "Plus Jakarta Sans", "Arial Hebrew", Arial, sans-serif; }
+  :root[lang="ar"] body { font-family: "Noto Sans Arabic", "Plus Jakarta Sans", Arial, sans-serif; }
+  :root[lang="ru"] body { font-family: "Rubik", "Plus Jakarta Sans", Arial, sans-serif; }
+  .lang-switch { display: inline-flex; gap: 2px; background: var(--surface-2); border-radius: 999px; padding: 3px; }
+  .lang-switch button { border: 0; background: transparent; border-radius: 999px; padding: 5px 10px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink-2); }
+  .lang-switch button[aria-pressed="true"] { background: var(--primary); color: #fff; }
+  .brand-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  #map { direction: ltr; }
 
   /* ================= Top bar ================= */
   .topbar { position: relative; z-index: 1000; background: var(--surface); box-shadow: var(--shadow-sm); }
@@ -102,7 +109,7 @@
   .combo-list li { padding: 8px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
   .combo-list li[aria-selected="true"], .combo-list li:hover { background: var(--primary-soft); }
   .combo-list li b { font-weight: 700; }
-  .combo-list li span { font-size: 12px; color: var(--ink-3); text-align: right; }
+  .combo-list li span { font-size: 12px; color: var(--ink-3); text-align: end; }
   .combo-list li.empty { cursor: default; color: var(--ink-3); background: none; }
   .f-transport select, .f-hood select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; cursor: pointer; max-width: 230px; }
   .f-hood select:focus { outline: none; }
@@ -155,7 +162,7 @@
   .hero-over { position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 2; color: #fff; }
   .hero-over .kicker { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
   .hero-over h1 { margin: 2px 0 0; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; text-shadow: 0 2px 12px rgba(0,0,0,.25); }
-  .tags { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 70px); }
+  .tags { position: absolute; top: 14px; inset-inline-start: 14px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 70px); }
   .tag {
     font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
     padding: 5px 9px; border-radius: 6px; background: #fff; color: #1c1433; box-shadow: 0 2px 6px rgba(0,0,0,.15);
@@ -168,7 +175,7 @@
   .tag.est { background: var(--sun); color: #3a2a00; }
   .tag.top { background: var(--primary); color: #fff; }
   .tag.value { background: #fff; color: var(--teal); }
-  .credit { position: absolute; right: 10px; bottom: 6px; z-index: 3; font-size: 10px; color: rgba(255,255,255,.75); text-decoration: none; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .credit { position: absolute; inset-inline-end: 10px; bottom: 6px; z-index: 3; font-size: 10px; color: rgba(255,255,255,.75); text-decoration: none; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .credit:hover { color: #fff; text-decoration: underline; }
 
   .hero-body { padding: 20px; }
@@ -176,8 +183,8 @@
   .hero-price small { font-size: 16px; font-weight: 600; color: var(--ink-3); letter-spacing: 0; }
   .hero-addr { color: var(--ink-3); font-size: 15px; margin-top: 6px; }
   .metrics { display: flex; flex-wrap: wrap; row-gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
-  .metrics span { padding: 0 10px; border-left: 2px solid var(--line); }
-  .metrics span:first-child { padding-left: 0; border-left: 0; }
+  .metrics span { padding: 0 10px; border-inline-start: 2px solid var(--line); }
+  .metrics span:first-child { padding-inline-start: 0; border-inline-start: 0; }
   .metrics b { color: var(--ink); }
   .metrics .up, .metrics .up b { color: var(--teal); }
 
@@ -194,13 +201,13 @@
   .tier .t-sel { font-size: 10px; background: var(--c); color: #fff; border-radius: 4px; padding: 2px 6px; letter-spacing: .06em; }
   .tier-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 10px; font-size: 13px; color: var(--ink-3); }
   .linkish { border: 0; background: none; padding: 0; font-size: 13px; font-weight: 800; color: var(--primary); cursor: pointer; text-decoration: underline; }
-  .tier .ill { position: absolute; right: -6px; bottom: -6px; width: 74px; height: 74px; opacity: .95; }
+  .tier .ill { position: absolute; inset-inline-end: -6px; bottom: -6px; width: 74px; height: 74px; opacity: .95; }
   .tier .t-name { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; gap: 6px; }
   .tier .t-fit { font-size: 10px; background: transparent; color: var(--c); border: 1.5px solid var(--c); border-radius: 4px; padding: 1px 5px; letter-spacing: .06em; }
   .tier .t-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .tier .t-price small { font-size: 13px; color: var(--ink-3); font-weight: 600; }
   .tier .t-range { font-size: 13px; color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
-  .tier .t-desc { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; padding-right: 54px; }
+  .tier .t-desc { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; padding-inline-end: 54px; }
 
   .hero-adj { margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
   .hero-adj:empty { display: none; }
@@ -220,7 +227,7 @@
   .panel > summary::-webkit-details-marker { display: none; }
   .panel > summary .ico { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex: none; }
   .panel > summary .ico svg { width: 20px; height: 20px; }
-  .panel > summary .chev { margin-left: auto; transition: transform .2s; color: var(--ink-3); flex: none; }
+  .panel > summary .chev { margin-inline-start: auto; transition: transform .2s; color: var(--ink-3); flex: none; }
   .panel[open] > summary .chev { transform: rotate(180deg); }
   .panel > summary small { display: block; font-weight: 500; font-size: 13px; color: var(--ink-3); }
   .panel-body { padding: 0 20px 20px; }
@@ -240,7 +247,7 @@
   .copy-line .txt { flex: 1; font-size: 16px; font-weight: 700; }
   .copy-line .act { font-size: 12px; font-weight: 800; color: #fff; background: var(--primary); padding: 4px 10px; border-radius: 999px; flex: none; }
   .filter-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .filter-table th, .filter-table td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .filter-table th, .filter-table td { text-align: start; padding-block: 9px; padding-inline: 0 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
   .filter-table th { font-weight: 700; width: 34%; }
   .filter-table th bdi { display: block; font-weight: 500; color: var(--ink-3); }
   .filter-table td { font-weight: 600; }
@@ -274,7 +281,7 @@
   .site { display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 2px solid transparent;
           color: inherit; text-decoration: none; transition: border-color .15s, transform .15s; }
   a.site:hover { border-color: var(--primary); transform: translateY(-1px); }
-  .site .open { margin-left: auto; align-self: center; font-size: 12px; font-weight: 800; color: var(--primary); white-space: nowrap; }
+  .site .open { margin-inline-start: auto; align-self: center; font-size: 12px; font-weight: 800; color: var(--primary); white-space: nowrap; }
   .go-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 4px; }
   .go-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; text-decoration: none;
             color: #fff; font-weight: 800; font-size: 14px; box-shadow: var(--shadow-sm); transition: transform .15s, box-shadow .15s; }
@@ -302,7 +309,7 @@
   .cost-head .amt { font-size: clamp(30px, 4.6vw, 40px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .cost-head .amt small { font-size: 15px; font-weight: 600; opacity: .85; }
   .cost-head .sub { font-size: 13px; opacity: .9; margin-top: 2px; }
-  .cost-head .vs { text-align: right; font-size: 13px; font-weight: 600; }
+  .cost-head .vs { text-align: end; font-size: 13px; font-weight: 600; }
   .sh-badge { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 800; background: rgba(255,255,255,.22); padding: 4px 10px; border-radius: 999px; }
   .sh-badge:empty { display: none; }
   .cc .nudge { font-size: 11.5px; font-weight: 700; color: var(--accent); text-transform: none; letter-spacing: 0; }
@@ -311,12 +318,12 @@
   .cost-bar { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 14px 0 6px; gap: 2px; background: var(--surface-2); }
   .cost-bar i { display: block; height: 100%; }
   .cost-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
-  .cost-table th { text-align: right; font-size: 11px; font-weight: 800; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; padding: 6px 0 6px 8px; border-bottom: 2px solid var(--line); }
-  .cost-table th:first-child { text-align: left; padding-left: 0; }
-  .cost-table td { padding: 9px 0 9px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
-  .cost-table td:first-child { text-align: left; padding-left: 0; white-space: normal; font-weight: 600; }
+  .cost-table th { text-align: end; font-size: 11px; font-weight: 800; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; padding: 6px 0 6px 8px; border-bottom: 2px solid var(--line); }
+  .cost-table th:first-child { text-align: start; padding-inline-start: 0; }
+  .cost-table td { padding: 9px 0 9px 8px; border-bottom: 1px solid var(--line); text-align: end; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+  .cost-table td:first-child { text-align: start; padding-inline-start: 0; white-space: normal; font-weight: 600; }
   .cost-table td:first-child small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; }
-  .cost-table .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 0; }
+  .cost-table .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-inline-end: 8px; vertical-align: 0; }
   .cost-table .more { color: #b4235a; }
   .cost-table .less { color: var(--teal); }
   .cost-table .muted { color: var(--ink-3); font-weight: 600; }
@@ -350,7 +357,7 @@
   .listing:hover .media img { transform: scale(1.05); }
   .listing .media::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(25,10,50,.45)); pointer-events: none; }
   .fav {
-    position: absolute; top: 10px; right: 10px; z-index: 3; width: 36px; height: 36px; border-radius: 50%;
+    position: absolute; top: 10px; inset-inline-end: 10px; z-index: 3; width: 36px; height: 36px; border-radius: 50%;
     border: 0; background: rgba(255,255,255,.92); display: grid; place-items: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.15);
   }
   .fav svg { width: 18px; height: 18px; stroke: #1c1433; fill: none; stroke-width: 2.2; transition: transform .15s; }
@@ -365,7 +372,7 @@
   .l-metrics .down { color: #b4235a; }
   .l-addr { font-size: 13.5px; color: var(--ink-3); margin-top: 2px; }
   .l-bar { margin-top: 10px; height: 6px; border-radius: 99px; background: var(--surface-2); position: relative; }
-  .l-bar i { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .l-bar i { position: absolute; top: 0; bottom: 0; inset-inline-start: 0; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
   .l-bar b { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--teal); }
   .feed-end { text-align: center; color: var(--ink-3); font-size: 13px; margin: 26px 0 4px; display: flex; align-items: center; gap: 12px; }
   .feed-end::before, .feed-end::after { content: ""; flex: 1; height: 1px; background: var(--line); }
@@ -449,45 +456,50 @@
         <rect x="17.5" y="23" width="5" height="7" rx="1" fill="#ff3d8b"/>
       </svg>
       <div>
-        <div class="brand-name">Israel Rent <span>Finder</span></div>
-        <div class="brand-sub">What renting really costs, city by city</div>
+        <div class="brand-name" data-i18n-html="@brand">Israel Rent <span>Finder</span></div>
+        <div class="brand-sub" data-i18n>What renting really costs, city by city</div>
       </div>
     </a>
-    <span class="data-chip"><i></i><span id="data-chip">Official CBS data</span></span>
+    <div class="brand-tools">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="he" lang="he">עב</button><button type="button" data-lang="ru" lang="ru">РУ</button><button type="button" data-lang="ar" lang="ar">ع</button>
+      </div>
+      <span class="data-chip"><i></i><span id="data-chip">Official CBS data</span></span>
+    </div>
   </div>
   <div class="filters" role="search" aria-label="Your search">
     <div class="f-box f-area">
-      <label for="area">Where</label>
+      <label for="area" data-i18n>Where</label>
       <input id="area" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="area-list"
-             autocomplete="off" spellcheck="false" placeholder="Type a city, e.g. Herzliya or הרצליה">
+             autocomplete="off" spellcheck="false" placeholder="Type a city, e.g. Herzliya or הרצליה" data-i18n-ph>
       <ul class="combo-list" id="area-list" role="listbox" aria-label="Matching places" hidden></ul>
     </div>
     <div class="f-box f-rooms">
-      <span class="f-label" id="rooms-label">Rooms</span>
+      <span class="f-label" id="rooms-label" data-i18n>Rooms</span>
       <div class="stepper" role="group" aria-labelledby="rooms-label">
-        <button type="button" id="rooms-down" aria-label="Fewer rooms">&minus;</button>
+        <button type="button" id="rooms-down" aria-label="Fewer rooms" data-i18n-aria>&minus;</button>
         <output id="rooms-value" aria-live="polite">3</output>
-        <button type="button" id="rooms-up" aria-label="More rooms">+</button>
+        <button type="button" id="rooms-up" aria-label="More rooms" data-i18n-aria>+</button>
         <small id="rooms-hint"></small>
       </div>
     </div>
     <div class="f-box f-hood" id="f-hood">
-      <label for="hood">Area in the city</label>
+      <label for="hood" data-i18n>Area in the city</label>
       <select id="hood"></select>
     </div>
     <div class="f-box f-transport">
-      <label for="transport">Transport</label>
+      <label for="transport" data-i18n>Transport</label>
       <select id="transport">
-        <option value="rail">Walk to train / light rail</option>
-        <option value="bus">Bus is fine</option>
-        <option value="car">I'll drive</option>
+        <option value="rail" data-i18n>Walk to train / light rail</option>
+        <option value="bus" data-i18n>Bus is fine</option>
+        <option value="car" data-i18n>I'll drive</option>
       </select>
     </div>
     <div class="f-box f-budget">
-      <label for="budget">Max budget / month</label>
-      <div class="money">₪<input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="Any"></div>
+      <label for="budget" data-i18n>Max budget / month</label>
+      <div class="money">₪<input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="Any" data-i18n-ph></div>
     </div>
-    <button type="button" class="nolimit" id="no-budget" aria-pressed="false">No budget limit</button>
+    <button type="button" class="nolimit" id="no-budget" aria-pressed="false" data-i18n>No budget limit</button>
   </div>
 </header>
 
@@ -508,10 +520,10 @@
 
           <div class="tiers">
             <div class="tier budget" id="tier-budget" data-level="budget" role="button" tabindex="0" aria-pressed="false">
-              <div class="t-name">Budget <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
+              <div class="t-name"><span data-i18n>Budget</span> <span class="t-sel" hidden data-i18n>✓ Selected</span><span class="t-fit" hidden data-i18n>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
-              <p class="t-desc">Older building, often no lift or parking, in a less central area.</p>
+              <p class="t-desc" data-i18n>Older building, often no lift or parking, in a less central area.</p>
               <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
                 <rect x="14" y="30" width="36" height="44" rx="3" fill="#0fb5a6" opacity=".25"/>
                 <rect x="20" y="38" width="8" height="8" rx="1.5" fill="#0fb5a6"/><rect x="36" y="38" width="8" height="8" rx="1.5" fill="#0fb5a6"/>
@@ -520,10 +532,10 @@
               </svg>
             </div>
             <div class="tier comfortable" id="tier-comfortable" data-level="comfortable" role="button" tabindex="0" aria-pressed="false">
-              <div class="t-name">Comfortable <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
+              <div class="t-name"><span data-i18n>Comfortable</span> <span class="t-sel" hidden data-i18n>✓ Selected</span><span class="t-fit" hidden data-i18n>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
-              <p class="t-desc">The average contract here: a decent, maintained flat.</p>
+              <p class="t-desc" data-i18n>The average contract here: a decent, maintained flat.</p>
               <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
                 <path d="M10 44 38 20l28 24" fill="none" stroke="#6c3cf0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
                 <rect x="18" y="40" width="40" height="34" rx="3" fill="#6c3cf0" opacity=".25"/>
@@ -533,10 +545,10 @@
               </svg>
             </div>
             <div class="tier luxury" id="tier-luxury" data-level="luxury" role="button" tabindex="0" aria-pressed="false">
-              <div class="t-name">Luxury <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
+              <div class="t-name"><span data-i18n>Luxury</span> <span class="t-sel" hidden data-i18n>✓ Selected</span><span class="t-fit" hidden data-i18n>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
-              <p class="t-desc">New tower with lift, parking, safe room and a big balcony.</p>
+              <p class="t-desc" data-i18n>New tower with lift, parking, safe room and a big balcony.</p>
               <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
                 <rect x="24" y="8" width="26" height="68" rx="3" fill="#ff3d8b" opacity=".28"/>
                 <g fill="#ff3d8b"><rect x="29" y="16" width="6" height="6" rx="1"/><rect x="39" y="16" width="6" height="6" rx="1"/><rect x="29" y="28" width="6" height="6" rx="1"/><rect x="39" y="28" width="6" height="6" rx="1"/><rect x="29" y="40" width="6" height="6" rx="1"/><rect x="39" y="40" width="6" height="6" rx="1"/><rect x="29" y="52" width="6" height="6" rx="1"/><rect x="39" y="52" width="6" height="6" rx="1"/></g>
@@ -546,8 +558,8 @@
             </div>
           </div>
 
-          <div class="tier-hint"><span>Tap a level to use it for your costs and search.</span>
-            <button type="button" class="linkish" id="auto-level" hidden>Match my budget again</button></div>
+          <div class="tier-hint"><span data-i18n>Tap a level to use it for your costs and search.</span>
+            <button type="button" class="linkish" id="auto-level" hidden data-i18n>Match my budget again</button></div>
           <div class="verdict" id="verdict" hidden></div>
           <div class="note" id="note"></div>
         </div>
@@ -556,39 +568,39 @@
       <details class="panel" id="cost-panel" open>
         <summary>
           <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18M7 6V4h10v2"/></svg></span>
-          <span><span id="cost-title">What it will really cost</span><small>Rent plus everyday living costs for your household</small></span>
+          <span><span id="cost-title">What it will really cost</span><small data-i18n>Rent plus everyday living costs for your household</small></span>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <div class="panel-body">
           <div class="cost-controls">
-            <div class="cc"><span id="adults-label">Adults</span>
-              <div class="stepper" role="group" aria-labelledby="adults-label"><button type="button" id="adults-down" aria-label="Fewer adults">&minus;</button><output id="adults-value">1</output><button type="button" id="adults-up" aria-label="More adults">+</button></div></div>
-            <div class="cc"><span id="kids-label">Children</span>
-              <div class="stepper" role="group" aria-labelledby="kids-label"><button type="button" id="kids-down" aria-label="Fewer children">&minus;</button><output id="kids-value">0</output><button type="button" id="kids-up" aria-label="More children">+</button></div></div>
-            <div class="cc"><span id="level-label">Lifestyle</span>
+            <div class="cc"><span id="adults-label" data-i18n>Adults</span>
+              <div class="stepper" role="group" aria-labelledby="adults-label"><button type="button" id="adults-down" aria-label="Fewer adults" data-i18n-aria>&minus;</button><output id="adults-value">1</output><button type="button" id="adults-up" aria-label="More adults" data-i18n-aria>+</button></div></div>
+            <div class="cc"><span id="kids-label" data-i18n>Children</span>
+              <div class="stepper" role="group" aria-labelledby="kids-label"><button type="button" id="kids-down" aria-label="Fewer children" data-i18n-aria>&minus;</button><output id="kids-value">0</output><button type="button" id="kids-up" aria-label="More children" data-i18n-aria>+</button></div></div>
+            <div class="cc"><span id="level-label" data-i18n>Lifestyle</span>
               <div class="seg" role="group" aria-labelledby="level-label">
-                <button type="button" data-level="budget">Budget</button><button type="button" data-level="comfortable">Comfortable</button><button type="button" data-level="luxury">Luxury</button>
+                <button type="button" data-level="budget" data-i18n>Budget</button><button type="button" data-level="comfortable" data-i18n>Comfortable</button><button type="button" data-level="luxury" data-i18n>Luxury</button>
               </div></div>
-            <div class="cc"><span><label for="compare">Compare with</label></span><select id="compare"></select></div>
-            <div class="cc"><span id="shabbat-label">Shabbat</span>
+            <div class="cc"><span><label for="compare" data-i18n>Compare with</label></span><select id="compare"></select></div>
+            <div class="cc"><span id="shabbat-label" data-i18n>Shabbat</span>
               <div class="seg" role="group" aria-labelledby="shabbat-label">
-                <button type="button" data-shabbat="0">Not included</button><button type="button" data-shabbat="1">I keep Shabbat</button>
+                <button type="button" data-shabbat="0" data-i18n>Not included</button><button type="button" data-shabbat="1" data-i18n>I keep Shabbat</button>
               </div></div>
-            <div class="cc" id="cc-guests"><span id="guests-label">Guests each Shabbat</span>
-              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests">&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests">+</button></div>
+            <div class="cc" id="cc-guests"><span id="guests-label" data-i18n>Guests each Shabbat</span>
+              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests" data-i18n-aria>&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests" data-i18n-aria>+</button></div>
               <span class="nudge" id="guests-nudge"></span></div>
-            <div class="cc" id="cc-meals"><span id="meals-label">Meals you host</span>
+            <div class="cc" id="cc-meals"><span id="meals-label" data-i18n>Meals you host</span>
               <div class="seg" role="group" aria-labelledby="meals-label">
-                <button type="button" data-meals="1">Friday night</button><button type="button" data-meals="2">Friday + lunch</button>
+                <button type="button" data-meals="1" data-i18n>Friday night</button><button type="button" data-meals="2" data-i18n>Friday + lunch</button>
               </div></div>
           </div>
           <div class="cost-head">
-            <div><div class="lbl">Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div><div class="sh-badge" id="sh-badge"></div></div>
+            <div><div class="lbl" data-i18n>Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div><div class="sh-badge" id="sh-badge"></div></div>
             <div class="vs" id="ct-vs"></div>
           </div>
           <div class="cost-bar" id="cost-bar" aria-hidden="true"></div>
           <table class="cost-table">
-            <thead><tr><th>Monthly cost</th><th id="col-a"></th><th class="colb" id="col-b"></th><th>Difference</th></tr></thead>
+            <thead><tr><th data-i18n>Monthly cost</th><th id="col-a"></th><th class="colb" id="col-b"></th><th data-i18n>Difference</th></tr></thead>
             <tbody id="cost-rows"></tbody>
             <tfoot><tr id="cost-foot"></tr></tfoot>
           </table>
@@ -599,30 +611,30 @@
       <details class="panel" open>
         <summary>
           <span class="ico" style="background:var(--primary-soft);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
-          <span><span id="guide-title">How to search</span><small>Copy-and-paste searches and filters for Israeli rental sites</small></span>
+          <span><span id="guide-title">How to search</span><small data-i18n>Copy-and-paste searches and filters for Israeli rental sites</small></span>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <div class="panel-body">
           <div class="step">
             <div class="step-num" style="background:var(--ink)">↗</div>
             <div class="step-body"><h3 id="go-title">Go straight to the listings</h3><div class="go-row" id="go-row"></div>
-              <div class="seg link-mode" role="group" aria-label="How strict the links are">
-                <button type="button" data-linkmode="all">All my filters</button><button type="button" data-linkmode="basic">Rooms &amp; budget only</button><button type="button" data-linkmode="city">Just the city</button>
+              <div class="seg link-mode" role="group" aria-label="How strict the links are" data-i18n-aria>
+                <button type="button" data-linkmode="all" data-i18n>All my filters</button><button type="button" data-linkmode="basic" data-i18n>Rooms &amp; budget only</button><button type="button" data-linkmode="city" data-i18n>Just the city</button>
               </div>
               <p class="go-note" id="go-note"></p><p class="go-incl" id="go-incl"></p></div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--primary)">1</div>
-            <div class="step-body"><h3>Then narrow it down: search for</h3><div id="guide-phrases"></div></div>
+            <div class="step-body"><h3 data-i18n>Then narrow it down: search for</h3><div id="guide-phrases"></div></div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--accent)">2</div>
-            <div class="step-body"><h3>Set these filters</h3><table class="filter-table"><tbody id="guide-filters"></tbody></table></div>
+            <div class="step-body"><h3 data-i18n>Set these filters</h3><table class="filter-table"><tbody id="guide-filters"></tbody></table></div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--teal)">3</div>
-            <div class="step-body"><h3>Add keywords for your level</h3><div class="kw-groups" id="guide-keywords"></div>
-              <p class="tip">Tap words to add them to your search. Ones marked "filter" are also ticked for you on the sites that support them when you open the links above. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
+            <div class="step-body"><h3 data-i18n>Add keywords for your level</h3><div class="kw-groups" id="guide-keywords"></div>
+              <p class="tip" data-i18n-html="@kwTip">Tap words to add them to your search. Ones marked "filter" are also ticked for you on the sites that support them when you open the links above. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
             </div>
           </div>
         </div>
@@ -631,7 +643,7 @@
       <details class="panel">
         <summary>
           <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
-          <span>Where to look<small>Rental sites and groups worth checking</small></span>
+          <span><span data-i18n>Where to look</span><small data-i18n>Rental sites and groups worth checking</small></span>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <div class="panel-body"><div class="site-grid" id="site-list"></div></div>
@@ -642,14 +654,14 @@
           <h2 id="feed-title">Compare cities</h2>
           <p id="feed-sub"></p>
         </div>
-        <label class="sort">Sort
+        <label class="sort"><span data-i18n>Sort</span>
           <select id="sort">
-            <option value="price-desc">Price: high to low</option>
-            <option value="price-asc">Price: low to high</option>
-            <option value="growth">Fastest rising</option>
-            <option value="transit">Best public transport</option>
-            <option value="total">Lowest total cost</option>
-            <option value="saved">Saved first</option>
+            <option value="price-desc" data-i18n>Price: high to low</option>
+            <option value="price-asc" data-i18n>Price: low to high</option>
+            <option value="growth" data-i18n>Fastest rising</option>
+            <option value="transit" data-i18n>Best public transport</option>
+            <option value="total" data-i18n>Lowest total cost</option>
+            <option value="saved" data-i18n>Saved first</option>
           </select>
         </label>
       </div>
@@ -659,10 +671,10 @@
       <details class="panel">
         <summary>
           <span class="ico" style="background:var(--teal-soft);color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></span>
-          <span>How the estimates work<small>Data source, price levels and photo credits</small></span>
+          <span><span data-i18n>How the estimates work</span><small data-i18n>Data source, price levels and photo credits</small></span>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
-        <div class="panel-body method-body">
+        <div class="panel-body method-body" data-i18n-html="@method">
           <p><strong>Comfortable</strong> is the official average monthly rent from the Israel Central Bureau of Statistics (CBS) for that area and size, for <span id="m-quarter"></span>. It covers new and renewed contracts.</p>
           <p>CBS publishes averages only, not the spread of prices. <strong>Budget</strong> and <strong>luxury</strong> are rules of thumb applied to the CBS average:</p>
           <ul>
@@ -681,9 +693,9 @@
       </details>
 
       <section class="sources" id="sources" aria-labelledby="sources-title">
-        <h2 id="sources-title"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></span>Sources &amp; data</h2>
-        <p>Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.</p>
-        <ul class="src-list">
+        <h2 id="sources-title"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></span><span data-i18n>Sources &amp; data</span></h2>
+        <p data-i18n>Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.</p>
+        <ul class="src-list" data-i18n-html="@sources">
           <li><span class="used">Rent by city and rooms</span>
             <strong>Israel Central Bureau of Statistics (CBS): Average Monthly Prices of Rent, Table 4.9</strong>
             Official average rent of new and renewed contracts, by district, big city and number of rooms, Q3 2023 to Q2 2026 (Price Statistics Monthly, Jun 2025 to Sep 2026 editions).
@@ -729,7 +741,7 @@
             The scripts that clean the data, build the charts and produce every number on this page.
             <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis" target="_blank" rel="noopener noreferrer">GitHub project</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/tree/main/R" target="_blank" rel="noopener noreferrer">R scripts</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/tree/main/data/raw" target="_blank" rel="noopener noreferrer">All raw data</a></span></li>
         </ul>
-        <div class="assume">
+        <div class="assume" data-i18n-html="@assume">
           <strong>My assumptions (not from official data)</strong>, so you know what is an estimate:
           <ul>
             <li>Budget and luxury rent: about 80% and 140% of the CBS average (CBS only publishes averages).</li>
@@ -743,7 +755,7 @@
         </div>
       </section>
 
-      <footer>
+      <footer data-i18n-html="@footer">
         Data: Israel Central Bureau of Statistics (Price Statistics Monthly Table 4.9; Household Expenditure Survey 2021). Map and stations © OpenStreetMap contributors.
         Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
       </footer>
@@ -754,10 +766,10 @@
     <div id="map"></div>
     <div class="map-legend">
       <div id="legend-title">Avg rent</div>
-      <div><span class="sw" style="background:var(--primary)"></span>City</div>
-      <div><span class="sw" style="background:var(--accent)"></span>Selected</div>
-      <div id="legend-over" hidden><span class="sw" style="background:var(--over)"></span>Over budget</div>
-      <button type="button" id="stations-btn" aria-pressed="false">🚆 Train &amp; light rail</button>
+      <div><span class="sw" style="background:var(--primary)"></span><span data-i18n>City</span></div>
+      <div><span class="sw" style="background:var(--accent)"></span><span data-i18n>Selected</span></div>
+      <div id="legend-over" hidden><span class="sw" style="background:var(--over)"></span><span data-i18n>Over budget</span></div>
+      <button type="button" id="stations-btn" aria-pressed="false" data-i18n>🚆 Train &amp; light rail</button>
     </div>
   </aside>
 </main>
@@ -771,6 +783,10 @@
 <script src="rent-data.js?v=2026q2-6"></script>
 <script src="living-data.js?v=3"></script>
 <script src="city-media.js?v=1"></script>
+<script src="i18n-places.js?v=1"></script>
+<script src="i18n-he.js?v=1"></script>
+<script src="i18n-ru.js?v=1"></script>
+<script src="i18n-ar.js?v=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -785,6 +801,27 @@
   const MIN_ROOMS = 1, MAX_ROOMS = 6, STEP = 0.5;
 
   const $ = (id) => document.getElementById(id);
+
+  // ---- Languages ----
+  // T() translates an English string (with {placeholders}); P() translates a place name.
+  // Translations live in i18n.js; anything missing falls back to English.
+  const I18N = window.I18N || {};
+  const LANGS = ["en", "he", "ru", "ar"];
+  const RTL = ["he", "ar"];
+  const detectLang = () => {
+    try { const s = JSON.parse(localStorage.getItem("rent-calc") || "{}").lang; if (LANGS.includes(s)) return s; } catch (e) {}
+    const n = (navigator.language || "en").slice(0, 2);
+    return LANGS.includes(n) ? n : "en";
+  };
+  let lang = detectLang();
+  const T = (s, v) => {
+    let out = (lang !== "en" && I18N[lang] && I18N[lang][s]) || s;
+    if (lang !== "en" && out === s) (window.__i18nMissing = window.__i18nMissing || new Set()).add(lang + ": " + s);   // for checking coverage
+    if (v) out = out.replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined ? v[k] : m));
+    return out;
+  };
+  const P = (name) => (lang !== "en" && I18N.places && I18N.places[lang] && I18N.places[lang][name]) || name;
+  const cap = (w) => w[0].toUpperCase() + w.slice(1);
   const fmt = (n) => "₪" + Math.round(n).toLocaleString("en-US");
   const fmtK = (n) => "₪" + (n / 1000).toFixed(1) + "k";
   const round50 = (n) => Math.round(n / 50) * 50;
@@ -792,11 +829,11 @@
   const he = (t) => '<bdi dir="rtl" lang="he">' + t + "</bdi>";
   const quarterLabel = (q) => {
     const [y, n] = q.split("Q");
-    return ["Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"][+n - 1] + " " + y;
+    return T(["Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"][+n - 1]) + " " + y;
   };
   const bandFor = (r) => r <= 2 ? "1-2" : r <= 3 ? "2.5-3" : r <= 4 ? "3.5-4" : "4.5+";
   const roomsShort = (r) => (r >= MAX_ROOMS ? "6+" : String(r));
-  const roomsText = (r) => roomsShort(r) + (r === 1 ? " room" : " rooms");
+  const roomsText = (r) => (r === 1 ? T("{n} room", { n: 1 }) : T("{n} rooms", { n: roomsShort(r) }));
   const bedCount = (r) => Math.max(0, Math.floor(r) - 1);
 
   const byName = Object.fromEntries(D.areas.map((a) => [a.name, a]));
@@ -825,7 +862,8 @@
     hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else area name
     shabbat: saved.shabbat === true,
     guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
-    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2
+    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2,
+    lang
   };
   if (state.town) state.area = LD.costs.otherTowns[state.town];
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
@@ -835,15 +873,19 @@
   // Everything a person might type: big cities (English or Hebrew), districts,
   // Israel, and other towns that fall back to their district's figures
   const norm = (t) => String(t).toLowerCase().replace(/[\u2019'`\-\s.]/g, "");
+  // A place can be typed in any of the four languages
+  const allNames = (n) => [n, ...["he", "ru", "ar"].map((l) => (I18N.places && I18N.places[l] && I18N.places[l][n]) || "")];
   const places = [
-    ...cities.map((c) => ({ label: c.name, sub: c.district + (c.hebrew ? " · " + c.hebrew : ""), area: c.name, town: null, keys: [c.name, c.hebrew || ""] })),
-    ...D.areas.filter((a) => a.type === "District").map((a) => ({ label: a.name, sub: "Whole district average", area: a.name, town: null, keys: [a.name] })),
-    { label: "Israel", sub: "National average", area: "Israel", town: null, keys: ["Israel", "ישראל", "national"] },
-    ...Object.entries(LD.costs.otherTowns).map(([t, d]) => ({ label: t, sub: d + " · district estimate", area: d, town: t, keys: [t] }))
+    ...cities.map((c) => ({ id: c.name, kind: "city", district: c.district, area: c.name, town: null, keys: [...allNames(c.name), c.hebrew || ""] })),
+    ...D.areas.filter((a) => a.type === "District").map((a) => ({ id: a.name, kind: "district", area: a.name, town: null, keys: allNames(a.name) })),
+    { id: "Israel", kind: "national", area: "Israel", town: null, keys: [...allNames("Israel"), "national"] },
+    ...Object.entries(LD.costs.otherTowns).map(([t, d]) => ({ id: t, kind: "town", district: d, area: d, town: t, keys: allNames(t) }))
   ];
+  const placeSub = (p) => p.kind === "city" ? P(p.district) + (lang !== "he" && byName[p.id].hebrew ? " · " + byName[p.id].hebrew : "")
+    : p.kind === "district" ? T("Whole district average") : p.kind === "national" ? T("National average") : T("{district} · district estimate", { district: P(p.district) });
   const areaInput = $("area"), areaList = $("area-list");
   let matches = [], active = -1;
-  const placeLabel = () => state.town || (state.area === "Israel" ? "Israel (national average)" : state.area);
+  const placeLabel = () => (state.town ? P(state.town) : state.area === "Israel" ? T("Israel (national average)") : P(state.area));
   function searchPlaces(q) {
     const n = norm(q);
     if (!n) return places.filter((p) => !p.town && cities.some((c) => c.name === p.area)).slice(0, 8);
@@ -857,8 +899,8 @@
   function openList(q) {
     matches = searchPlaces(q); active = matches.length ? 0 : -1;
     areaList.innerHTML = matches.length
-      ? matches.map((p, i) => '<li role="option" id="opt-' + i + '" data-i="' + i + '" aria-selected="' + (i === active) + '"><b>' + esc(p.label) + "</b><span>" + esc(p.sub) + "</span></li>").join("")
-      : '<li class="empty" role="option" aria-disabled="true">No match. Try the nearest big city or pick its district.</li>';
+      ? matches.map((p, i) => '<li role="option" id="opt-' + i + '" data-i="' + i + '" aria-selected="' + (i === active) + '"><b>' + esc(P(p.id)) + "</b><span>" + esc(placeSub(p)) + "</span></li>").join("")
+      : '<li class="empty" role="option" aria-disabled="true">' + T("No match. Try the nearest big city or pick its district.") + "</li>";
     areaList.hidden = false; areaInput.setAttribute("aria-expanded", "true");
     areaInput.setAttribute("aria-activedescendant", active >= 0 ? "opt-" + active : "");
   }
@@ -891,8 +933,7 @@
     if (li) { e.preventDefault(); choose(matches[+li.dataset.i]); }
   });
 
-  $("data-chip").textContent = "Official CBS data · " + quarterLabel(D.quarter);
-  $("m-quarter").textContent = quarterLabel(D.quarter);
+
 
   // ---- Public transport ----
   const RENT_ADJ = { rail: 0.05, bus: 0, car: -0.05 };   // rule of thumb, see "How the estimates work"
@@ -901,9 +942,9 @@
   function transitText(t, long) {
     if (!t) return "";
     const parts = [];
-    if (t.train) parts.push((long ? "<b>" + t.train + "</b> train" : "🚆 " + t.train));
-    if (t.lightRail) parts.push((long ? "<b>" + t.lightRail + "</b> light rail" : "🚊 " + t.lightRail));
-    if (t.metro) parts.push((long ? "<b>" + t.metro + "</b> Carmelit" : "🚇 " + t.metro));
+    if (t.train) parts.push((long ? "<b>" + t.train + "</b> " + T("train") : "🚆 " + t.train));
+    if (t.lightRail) parts.push((long ? "<b>" + t.lightRail + "</b> " + T("light rail") : "🚊 " + t.lightRail));
+    if (t.metro) parts.push((long ? "<b>" + t.metro + "</b> " + T("Carmelit") : "🚇 " + t.metro));
     return parts.join(long ? " · " : " ");
   }
 
@@ -922,6 +963,8 @@
     return list.find((h) => h.en === state.hood) || null;
   }
   const areaAdj = (hood) => (hood ? AREA_ADJ[hood.hint] || 0 : 0);
+  // Neighbourhood names: Hebrew in Hebrew, otherwise the English transliteration
+  const hoodName = (h) => (h.members ? T("By the beach") : lang === "he" ? h.he : h.en);
 
   // ---- Cost of living model ----
   const STD_PERSONS = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6];   // CBS equivalence scale
@@ -1023,7 +1066,7 @@
   }
   function initMap() {
     if (!window.L) {
-      $("map").innerHTML = '<div class="map-fallback">The map couldn\'t load. Everything else still works.</div>';
+      $("map").innerHTML = '<div class="map-fallback">' + T("The map couldn't load. Everything else still works.") + "</div>";
       return;
     }
     map = L.map("map", { zoomControl: false }).setView([31.9, 34.9], 9);
@@ -1050,7 +1093,7 @@
     if (on && !stationLayer) {
       stationLayer = L.layerGroup(LD.stations.map((st) =>
         L.circleMarker([st.la, st.lo], { radius: st.k === "train" ? 6 : 4, color: "#fff", weight: 1.5, fillColor: STN_COLORS[st.k], fillOpacity: 1 })
-          .bindTooltip(st.n + " · " + STN_NAMES[st.k])));
+          .bindTooltip(st.n + " · " + T(STN_NAMES[st.k]))));
     }
     if (stationLayer) { if (on) stationLayer.addTo(map); else stationLayer.remove(); }
   }
@@ -1087,49 +1130,49 @@
     if (B) tags.push(b.rent <= B ? ["ok", "In budget"] : ["over", "Over budget"]);
     return tags;
   }
-  const tagHtml = (tags) => tags.slice(0, 3).map(([cls, t]) => '<span class="tag ' + cls + '"><i></i>' + t + "</span>").join("");
+  const tagHtml = (tags) => tags.slice(0, 3).map(([cls, t]) => '<span class="tag ' + cls + '"><i></i>' + T(t) + "</span>").join("");
 
   // ---- Hero ----
   function renderHero(area, band, b) {
     const town = state.town;
     const media = !town && M.cities[area.name];
     const avg = b.rent;
-    const kicker = town ? area.name + " · district figures" : area.type === "City" ? area.district : area.type === "National" ? "Nationwide" : "Whole district";
-    const title = town || (area.type === "National" ? "All of Israel" : area.name);
+    const kicker = town ? T("{district} · district figures", { district: P(area.name) }) : area.type === "City" ? P(area.district) : area.type === "National" ? T("Nationwide") : T("Whole district");
+    const title = town ? P(town) : area.type === "National" ? T("All of Israel") : P(area.name);
     $("hero-media").innerHTML =
       (media ? '<img src="' + esc(media.photo) + '" alt="' + esc(area.name) + '" decoding="async">' : skyline()) +
       '<div class="tags">' + tagHtml(town ? [["est", "District estimate"]] : tagsFor(area, band, b)) + "</div>" +
       '<div class="hero-over"><div class="kicker">' + esc(kicker) + "</div><h1>" + esc(title) + "</h1></div>" +
-      (media ? '<a class="credit" href="' + esc(media.source) + '" target="_blank" rel="noopener noreferrer">Photo: ' + esc(media.credit) + " · " + esc(media.license) + "</a>" : "");
+      (media ? '<a class="credit" href="' + esc(media.source) + '" target="_blank" rel="noopener noreferrer">' + T("Photo:") + " " + esc(media.credit) + " · " + esc(media.license) + "</a>" : "");
 
-    $("hero-price").innerHTML = fmt(round50(avg)) + " <small>/ month</small>";
-    $("hero-addr").textContent = "Typical " + roomsText(state.rooms) + " apartment in " + title + " · CBS data for " + band + " rooms, " + quarterLabel(D.quarter);
+    $("hero-price").innerHTML = fmt(round50(avg)) + " <small>" + T("/ month") + "</small>";
+    $("hero-addr").textContent = T("Typical {rooms} apartment in {place} · CBS data for {band} rooms, {quarter}", { rooms: roomsText(state.rooms), place: title, band, quarter: quarterLabel(D.quarter) });
 
     const nat = bandOf(byName["Israel"], band).rent;
     const diff = avg / nat - 1;
     const beds = bedCount(state.rooms);
-    const parts = ["<span><b>" + roomsShort(state.rooms) + "</b> RM</span>", "<span>" + (beds ? "<b>" + beds + "</b> BD" : "<b>Studio</b>") + "</span>"];
-    if (area.name !== "Israel") parts.push("<span><b>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</b> vs Israel</span>");
-    if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> in a year</span>");
-    if (b.se != null) parts.push("<span>±<b>" + fmt(1.96 * b.se) + "</b> margin</span>");
+    const parts = ["<span><b>" + roomsShort(state.rooms) + "</b> " + T("RM") + "</span>", "<span>" + (beds ? "<b>" + beds + "</b> " + T("BD") : "<b>" + T("Studio") + "</b>") + "</span>"];
+    if (area.name !== "Israel") parts.push("<span><b>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</b> " + T("vs Israel") + "</span>");
+    if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> " + T("in a year") + "</span>");
+    if (b.se != null) parts.push("<span>±<b>" + fmt(1.96 * b.se) + "</b> " + T("margin") + "</span>");
     const tr = !town && transitOf(area.name);
-    if (tr) parts.push("<span>" + (stopCount(tr) ? transitText(tr, true) : "<b>No</b> rail stations") + "</span>");
+    if (tr) parts.push("<span>" + (stopCount(tr) ? transitText(tr, true) : T("No rail stations")) + "</span>");
     $("metrics").innerHTML = parts.join("");
 
     const adj = RENT_ADJ[state.transport];
     const hood = currentHood(area.name);
     const hAdj = areaAdj(hood);
     const bits = [];
-    if (hood) bits.push((hAdj ? "<i>" + (hAdj > 0 ? "+" : "−") + Math.abs(Math.round(hAdj * 100)) + "%</i> " : "") + esc(hood.en) + ": " + HINT_TEXT[hood.hint]);
-    if (adj > 0) bits.push("<i>+5%</i> near a train or light-rail station");
-    else if (adj < 0) bits.push("<i>−5%</i> further from public transport");
-    $("hero-adj").innerHTML = bits.length ? bits.join(" · ") + " → about <b>" + fmt(round50(avg * (1 + adj) * (1 + hAdj))) + "</b>/month" : "";
+    if (hood) bits.push((hAdj ? "<i>" + (hAdj > 0 ? "+" : "−") + Math.abs(Math.round(hAdj * 100)) + "%</i> " : "") + esc(hoodName(hood)) + ": " + T(HINT_TEXT[hood.hint]));
+    if (adj > 0) bits.push("<i>+5%</i> " + T("near a train or light-rail station"));
+    else if (adj < 0) bits.push("<i>−5%</i> " + T("further from public transport"));
+    $("hero-adj").innerHTML = bits.length ? bits.join(" · ") + " → " + T("about {price}/month", { price: "<b>" + fmt(round50(avg * (1 + adj) * (1 + hAdj))) + "</b>" }) : "";
 
     const level = fitLevel(avg);            // what the budget covers
     const chosen = currentLevel(avg);       // what the person picked (or the budget's level)
     for (const [key, t] of Object.entries(TIERS)) {
       const el = $("tier-" + key);
-      el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>/mo</small>";
+      el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>" + T("/mo") + "</small>";
       el.querySelector("[data-range]").textContent = fmt(round50(avg * t.lo)) + " - " + fmt(round50(avg * t.hi));
       el.classList.toggle("selected", key === chosen);
       el.setAttribute("aria-pressed", String(key === chosen));
@@ -1139,13 +1182,15 @@
     $("auto-level").hidden = !(state.level && state.level !== autoLevel(avg));
 
     const notes = [];
-    if (town) notes.push("CBS doesn't publish rents for " + town + ", so these figures use the " + area.name + " average. Rents in " + town + " may differ.");
+    if (town) notes.push(T("CBS doesn't publish rents for {town}, so these figures use the {district} average. Rents in {town} may differ.", { town: P(town), district: P(area.name) }));
     if (state.transport === "rail" && tr && stopCount(tr) <= 2)
-      notes.push(area.name + " has only " + (stopCount(tr) === 1 ? "one rail station" : stopCount(tr) === 0 ? "no rail stations" : "two rail stations") + ", so fewer homes are within walking distance of one.");
-    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ".");
-    else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
-    if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
-    if (area.type === "District") notes.push("District figures average all towns in the district, including its big cities.");
+      notes.push(T(stopCount(tr) === 1 ? "{city} has only one rail station, so fewer homes are within walking distance of one."
+        : stopCount(tr) === 0 ? "{city} has no rail stations, so fewer homes are within walking distance of one."
+        : "{city} has only two rail stations, so fewer homes are within walking distance of one.", { city: P(area.name) }));
+    if (area.proxyFor) notes.push(T("CBS doesn't publish rents for {city} (under 100,000 residents), so these figures use neighbouring {proxy}.", { city: P(area.name), proxy: P(area.proxyFor) }));
+    else if (b.estimated) notes.push(T("CBS doesn't publish a 1-2 room figure for {city}, so this one is estimated from its 2.5-3 room rent.", { city: P(area.name) }));
+    if (band === "4.5+") notes.push(T("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide."));
+    if (area.type === "District") notes.push(T("District figures average all towns in the district, including its big cities."));
     $("note").textContent = notes.join(" ");
 
     renderVerdict(avg, band, level);
@@ -1159,17 +1204,17 @@
     let msg = null;
     if (state.noLimit) {
       const top = measured.reduce((m, c) => bandOf(c, band).rent > bandOf(m, band).rent ? c : m);
-      msg = "<strong>No budget limit.</strong> Here the range runs from about " + fmt(round50(avg * TIERS.budget.lo)) +
-        " for a basic flat to " + fmt(round50(avg * TIERS.luxury.hi)) + " or more for the best homes. The priciest big city for " +
-        band + " rooms is " + top.name + ".";
+      msg = T("<strong>No budget limit.</strong> Here the range runs from about {lo} for a basic flat to {hi} or more for the best homes. The priciest big city for {band} rooms is {top}.",
+        { lo: fmt(round50(avg * TIERS.budget.lo)), hi: fmt(round50(avg * TIERS.luxury.hi)), band, top: P(top.name) });
     } else if (state.budget) {
       const B = state.budget;
-      if (level === "luxury") msg = "<strong>" + fmt(B) + "</strong> covers a <strong>luxury</strong> flat here.";
-      else if (level === "comfortable") msg = "<strong>" + fmt(B) + "</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about " + fmt(round50(avg * TIERS.luxury.mid)) + ".";
-      else if (level === "budget") msg = "<strong>" + fmt(B) + "</strong> fits the <strong>budget</strong> level here. A typical flat costs about " + fmt(round50(avg)) + ".";
-      else msg = "<strong>" + fmt(B) + "</strong> is below the budget level here (about " + fmt(round50(avg * TIERS.budget.mid)) + "). Try fewer rooms or another city.";
+      const v = { b: fmt(B), lux: fmt(round50(avg * TIERS.luxury.mid)), avg: fmt(round50(avg)), min: fmt(round50(avg * TIERS.budget.mid)) };
+      if (level === "luxury") msg = T("<strong>{b}</strong> covers a <strong>luxury</strong> flat here.", v);
+      else if (level === "comfortable") msg = T("<strong>{b}</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about {lux}.", v);
+      else if (level === "budget") msg = T("<strong>{b}</strong> fits the <strong>budget</strong> level here. A typical flat costs about {avg}.", v);
+      else msg = T("<strong>{b}</strong> is below the budget level here (about {min}). Try fewer rooms or another city.", v);
       const fits = measured.filter((c) => bandOf(c, band).rent <= B).length;
-      msg += " It covers the average " + band + " room rent in <strong>" + fits + " of " + measured.length + "</strong> big cities (marked In budget below).";
+      msg += " " + T("It covers the average {band} room rent in <strong>{n} of {total}</strong> big cities (marked In budget below).", { band, n: fits, total: measured.length });
     }
     if (msg) { v.innerHTML = BULB + "<div>" + msg + "</div>"; v.hidden = false; } else v.hidden = true;
   }
@@ -1192,32 +1237,32 @@
       s === "saved" ? (state.favs.includes(y.c.name) - state.favs.includes(x.c.name)) || y.b.rent - x.b.rent :
       y.b.rent - x.b.rent);
 
-    $("feed-title").textContent = roomsText(state.rooms) + " across " + cities.length + " cities";
-    $("feed-sub").textContent = "Average monthly rent (comfortable level). Tap a city to see its prices.";
+    $("feed-title").textContent = T("{rooms} across {n} cities", { rooms: roomsText(state.rooms), n: cities.length });
+    $("feed-sub").textContent = T("Average monthly rent (comfortable level). Tap a city to see its prices.");
 
     const feed = $("feed");
     feed.innerHTML = rows.map(({ c, b, total }) => {
       const m = M.cities[c.name] || {};
       const fav = state.favs.includes(c.name);
       const beds = bedCount(state.rooms);
-      const yoy = b.yoy != null ? '<span class="' + (b.yoy >= 0 ? "up" : "down") + '">' + (b.yoy >= 0 ? "▲ " : "▼ ") + (b.yoy * 100).toFixed(1) + "%/yr</span>" : "";
-      return '<article class="listing' + (c.name === state.area ? " selected" : "") + '" data-city="' + esc(c.name) + '" tabindex="0" aria-label="' + esc(c.name + ", " + fmt(b.rent) + " a month") + '">' +
+      const yoy = b.yoy != null ? '<span class="' + (b.yoy >= 0 ? "up" : "down") + '">' + (b.yoy >= 0 ? "▲ " : "▼ ") + (b.yoy * 100).toFixed(1) + "%" + T("/yr") + "</span>" : "";
+      return '<article class="listing' + (c.name === state.area ? " selected" : "") + '" data-city="' + esc(c.name) + '" tabindex="0" aria-label="' + esc(P(c.name) + ", " + fmt(b.rent) + " " + T("a month")) + '">' +
         '<div class="media">' + (m.photo ? '<img src="' + esc(m.photo) + '" alt="" loading="lazy" decoding="async">' : "") +
           '<div class="tags">' + tagHtml(tagsFor(c, band, b)) + "</div>" +
-          '<button type="button" class="fav" data-fav="' + esc(c.name) + '" aria-pressed="' + fav + '" aria-label="' + (fav ? "Remove " : "Save ") + esc(c.name) + '">' +
+          '<button type="button" class="fav" data-fav="' + esc(c.name) + '" aria-pressed="' + fav + '" aria-label="' + esc(T(fav ? "Remove {name}" : "Save {name}", { name: P(c.name) })) + '">' +
           '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-9A5 5 0 0 1 12 6a5 5 0 0 1 9.2 5C19 15.6 12 20 12 20z"/></svg></button>' +
         "</div>" +
         '<div class="body">' +
-          '<div class="l-price">' + fmt(b.rent) + "<small>/mo</small></div>" +
-          '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " rm</span><span>" + (beds ? beds + " bd" : "Studio") + "</span>" + yoy +
-          (stopCount(transitOf(c.name)) ? '<span class="l-transit" title="Train / light rail / Carmelit stations">' + transitText(transitOf(c.name), false) + "</span>" : "") + "</div>" +
-          '<div class="l-addr">' + esc(c.name) + ", " + esc(c.district) + (c.proxyFor ? " · based on " + esc(c.proxyFor) : "") + "</div>" +
-          '<div class="l-bar" title="Compared with the most expensive city"><i style="width:' + Math.min(100, b.rent / maxRent * 100).toFixed(1) + '%"></i>' +
-          (B && B < maxRent ? '<b style="left:' + (B / maxRent * 100).toFixed(1) + '%" title="Your budget"></b>' : "") + "</div>" +
-          '<div class="l-allin">≈ ' + fmt(total) + "/mo all-in for your household</div>" +
+          '<div class="l-price">' + fmt(b.rent) + "<small>" + T("/mo") + "</small></div>" +
+          '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " " + T("rm") + "</span><span>" + (beds ? beds + " " + T("bd") : T("Studio")) + "</span>" + yoy +
+          (stopCount(transitOf(c.name)) ? '<span class="l-transit" title="' + esc(T("Train / light rail / Carmelit stations")) + '">' + transitText(transitOf(c.name), false) + "</span>" : "") + "</div>" +
+          '<div class="l-addr">' + esc(P(c.name)) + ", " + esc(P(c.district)) + (c.proxyFor ? " · " + esc(T("based on {city}", { city: P(c.proxyFor) })) : "") + "</div>" +
+          '<div class="l-bar" title="' + esc(T("Compared with the most expensive city")) + '"><i style="width:' + Math.min(100, b.rent / maxRent * 100).toFixed(1) + '%"></i>' +
+          (B && B < maxRent ? '<b style="inset-inline-start:' + (B / maxRent * 100).toFixed(1) + '%" title="' + esc(T("Your budget")) + '"></b>' : "") + "</div>" +
+          '<div class="l-allin">' + T("≈ {price}/mo all-in for your household", { price: fmt(total) }) + "</div>" +
         "</div></article>";
     }).join("");
-    $("feed-end").textContent = "You've seen all " + cities.length + " cities";
+    $("feed-end").textContent = T("You've seen all {n} cities", { n: cities.length });
 
     // fade cards in as they scroll into view
     if (observer) observer.disconnect();
@@ -1259,14 +1304,14 @@
   };
   const kwOn = (w) => state.features.includes(w);
   const kwBtn = ([w, en]) => '<button type="button" class="kw' + (kwOn(w) ? " on" : "") + '" data-kw="' + esc(w) + '" aria-pressed="' + kwOn(w) + '">' +
-    he(esc(w)) + "<span>" + (kwOn(w) ? "✓ " : "") + en + (FEATURES[w] ? " · filter" : "") + "</span></button>";
+    he(esc(w)) + "<span>" + (kwOn(w) ? "✓ " : "") + T(en) + (FEATURES[w] ? " · " + T("filter") : "") + "</span></button>";
 
   function renderGuide(area, band, avg) {
     const isTown = !!area.hebrew && !state.town;
     const cityHe = isTown ? (SEARCH_NAME[area.name] || area.hebrew) : "[שם העיר]";
     const cityEn = isTown ? area.name : state.town || "[your town]";
     const r = state.rooms;
-    $("guide-title").textContent = "How to search for " + roomsText(r) + " in " + (isTown ? area.name : state.town || "your town");
+    $("guide-title").textContent = T("How to search for {rooms} in {place}", { rooms: roomsText(r), place: isTown ? P(area.name) : state.town ? P(state.town) : T("your town") });
 
     const hood = isTown ? currentHood(area.name) : null;
     const placeHe = hood ? (hood.beach && !hood.hood && hood.members ? cityHe + " ליד הים" : hood.he + ", " + cityHe) : cityHe;
@@ -1277,37 +1322,38 @@
       ["Facebook", "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " + cityHe : cityHe), true]
     ];
     $("guide-phrases").innerHTML = phrases.map(([lang, text, rtl]) =>
-      '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + lang + "</span>" +
-      '<span class="txt"' + (rtl ? ' dir="rtl" lang="he"' : "") + ">" + esc(text) + '</span><span class="act">Copy</span></button>').join("");
+      '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + T(lang) + "</span>" +
+      '<span class="txt"' + (rtl ? ' dir="rtl" lang="he"' : ' dir="ltr" lang="en"') + ">" + esc(text) + '</span><span class="act">' + T("Copy") + "</span></button>").join("");
 
     let price;
-    if (state.noLimit) price = ["Leave empty", "No budget limit, so don't cap the price."];
-    else if (state.budget) price = ["Up to " + fmt(state.budget), "Your budget."];
+    if (state.noLimit) price = [T("Leave empty"), T("No budget limit, so don't cap the price.")];
+    else if (state.budget) price = [T("Up to {price}", { price: fmt(state.budget) }), T("Your budget.")];
     else price = [fmt(round50(avg * TIERS.comfortable.lo)) + " - " + fmt(round50(avg * TIERS.comfortable.hi)),
-      "The comfortable range. Budget: up to " + fmt(round50(avg * TIERS.budget.hi)) + ", luxury: from " + fmt(round50(avg * TIERS.luxury.lo)) + "."];
-    const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? "any" : r + STEP;
+      T("The comfortable range. Budget: up to {b}, luxury: from {l}.", { b: fmt(round50(avg * TIERS.budget.hi)), l: fmt(round50(avg * TIERS.luxury.lo)) })];
+    const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? T("any") : r + STEP;
     const rows = [
-      ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : state.town || "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
+      ["City", "עיר", isTown ? he(area.hebrew) + (lang === "he" ? "" : " (" + esc(P(area.name)) + ")") : state.town ? esc(P(state.town)) : T("Your town"), isTown ? "" : T("Type your town's name in Hebrew or English.")],
       ...(hood ? [["Neighbourhood", "שכונה",
-        hood.members ? hood.members.map((m) => he(m.he)).join(", ") : he(hood.he) + " (" + esc(hood.en) + ")",
-        hood.members ? "Tick these beach-side neighbourhoods on the site." : hood.hood ? "The Yad2 button already opens this neighbourhood." : "Type it into the site's location box after the city."]] : []),
-      ["Rooms", "חדרים", r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r, "Widen it to " + lo + " - " + hi + " to see more homes."],
+        hood.members ? hood.members.map((m) => he(m.he)).join(", ") : he(hood.he) + (lang === "he" ? "" : " (" + esc(hood.en) + ")"),
+        T(hood.members ? "Tick these beach-side neighbourhoods on the site." : hood.hood ? "The Yad2 button already opens this neighbourhood." : "Type it into the site's location box after the city.")]] : []),
+      ["Rooms", "חדרים", r >= MAX_ROOMS ? T("From 6") : T("From {a} to {b}", { a: r, b: r }), T("Widen it to {lo} - {hi} to see more homes.", { lo, hi })],
       ["Price per month", "מחיר", price[0], price[1]],
-      ["Property type", "סוג נכס", he("דירה") + " (apartment)", "For luxury also try " + he("דירת גן") + " (garden flat) and " + he("פנטהאוז") + "."]
+      ["Property type", "סוג נכס", he("דירה") + (lang === "he" ? "" : " " + T("(apartment)")), T("For luxury also try {a} (garden flat) and {b}.", { a: he("דירת גן"), b: he("פנטהאוז") })]
     ];
+    // Show the Hebrew field name too, since the sites are in Hebrew (once is enough in Hebrew)
     $("guide-filters").innerHTML = rows.map(([en, h, val, note]) =>
-      "<tr><th>" + en + he(h) + "</th><td>" + val + (note ? "<small>" + note + "</small>" : "") + "</td></tr>").join("");
+      "<tr><th>" + (lang === "he" ? he(h) : T(en) + he(h)) + "</th><td>" + val + (note ? "<small>" + note + "</small>" : "") + "</td></tr>").join("");
 
     const level = currentLevel(avg);
     $("guide-keywords").innerHTML =
       [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
-        '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " · your level" : "") + "</h4>" +
+        '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + T(label) + (k === level ? " · " + T("your level") : "") + "</h4>" +
         KEYWORDS[k].map(kwBtn).join("") + "</div>").join("") +
-      '<div class="kw-group any"><h4>For your transport choice</h4><div class="kw-wrap">' + TRANSIT_KW[state.transport].map(kwBtn).join("") + "</div></div>" +
-      ((hood && hood.beach) || state.shabbat ? '<div class="kw-group any"><h4>For your area and needs</h4><div class="kw-wrap">' +
+      '<div class="kw-group any"><h4>' + T("For your transport choice") + '</h4><div class="kw-wrap">' + TRANSIT_KW[state.transport].map(kwBtn).join("") + "</div></div>" +
+      ((hood && hood.beach) || state.shabbat ? '<div class="kw-group any"><h4>' + T("For your area and needs") + '</h4><div class="kw-wrap">' +
         [...(hood && hood.beach ? [["קרוב לים", "near the beach"], ["נוף לים", "sea view"]] : []),
          ...(state.shabbat ? [["קרוב לבית כנסת", "near a synagogue"], ["שבת", "Shabbat (e.g. Shabbat lift)"]] : [])].map(kwBtn).join("") + "</div></div>" : "") +
-      '<div class="kw-group any"><h4>Useful at any level</h4><div class="kw-wrap">' + ALWAYS.map(kwBtn).join("") + "</div></div>";
+      '<div class="kw-group any"><h4>' + T("Useful at any level") + '</h4><div class="kw-wrap">' + ALWAYS.map(kwBtn).join("") + "</div></div>";
   }
 
   // ---- Where to look ----
@@ -1409,55 +1455,61 @@
     ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6", "komo"],
     ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff", "homeless"],
     ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a", "onmap"],
-    ["Facebook groups", "facebook.com", "Finds your city's Facebook rental groups (via Google, no login needed). " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90", "facebook"],
+    ["Facebook groups", "facebook.com", "Finds your city's Facebook rental groups (via Google, no login needed). {group} is a big group for flats without agents.", "#0a9d90", "facebook"],
     ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh. Pick your region on the site.", "#e0a400", "janglo", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
   ];
   function renderSites(area) {
     const L = siteLinks(area);
     const place = L.city ? L.city.name : state.town || null;
-    $("go-title").textContent = place ? "Go straight to the listings in " + place : "Go straight to the listings";
+    $("go-title").textContent = place ? T("Go straight to the listings in {place}", { place: P(place) }) : T("Go straight to the listings");
     $("go-row").innerHTML = [["Realta · all sites in one", L.realta, "#1c1433"], ["Yad2", L.yad2, "#6c3cf0"], ["Komo", L.komo, "#0fb5a6"], ["OnMap", L.onmap, "#e0338a"], ["Madlan", L.madlan, "#ff3d8b"],
       ["Homeless", L.homeless, "#9b5cff"], ["Facebook groups", L.facebook, "#0a9d90"]]
-      .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + n + " " + EXT + "</a>").join("");
+      .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + T(n) + " " + EXT + "</a>").join("");
     document.querySelectorAll("[data-linkmode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.linkmode === state.linkMode)));
     const fl = state.linkMode === "all" ? state.features.filter((w) => FEATURES[w]) : [];
-    const roomsTxt = state.rooms >= MAX_ROOMS ? "6+ rooms" : Math.max(1, state.rooms - 0.5) + "-" + (state.rooms + 0.5) + " rooms";
-    const incl = state.linkMode === "city" ? ["your city only"]
-      : [roomsTxt, L.maxP ? "up to " + fmt(L.maxP) + "/month" : "any price (enter a budget to cap it)", ...fl.map((w) => he(esc(w)))];
-    $("go-incl").innerHTML = "<b>Included in the links:</b> " + incl.join(" · ") +
+    const roomsTxt = state.rooms >= MAX_ROOMS ? T("6+ rooms") : T("{a}-{b} rooms", { a: Math.max(1, state.rooms - 0.5), b: state.rooms + 0.5 });
+    const incl = state.linkMode === "city" ? [T("your city only")]
+      : [roomsTxt, L.maxP ? T("up to {price}/month", { price: fmt(L.maxP) }) : T("any price (enter a budget to cap it)"), ...fl.map((w) => he(esc(w)))];
+    const nextMode = state.linkMode === "all" ? "\u201c" + T("Rooms & budget only") + "\u201d" : state.linkMode === "basic" ? "\u201c" + T("Just the city") + "\u201d" : T("Realta, which combines all the sites");
+    $("go-incl").innerHTML = "<b>" + T("Included in the links:") + "</b> " + incl.join(" · ") +
       (state.linkMode === "city" ? "" : "<br>" +
-        (L.realtaPage ? "Realta opens its \u201c" + { "near-the-sea": "near the sea", "from-owners": "no agent", furnished: "furnished" }[L.realtaPage] + "\u201d page for your city; " : "Realta gets rooms and budget; ") +
-        "Yad2 and Komo get all of these" + (L.hood && L.hood.hood ? " (and the neighbourhood)" : "") + "; OnMap gets rooms and price; Homeless and Madlan open your city.") +
-      "<br><b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try " +
-      (state.linkMode === "all" ? "\u201cRooms & budget only\u201d" : state.linkMode === "basic" ? "\u201cJust the city\u201d" : "Realta, which combines all the sites") + ".";
-    const where = L.hood ? L.hood.en + ", " + L.city.name : L.city ? L.city.name : state.town;
+        (L.realtaPage ? T("Realta opens its \u201c{page}\u201d page for your city; ", { page: T({ "near-the-sea": "near the sea", "from-owners": "no agent", furnished: "furnished" }[L.realtaPage]) }) : T("Realta gets rooms and budget; ")) +
+        T(L.hood && L.hood.hood ? "Yad2 and Komo get all of these (and the neighbourhood); OnMap gets rooms and price; Homeless and Madlan open your city." : "Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.")) +
+      "<br>" + T("<b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try {next}.", { next: nextMode });
+    const where = L.hood ? hoodName(L.hood) + ", " + P(L.city.name) : L.city ? P(L.city.name) : state.town ? P(state.town) : null;
     $("go-note").textContent = L.city
-      ? "Each button opens " + L.city.name + "'s rental listings in a new tab" + (L.hood && L.hood.hood ? " (Yad2 opens " + L.hood.en + " directly)" : L.hood ? ". Add the neighbourhood " + (L.hood.members ? "names" : "\u201c" + L.hood.he + "\u201d") + " in the site's location box" : "") + "."
-      : L.yad2Town ? "Yad2 opens " + state.town + "'s listings; on the other sites pick " + state.town + " in the search, then use the filters below."
-      : "Opens the site's rental search in a new tab. Pick " + (state.town || "your town") + " there, then use the filters below.";
-    if (where) $("go-title").textContent = "Go straight to the listings in " + where;
+      ? (L.hood && L.hood.hood ? T("Each button opens {city}'s rental listings in a new tab (Yad2 opens {hood} directly).", { city: P(L.city.name), hood: hoodName(L.hood) })
+        : L.hood ? T("Each button opens {city}'s rental listings in a new tab. Add the neighbourhood {names} in the site's location box.", { city: P(L.city.name), names: L.hood.members ? T("names") : "\u201c" + L.hood.he + "\u201d" })
+        : T("Each button opens {city}'s rental listings in a new tab.", { city: P(L.city.name) }))
+      : L.yad2Town ? T("Yad2 opens {town}'s listings; on the other sites pick {town} in the search, then use the filters below.", { town: P(state.town) })
+      : T("Opens the site's rental search in a new tab. Pick {town} there, then use the filters below.", { town: state.town ? P(state.town) : T("your town") });
+    if (where) $("go-title").textContent = T("Go straight to the listings in {place}", { place: where });
     $("site-list").innerHTML = SITES.map(([name, domain, desc, color, link, local]) => {
       const hl = local && local.includes(area.name);
       const url = L[link] || link;
       return '<a class="site' + (hl ? " highlight" : "") + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
         '<span class="logo" style="background:' + color + '">' + name[0] + "</span>" +
-        "<div><strong>" + name + (hl ? " · great for " + area.name : "") + '</strong><span class="domain">' + domain + "</span><p>" + desc + "</p></div>" +
-        '<span class="open">Open ' + EXT + "</span></a>";
+        "<div><strong>" + T(name) + (hl ? " · " + T("great for {place}", { place: P(area.name) }) : "") + '</strong><span class="domain">' + domain + "</span><p>" + T(desc, { group: he("דירות מפה לאוזן") }) + "</p></div>" +
+        '<span class="open">' + T("Open") + " " + EXT + "</span></a>";
     }).join("");
   }
 
   // ---- What it will really cost ----
   const cmpSel = $("compare");
-  cmpSel.append(new Option("Israel average", "Israel"));
-  [...cities].sort((a, b) => a.name.localeCompare(b.name)).forEach((c) => cmpSel.append(new Option(c.name, c.name)));
+  function fillCompare() {
+    cmpSel.innerHTML = "";
+    cmpSel.append(new Option(T("Israel average"), "Israel"));
+    [...cities].sort((a, b) => P(a.name).localeCompare(P(b.name), lang)).forEach((c) => cmpSel.append(new Option(P(c.name), c.name)));
+  }
+  fillCompare();
   function renderCosts(area, band, avg) {
     const level = currentLevel(avg);
     const hood = currentHood(area.name);
     const here = costFor(area.name, state.town, band, level, hood);
     const cmpName = state.compare === area.name && !state.town ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
     const there = costFor(cmpName, null, band, level);
-    const placeName = state.town || (area.type === "National" ? "Israel" : area.name);
-    const cmpLabel = cmpName === "Israel" ? "Israel avg" : cmpName;
+    const placeName = state.town ? P(state.town) : P(area.type === "National" ? "Israel" : area.name);
+    const cmpLabel = cmpName === "Israel" ? T("Israel avg") : P(cmpName);
     const people = state.adults + state.kids;
 
     $("adults-value").textContent = state.adults; $("kids-value").textContent = state.kids;
@@ -1466,50 +1518,50 @@
     document.querySelectorAll(".seg [data-level]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.level === level)));
     cmpSel.value = cmpName;
 
-    $("cost-title").textContent = "What it will really cost in " + (hood ? hood.en + ", " : "") + placeName;
+    $("cost-title").textContent = T("What it will really cost in {place}", { place: (hood ? hoodName(hood) + ", " : "") + placeName });
     document.querySelectorAll("[data-shabbat]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.shabbat === "1") === state.shabbat)));
     document.querySelectorAll("[data-meals]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.meals === state.shabbatMeals)));
     $("cc-guests").hidden = $("cc-meals").hidden = !state.shabbat;
     $("guests-value").textContent = state.guests;
     $("guests-down").disabled = state.guests <= 0; $("guests-up").disabled = state.guests >= 12;
-    $("ct-amount").innerHTML = fmt(here.total) + " <small>/ month</small>";
-    $("ct-sub").textContent = people + (people === 1 ? " person" : " people") + " · " + roomsText(state.rooms) + " · " +
-      level[0].toUpperCase() + level.slice(1) + " lifestyle · " + { rail: "near a station", bus: "public transport", car: "with a car" }[state.transport];
+    $("ct-amount").innerHTML = fmt(here.total) + " <small>" + T("/ month") + "</small>";
+    $("ct-sub").textContent = (people === 1 ? T("1 person") : T("{n} people", { n: people })) + " · " + roomsText(state.rooms) + " · " +
+      T(cap(level) + " lifestyle") + " · " + T({ rail: "near a station", bus: "public transport", car: "with a car" }[state.transport]);
     const diff = here.total - there.total;
-    $("ct-vs").innerHTML = "vs " + esc(cmpLabel) + "<b>" + (diff === 0 ? "Same" : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</b>" +
-      (diff === 0 ? "" : diff > 0 ? "more a month" : "less a month") + (state.shabbat ? "<br>(both include Shabbat)" : "");
-    $("sh-badge").textContent = state.shabbat ? "🕯 Shabbat adds +" + fmt(here.shabbat) + " a month" : "";
-    $("guests-nudge").textContent = state.shabbat && !state.guests ? "Add guests to include hosting" : "";
-    $("allin").innerHTML = "≈ " + fmt(here.total) + "/mo all-in →";
+    $("ct-vs").innerHTML = T("vs {place}", { place: esc(cmpLabel) }) + "<b>" + (diff === 0 ? T("Same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</b>" +
+      (diff === 0 ? "" : diff > 0 ? T("more a month") : T("less a month")) + (state.shabbat ? "<br>" + T("(both include Shabbat)") : "");
+    $("sh-badge").textContent = state.shabbat ? T("🕯 Shabbat adds +{price} a month", { price: fmt(here.shabbat) }) : "";
+    $("guests-nudge").textContent = state.shabbat && !state.guests ? T("Add guests to include hosting") : "";
+    $("allin").innerHTML = T("≈ {price}/mo all-in →", { price: fmt(here.total) });
 
     $("cost-bar").innerHTML = COST_LINES.filter(([k]) => here[k] > 0)
-      .map(([k, label, color]) => '<i style="width:' + (here[k] / here.total * 100).toFixed(2) + "%;background:" + color + '" title="' + esc(label) + '"></i>').join("");
+      .map(([k, label, color]) => '<i style="width:' + (here[k] / here.total * 100).toFixed(2) + "%;background:" + color + '" title="' + esc(T(label)) + '"></i>').join("");
 
     $("col-a").textContent = placeName; $("col-b").textContent = cmpLabel;
     const hint = {
-      rent: TIERS[level] && level[0].toUpperCase() + level.slice(1) + " level" + (RENT_ADJ[state.transport] ? (RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : "") +
-        (areaAdj(hood) ? ", " + (areaAdj(hood) > 0 ? "+" : "−") + Math.abs(Math.round(areaAdj(hood) * 100)) + "% for " + hood.en : ""),
-      transport: state.transport === "car" ? "Typical car costs: fuel, insurance, upkeep" : state.adults + " × Rav-Kav nationwide monthly pass (₪" + LD.costs.passes.national + ")",
-      education: "Schools, kindergarten, after-school activities",
-      shabbat: (state.adults + state.kids) + " of you" + (state.guests ? " + " + state.guests + " guest" + (state.guests > 1 ? "s" : "") : "") +
-        " × " + state.shabbatMeals + " festive meal" + (state.shabbatMeals > 1 ? "s" : "") + " a week (₪" + Math.round(LD.costs.shabbat.personMeal * 2) +
-        " extra per family member, ₪" + LD.costs.shabbat.guestMeal + " per guest), about 4.3 Shabbatot a month",
-      leisure: "Gym, classes, events, outings",
-      groceries: "Supermarket food, fruit & veg"
+      rent: T(cap(level) + " level") + (RENT_ADJ[state.transport] ? T(RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : "") +
+        (areaAdj(hood) ? T(", {pct} for {area}", { pct: (areaAdj(hood) > 0 ? "+" : "−") + Math.abs(Math.round(areaAdj(hood) * 100)) + "%", area: hoodName(hood) }) : ""),
+      transport: state.transport === "car" ? T("Typical car costs: fuel, insurance, upkeep") : T("{n} × Rav-Kav nationwide monthly pass (₪{price})", { n: state.adults, price: LD.costs.passes.national }),
+      education: T("Schools, kindergarten, after-school activities"),
+      shabbat: T(state.guests ? "{people} of you + {guests} guests × {meals} festive meals a week (₪{fam} extra per family member, ₪{guest} per guest), about 4.3 Shabbatot a month"
+        : "{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
+        { people: state.adults + state.kids, guests: state.guests, meals: state.shabbatMeals, fam: Math.round(LD.costs.shabbat.personMeal * 2), guest: LD.costs.shabbat.guestMeal }),
+      leisure: T("Gym, classes, events, outings"),
+      groceries: T("Supermarket food, fruit & veg")
     };
     $("cost-rows").innerHTML = COST_LINES.filter(([k]) => here[k] > 0 || there[k] > 0).map(([k, label, color]) => {
       const d = here[k] - there[k];
       const cls = Math.abs(d) < 20 ? "muted" : d > 0 ? "more" : "less";
-      return "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(label) + (hint[k] ? "<small>" + esc(hint[k]) + "</small>" : "") + "</td>" +
+      return "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(T(label)) + (hint[k] ? "<small>" + esc(hint[k]) + "</small>" : "") + "</td>" +
         "<td>" + fmt(here[k]) + '</td><td class="colb">' + fmt(there[k]) + '</td><td class="' + cls + '">' +
-        (Math.abs(d) < 20 ? "≈ same" : (d > 0 ? "+" : "−") + fmt(Math.abs(d))) + "</td></tr>";
+        (Math.abs(d) < 20 ? T("≈ same") : (d > 0 ? "+" : "−") + fmt(Math.abs(d))) + "</td></tr>";
     }).join("");
-    $("cost-foot").innerHTML = "<td>Total</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
-      (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? "≈ same" : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
+    $("cost-foot").innerHTML = "<td>" + T("Total") + "</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
+      (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? T("≈ same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
 
     const region = regionFor(area.name, state.town);
-    $("cost-note").innerHTML = "Everyday costs: typical spending in the " + esc(LD.costs.regionNames[region] || region) +
-      " (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.";
+    $("cost-note").innerHTML = T("Everyday costs: typical spending in the {region} (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.",
+      { region: esc(P(LD.costs.regionNames[region] || region)) });
   }
 
   // ---- Area-in-city picker ----
@@ -1518,10 +1570,10 @@
     const list = hoodsOf(area.name);
     $("f-hood").hidden = !list.length;
     if (!list.length) return;
-    const opts = ['<option value="">Anywhere in ' + esc(area.name) + "</option>"];
-    if (list.some((h) => h.beach)) opts.push('<option value="__beach">🏖 By the beach</option>');
-    for (const h of list) opts.push('<option value="' + esc(h.en) + '">' + (h.beach ? "🏖 " : "") + esc(h.en) + " · " + esc(h.he) +
-      (h.hint === "higher" ? " (pricier)" : h.hint === "lower" ? " (cheaper)" : "") + "</option>");
+    const opts = ['<option value="">' + esc(T("Anywhere in {city}", { city: P(area.name) })) + "</option>"];
+    if (list.some((h) => h.beach)) opts.push('<option value="__beach">🏖 ' + esc(T("By the beach")) + "</option>");
+    for (const h of list) opts.push('<option value="' + esc(h.en) + '">' + (h.beach ? "🏖 " : "") + esc(lang === "he" ? h.he : h.en + " · " + h.he) +
+      (h.hint === "higher" ? " " + T("(pricier)") : h.hint === "lower" ? " " + T("(cheaper)") : "") + "</option>");
     hoodSel.innerHTML = opts.join("");
     if (state.hood && !currentHood(area.name)) state.hood = "";
     hoodSel.value = state.hood;
@@ -1537,8 +1589,8 @@
     $("rooms-value").textContent = roomsShort(state.rooms);
     $("rooms-down").disabled = state.rooms <= MIN_ROOMS;
     $("rooms-up").disabled = state.rooms >= MAX_ROOMS;
-    $("rooms-hint").textContent = bedCount(state.rooms) ? "= " + bedCount(state.rooms) + " bed + living" : "= studio";
-    $("legend-title").textContent = "Avg rent · " + band + " rooms";
+    $("rooms-hint").textContent = bedCount(state.rooms) ? T("= {n} bed + living", { n: bedCount(state.rooms) }) : T("= studio");
+    $("legend-title").textContent = T("Avg rent · {band} rooms", { band });
     $("legend-over").hidden = !effBudget();
 
     renderHoodPicker(area);
@@ -1568,7 +1620,7 @@
     clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 1600);
   }
   function copy(text) {
-    const done = () => toast("Copied: " + text);
+    const done = () => toast(T("Copied: {text}", { text }));
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => {});
     else { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
   }
@@ -1589,7 +1641,7 @@
   $("kids-up").addEventListener("click", () => bump("kids", 1, 0, 5));
   document.querySelectorAll(".seg [data-level]").forEach((btn) => btn.addEventListener("click", () => { state.level = btn.dataset.level; persist(); render(); }));
   document.querySelectorAll(".tier[data-level]").forEach((el) => {
-    const pick = () => { state.level = el.dataset.level; persist(); render(); toast(el.dataset.level[0].toUpperCase() + el.dataset.level.slice(1) + " level selected"); };
+    const pick = () => { state.level = el.dataset.level; persist(); render(); toast(T(cap(el.dataset.level) + " level selected")); };
     el.addEventListener("click", pick);
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
   });
@@ -1597,7 +1649,7 @@
   document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => {
     const on = b.dataset.shabbat === "1", was = state.shabbat;
     state.shabbat = on; persist(); render();
-    if (on && !was) toast("Shabbat meals added to your costs" + (state.guests ? "" : ". Add guests to include hosting."));
+    if (on && !was) toast(T(state.guests ? "Shabbat meals added to your costs" : "Shabbat meals added to your costs. Add guests to include hosting."));
   }));
   document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
   document.querySelectorAll("[data-linkmode]").forEach((b) => b.addEventListener("click", () => { state.linkMode = b.dataset.linkmode; persist(); render(); }));
@@ -1621,7 +1673,7 @@
       const w = kw.getAttribute("data-kw");
       state.features = kwOn(w) ? state.features.filter((x) => x !== w) : [...state.features, w];
       persist(); render();
-      toast((kwOn(w) ? "Added " : "Removed ") + w + (FEATURES[w] ? (kwOn(w) ? " as a filter on the links" : " from the links") : (kwOn(w) ? " to your search words" : "")));
+      toast(T(FEATURES[w] ? (kwOn(w) ? "Added {w} as a filter on the links" : "Removed {w} from the links") : (kwOn(w) ? "Added {w} to your search words" : "Removed {w}"), { w }));
       return;
     }
     const c = e.target.closest("[data-copy]");
@@ -1633,8 +1685,8 @@
       persist();
       const on = state.favs.includes(n);
       f.setAttribute("aria-pressed", String(on));
-      f.setAttribute("aria-label", (on ? "Remove " : "Save ") + n);
-      toast(on ? "Saved " + n : "Removed " + n);
+      f.setAttribute("aria-label", T(on ? "Remove {name}" : "Save {name}", { name: P(n) }));
+      toast(T(on ? "Saved {name}" : "Removed {name}", { name: P(n) }));
       return;
     }
     const card = e.target.closest(".listing");
@@ -1658,18 +1710,57 @@
   function setMapOpen(on) {
     document.body.classList.toggle("show-map", on);
     mt.setAttribute("aria-pressed", String(on));
-    mt.querySelector("span").textContent = on ? "List" : "Map";
+    mt.querySelector("span").textContent = on ? T("List") : T("Map");
     if (on && map) setTimeout(() => map.invalidateSize(), 320);
   }
   mt.addEventListener("click", () => setMapOpen(!document.body.classList.contains("show-map")));
 
   window.addEventListener("resize", () => { if (map) map.invalidateSize(); });
 
-  $("credits").innerHTML = Object.entries(M.cities).map(([n, m]) =>
-    esc(n) + ': <a href="' + esc(m.source) + '" target="_blank" rel="noopener noreferrer">' + esc(m.credit) + "</a> (" + esc(m.license) + ")").join("; ") + ".";
+  // ---- Language switching ----
+  const staticSrc = new WeakMap();      // original English of each translatable element
+  function applyStatic() {
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      if (!staticSrc.has(el)) staticSrc.set(el, el.textContent.trim());
+      el.textContent = T(staticSrc.get(el));
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+      if (!staticSrc.has(el)) staticSrc.set(el, el.innerHTML);
+      const key = el.getAttribute("data-i18n-html");
+      el.innerHTML = (lang !== "en" && I18N[lang] && I18N[lang][key]) || staticSrc.get(el);
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+      if (!el.dataset.srcPh) el.dataset.srcPh = el.getAttribute("placeholder");
+      el.setAttribute("placeholder", T(el.dataset.srcPh));
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      if (!el.dataset.srcAria) el.dataset.srcAria = el.getAttribute("aria-label");
+      el.setAttribute("aria-label", T(el.dataset.srcAria));
+    });
+    // filled-in bits inside the translated blocks
+    $("data-chip").textContent = T("Official CBS data") + " · " + quarterLabel(D.quarter);
+    if ($("m-quarter")) $("m-quarter").textContent = quarterLabel(D.quarter);
+    if ($("credits")) $("credits").innerHTML = Object.entries(M.cities).map(([n, m]) =>
+      esc(P(n)) + ': <a href="' + esc(m.source) + '" target="_blank" rel="noopener noreferrer">' + esc(m.credit) + "</a> (" + esc(m.license) + ")").join("; ") + ".";
+    mt.querySelector("span").textContent = document.body.classList.contains("show-map") ? T("List") : T("Map");
+    document.title = T("Israel Rent Finder");
+    document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  }
+  function setLang(l) {
+    lang = LANGS.includes(l) ? l : "en";
+    state.lang = lang; persist();
+    document.documentElement.lang = lang;
+    document.documentElement.dir = RTL.includes(lang) ? "rtl" : "ltr";
+    applyStatic();
+    fillCompare();
+    if (stationLayer) { stationLayer.remove(); stationLayer = null; if (state.showStations) toggleStations(true); }
+    render();
+    if (document.activeElement !== areaInput) areaInput.value = placeLabel();
+  }
+  document.querySelectorAll("[data-lang]").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
 
   initMap();
-  render();
+  setLang(lang);
   if (state.showStations || state.transport === "rail") toggleStations(true);
   flyToArea(byName[state.area]);
 })();

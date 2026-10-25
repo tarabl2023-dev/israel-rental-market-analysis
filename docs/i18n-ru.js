@@ -1,0 +1,242 @@
+// Russian. Keys are the English text on the page; {placeholders} are filled in by the page.
+window.I18N = window.I18N || {};
+(function () {
+  const R = "https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/";
+  window.I18N.ru = {
+    // ---- header, search ----
+    "Israel Rent Finder": "Аренда в Израиле",
+    "@brand": "Аренда <span>в Израиле</span>",
+    "What renting really costs, city by city": "Сколько на самом деле стоит аренда — город за городом",
+    "Official CBS data": "Официальные данные ЦСБ",
+    "Where": "Где",
+    "Type a city, e.g. Herzliya or הרצליה": "Введите город, например Герцлия",
+    "Rooms": "Комнаты",
+    "Fewer rooms": "Меньше комнат", "More rooms": "Больше комнат",
+    "Area in the city": "Район города",
+    "Transport": "Транспорт",
+    "Walk to train / light rail": "Пешком до поезда / трамвая", "Bus is fine": "Автобус подойдёт", "I'll drive": "Буду на машине",
+    "Max budget / month": "Макс. бюджет в месяц",
+    "Any": "Любой",
+    "No budget limit": "Без ограничения бюджета",
+    "Jan-Mar": "янв–мар", "Apr-Jun": "апр–июн", "Jul-Sep": "июл–сен", "Oct-Dec": "окт–дек",
+    "{n} room": "{n} комната", "{n} rooms": "комнат: {n}",
+    "Whole district average": "Среднее по всему округу", "National average": "Среднее по стране",
+    "{district} · district estimate": "{district} · оценка по округу",
+    "Israel (national average)": "Израиль (среднее по стране)",
+    "No match. Try the nearest big city or pick its district.": "Ничего не найдено. Попробуйте ближайший крупный город или выберите округ.",
+    "= {n} bed + living": "= спален: {n} + салон", "= studio": "= студия",
+
+    // ---- hero ----
+    "Budget": "Эконом", "Comfortable": "Комфорт", "Luxury": "Люкс",
+    "✓ Selected": "✓ Выбрано", "Fits budget": "По бюджету",
+    "Older building, often no lift or parking, in a less central area.": "Старый дом, часто без лифта и парковки, в менее центральном районе.",
+    "The average contract here: a decent, maintained flat.": "Средний договор здесь: приличная, ухоженная квартира.",
+    "New tower with lift, parking, safe room and a big balcony.": "Новая башня с лифтом, парковкой, мамадом и большим балконом.",
+    "Tap a level to use it for your costs and search.": "Нажмите на уровень, чтобы использовать его для расчёта и поиска.",
+    "Match my budget again": "Снова подобрать по бюджету",
+    "Most expensive": "Самый дорогой", "Best value": "Самый выгодный", "Fastest rising": "Быстрее всех дорожает",
+    "Estimate": "Оценка", "In budget": "В бюджете", "Over budget": "Дороже бюджета", "District estimate": "Оценка по округу",
+    "{district} · district figures": "{district} · данные по округу",
+    "Nationwide": "Вся страна", "Whole district": "Весь округ", "All of Israel": "Весь Израиль",
+    "Photo:": "Фото:",
+    "/ month": "/ мес.", "/mo": "/мес.", "/yr": " в год", "a month": "в месяц",
+    "Typical {rooms} apartment in {place} · CBS data for {band} rooms, {quarter}": "Типичная квартира ({rooms}), {place} · данные ЦСБ для {band} комнат, {quarter}",
+    "RM": "КОМН.", "BD": "СПАЛ.", "Studio": "Студия",
+    "vs Israel": "к Израилю", "in a year": "за год", "margin": "погрешность",
+    "No rail stations": "Нет ж/д станций",
+    "train": "поезд", "light rail": "трамвай", "Carmelit": "Кармелит",
+    "usually pricier than the city average": "обычно дороже среднего по городу", "around the city average": "около среднего по городу",
+    "usually cheaper than the city average": "обычно дешевле среднего по городу",
+    "By the beach": "У моря",
+    "near a train or light-rail station": "рядом со станцией поезда или трамвая", "further from public transport": "дальше от общественного транспорта",
+    "about {price}/month": "около {price} в месяц",
+    "CBS doesn't publish rents for {town}, so these figures use the {district} average. Rents in {town} may differ.":
+      "ЦСБ не публикует аренду для города {town}, поэтому используется среднее: {district}. Реальные цены в {town} могут отличаться.",
+    "{city} has only one rail station, so fewer homes are within walking distance of one.": "{city}: всего одна ж/д станция, поэтому мало квартир рядом с ней.",
+    "{city} has no rail stations, so fewer homes are within walking distance of one.": "{city}: нет ж/д станций, поэтому мало квартир рядом со станцией.",
+    "{city} has only two rail stations, so fewer homes are within walking distance of one.": "{city}: всего две ж/д станции, поэтому мало квартир рядом с ними.",
+    "CBS doesn't publish rents for {city} (under 100,000 residents), so these figures use neighbouring {proxy}.":
+      "ЦСБ не публикует аренду для города {city} (меньше 100 000 жителей), поэтому используются данные соседнего города {proxy}.",
+    "CBS doesn't publish a 1-2 room figure for {city}, so this one is estimated from its 2.5-3 room rent.":
+      "ЦСБ не публикует данные для 1–2 комнат в городе {city}, поэтому они оценены по аренде 2,5–3 комнат.",
+    "The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.":
+      "Группа 4,5+ включает всё — от 4,5 комнат до больших пентхаусов, так что это грубая оценка.",
+    "District figures average all towns in the district, including its big cities.": "Данные по округу — среднее по всем населённым пунктам, включая крупные города.",
+    "<strong>No budget limit.</strong> Here the range runs from about {lo} for a basic flat to {hi} or more for the best homes. The priciest big city for {band} rooms is {top}.":
+      "<strong>Без ограничения бюджета.</strong> Здесь цены от примерно {lo} за простую квартиру до {hi} и выше за лучшие. Самый дорогой крупный город для {band} комнат: {top}.",
+    "<strong>{b}</strong> covers a <strong>luxury</strong> flat here.": "<strong>{b}</strong> хватит на квартиру уровня <strong>люкс</strong>.",
+    "<strong>{b}</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about {lux}.": "<strong>{b}</strong> хватит на квартиру уровня <strong>комфорт</strong>. Люкс — примерно от {lux}.",
+    "<strong>{b}</strong> fits the <strong>budget</strong> level here. A typical flat costs about {avg}.": "<strong>{b}</strong> соответствует уровню <strong>эконом</strong>. Типичная квартира стоит около {avg}.",
+    "<strong>{b}</strong> is below the budget level here (about {min}). Try fewer rooms or another city.": "<strong>{b}</strong> ниже уровня эконом (около {min}). Попробуйте меньше комнат или другой город.",
+    "It covers the average {band} room rent in <strong>{n} of {total}</strong> big cities (marked In budget below).":
+      "Этого хватает на среднюю аренду {band} комнат в <strong>{n} из {total}</strong> крупных городов (отмечены «В бюджете» ниже).",
+
+    // ---- cost of living ----
+    "Rent plus everyday living costs for your household": "Аренда плюс ежедневные расходы вашей семьи",
+    "What it will really cost in {place}": "Сколько это реально стоит: {place}",
+    "Adults": "Взрослые", "Children": "Дети", "Lifestyle": "Образ жизни",
+    "Fewer adults": "Меньше взрослых", "More adults": "Больше взрослых", "Fewer children": "Меньше детей", "More children": "Больше детей",
+    "Compare with": "Сравнить с", "Shabbat": "Шаббат", "Not included": "Не учитывать", "I keep Shabbat": "Соблюдаю шаббат",
+    "Guests each Shabbat": "Гостей каждый шаббат", "Fewer guests": "Меньше гостей", "More guests": "Больше гостей",
+    "Meals you host": "Трапезы с гостями", "Friday night": "Вечер пятницы", "Friday + lunch": "Пятница + обед",
+    "Add guests to include hosting": "Добавьте гостей, чтобы учесть приём",
+    "Total per month": "Итого в месяц", "Monthly cost": "Расходы в месяц", "Difference": "Разница", "Total": "Итого",
+    "Israel average": "Среднее по Израилю", "Israel avg": "Среднее по Израилю",
+    "1 person": "1 человек", "{n} people": "человек: {n}",
+    "Budget lifestyle": "эконом", "Comfortable lifestyle": "комфорт", "Luxury lifestyle": "люкс",
+    "near a station": "рядом со станцией", "public transport": "общественный транспорт", "with a car": "с машиной",
+    "vs {place}": "по сравнению с: {place}", "Same": "Одинаково", "more a month": "больше в месяц", "less a month": "меньше в месяц",
+    "(both include Shabbat)": "(оба с учётом шаббата)",
+    "🕯 Shabbat adds +{price} a month": "🕯 Шаббат добавляет +{price} в месяц",
+    "≈ {price}/mo all-in →": "≈ {price}/мес. всё включено →",
+    "Rent": "Аренда", "Arnona (municipal tax)": "Арнона (муниципальный налог)", "Bills: electricity, water, gas, phone": "Счета: электричество, вода, газ, телефон",
+    "Groceries": "Продукты", "Eating out & takeaway": "Кафе и доставка еды", "Education": "Образование",
+    "Sport, fitness & entertainment": "Спорт, фитнес и досуг", "Health (private insurance, dental)": "Здоровье (частная страховка, стоматология)",
+    "Clothing & personal care": "Одежда и уход за собой", "Shabbat meals & hosting": "Трапезы шаббата и гости",
+    "Budget level": "Уровень эконом", "Comfortable level": "Уровень комфорт", "Luxury level": "Уровень люкс",
+    ", +5% near a station": ", +5% рядом со станцией", ", −5% further out": ", −5% подальше", ", {pct} for {area}": ", {pct} за район {area}",
+    "Typical car costs: fuel, insurance, upkeep": "Обычные расходы на машину: бензин, страховка, обслуживание",
+    "{n} × Rav-Kav nationwide monthly pass (₪{price})": "{n} × общенациональный проездной Рав-Кав (₪{price})",
+    "Schools, kindergarten, after-school activities": "Школа, детский сад, кружки",
+    "Gym, classes, events, outings": "Спортзал, занятия, мероприятия, выходы",
+    "Supermarket food, fruit & veg": "Супермаркет, фрукты и овощи",
+    "{people} of you + {guests} guests × {meals} festive meals a week (₪{fam} extra per family member, ₪{guest} per guest), about 4.3 Shabbatot a month":
+      "Членов семьи: {people} + гостей: {guests} × праздничных трапез в неделю: {meals} (₪{fam} сверху на члена семьи, ₪{guest} на гостя), около 4,3 шаббатов в месяц",
+    "{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month":
+      "Членов семьи: {people} × праздничных трапез в неделю: {meals} (₪{fam} сверху на члена семьи), около 4,3 шаббатов в месяц",
+    "≈ same": "≈ одинаково",
+    "Everyday costs: typical spending in the {region} (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See “How the estimates work”.":
+      "Ежедневные расходы: типичные траты, {region} (обследование расходов домохозяйств ЦСБ 2021, в ценах 2026), пересчитанные на вашу семью. Это оценки, а не цены. См. «Как считаются оценки».",
+
+    // ---- search guide ----
+    "Copy-and-paste searches and filters for Israeli rental sites": "Готовые запросы и фильтры для израильских сайтов аренды",
+    "How to search for {rooms} in {place}": "Как искать ({rooms}): {place}",
+    "your town": "ваш город", "Your town": "Ваш город",
+    "Go straight to the listings": "Сразу к объявлениям", "Go straight to the listings in {place}": "Сразу к объявлениям: {place}",
+    "All my filters": "Все мои фильтры", "Rooms & budget only": "Только комнаты и бюджет", "Just the city": "Только город",
+    "How strict the links are": "Насколько точные ссылки",
+    "Then narrow it down: search for": "Затем уточните: ищите",
+    "Set these filters": "Установите эти фильтры",
+    "Add keywords for your level": "Добавьте ключевые слова для вашего уровня",
+    "Hebrew": "Иврит", "English": "Английский", "Facebook": "Facebook", "Copy": "Копировать",
+    "City": "Город", "Neighbourhood": "Район", "Price per month": "Цена в месяц", "Property type": "Тип жилья",
+    "Leave empty": "Оставьте пустым", "No budget limit, so don't cap the price.": "Без ограничения бюджета, цену не ограничивайте.",
+    "Up to {price}": "До {price}", "Your budget.": "Ваш бюджет.",
+    "The comfortable range. Budget: up to {b}, luxury: from {l}.": "Диапазон «комфорт». Эконом: до {b}, люкс: от {l}.",
+    "any": "любое",
+    "Type your town's name in Hebrew or English.": "Введите название города на иврите или английском.",
+    "Tick these beach-side neighbourhoods on the site.": "Отметьте на сайте эти приморские районы.",
+    "The Yad2 button already opens this neighbourhood.": "Кнопка Yad2 уже открывает этот район.",
+    "Type it into the site's location box after the city.": "Введите его в поле местоположения на сайте после города.",
+    "From 6": "От 6", "From {a} to {b}": "От {a} до {b}", "Widen it to {lo} - {hi} to see more homes.": "Расширьте до {lo} – {hi}, чтобы увидеть больше квартир.",
+    "(apartment)": "(квартира)", "For luxury also try {a} (garden flat) and {b}.": "Для люкса попробуйте также {a} (квартира с садом) и {b}.",
+    "your level": "ваш уровень", "For your transport choice": "Для вашего выбора транспорта", "For your area and needs": "Для района и ваших нужд",
+    "Useful at any level": "Полезно на любом уровне", "filter": "фильтр",
+    "no agent's fee": "без комиссии агента", "self-contained unit": "отдельная единица", "price negotiable": "цена обсуждается", "older flat": "старая квартира",
+    "lift": "лифт", "parking": "парковка", "renovated": "после ремонта", "air-conditioning": "кондиционеры", "safe room": "мамад (защищённая комната)",
+    "new building": "новый дом", "sun balcony": "солнечный балкон", "penthouse": "пентхаус",
+    "available now": "въезд сразу", "furnished": "с мебелью", "pets allowed": "можно с животными",
+    "near the train": "рядом с поездом", "near the light rail": "рядом с трамваем", "near public transport": "рядом с транспортом",
+    "near a bus stop": "рядом с остановкой", "central": "в центре", "registered private parking": "зарегистрированная парковка", "quiet area": "тихий район",
+    "near the beach": "рядом с морем", "sea view": "вид на море", "near a synagogue": "рядом с синагогой", "Shabbat (e.g. Shabbat lift)": "шаббат (например, лифт для шаббата)",
+    "@kwTip": "Нажимайте на слова, чтобы добавить их в поиск. Слова с пометкой «фильтр» также отмечаются на сайтах, которые их поддерживают, когда вы открываете ссылки выше. Браузер может перевести объявления (правый клик → Перевести). <bdi dir=\"rtl\" lang=\"he\">תיווך</bdi> — значит через агента, который может взять комиссию.",
+
+    // ---- links ----
+    "Realta · all sites in one": "Realta · все сайты в одном", "Facebook groups": "Группы в Facebook",
+    "6+ rooms": "6+ комнат", "{a}-{b} rooms": "{a}–{b} комн.", "your city only": "только ваш город",
+    "up to {price}/month": "до {price} в месяц", "any price (enter a budget to cap it)": "любая цена (введите бюджет, чтобы ограничить)",
+    "Realta, which combines all the sites": "Realta, где собраны все сайты",
+    "Included in the links:": "В ссылки включено:",
+    "Realta opens its “{page}” page for your city; ": "Realta открывает свою страницу «{page}» для вашего города; ",
+    "near the sea": "у моря", "no agent": "без агента",
+    "Realta gets rooms and budget; ": "Realta получает комнаты и бюджет; ",
+    "Yad2 and Komo get all of these (and the neighbourhood); OnMap gets rooms and price; Homeless and Madlan open your city.":
+      "Yad2 и Komo получают всё это (и район); OnMap — комнаты и цену; Homeless и Madlan открывают ваш город.",
+    "Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.":
+      "Yad2 и Komo получают всё это; OnMap — комнаты и цену; Homeless и Madlan открывают ваш город.",
+    "<b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try {next}.":
+      "<b>Ничего не нашлось?</b> На небольших сайтах в некоторых городах мало объявлений, а во многих объявлениях не отмечены лифт или мамад. Попробуйте {next}.",
+    "Each button opens {city}'s rental listings in a new tab.": "Каждая кнопка открывает объявления об аренде ({city}) в новой вкладке.",
+    "Each button opens {city}'s rental listings in a new tab (Yad2 opens {hood} directly).": "Каждая кнопка открывает объявления об аренде ({city}) в новой вкладке (Yad2 сразу открывает район {hood}).",
+    "Each button opens {city}'s rental listings in a new tab. Add the neighbourhood {names} in the site's location box.": "Каждая кнопка открывает объявления об аренде ({city}) в новой вкладке. Добавьте район {names} в поле местоположения на сайте.",
+    "names": "(названия)",
+    "Yad2 opens {town}'s listings; on the other sites pick {town} in the search, then use the filters below.": "Yad2 открывает объявления ({town}); на других сайтах выберите {town} в поиске и используйте фильтры ниже.",
+    "Opens the site's rental search in a new tab. Pick {town} there, then use the filters below.": "Открывает поиск аренды на сайте в новой вкладке. Выберите там {town} и используйте фильтры ниже.",
+    "Where to look": "Где искать", "Rental sites and groups worth checking": "Сайты и группы, которые стоит проверить",
+    "great for {place}": "отлично для: {place}", "Open": "Открыть",
+    "Collects listings from Yad2, Madlan, OnMap, Homeless, Komo and Facebook in one search. The best place to start.": "Собирает объявления с Yad2, Madlan, OnMap, Homeless, Komo и Facebook в одном поиске. Лучшее место для начала.",
+    "Israel's biggest classifieds site, with the most rental listings.": "Крупнейший сайт объявлений в Израиле, больше всего объявлений об аренде.",
+    "Listings plus neighbourhood info: schools, transport and past prices.": "Объявления и данные о районе: школы, транспорт, прошлые цены.",
+    "Classifieds with many private landlords.": "Доска объявлений с множеством частных арендодателей.",
+    "Long-running classifieds site. Some listings don't appear elsewhere.": "Давний сайт объявлений. Некоторых объявлений больше нигде нет.",
+    "Map-based search, with an English version.": "Поиск по карте, есть английская версия.",
+    "Finds your city's Facebook rental groups (via Google, no login needed). {group} is a big group for flats without agents.": "Находит группы аренды вашего города в Facebook (через Google, без входа). {group} — большая группа квартир без агентов.",
+    "English-speaking community board, strongest in Jerusalem and Beit Shemesh. Pick your region on the site.": "Англоязычная доска сообщества, сильнее всего в Иерусалиме и Бейт-Шемеше. Выберите регион на сайте.",
+
+    // ---- feed ----
+    "Compare cities": "Сравнение городов", "Sort": "Сортировка",
+    "Price: high to low": "Цена: по убыванию", "Price: low to high": "Цена: по возрастанию", "Best public transport": "Лучший общественный транспорт",
+    "Lowest total cost": "Самые низкие общие расходы", "Saved first": "Сначала сохранённые",
+    "{rooms} across {n} cities": "{rooms} в {n} городах",
+    "Average monthly rent (comfortable level). Tap a city to see its prices.": "Средняя аренда в месяц (уровень комфорт). Нажмите на город, чтобы увидеть цены.",
+    "Remove {name}": "Убрать {name}", "Save {name}": "Сохранить {name}",
+    "rm": "комн.", "bd": "спал.",
+    "Train / light rail / Carmelit stations": "Станции поезда / трамвая / Кармелита",
+    "based on {city}": "по данным: {city}", "Compared with the most expensive city": "По сравнению с самым дорогим городом", "Your budget": "Ваш бюджет",
+    "≈ {price}/mo all-in for your household": "≈ {price}/мес. всё включено для вашей семьи",
+    "You've seen all {n} cities": "Вы посмотрели все {n} городов",
+    "Anywhere in {city}": "Весь город {city}", "(pricier)": "(дороже)", "(cheaper)": "(дешевле)",
+
+    // ---- map, toasts ----
+    "Avg rent · {band} rooms": "Средняя аренда · {band} комн.", "Selected": "Выбранный", "🚆 Train & light rail": "🚆 Поезд и трамвай",
+    "Train station": "Ж/д станция", "Light rail": "Трамвай", "Carmelit (metro)": "Кармелит (метро)",
+    "The map couldn't load. Everything else still works.": "Карта не загрузилась. Всё остальное работает.",
+    "List": "Список", "Map": "Карта",
+    "Copied: {text}": "Скопировано: {text}",
+    "Budget level selected": "Выбран уровень эконом", "Comfortable level selected": "Выбран уровень комфорт", "Luxury level selected": "Выбран уровень люкс",
+    "Shabbat meals added to your costs": "Трапезы шаббата добавлены в расходы",
+    "Shabbat meals added to your costs. Add guests to include hosting.": "Трапезы шаббата добавлены в расходы. Добавьте гостей, чтобы учесть приём.",
+    "Added {w} as a filter on the links": "{w} добавлено как фильтр в ссылки", "Removed {w} from the links": "{w} убрано из ссылок",
+    "Added {w} to your search words": "{w} добавлено в слова поиска", "Removed {w}": "{w} убрано",
+    "Saved {name}": "Сохранено: {name}", "Removed {name}": "Убрано: {name}",
+
+    // ---- method, sources, footer ----
+    "How the estimates work": "Как считаются оценки", "Data source, price levels and photo credits": "Источники данных, уровни цен и авторы фото",
+    "Sources & data": "Источники и данные",
+    "Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.":
+      "Каждая цифра на этой странице взята из одного из этих источников. У каждого есть ссылка на оригинал и на файл данных в проекте, так что вы можете проверить сами.",
+    "@method":
+      "<p><strong>Комфорт</strong> — официальная средняя месячная аренда Центрального статистического бюро Израиля (ЦСБ) для района и размера квартиры, за <span id=\"m-quarter\"></span>. Учитываются новые и продлённые договоры.</p>" +
+      "<p>ЦСБ публикует только средние значения, без разброса цен. <strong>Эконом</strong> и <strong>люкс</strong> — практические правила, применённые к среднему:</p>" +
+      "<ul><li>Эконом: около 80% от среднего (диапазон 70–90%)</li><li>Комфорт: среднее (диапазон 90–115%)</li><li>Люкс: около 140% от среднего (диапазон 125–170%)</li></ul>" +
+      "<p>Аренда сильно различается внутри города, поэтому смотрите реальные объявления в нужных районах. Группы по размеру как у ЦСБ: 1–2, 2,5–3, 3,5–4 и 4,5+ комнат. ЦСБ скрывает данные для 1–2 комнат в Кфар-Сабе и Бейт-Шемеше (слишком мало договоров); они оценены по аренде 2,5–3 комнат и соотношению цен в округе.</p>" +
+      "<p><strong>В Раанане</strong> меньше 100 000 жителей, поэтому ЦСБ не публикует её аренду. Используются данные соседней Кфар-Сабы.</p>" +
+      "<p><strong>Общественный транспорт.</strong> Число станций — это станции поезда, трамвая и Кармелита в границах города по данным OpenStreetMap. Официальных данных о влиянии станций на аренду нет. Исследования цен <em>продажи</em> показывают, что жильё рядом с тель-авивским трамваем дорожало быстрее (<a href=\"https://en.globes.co.il/en/article-1001503910\" target=\"_blank\" rel=\"noopener noreferrer\">Globes</a>), поэтому выбор транспорта добавляет правило: около +5% рядом со станцией и около −5% подальше, если вы на машине.</p>" +
+      "<p><strong>Сколько это реально стоит.</strong> Ежедневные расходы взяты из обследования расходов домохозяйств ЦСБ 2021 (таблица 10) по подокругам, пересчитаны на размер вашей семьи по шкале «стандартных лиц» ЦСБ и приведены к ценам 2026 года по индексу цен каждой группы товаров. Без машины транспорт — общенациональный проездной Рав-Кав (₪315 на взрослого; для периферии есть автобусный проездной за ₪139, см. <a href=\"https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract\" target=\"_blank\" rel=\"noopener noreferrer\">Rav-Kav Online</a>). Среднее по образованию включает семьи без детей, поэтому при наличии детей оно удваивается. Уровни эконом и люкс умножают кафе, досуг и одежду на 0,75 и 1,5. Это оценки типичных расходов, а не цены.</p>" +
+      "<p><strong>Шаббат.</strong> Каждая праздничная трапеза считается примерно в три раза дороже обычной (обычная порция — около ₪12, по общенациональным расходам на продукты ЦСБ, делённым на 90 приёмов пищи в месяц). Обычную еду семья и так покупает, поэтому доплата — около ₪25 на члена семьи за трапезу, а каждый гость добавляет около ₪37, умноженные на число трапез, около 4,3 шаббатов в месяц. Для сравнения: по таблице 13 ЦСБ семьи, соблюдающие шаббат, в среднем тратят на субботнюю еду всего на ₪27 в месяц на человека больше, в том числе потому, что реже едят вне дома.</p>" +
+      "<p>Аренда не включает арнону, плату домовому комитету (ваад байт) и коммунальные счета — они добавлены отдельно в разбивке расходов.</p>" +
+      "<p><strong>Авторы фото</strong> (Wikimedia Commons): <span id=\"credits\"></span></p>",
+    "@sources":
+      "<li><span class=\"used\">Аренда по городам и комнатам</span><strong>ЦСБ: средние месячные цены аренды, таблица 4.9</strong>Официальная средняя аренда по новым и продлённым договорам, по округам, крупным городам и числу комнат, III кв. 2023 – II кв. 2026.<span class=\"links\"><a href=\"https://www.cbs.gov.il/en/subjects/Pages/Average-Monthly-Prices-of-Rent.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">Страница ЦСБ</a><a href=\"https://www.cbs.gov.il/he/publications/Madad/DocLib/2026/price09a/a4_9_e.xlsx\" target=\"_blank\" rel=\"noopener noreferrer\">Исходная таблица (Excel)</a><a href=\"" + R + "data/raw/cbs_rent_table_4_9.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Использованный файл</a><a href=\"" + R + "data/raw/SOURCES.md\" target=\"_blank\" rel=\"noopener noreferrer\">Все выпуски</a></span></li>" +
+      "<li><span class=\"used\">Расходы на жизнь</span><strong>Обследование расходов домохозяйств ЦСБ 2021, таблица 10 (по подокругам)</strong>Средние месячные траты семьи по каждой категории в каждом подокруге.<span class=\"links\"><a href=\"https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t10.xls\" target=\"_blank\" rel=\"noopener noreferrer\">Исходная таблица</a><a href=\"" + R + "data/raw/cbs_hes_2021_table10.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Использованный файл</a></span></li>" +
+      "<li><span class=\"used\">Трапезы шаббата и гости</span><strong>Обследование 2021, таблица 13 (еврейские семьи по уровню религиозности)</strong>Траты на человека на субботнюю еду в семьях, соблюдающих шаббат, по сравнению со светскими.<span class=\"links\"><a href=\"https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t13.xls\" target=\"_blank\" rel=\"noopener noreferrer\">Исходная таблица</a><a href=\"" + R + "data/raw/cbs_hes_2021_table13.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Использованный файл</a></span></li>" +
+      "<li><span class=\"used\">Пересчёт в цены 2026</span><strong>Индекс потребительских цен ЦСБ по группам</strong>Изменение цен с 2021 по 2026 год по группам товаров.<span class=\"links\"><a href=\"https://www.cbs.gov.il/en/subjects/Pages/Consumer-Price-Index.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">Индексы цен</a><a href=\"" + R + "data/raw/cbs_cpi_factors.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Коэффициенты</a></span></li>" +
+      "<li><span class=\"used\">Станции поезда, трамвая и Кармелита</span><strong>OpenStreetMap</strong>Все станции Израиля и муниципалитет, где они находятся. © участники OpenStreetMap.<span class=\"links\"><a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener noreferrer\">Лицензия</a><a href=\"" + R + "data/raw/osm_rail_stations.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Использованный файл</a></span></li>" +
+      "<li><span class=\"used\">Ссылки на Yad2</span><strong>Коды регионов и городов Yad2</strong>Yad2 нужны коды региона и района, а не только города. Список взят из открытого проекта <a href=\"https://github.com/ron-levi/yad2-analyzer\" target=\"_blank\" rel=\"noopener noreferrer\">yad2-analyzer</a>.<span class=\"links\"><a href=\"" + R + "data/raw/yad2_locations.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Коды</a><a href=\"" + R + "data/raw/neighbourhoods.csv\" target=\"_blank\" rel=\"noopener noreferrer\">Список районов</a></span></li>" +
+      "<li><span class=\"used\">Ссылки на сайты</span><strong>Как проверялась каждая ссылка</strong>Realta: страницы городов проверены для всех городов (кроме Цфата), включая страницы «у моря», «без агента» и «с мебелью». Komo: фильтры по названиям полей его формы поиска, проверено, что они сужают результаты. OnMap и Homeless: страницы городов проверены. Yad2: коды местоположения из списка; названия фильтров из открытых проектов, проверить их не удалось, так как Yad2 блокирует автоматические браузеры. Facebook: поиск Google по группам аренды города.</li>" +
+      "<li><span class=\"used\">Месячный проездной</span><strong>Rav-Kav Online</strong>Общенациональный проездной ₪315 (весь транспорт, кроме поездов); автобусный для периферии ₪139.<span class=\"links\"><a href=\"https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract\" target=\"_blank\" rel=\"noopener noreferrer\">Rav-Kav Online</a></span></li>" +
+      "<li><span class=\"used\">Почему важна близость к станции</span><strong>Globes: близость к Красной линии повышает цены на жильё</strong>Исследование цен продажи рядом с тель-авивским трамваем. Оно о продаже, а не об аренде, поэтому используется только для правила ±5%.<span class=\"links\"><a href=\"https://en.globes.co.il/en/article-1001503910\" target=\"_blank\" rel=\"noopener noreferrer\">Статья</a></span></li>" +
+      "<li><span class=\"used\">Карта и фото</span><strong>Карта OpenStreetMap · фото Wikimedia Commons</strong>Фото — главное изображение каждого города в Википедии, с указанием авторов и открытых лицензий.<span class=\"links\"><a href=\"https://commons.wikimedia.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Wikimedia Commons</a></span></li>" +
+      "<li><span class=\"used\">Как всё связано</span><strong>Код анализа (R и Tidyverse)</strong>Скрипты, которые чистят данные, строят графики и считают каждую цифру на странице.<span class=\"links\"><a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\" target=\"_blank\" rel=\"noopener noreferrer\">Проект на GitHub</a><a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis/tree/main/data/raw\" target=\"_blank\" rel=\"noopener noreferrer\">Все исходные данные</a></span></li>",
+    "@assume":
+      "<strong>Мои допущения (не из официальных данных)</strong>, чтобы было понятно, что является оценкой:<ul>" +
+      "<li>Аренда эконом и люкс: около 80% и 140% от среднего ЦСБ.</li>" +
+      "<li>Транспорт: около +5% рядом со станцией, −5% подальше с машиной.</li>" +
+      "<li>Образ жизни: кафе, досуг и одежда ×0,75 (эконом) или ×1,5 (люкс).</li>" +
+      "<li>Образование с детьми: вдвое больше среднего по обследованию, которое включает семьи без детей.</li>" +
+      "<li>Раанана — по данным Кфар-Сабы, небольшие города — по округу, так как ЦСБ их не публикует.</li>" +
+      "<li>Районы города: какие районы у моря, дороже или дешевле — местная оценка. Выбор района меняет аренду примерно на +15% (дороже или у моря), 0% или −10% (дешевле).</li>" +
+      "<li>Шаббат: праздничная трапеза примерно в три раза дороже обычной (≈₪37 на человека). Члены семьи добавляют ≈₪25 за трапезу, гости ≈₪37, около 4,3 шаббатов в месяц.</li></ul>",
+    "@footer": "Данные: Центральное статистическое бюро Израиля (таблица 4.9; обследование расходов домохозяйств 2021). Карта и станции © участники OpenStreetMap. Часть проекта <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R и Tidyverse)."
+  };
+})();
