@@ -259,7 +259,16 @@
 
   .site-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   @media (max-width: 640px) { .site-grid { grid-template-columns: 1fr; } }
-  .site { display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 2px solid transparent; }
+  .site { display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 2px solid transparent;
+          color: inherit; text-decoration: none; transition: border-color .15s, transform .15s; }
+  a.site:hover { border-color: var(--primary); transform: translateY(-1px); }
+  .site .open { margin-left: auto; align-self: center; font-size: 12px; font-weight: 800; color: var(--primary); white-space: nowrap; }
+  .go-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 4px; }
+  .go-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; text-decoration: none;
+            color: #fff; font-weight: 800; font-size: 14px; box-shadow: var(--shadow-sm); transition: transform .15s, box-shadow .15s; }
+  .go-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .go-btn svg { width: 15px; height: 15px; }
+  .go-note { font-size: 12.5px; color: var(--ink-3); margin: 6px 0 0; }
   .site.highlight { border-color: var(--accent); }
   .site .logo { width: 40px; height: 40px; border-radius: 10px; flex: none; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px; }
   .site strong { display: block; font-size: 15px; }
@@ -345,6 +354,20 @@
   .feed-end { text-align: center; color: var(--ink-3); font-size: 13px; margin: 26px 0 4px; display: flex; align-items: center; gap: 12px; }
   .feed-end::before, .feed-end::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   footer { margin-top: 26px; font-size: 12.5px; color: var(--ink-3); }
+  .sources { margin-top: 26px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 20px; }
+  .sources h2 { margin: 0 0 4px; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .sources h2 .ico { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--teal-soft); color: var(--teal); }
+  .sources h2 .ico svg { width: 18px; height: 18px; }
+  .sources > p { margin: 0 0 14px; color: var(--ink-2); font-size: 14px; }
+  .src-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .src-list li { padding: 12px 14px; border-radius: 12px; background: var(--surface-2); font-size: 13.5px; color: var(--ink-2); }
+  .src-list li strong { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 2px; }
+  .src-list .used { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--primary); margin-bottom: 4px; }
+  .src-list .links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; }
+  .src-list .links a { color: var(--primary); font-weight: 700; font-size: 13px; }
+  .assume { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); font-size: 13.5px; color: var(--ink-2); }
+  .assume strong { color: var(--ink); }
+  .assume ul { margin: 6px 0 0; padding-left: 18px; }
   footer a { color: var(--primary); }
 
   /* ================= Map pins ================= */
@@ -549,8 +572,13 @@
         </summary>
         <div class="panel-body">
           <div class="step">
+            <div class="step-num" style="background:var(--ink)">↗</div>
+            <div class="step-body"><h3 id="go-title">Go straight to the listings</h3><div class="go-row" id="go-row"></div>
+              <p class="go-note" id="go-note"></p></div>
+          </div>
+          <div class="step">
             <div class="step-num" style="background:var(--primary)">1</div>
-            <div class="step-body"><h3>Type this into the search box</h3><div id="guide-phrases"></div></div>
+            <div class="step-body"><h3>Then narrow it down: search for</h3><div id="guide-phrases"></div></div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--accent)">2</div>
@@ -615,6 +643,55 @@
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
       </details>
+
+      <section class="sources" id="sources" aria-labelledby="sources-title">
+        <h2 id="sources-title"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></span>Sources &amp; data</h2>
+        <p>Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.</p>
+        <ul class="src-list">
+          <li><span class="used">Rent by city and rooms</span>
+            <strong>Israel Central Bureau of Statistics (CBS): Average Monthly Prices of Rent, Table 4.9</strong>
+            Official average rent of new and renewed contracts, by district, big city and number of rooms, Q3 2023 to Q2 2026 (Price Statistics Monthly, Jun 2025 to Sep 2026 editions).
+            <span class="links"><a href="https://www.cbs.gov.il/en/subjects/Pages/Average-Monthly-Prices-of-Rent.aspx" target="_blank" rel="noopener noreferrer">CBS topic page</a><a href="https://www.cbs.gov.il/he/publications/Madad/DocLib/2026/price09a/a4_9_e.xlsx" target="_blank" rel="noopener noreferrer">Original table (Sep 2026, Excel)</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_rent_table_4_9.csv" target="_blank" rel="noopener noreferrer">Data file used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/SOURCES.md" target="_blank" rel="noopener noreferrer">All editions used</a></span></li>
+          <li><span class="used">Living costs: groceries, bills, arnona, transport, education, leisure, health, clothing</span>
+            <strong>CBS Household Expenditure Survey 2021, Table 10 (by sub-district)</strong>
+            Average monthly household spending on each category in each sub-district of Israel.
+            <span class="links"><a href="https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t10.xls" target="_blank" rel="noopener noreferrer">Original table (Excel)</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_hes_2021_table10.csv" target="_blank" rel="noopener noreferrer">Data file used</a></span></li>
+          <li><span class="used">Bringing 2021 costs to 2026 prices</span>
+            <strong>CBS Consumer Price Index, by main group</strong>
+            Change in prices from 2021 to 2026 for food, fruit &amp; veg, housing upkeep, health, education &amp; entertainment, transport &amp; communication, and the general index.
+            <span class="links"><a href="https://www.cbs.gov.il/en/subjects/Pages/Consumer-Price-Index.aspx" target="_blank" rel="noopener noreferrer">CBS price indices</a><a href="https://api.cbs.gov.il/index/catalog/catalog?format=json&amp;download=false&amp;lang=en" target="_blank" rel="noopener noreferrer">CBS price index API</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_cpi_factors.csv" target="_blank" rel="noopener noreferrer">Factors used</a></span></li>
+          <li><span class="used">Train, light-rail and Carmelit stations</span>
+            <strong>OpenStreetMap (via the Overpass API)</strong>
+            Every station and stop in Israel, with the municipality it sits in. © OpenStreetMap contributors, Open Database Licence.
+            <span class="links"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap licence</a><a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener noreferrer">Overpass API</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/osm_rail_stations.csv" target="_blank" rel="noopener noreferrer">Data file used</a></span></li>
+          <li><span class="used">Public transport monthly pass</span>
+            <strong>Rav-Kav Online: monthly contracts</strong>
+            Nationwide monthly pass ₪315 (all transport except trains); periphery bus-only pass ₪139.
+            <span class="links"><a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a></span></li>
+          <li><span class="used">Why being near a station matters</span>
+            <strong>Globes: "Proximity to Tel Aviv Red Line pushes up housing prices"</strong>
+            Study of sale prices near the Tel Aviv light rail. It covers sale prices, not rents, so it only informs the ±5% rule of thumb below.
+            <span class="links"><a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Read the article</a></span></li>
+          <li><span class="used">Map and city photos</span>
+            <strong>OpenStreetMap map tiles · Wikimedia Commons photos</strong>
+            Map © OpenStreetMap contributors. City photos are each city's main Wikipedia image, credited to their authors under open licences (full list in "How the estimates work").
+            <span class="links"><a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/docs/city-media.js" target="_blank" rel="noopener noreferrer">Photo credits file</a></span></li>
+          <li><span class="used">How it all fits together</span>
+            <strong>The analysis code (R &amp; Tidyverse)</strong>
+            The scripts that clean the data, build the charts and produce every number on this page.
+            <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis" target="_blank" rel="noopener noreferrer">GitHub project</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/tree/main/R" target="_blank" rel="noopener noreferrer">R scripts</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/tree/main/data/raw" target="_blank" rel="noopener noreferrer">All raw data</a></span></li>
+        </ul>
+        <div class="assume">
+          <strong>My assumptions (not from official data)</strong>, so you know what is an estimate:
+          <ul>
+            <li>Budget and luxury rent: about 80% and 140% of the CBS average (CBS only publishes averages).</li>
+            <li>Transport choice: about +5% rent near a station, −5% further out if you drive.</li>
+            <li>Lifestyle: eating out, leisure and clothing ×0.75 (budget) or ×1.5 (luxury).</li>
+            <li>Education with children: twice the survey average, which includes households without children.</li>
+            <li>Ra'anana uses Kfar Saba's rents, and smaller towns use their district's, because CBS doesn't publish them.</li>
+          </ul>
+        </div>
+      </section>
 
       <footer>
         Data: Israel Central Bureau of Statistics (Price Statistics Monthly Table 4.9; Household Expenditure Survey 2021). Map and stations © OpenStreetMap contributors.
@@ -1120,20 +1197,44 @@
   }
 
   // ---- Where to look ----
+  // Direct links. Yad2 takes the CBS locality code and Madlan "<hebrew-name>-ישראל"; both open the
+  // city's rental listings, and rooms and price are then set on the site.
+  const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  function siteLinks(area) {
+    const city = !state.town && area.cbsCode ? area : null;
+    const fbQuery = city ? "דירות להשכרה ב" + (SEARCH_NAME[city.name] || city.hebrew) : "apartments for rent " + (state.town || "");
+    return {
+      city,
+      yad2: city ? "https://www.yad2.co.il/realestate/rent?city=" + city.cbsCode : "https://www.yad2.co.il/realestate/rent",
+      madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
+      facebook: "https://www.facebook.com/search/groups/?q=" + encodeURIComponent(fbQuery.trim())
+    };
+  }
   const SITES = [
-    ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings.", "#6c3cf0"],
-    ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices.", "#ff3d8b"],
-    ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6"],
-    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff"],
-    ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a"],
-    ["Facebook groups", "facebook.com", "Search the Facebook phrase above for your city's groups. " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90"],
-    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", "#e0a400", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
+    ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings.", "#6c3cf0", "yad2"],
+    ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices.", "#ff3d8b", "madlan"],
+    ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6", "https://www.komo.co.il/"],
+    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff", "https://www.homeless.co.il/"],
+    ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a", "https://www.onmap.co.il/"],
+    ["Facebook groups", "facebook.com", "Opens a group search for your city. " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90", "facebook"],
+    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", "#e0a400", "https://www.janglo.net/", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
   ];
   function renderSites(area) {
-    $("site-list").innerHTML = SITES.map(([name, domain, desc, color, local]) => {
+    const L = siteLinks(area);
+    const place = L.city ? L.city.name : state.town || null;
+    $("go-title").textContent = place ? "Go straight to the listings in " + place : "Go straight to the listings";
+    $("go-row").innerHTML = [["Yad2", L.yad2, "#6c3cf0"], ["Madlan", L.madlan, "#ff3d8b"], ["Facebook groups", L.facebook, "#0a9d90"]]
+      .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + n + " " + EXT + "</a>").join("");
+    $("go-note").textContent = L.city
+      ? "Opens " + L.city.name + "'s rental listings in a new tab. Then set " + roomsText(state.rooms) + " and your price on the site, using the filters below."
+      : "Opens the site's rental search in a new tab. Pick " + (state.town || "your town") + " there, then use the filters below.";
+    $("site-list").innerHTML = SITES.map(([name, domain, desc, color, link, local]) => {
       const hl = local && local.includes(area.name);
-      return '<div class="site' + (hl ? " highlight" : "") + '"><span class="logo" style="background:' + color + '">' + name[0] + "</span>" +
-        "<div><strong>" + name + (hl ? " · great for " + area.name : "") + '</strong><span class="domain">' + domain + "</span><p>" + desc + "</p></div></div>";
+      const url = L[link] || link;
+      return '<a class="site' + (hl ? " highlight" : "") + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="logo" style="background:' + color + '">' + name[0] + "</span>" +
+        "<div><strong>" + name + (hl ? " · great for " + area.name : "") + '</strong><span class="domain">' + domain + "</span><p>" + desc + "</p></div>" +
+        '<span class="open">Open ' + EXT + "</span></a>";
     }).join("");
   }
 
