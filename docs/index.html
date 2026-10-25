@@ -122,7 +122,30 @@
   .facts strong { color: var(--text); font-variant-numeric: tabular-nums; }
   .note { font-size: 13px; color: var(--text-3); margin-top: 10px; }
 
+  .budget-row { display: flex; gap: 8px; }
+  .budget-row .budget-input { flex: 1; }
+  .chip {
+    height: 44px; padding: 0 14px; border-radius: 10px; white-space: nowrap;
+    font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    color: var(--text); background: var(--surface-2); border: 1px solid var(--border);
+  }
+  .chip:hover { background: var(--accent-soft); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .budget-input input:disabled { opacity: .5; }
+
   .budget-verdict { margin-top: 14px; padding: 14px 16px; font-size: 15px; }
+
+  .listings { margin-top: 14px; padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .listings h3 { margin: 0; font-size: 15px; flex: 1 1 220px; }
+  .listings h3 span { display: block; font-size: 13px; font-weight: 400; color: var(--text-3); margin-top: 2px; }
+  .listings .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .site-link {
+    display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2);
+    color: var(--text); font-size: 14px; font-weight: 600; text-decoration: none;
+  }
+  .site-link:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .site-link svg { width: 14px; height: 14px; stroke: var(--text-3); }
   .budget-verdict[hidden] { display: none; }
 
   /* ---- Comparison chart ---- */
@@ -168,7 +191,7 @@
     <div>
       <label class="field-label" for="area">Where do you want to live?</label>
       <select id="area"></select>
-      <div class="hint">18 big cities, or a whole district if your town isn't listed.</div>
+      <div class="hint">19 cities, or a whole district if your town isn't listed.</div>
     </div>
     <div>
       <span class="field-label" id="rooms-label">Number of rooms</span>
@@ -181,7 +204,10 @@
     </div>
     <div>
       <label class="field-label" for="budget">Your monthly budget <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
-      <div class="budget-input"><span>₪</span><input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="e.g. 6000"></div>
+      <div class="budget-row">
+        <div class="budget-input"><span>₪</span><input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="e.g. 6000"></div>
+        <button type="button" class="chip" id="no-budget" aria-pressed="false">No budget limit</button>
+      </div>
       <div class="hint">See which level and which cities it covers.</div>
     </div>
   </section>
@@ -214,6 +240,10 @@
     <div class="facts" id="facts"></div>
     <div class="note" id="note"></div>
     <div class="card budget-verdict" id="verdict" hidden></div>
+    <div class="card listings">
+      <h3 id="listings-title"></h3>
+      <div class="links" id="listings-links"></div>
+    </div>
   </section>
 
   <section class="card compare" aria-labelledby="compare-title">
@@ -238,6 +268,7 @@
     </ul>
     <p>Treat them as a starting point and check real listings (Yad2, Madlan, Komo) in the neighbourhoods you like. Prices vary a lot within a city: north Tel Aviv and south Tel Aviv are very different markets.</p>
     <p>Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band covers everything from 4.5 rooms to large penthouses, so its average is less precise. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). For those, the estimate uses the city's 2.5-3 room rent scaled by its district's price ratio.</p>
+    <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ, so check listings.</p>
     <p>Prices are estimates and exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
   </details>
 
@@ -248,7 +279,7 @@
 </div>
 
 <!-- Bump ?v= when the data is re-exported so browsers don't keep a stale copy -->
-<script src="rent-data.js?v=2026q2-2"></script>
+<script src="rent-data.js?v=2026q2-3"></script>
 <script>
 (function () {
   const D = window.RENT_DATA;
@@ -275,6 +306,8 @@
 
   const byName = Object.fromEntries(D.areas.map((a) => [a.name, a]));
   const cities = D.areas.filter((a) => a.type === "City");
+  // Towns without their own CBS figures (they borrow a nearby city's) stay out of comparisons
+  const measured = cities.filter((c) => !c.proxyFor);
   const bandOf = (area, band) => area.bands.find((b) => b.rooms === band);
 
   // ---- State (remembered per viewer) ----
@@ -282,7 +315,8 @@
   const state = {
     area: byName[saved.area] ? saved.area : "Tel Aviv",
     rooms: saved.rooms >= MIN_ROOMS && saved.rooms <= MAX_ROOMS ? saved.rooms : 3,
-    budget: saved.budget > 0 ? saved.budget : null
+    budget: saved.budget > 0 ? saved.budget : null,
+    noLimit: saved.noLimit === true
   };
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
 
@@ -346,17 +380,30 @@
     $("facts").innerHTML = facts.join("");
 
     const notes = [];
-    if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
+    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ". Check listings below for real prices.");
+    else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
     if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
     if (area.type === "District" && area.name !== "Israel") notes.push("District figures average all towns in the district, including the big cities in it.");
     $("note").textContent = notes.join(" ");
 
     renderBudget(avg, band);
+    renderListings(area);
     renderBars(band);
   }
 
   function renderBudget(avg, band) {
     const v = $("verdict");
+    $("no-budget").setAttribute("aria-pressed", String(state.noLimit));
+    $("budget").disabled = state.noLimit;
+    if (state.noLimit) {
+      $("legend-budget").hidden = true;
+      v.innerHTML = "<strong>No budget limit.</strong> Here the full range runs from about " +
+        fmt(round50(avg * TIERS.budget.lo)) + " for a basic flat to " + fmt(round50(avg * TIERS.luxury.hi)) +
+        " or more for the best homes. The most expensive big city for " + band + " rooms is " +
+        measured.reduce((m, c) => bandOf(c, band).rent > bandOf(m, band).rent ? c : m).name + ".";
+      v.hidden = false;
+      return;
+    }
     if (!state.budget) { v.hidden = true; $("legend-budget").hidden = true; return; }
     $("legend-budget").hidden = false;
     const B = state.budget;
@@ -366,7 +413,7 @@
     }
     if (level) $("tier-" + level).classList.add("fits");
 
-    const affordable = cities
+    const affordable = measured
       .map((c) => ({ name: c.name, rent: bandOf(c, band).rent }))
       .filter((c) => c.rent <= B)
       .sort((a, z) => z.rent - a.rent);
@@ -382,16 +429,17 @@
       msg += " In these cities your budget covers an average " + band + " room flat: " + names.join(", ") +
         (affordable.length > 6 ? " and " + (affordable.length - 6) + " more" : "") + ".";
     } else {
-      msg += " None of the 18 big cities has an average " + band + " room rent within this budget.";
+      msg += " None of the big cities has an average " + band + " room rent within this budget.";
     }
     v.innerHTML = msg;
     v.hidden = false;
   }
 
   function renderBars(band) {
-    const rows = cities.map((c) => ({ name: c.name, rent: bandOf(c, band).rent, est: bandOf(c, band).estimated }))
+    const rows = measured.map((c) => ({ name: c.name, rent: bandOf(c, band).rent, est: bandOf(c, band).estimated }))
       .sort((a, z) => z.rent - a.rent);
-    const max = Math.max(...rows.map((r) => r.rent), state.budget || 0) * 1.04;
+    const budget = state.noLimit ? null : state.budget;
+    const max = Math.max(...rows.map((r) => r.rent), budget || 0) * 1.04;
     $("compare-title").textContent = band + " room homes across the big cities";
     $("compare-sub").textContent = "Average monthly rent (comfortable level), " + quarterLabel(D.quarter) + ". Click a city to select it.";
 
@@ -406,12 +454,32 @@
       btn.innerHTML =
         '<span class="name">' + r.name + '</span>' +
         '<span class="bar-track"><span class="bar-fill" style="width:' + (r.rent / max * 100).toFixed(2) + '%"></span>' +
-        (state.budget ? '<span class="budget-line" style="left:' + (state.budget / max * 100).toFixed(2) + '%"></span>' : '') +
+        (budget ? '<span class="budget-line" style="left:' + (budget / max * 100).toFixed(2) + '%"></span>' : '') +
         '</span>' +
         '<span class="val">' + fmt(r.rent) + (r.est ? "*" : "") + '</span>';
       btn.addEventListener("click", () => { state.area = r.name; sel.value = r.name; persist(); render(); });
       wrap.append(btn);
     }
+  }
+
+  // ---- Where to find apartments ----
+  const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  function renderListings(area) {
+    const links = [];
+    if (area.cbsCode) {
+      // Yad2 takes the CBS locality code; Madlan takes "<hebrew-name>-ישראל"
+      links.push(["Yad2", "https://www.yad2.co.il/realestate/rent?city=" + area.cbsCode]);
+      links.push(["Madlan", "https://www.madlan.co.il/for-rent/" + encodeURIComponent(area.hebrew.replace(/ /g, "-") + "-ישראל")]);
+      $("listings-title").innerHTML = "Find apartments in " + area.name +
+        "<span>Opens live rental listings. Filter by rooms and price on the site.</span>";
+    } else {
+      links.push(["Yad2", "https://www.yad2.co.il/realestate/rent"]);
+      links.push(["Madlan", "https://www.madlan.co.il/"]);
+      $("listings-title").innerHTML = "Find apartments" +
+        "<span>Pick your town on the site, then filter by rooms and price.</span>";
+    }
+    $("listings-links").innerHTML = links.map(([name, url]) =>
+      '<a class="site-link" href="' + url + '" target="_blank" rel="noopener noreferrer">' + name + " " + EXT + "</a>").join("");
   }
 
   // ---- Events ----
@@ -425,6 +493,11 @@
     const v = parseFloat(budgetEl.value);
     state.budget = v > 0 ? v : null;
     persist(); render();
+  });
+  $("no-budget").addEventListener("click", () => {
+    state.noLimit = !state.noLimit;
+    persist(); render();
+    if (!state.noLimit) budgetEl.focus();
   });
   $("m-quarter").textContent = quarterLabel(D.quarter);
 

@@ -8,6 +8,9 @@ window.RENT_DATA = {
       "name": "Ashdod",
       "type": "City",
       "district": "South District",
+      "cbsCode": 70,
+      "hebrew": "אשדוד",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -43,6 +46,9 @@ window.RENT_DATA = {
       "name": "Ashkelon",
       "type": "City",
       "district": "South District",
+      "cbsCode": 7100,
+      "hebrew": "אשקלון",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -78,6 +84,9 @@ window.RENT_DATA = {
       "name": "Bat Yam",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 6200,
+      "hebrew": "בת ים",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -113,6 +122,9 @@ window.RENT_DATA = {
       "name": "Be'er Sheva",
       "type": "City",
       "district": "South District",
+      "cbsCode": 9000,
+      "hebrew": "באר שבע",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -148,6 +160,9 @@ window.RENT_DATA = {
       "name": "Beit Shemesh",
       "type": "City",
       "district": "Jerusalem District",
+      "cbsCode": 2610,
+      "hebrew": "בית שמש",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -183,6 +198,9 @@ window.RENT_DATA = {
       "name": "Bnei Brak",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 6100,
+      "hebrew": "בני ברק",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -218,6 +236,9 @@ window.RENT_DATA = {
       "name": "Hadera",
       "type": "City",
       "district": "Haifa District",
+      "cbsCode": 6500,
+      "hebrew": "חדרה",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -253,6 +274,9 @@ window.RENT_DATA = {
       "name": "Haifa",
       "type": "City",
       "district": "Haifa District",
+      "cbsCode": 4000,
+      "hebrew": "חיפה",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -288,6 +312,9 @@ window.RENT_DATA = {
       "name": "Herzliya",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 6400,
+      "hebrew": "הרצליה",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -323,6 +350,9 @@ window.RENT_DATA = {
       "name": "Holon",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 6600,
+      "hebrew": "חולון",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -358,6 +388,9 @@ window.RENT_DATA = {
       "name": "Jerusalem",
       "type": "City",
       "district": "Jerusalem District",
+      "cbsCode": 3000,
+      "hebrew": "ירושלים",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -393,6 +426,9 @@ window.RENT_DATA = {
       "name": "Kfar Saba",
       "type": "City",
       "district": "Central District",
+      "cbsCode": 6900,
+      "hebrew": "כפר סבא",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -428,6 +464,9 @@ window.RENT_DATA = {
       "name": "Netanya",
       "type": "City",
       "district": "Central District",
+      "cbsCode": 7400,
+      "hebrew": "נתניה",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -463,6 +502,9 @@ window.RENT_DATA = {
       "name": "Petah Tikva",
       "type": "City",
       "district": "Central District",
+      "cbsCode": 7900,
+      "hebrew": "פתח תקווה",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -495,9 +537,50 @@ window.RENT_DATA = {
       ]
     },
     {
+      "name": "Ra'anana",
+      "type": "City",
+      "district": "Central District",
+      "cbsCode": 8700,
+      "hebrew": "רעננה",
+      "proxyFor": "Kfar Saba",
+      "bands": [
+        {
+          "rooms": "1-2",
+          "rent": 3676.9,
+          "se": null,
+          "yoy": null,
+          "estimated": true
+        },
+        {
+          "rooms": "2.5-3",
+          "rent": 4771,
+          "se": null,
+          "yoy": null,
+          "estimated": true
+        },
+        {
+          "rooms": "3.5-4",
+          "rent": 6041.6,
+          "se": null,
+          "yoy": null,
+          "estimated": true
+        },
+        {
+          "rooms": "4.5+",
+          "rent": 7795.9,
+          "se": null,
+          "yoy": null,
+          "estimated": true
+        }
+      ]
+    },
+    {
       "name": "Ramat Gan",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 8600,
+      "hebrew": "רמת גן",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -533,6 +616,9 @@ window.RENT_DATA = {
       "name": "Rehovot",
       "type": "City",
       "district": "Central District",
+      "cbsCode": 8400,
+      "hebrew": "רחובות",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -568,6 +654,9 @@ window.RENT_DATA = {
       "name": "Rishon LeZion",
       "type": "City",
       "district": "Central District",
+      "cbsCode": 8300,
+      "hebrew": "ראשון לציון",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -603,6 +692,9 @@ window.RENT_DATA = {
       "name": "Tel Aviv",
       "type": "City",
       "district": "Tel Aviv District",
+      "cbsCode": 5000,
+      "hebrew": "תל אביב יפו",
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -638,6 +730,9 @@ window.RENT_DATA = {
       "name": "Central District",
       "type": "District",
       "district": "Central District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -673,6 +768,9 @@ window.RENT_DATA = {
       "name": "Haifa District",
       "type": "District",
       "district": "Haifa District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -708,6 +806,9 @@ window.RENT_DATA = {
       "name": "Jerusalem District",
       "type": "District",
       "district": "Jerusalem District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -743,6 +844,9 @@ window.RENT_DATA = {
       "name": "North District",
       "type": "District",
       "district": "North District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -778,6 +882,9 @@ window.RENT_DATA = {
       "name": "South District",
       "type": "District",
       "district": "South District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -813,6 +920,9 @@ window.RENT_DATA = {
       "name": "Tel Aviv District",
       "type": "District",
       "district": "Tel Aviv District",
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
@@ -848,6 +958,9 @@ window.RENT_DATA = {
       "name": "Israel",
       "type": "National",
       "district": null,
+      "cbsCode": null,
+      "hebrew": null,
+      "proxyFor": null,
       "bands": [
         {
           "rooms": "1-2",
