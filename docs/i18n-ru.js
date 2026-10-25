@@ -19,7 +19,7 @@ window.I18N = window.I18N || {};
     "Any": "Любой",
     "No budget limit": "Без ограничения бюджета",
     "Jan-Mar": "янв–мар", "Apr-Jun": "апр–июн", "Jul-Sep": "июл–сен", "Oct-Dec": "окт–дек",
-    "{n} room": "{n} комната", "{n} rooms": "комнат: {n}",
+    "{n} room": "1-комн.", "{n} rooms": "{n}-комн.",
     "Whole district average": "Среднее по всему округу", "National average": "Среднее по стране",
     "{district} · district estimate": "{district} · оценка по округу",
     "Israel (national average)": "Израиль (среднее по стране)",

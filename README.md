@@ -8,6 +8,8 @@ The project looks at how monthly rent varies by **city**, **district** and **dwe
 
 ### 🏠 [Try the interactive rent calculator →](https://tarabl2023-dev.github.io/israel-rental-market-analysis/)
 
+Available in **English, Hebrew (עברית), Russian (Русский) and Arabic (العربية)**.
+
 Type any city or town (in English or Hebrew) and the number of rooms you need, then browse every city as photo listing cards next to an interactive map with price pins. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check.
 
 - **Public transport:** choose whether you want to walk to a train or light-rail station, use buses, or drive. Each city shows its train, light-rail and Carmelit stations (from OpenStreetMap), which can also appear on the map.
