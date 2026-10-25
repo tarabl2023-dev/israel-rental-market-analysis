@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Israel Rent Calculator</title>
+<meta name="description" content="Estimate monthly rent in Israel by city and number of rooms, at budget, comfortable and luxury levels. Based on official CBS data.">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --surface-2: #f0efeb;
+    --border: #e3e1db;
+    --text: #1b1b1a;
+    --text-2: #55534f;
+    --text-3: #7a7873;
+    --accent: #2a78d6;
+    --accent-ink: #1d5fae;
+    --accent-soft: #e6effb;
+    --bar: #2a78d6;
+    --bar-muted: #c9d9ef;
+    --tier-budget: #8fb5e6;
+    --tier-comfort: #2a78d6;
+    --tier-luxury: #12407a;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #121211;
+      --surface: #1c1c1b;
+      --surface-2: #252524;
+      --border: #33332f;
+      --text: #f0efec;
+      --text-2: #c3c2b7;
+      --text-3: #94938b;
+      --accent: #3987e5;
+      --accent-ink: #8db8f0;
+      --accent-soft: #1d2a3b;
+      --bar: #3987e5;
+      --bar-muted: #2f3d52;
+      --tier-budget: #5f8fcc;
+      --tier-comfort: #3987e5;
+      --tier-luxury: #a9c8f2;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #121211; --surface: #1c1c1b; --surface-2: #252524; --border: #33332f;
+    --text: #f0efec; --text-2: #c3c2b7; --text-3: #94938b;
+    --accent: #3987e5; --accent-ink: #8db8f0; --accent-soft: #1d2a3b;
+    --bar: #3987e5; --bar-muted: #2f3d52;
+    --tier-budget: #5f8fcc; --tier-comfort: #3987e5; --tier-luxury: #a9c8f2;
+    --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; }
+  header h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--text-2); max-width: 62ch; }
+  .eyebrow { font-size: 13px; font-weight: 600; color: var(--accent-ink); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---- Inputs ---- */
+  .controls { margin-top: 24px; padding: 20px; display: grid; gap: 20px; grid-template-columns: 1.3fr 1fr 1fr; }
+  @media (max-width: 760px) { .controls { grid-template-columns: 1fr; } }
+  label.field-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .hint { font-size: 13px; color: var(--text-3); margin-top: 6px; }
+  select, input[type="number"] {
+    width: 100%; height: 44px; padding: 0 12px;
+    font: inherit; color: var(--text);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+  }
+  select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .stepper { display: flex; align-items: stretch; height: 44px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface-2); }
+  .stepper button {
+    width: 44px; border: 0; background: transparent; color: var(--text); font-size: 20px; cursor: pointer;
+  }
+  .stepper button:hover { background: var(--accent-soft); }
+  .stepper button:disabled { color: var(--text-3); cursor: default; background: transparent; }
+  .stepper output { flex: 1; display: grid; place-items: center; font-weight: 600; font-variant-numeric: tabular-nums; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .budget-input { position: relative; }
+  .budget-input span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-3); pointer-events: none; }
+  .budget-input input { padding-left: 28px; }
+
+  /* ---- Results ---- */
+  .summary { margin: 28px 0 12px; }
+  .summary h2 { font-size: 20px; margin: 0 0 4px; }
+  .summary p { margin: 0; color: var(--text-2); font-size: 15px; }
+
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 760px) { .tiers { grid-template-columns: 1fr; } }
+  .tier { padding: 18px 18px 16px; position: relative; overflow: hidden; }
+  .tier::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--tier-color); }
+  .tier.budget { --tier-color: var(--tier-budget); }
+  .tier.comfortable { --tier-color: var(--tier-comfort); }
+  .tier.luxury { --tier-color: var(--tier-luxury); }
+  .tier h3 { margin: 0; font-size: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .tier .badge { font-size: 12px; font-weight: 600; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .tier .price { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 0; font-variant-numeric: tabular-nums; }
+  .tier .price small { font-size: 15px; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
+  .tier .range { font-size: 14px; color: var(--text-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .tier .desc { font-size: 14px; color: var(--text-2); margin: 12px 0 0; }
+  .tier.fits { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 14px; color: var(--text-2); }
+  .facts strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  .note { font-size: 13px; color: var(--text-3); margin-top: 10px; }
+
+  .budget-verdict { margin-top: 14px; padding: 14px 16px; font-size: 15px; }
+  .budget-verdict[hidden] { display: none; }
+
+  /* ---- Comparison chart ---- */
+  .compare { margin-top: 28px; padding: 20px; }
+  .compare h2 { font-size: 18px; margin: 0 0 2px; }
+  .compare .sub { color: var(--text-2); font-size: 14px; margin: 0 0 14px; }
+  .bars { display: grid; gap: 4px; }
+  .bar-row {
+    display: grid; grid-template-columns: 120px 1fr 72px; align-items: center; gap: 10px;
+    padding: 3px 6px; margin: 0 -6px; border-radius: 6px; cursor: pointer; border: 0; background: transparent;
+    font: inherit; color: inherit; text-align: left; width: calc(100% + 12px);
+  }
+  .bar-row:hover, .bar-row:focus-visible { background: var(--surface-2); }
+  .bar-row .name { font-size: 14px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-row.selected .name { color: var(--text); font-weight: 600; }
+  .bar-track { position: relative; height: 16px; }
+  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar-muted); border-radius: 0 4px 4px 0; }
+  .bar-row.selected .bar-fill { background: var(--bar); }
+  .budget-line { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--text); pointer-events: none; }
+  .bar-row .val { font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text-2); }
+  .bar-row.selected .val { color: var(--text); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--text-3); margin-top: 12px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+  @media (max-width: 520px) { .bar-row { grid-template-columns: 92px 1fr 62px; } }
+
+  details.method { margin-top: 28px; padding: 16px 20px; }
+  details.method summary { cursor: pointer; font-weight: 600; }
+  details.method p, details.method li { color: var(--text-2); font-size: 14px; }
+  footer { margin-top: 28px; font-size: 13px; color: var(--text-3); }
+  footer a, details a { color: var(--accent-ink); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Israel rental market</div>
+    <h1>How much will it cost to rent?</h1>
+    <p>Pick where you want to live and how many rooms you need. You'll get an estimated monthly rent at three levels: budget, comfortable and luxury.</p>
+  </header>
+
+  <section class="card controls" aria-label="Your search">
+    <div>
+      <label class="field-label" for="area">Where do you want to live?</label>
+      <select id="area"></select>
+      <div class="hint">18 big cities, or a whole district if your town isn't listed.</div>
+    </div>
+    <div>
+      <span class="field-label" id="rooms-label">Number of rooms</span>
+      <div class="stepper" role="group" aria-labelledby="rooms-label">
+        <button type="button" id="rooms-down" aria-label="Fewer rooms">&minus;</button>
+        <output id="rooms-value" aria-live="polite">3</output>
+        <button type="button" id="rooms-up" aria-label="More rooms">+</button>
+      </div>
+      <div class="hint" id="rooms-hint">Israeli count: the living room is a room.</div>
+    </div>
+    <div>
+      <label class="field-label" for="budget">Your monthly budget <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
+      <div class="budget-input"><span>₪</span><input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="e.g. 6000"></div>
+      <div class="hint">See which level and which cities it covers.</div>
+    </div>
+  </section>
+
+  <section aria-live="polite">
+    <div class="summary">
+      <h2 id="summary-title"></h2>
+      <p id="summary-sub"></p>
+    </div>
+    <div class="tiers">
+      <article class="card tier budget" id="tier-budget">
+        <h3>Budget <span class="badge">Cheapest</span></h3>
+        <div class="price" data-price></div>
+        <div class="range" data-range></div>
+        <p class="desc">Older building, often no lift or parking. A less central neighbourhood or a flat that needs some work.</p>
+      </article>
+      <article class="card tier comfortable" id="tier-comfortable">
+        <h3>Comfortable <span class="badge">Typical</span></h3>
+        <div class="price" data-price></div>
+        <div class="range" data-range></div>
+        <p class="desc">The average contract in this area. A decent, maintained flat in an ordinary neighbourhood.</p>
+      </article>
+      <article class="card tier luxury" id="tier-luxury">
+        <h3>Luxury <span class="badge">Premium</span></h3>
+        <div class="price" data-price></div>
+        <div class="range" data-range></div>
+        <p class="desc">New building or tower with a lift, parking, a safe room (mamad) and a balcony, in a sought-after neighbourhood.</p>
+      </article>
+    </div>
+    <div class="facts" id="facts"></div>
+    <div class="note" id="note"></div>
+    <div class="card budget-verdict" id="verdict" hidden></div>
+  </section>
+
+  <section class="card compare" aria-labelledby="compare-title">
+    <h2 id="compare-title"></h2>
+    <p class="sub" id="compare-sub"></p>
+    <div class="bars" id="bars"></div>
+    <div class="legend">
+      <span><i style="background:var(--bar)"></i>Your choice</span>
+      <span><i style="background:var(--bar-muted)"></i>Other cities</span>
+      <span id="legend-budget" hidden><i style="border:2px dashed var(--text);background:transparent"></i>Your budget</span>
+    </div>
+  </section>
+
+  <details class="card method">
+    <summary>How the estimates work</summary>
+    <p><strong>Comfortable</strong> is the official average monthly rent from the Israel Central Bureau of Statistics (CBS) for that area and size, for <span id="m-quarter"></span>. It covers new and renewed contracts.</p>
+    <p>CBS publishes averages only, not the spread of prices. The <strong>budget</strong> and <strong>luxury</strong> levels are rules of thumb, applied to the CBS average:</p>
+    <ul>
+      <li>Budget: about 80% of the average (range 70-90%)</li>
+      <li>Comfortable: the average (range 90-115%)</li>
+      <li>Luxury: about 140% of the average (range 125-170%)</li>
+    </ul>
+    <p>Treat them as a starting point and check real listings (Yad2, Madlan, Komo) in the neighbourhoods you like. Prices vary a lot within a city: north Tel Aviv and south Tel Aviv are very different markets.</p>
+    <p>Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band covers everything from 4.5 rooms to large penthouses, so its average is less precise. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). For those, the estimate uses the city's 2.5-3 room rent scaled by its district's price ratio.</p>
+    <p>Prices are estimates and exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
+  </details>
+
+  <footer>
+    Data: Israel Central Bureau of Statistics, Price Statistics Monthly, Table 4.9.
+    Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
+  </footer>
+</div>
+
+<script src="rent-data.js"></script>
+<script>
+(function () {
+  const D = window.RENT_DATA;
+  const TIERS = {
+    budget:      { mid: 0.80, lo: 0.70, hi: 0.90 },
+    comfortable: { mid: 1.00, lo: 0.90, hi: 1.15 },
+    luxury:      { mid: 1.40, lo: 1.25, hi: 1.70 }
+  };
+  const MIN_ROOMS = 1, MAX_ROOMS = 6, STEP = 0.5;
+
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => "₪" + Math.round(n).toLocaleString("en-US");
+  const round50 = (n) => Math.round(n / 50) * 50;
+  const quarterLabel = (q) => {
+    const [y, n] = q.split("Q");
+    return ["Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"][+n - 1] + " " + y;
+  };
+  const bandFor = (rooms) => rooms <= 2 ? "1-2" : rooms <= 3 ? "2.5-3" : rooms <= 4 ? "3.5-4" : "4.5+";
+  const roomsText = (r) => (r >= MAX_ROOMS ? "6+" : String(r)) + (r === 1 ? " room" : " rooms");
+  const bedrooms = (r) => {
+    const b = Math.max(0, Math.floor(r) - 1);
+    return b === 0 ? "a studio" : b === 1 ? "1 bedroom + living room" : b + " bedrooms + living room";
+  };
+
+  const byName = Object.fromEntries(D.areas.map((a) => [a.name, a]));
+  const cities = D.areas.filter((a) => a.type === "City");
+  const bandOf = (area, band) => area.bands.find((b) => b.rooms === band);
+
+  // ---- State (remembered per viewer) ----
+  const saved = (() => { try { return JSON.parse(localStorage.getItem("rent-calc") || "{}"); } catch (e) { return {}; } })();
+  const state = {
+    area: byName[saved.area] ? saved.area : "Tel Aviv",
+    rooms: saved.rooms >= MIN_ROOMS && saved.rooms <= MAX_ROOMS ? saved.rooms : 3,
+    budget: saved.budget > 0 ? saved.budget : null
+  };
+  const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
+
+  // ---- Area picker, grouped by district ----
+  const sel = $("area");
+  const districts = [...new Set(cities.map((c) => c.district))].sort();
+  for (const d of districts) {
+    const g = document.createElement("optgroup");
+    g.label = d;
+    cities.filter((c) => c.district === d).forEach((c) => g.append(new Option(c.name, c.name)));
+    g.append(new Option("Elsewhere in " + d, d));
+    sel.append(g);
+  }
+  const other = document.createElement("optgroup");
+  other.label = "Other";
+  D.areas.filter((a) => a.type === "District" && !districts.includes(a.name))
+    .forEach((a) => other.append(new Option(a.name.replace(" District", "") + " (whole district)", a.name)));
+  other.append(new Option("Israel average", "Israel"));
+  sel.append(other);
+
+  // ---- Render ----
+  function render() {
+    const area = byName[state.area];
+    const band = bandFor(state.rooms);
+    const b = bandOf(area, band);
+    const avg = b.rent;
+    const place = area.type === "City" ? area.name
+      : area.type === "National" ? "Israel (national average)"
+      : area.name;
+
+    $("rooms-value").textContent = state.rooms >= MAX_ROOMS ? "6+" : state.rooms;
+    $("rooms-down").disabled = state.rooms <= MIN_ROOMS;
+    $("rooms-up").disabled = state.rooms >= MAX_ROOMS;
+    $("rooms-hint").textContent = roomsText(state.rooms) + " = " + bedrooms(state.rooms) + ".";
+
+    $("summary-title").textContent = roomsText(state.rooms) + " in " + place;
+    $("summary-sub").textContent = "Estimated monthly rent, based on CBS data for " + band +
+      " room homes, " + quarterLabel(D.quarter) + ".";
+
+    for (const [key, t] of Object.entries(TIERS)) {
+      const el = $("tier-" + key);
+      el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>/ month</small>";
+      el.querySelector("[data-range]").textContent = fmt(round50(avg * t.lo)) + " - " + fmt(round50(avg * t.hi));
+      el.classList.remove("fits");
+    }
+
+    // Facts line
+    const nat = bandOf(byName["Israel"], band).rent;
+    const diff = avg / nat - 1;
+    const facts = [];
+    facts.push("CBS average: <strong>" + fmt(avg) + "</strong>");
+    if (area.name !== "Israel") {
+      facts.push("vs Israel average: <strong>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</strong>");
+    }
+    if (b.yoy != null) {
+      facts.push("Change in a year: <strong>" + (b.yoy >= 0 ? "+" : "") + (b.yoy * 100).toFixed(1) + "%</strong>");
+    }
+    if (b.se != null) {
+      facts.push("95% confidence: <strong>" + fmt(avg - 1.96 * b.se) + " - " + fmt(avg + 1.96 * b.se) + "</strong>");
+    }
+    $("facts").innerHTML = facts.join("");
+
+    const notes = [];
+    if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
+    if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
+    if (area.type === "District" && area.name !== "Israel") notes.push("District figures average all towns in the district, including the big cities in it.");
+    $("note").textContent = notes.join(" ");
+
+    renderBudget(avg, band);
+    renderBars(band);
+  }
+
+  function renderBudget(avg, band) {
+    const v = $("verdict");
+    if (!state.budget) { v.hidden = true; $("legend-budget").hidden = true; return; }
+    $("legend-budget").hidden = false;
+    const B = state.budget;
+    let level = null;
+    for (const key of ["luxury", "comfortable", "budget"]) {
+      if (B >= round50(avg * TIERS[key].mid)) { level = key; break; }
+    }
+    if (level) $("tier-" + level).classList.add("fits");
+
+    const affordable = cities
+      .map((c) => ({ name: c.name, rent: bandOf(c, band).rent }))
+      .filter((c) => c.rent <= B)
+      .sort((a, z) => z.rent - a.rent);
+
+    let msg;
+    if (level === "luxury") msg = "<strong>" + fmt(B) + "</strong> covers a <strong>luxury</strong> flat here.";
+    else if (level === "comfortable") msg = "<strong>" + fmt(B) + "</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about " + fmt(round50(avg * TIERS.luxury.mid)) + ".";
+    else if (level === "budget") msg = "<strong>" + fmt(B) + "</strong> fits the <strong>budget</strong> level here. A typical flat costs about " + fmt(round50(avg)) + ".";
+    else msg = "<strong>" + fmt(B) + "</strong> is below the budget level here (about " + fmt(round50(avg * TIERS.budget.mid)) + "). Consider fewer rooms or another area.";
+
+    if (affordable.length) {
+      const names = affordable.slice(0, 6).map((c) => c.name);
+      msg += " In these cities your budget covers an average " + band + " room flat: " + names.join(", ") +
+        (affordable.length > 6 ? " and " + (affordable.length - 6) + " more" : "") + ".";
+    } else {
+      msg += " None of the 18 big cities has an average " + band + " room rent within this budget.";
+    }
+    v.innerHTML = msg;
+    v.hidden = false;
+  }
+
+  function renderBars(band) {
+    const rows = cities.map((c) => ({ name: c.name, rent: bandOf(c, band).rent, est: bandOf(c, band).estimated }))
+      .sort((a, z) => z.rent - a.rent);
+    const max = Math.max(...rows.map((r) => r.rent), state.budget || 0) * 1.04;
+    $("compare-title").textContent = band + " room homes across the big cities";
+    $("compare-sub").textContent = "Average monthly rent (comfortable level), " + quarterLabel(D.quarter) + ". Click a city to select it.";
+
+    const wrap = $("bars");
+    wrap.innerHTML = "";
+    for (const r of rows) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "bar-row" + (r.name === state.area ? " selected" : "");
+      btn.title = r.name + ": " + fmt(r.rent) + (r.est ? " (estimated)" : "");
+      btn.setAttribute("aria-label", r.name + ", " + fmt(r.rent) + " per month" + (r.est ? ", estimated" : ""));
+      btn.innerHTML =
+        '<span class="name">' + r.name + '</span>' +
+        '<span class="bar-track"><span class="bar-fill" style="width:' + (r.rent / max * 100).toFixed(2) + '%"></span>' +
+        (state.budget ? '<span class="budget-line" style="left:' + (state.budget / max * 100).toFixed(2) + '%"></span>' : '') +
+        '</span>' +
+        '<span class="val">' + fmt(r.rent) + (r.est ? "*" : "") + '</span>';
+      btn.addEventListener("click", () => { state.area = r.name; sel.value = r.name; persist(); render(); });
+      wrap.append(btn);
+    }
+  }
+
+  // ---- Events ----
+  sel.value = state.area;
+  sel.addEventListener("change", () => { state.area = sel.value; persist(); render(); });
+  $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });
+  $("rooms-up").addEventListener("click", () => { state.rooms = Math.min(MAX_ROOMS, state.rooms + STEP); persist(); render(); });
+  const budgetEl = $("budget");
+  if (state.budget) budgetEl.value = state.budget;
+  budgetEl.addEventListener("input", () => {
+    const v = parseFloat(budgetEl.value);
+    state.budget = v > 0 ? v : null;
+    persist(); render();
+  });
+  $("m-quarter").textContent = quarterLabel(D.quarter);
+
+  render();
+})();
+</script>
+</body>
+</html>
