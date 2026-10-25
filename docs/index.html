@@ -185,10 +185,15 @@
   .tier.budget { background: var(--teal-soft); --c: var(--teal); }
   .tier.comfortable { background: var(--primary-soft); --c: var(--primary); }
   .tier.luxury { background: var(--accent-soft); --c: var(--accent); }
-  .tier.fits { border-color: var(--c); }
+  .tier { cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
+  .tier:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .tier.selected { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent); }
+  .tier .t-sel { font-size: 10px; background: var(--c); color: #fff; border-radius: 4px; padding: 2px 6px; letter-spacing: .06em; }
+  .tier-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 10px; font-size: 13px; color: var(--ink-3); }
+  .linkish { border: 0; background: none; padding: 0; font-size: 13px; font-weight: 800; color: var(--primary); cursor: pointer; text-decoration: underline; }
   .tier .ill { position: absolute; right: -6px; bottom: -6px; width: 74px; height: 74px; opacity: .95; }
   .tier .t-name { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; gap: 6px; }
-  .tier .t-fit { font-size: 10px; background: var(--c); color: #fff; border-radius: 4px; padding: 2px 6px; letter-spacing: .06em; }
+  .tier .t-fit { font-size: 10px; background: transparent; color: var(--c); border: 1.5px solid var(--c); border-radius: 4px; padding: 1px 5px; letter-spacing: .06em; }
   .tier .t-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .tier .t-price small { font-size: 13px; color: var(--ink-3); font-weight: 600; }
   .tier .t-range { font-size: 13px; color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -486,8 +491,8 @@
           <div class="metrics" id="metrics"></div>
 
           <div class="tiers">
-            <div class="tier budget" id="tier-budget">
-              <div class="t-name">Budget <span class="t-fit" hidden>Your level</span></div>
+            <div class="tier budget" id="tier-budget" data-level="budget" role="button" tabindex="0" aria-pressed="false">
+              <div class="t-name">Budget <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
               <p class="t-desc">Older building, often no lift or parking, in a less central area.</p>
@@ -498,8 +503,8 @@
                 <circle cx="60" cy="56" r="13" fill="#ffc83d"/><text x="60" y="61" text-anchor="middle" font-size="14" font-weight="800" fill="#7a5600" font-family="Arial">₪</text>
               </svg>
             </div>
-            <div class="tier comfortable" id="tier-comfortable">
-              <div class="t-name">Comfortable <span class="t-fit" hidden>Your level</span></div>
+            <div class="tier comfortable" id="tier-comfortable" data-level="comfortable" role="button" tabindex="0" aria-pressed="false">
+              <div class="t-name">Comfortable <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
               <p class="t-desc">The average contract here: a decent, maintained flat.</p>
@@ -511,8 +516,8 @@
                 <circle cx="64" cy="20" r="7" fill="#ffc83d"/>
               </svg>
             </div>
-            <div class="tier luxury" id="tier-luxury">
-              <div class="t-name">Luxury <span class="t-fit" hidden>Your level</span></div>
+            <div class="tier luxury" id="tier-luxury" data-level="luxury" role="button" tabindex="0" aria-pressed="false">
+              <div class="t-name">Luxury <span class="t-sel" hidden>✓ Selected</span><span class="t-fit" hidden>Fits budget</span></div>
               <div class="t-price" data-price></div>
               <div class="t-range" data-range></div>
               <p class="t-desc">New tower with lift, parking, safe room and a big balcony.</p>
@@ -525,6 +530,8 @@
             </div>
           </div>
 
+          <div class="tier-hint"><span>Tap a level to use it for your costs and search.</span>
+            <button type="button" class="linkish" id="auto-level" hidden>Match my budget again</button></div>
           <div class="verdict" id="verdict" hidden></div>
           <div class="note" id="note"></div>
         </div>
@@ -870,8 +877,16 @@
     if (a.type === "City") return LD.costs.cityRegion[a.name];
     return a.type === "National" ? "Israel" : a.name;
   }
+  // The level the budget points to; the person can still pick another one
+  const fitLevel = (avg) => {
+    const B = effBudget();
+    return B ? (["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || null) : null;
+  };
   function currentLevel(avg) {
     if (state.level) return state.level;
+    return autoLevel(avg);
+  }
+  function autoLevel(avg) {
     const B = effBudget();
     if (B) return ["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || "budget";
     return state.noLimit ? "luxury" : "comfortable";
@@ -1034,15 +1049,18 @@
     else if (adj < 0) adjMsg = "<i>−5%</i> Further from public transport (you'll drive): about " + fmt(round50(avg * (1 + adj))) + "/month";
     $("hero-adj").innerHTML = adjMsg;
 
-    const B = effBudget();
-    const level = B ? (["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || null) : null;
+    const level = fitLevel(avg);            // what the budget covers
+    const chosen = currentLevel(avg);       // what the person picked (or the budget's level)
     for (const [key, t] of Object.entries(TIERS)) {
       const el = $("tier-" + key);
       el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>/mo</small>";
       el.querySelector("[data-range]").textContent = fmt(round50(avg * t.lo)) + " - " + fmt(round50(avg * t.hi));
-      el.classList.toggle("fits", key === level);
-      el.querySelector(".t-fit").hidden = key !== level;
+      el.classList.toggle("selected", key === chosen);
+      el.setAttribute("aria-pressed", String(key === chosen));
+      el.querySelector(".t-sel").hidden = key !== chosen;
+      el.querySelector(".t-fit").hidden = key !== level || key === chosen;
     }
+    $("auto-level").hidden = !(state.level && state.level !== autoLevel(avg));
 
     const notes = [];
     if (town) notes.push("CBS doesn't publish rents for " + town + ", so these figures use the " + area.name + " average. Rents in " + town + " may differ.");
@@ -1183,9 +1201,7 @@
     $("guide-filters").innerHTML = rows.map(([en, h, val, note]) =>
       "<tr><th>" + en + he(h) + "</th><td>" + val + (note ? "<small>" + note + "</small>" : "") + "</td></tr>").join("");
 
-    let level = "comfortable";
-    if (state.noLimit) level = "luxury";
-    else if (state.budget) level = ["luxury", "comfortable", "budget"].find((k) => state.budget >= round50(avg * TIERS[k].mid)) || "budget";
+    const level = currentLevel(avg);
     $("guide-keywords").innerHTML =
       [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
         '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " · your level" : "") + "</h4>" +
@@ -1348,14 +1364,20 @@
   $("kids-down").addEventListener("click", () => bump("kids", -1, 0, 5));
   $("kids-up").addEventListener("click", () => bump("kids", 1, 0, 5));
   document.querySelectorAll(".seg [data-level]").forEach((btn) => btn.addEventListener("click", () => { state.level = btn.dataset.level; persist(); render(); }));
+  document.querySelectorAll(".tier[data-level]").forEach((el) => {
+    const pick = () => { state.level = el.dataset.level; persist(); render(); toast(el.dataset.level[0].toUpperCase() + el.dataset.level.slice(1) + " level selected"); };
+    el.addEventListener("click", pick);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  });
+  $("auto-level").addEventListener("click", () => { state.level = null; persist(); render(); });
   cmpSel.addEventListener("change", () => { state.compare = cmpSel.value; persist(); render(); });
   $("allin").addEventListener("click", () => { const p = $("cost-panel"); p.open = true; p.scrollIntoView({ behavior: "smooth", block: "start" }); });
   $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });
   $("rooms-up").addEventListener("click", () => { state.rooms = Math.min(MAX_ROOMS, state.rooms + STEP); persist(); render(); });
   const budgetEl = $("budget");
   if (state.budget) budgetEl.value = state.budget;
-  budgetEl.addEventListener("input", () => { const v = parseFloat(budgetEl.value); state.budget = v > 0 ? v : null; persist(); render(); });
-  $("no-budget").addEventListener("click", () => { state.noLimit = !state.noLimit; persist(); render(); if (!state.noLimit) budgetEl.focus(); });
+  budgetEl.addEventListener("input", () => { const v = parseFloat(budgetEl.value); state.budget = v > 0 ? v : null; state.level = null; persist(); render(); });
+  $("no-budget").addEventListener("click", () => { state.noLimit = !state.noLimit; state.level = null; persist(); render(); if (!state.noLimit) budgetEl.focus(); });
   const sortEl = $("sort");
   sortEl.value = state.sort;
   sortEl.addEventListener("change", () => { state.sort = sortEl.value; persist(); renderFeed(bandFor(state.rooms)); });
