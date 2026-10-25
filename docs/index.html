@@ -32,7 +32,6 @@
     --shadow-sm: 0 1px 2px rgba(28,20,51,.06), 0 2px 8px rgba(28,20,51,.06);
     --shadow-md: 0 6px 24px rgba(28,20,51,.12);
     --radius: 14px;
-    --top-h: 132px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -67,7 +66,7 @@
   [lang="he"] { font-family: "Plus Jakarta Sans", "Arial Hebrew", Arial, sans-serif; }
 
   /* ================= Top bar ================= */
-  .topbar { position: sticky; top: 0; z-index: 1000; background: var(--surface); box-shadow: var(--shadow-sm); }
+  .topbar { position: relative; z-index: 1000; background: var(--surface); box-shadow: var(--shadow-sm); }
   .topbar::after { /* colourful stripe */
     content: ""; display: block; height: 4px;
     background: linear-gradient(90deg, var(--primary) 0 40%, var(--accent) 40% 70%, var(--sun) 70% 85%, var(--teal) 85%);
@@ -128,9 +127,9 @@
   .nolimit[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   /* ================= Split layout ================= */
-  .split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); height: calc(100dvh - var(--top-h)); }
-  .pane-list { overflow-y: auto; overscroll-behavior: contain; }
-  .pane-map { position: relative; border-left: 1px solid var(--line); }
+  /* the whole page scrolls; the map stays in view beside the list */
+  .split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; }
+  .pane-map { position: sticky; top: 0; height: 100vh; height: 100dvh; border-left: 1px solid var(--line); }
   #map { position: absolute; inset: 0; background: var(--surface-2); }
   .map-legend { position: absolute; z-index: 500; top: 14px; left: 14px; right: 14px; pointer-events: none; display: flex; flex-wrap: wrap; gap: 8px; }
   .map-legend > div {
@@ -397,9 +396,8 @@
   /* mobile: list first, floating map toggle */
   .map-toggle { display: none; }
   @media (max-width: 1000px) {
-    .split { display: block; height: auto; }
-    .pane-list { overflow: visible; }
-    .pane-map { position: fixed; z-index: 900; left: 0; right: 0; bottom: 0; top: var(--top-h); border: 0; transform: translateY(105%); transition: transform .3s ease; }
+    .split { display: block; }
+    .pane-map { position: fixed; z-index: 1050; left: 0; right: 0; bottom: 0; top: 0; height: auto; border: 0; transform: translateY(105%); transition: transform .3s ease; }
     body.show-map .pane-map { transform: none; }
     .map-toggle {
       display: inline-flex; align-items: center; gap: 8px; position: fixed; z-index: 1100; left: 50%; bottom: 20px; transform: translateX(-50%);
@@ -1133,7 +1131,7 @@
     if ("IntersectionObserver" in window) {
       observer = new IntersectionObserver((entries) => entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add("in"); observer.unobserve(e.target); }
-      }), { root: window.innerWidth > 1000 ? $("pane-list") : null, rootMargin: "0px 0px -30px 0px" });
+      }), { rootMargin: "0px 0px -30px 0px" });
       cards.forEach((el) => observer.observe(el));
     } else cards.forEach((el) => el.classList.add("in"));
   }
@@ -1319,8 +1317,8 @@
     if (document.activeElement !== areaInput) areaInput.value = placeLabel();
     if (opts.fly !== false) flyToArea(byName[name]);
     if (opts.scroll) {
-      if (window.innerWidth > 1000) $("pane-list").scrollTo({ top: 0, behavior: "smooth" });
-      else { setMapOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }
+      if (window.innerWidth <= 1000) setMapOpen(false);
+      $("pane-list").scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
@@ -1402,10 +1400,7 @@
   }
   mt.addEventListener("click", () => setMapOpen(!document.body.classList.contains("show-map")));
 
-  // keep the split pane height in step with the top bar
-  const setTop = () => document.documentElement.style.setProperty("--top-h", $("topbar").offsetHeight + "px");
-  setTop();
-  if ("ResizeObserver" in window) new ResizeObserver(() => { setTop(); if (map) map.invalidateSize(); }).observe($("topbar"));
+  window.addEventListener("resize", () => { if (map) map.invalidateSize(); });
 
   $("credits").innerHTML = Object.entries(M.cities).map(([n, m]) =>
     esc(n) + ': <a href="' + esc(m.source) + '" target="_blank" rel="noopener noreferrer">' + esc(m.credit) + "</a> (" + esc(m.license) + ")").join("; ") + ".";
