@@ -29,3 +29,10 @@ one sampling-error column per quarter) and the CBS spellings. All cleaning happe
 - The largest size band was published as **4.5-6 rooms** in older editions and **4.5+ rooms** from 2026.
   CBS recalculated it from Q1 2026 to include homes with more than 6 rooms; earlier quarters are unchanged.
 - 1-2 room figures for Kfar Saba and Beit Shemesh are suppressed by CBS (too few observations).
+
+# Other sources (calculator)
+
+- **`cbs_hes_2021_table10.csv`**: CBS Household Expenditure Survey 2021, Table 10 "Monthly income and consumption expenditure per household, by sub-district" (https://www.cbs.gov.il/he/publications/DocLib/2023/1924_household_income_expenditure_2021/t10.xls). Selected rows, values as published: `(123)` = high sampling error, `~` = too few observations.
+- **`cbs_cpi_factors.csv`**: change in the CBS consumer price index by main group from 2021 to 2026, from the CBS price index API linkage calculator (https://api.cbs.gov.il/index/data/calculator/).
+- **`osm_rail_stations.csv`**: Israeli train stations, light-rail stops and Carmelit stations with the municipality each lies in, from OpenStreetMap via the Overpass API (© OpenStreetMap contributors, ODbL).
+- Rav-Kav monthly pass prices (₪315 nationwide, ₪139 periphery bus-only): https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract

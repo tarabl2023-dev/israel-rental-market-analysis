@@ -8,7 +8,10 @@ The project looks at how monthly rent varies by **city**, **district** and **dwe
 
 ### 🏠 [Try the interactive rent calculator →](https://tarabl2023-dev.github.io/israel-rental-market-analysis/)
 
-Pick a city (or district) and the number of rooms you need, then browse every city as photo listing cards next to an interactive map with price pins. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check. Ra'anana is included as an estimate: CBS doesn't publish rents for towns under 100,000 residents, so it borrows neighbouring Kfar Saba's figures, and the page says so.
+Type any city or town (in English or Hebrew) and the number of rooms you need, then browse every city as photo listing cards next to an interactive map with price pins. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check.
+
+- **Public transport:** choose whether you want to walk to a train or light-rail station, use buses, or drive. Each city shows its train, light-rail and Carmelit stations (from OpenStreetMap), which can also appear on the map.
+- **What it will really cost:** rent plus arnona, bills, groceries, eating out, transport, education, sport and fitness, health, and clothing for your household size and lifestyle, compared side by side with any other city. Everyday costs come from the CBS Household Expenditure Survey (2021, by sub-district), brought to 2026 prices with the CBS price index. Ra'anana is included as an estimate: CBS doesn't publish rents for towns under 100,000 residents, so it borrows neighbouring Kfar Saba's figures, and the page says so.
 
 ---
 
@@ -64,7 +67,8 @@ Each CBS edition only covers seven quarters, so five editions were combined, kee
 1. **Clean and reshape** ([`R/01_clean_data.R`](R/01_clean_data.R)): pivot the wide CBS layout (one column per quarter) into tidy long format with `pivot_longer()`, standardise city names, harmonise the 4.5+ size band (CBS renamed and redefined it in 2026), build proper quarter dates, and run sanity checks (no duplicate keys, 12 quarters, positive rents).
 2. **Analyse and visualise** ([`R/02_analysis.R`](R/02_analysis.R)): compare cities and districts in the latest quarter, add 95% confidence intervals from CBS sampling errors, calculate year-on-year and three-year growth, index rents to a common base to compare size bands, and calculate the size premium in each city.
 3. **Export for the calculator** ([`R/03_export_app_data.R`](R/03_export_app_data.R)): take the latest-quarter rent for every area and size band, fill the two cells CBS suppresses using district price ratios, and write JSON for the web page in [`docs/`](docs/).
-4. **Outputs:** six charts in [`figures/`](figures/), summary tables in [`output/`](output/) and the [interactive calculator](https://tarabl2023-dev.github.io/israel-rental-market-analysis/).
+4. **Export living costs and transport** ([`R/04_export_living_costs.R`](R/04_export_living_costs.R)): count rail stations per city from OpenStreetMap, then turn CBS household spending by sub-district into monthly costs per person at 2026 prices.
+5. **Outputs:** six charts in [`figures/`](figures/), summary tables in [`output/`](output/) and the [interactive calculator](https://tarabl2023-dev.github.io/israel-rental-market-analysis/).
 
 **How the calculator's levels work:** *comfortable* is the CBS average for that area and size. CBS doesn't publish the spread of rents, so *budget* (about 80% of the average) and *luxury* (about 140%) are rule-of-thumb multipliers. The page says this.
 
@@ -92,7 +96,8 @@ israel-rental-market/
 ├── R/
 │   ├── 01_clean_data.R
 │   ├── 02_analysis.R
-│   └── 03_export_app_data.R
+│   ├── 03_export_app_data.R
+│   └── 04_export_living_costs.R
 ├── docs/               # interactive calculator (GitHub Pages)
 ├── figures/            # charts (PNG)
 ├── output/             # summary tables (CSV)

@@ -821,6 +821,7 @@
       clothing: R.clothing * sp * life
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
+    v.rent = round50(rent);   // same rounding as the rent shown in the hero
     v.total = Object.values(v).reduce((a, b) => a + b, 0);
     return v;
   }
