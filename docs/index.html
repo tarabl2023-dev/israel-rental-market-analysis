@@ -260,6 +260,10 @@
         padding: 7px 9px; margin: 0 0 4px; border: 0; border-radius: 8px; background: var(--surface);
         font-size: 14px; cursor: pointer; text-align: start; }
   .kw:hover { box-shadow: inset 0 0 0 2px var(--c); }
+  .kw.on { background: var(--c); color: #fff; }
+  .kw.on span { color: rgba(255,255,255,.85); }
+  .go-incl { font-size: 12.5px; color: var(--ink-2); margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: var(--surface-2); }
+  .go-incl b { color: var(--ink); }
   .kw bdi { font-weight: 800; }
   .kw span { color: var(--ink-3); font-size: 12.5px; }
   .tip { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
@@ -601,7 +605,7 @@
           <div class="step">
             <div class="step-num" style="background:var(--ink)">↗</div>
             <div class="step-body"><h3 id="go-title">Go straight to the listings</h3><div class="go-row" id="go-row"></div>
-              <p class="go-note" id="go-note"></p></div>
+              <p class="go-note" id="go-note"></p><p class="go-incl" id="go-incl"></p></div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--primary)">1</div>
@@ -614,7 +618,7 @@
           <div class="step">
             <div class="step-num" style="background:var(--teal)">3</div>
             <div class="step-body"><h3>Add keywords for your level</h3><div class="kw-groups" id="guide-keywords"></div>
-              <p class="tip">Click any word to copy it. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
+              <p class="tip">Tap words to add them to your search. Ones marked "filter" are also ticked for you on the sites that support them when you open the links above. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
             </div>
           </div>
         </div>
@@ -666,7 +670,7 @@
           <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ.</p>
           <p><strong>Public transport.</strong> Station counts are train stations, light-rail stops and Haifa's Carmelit underground stations inside each city's boundary, from OpenStreetMap. Stations named after a city but just over its border (such as Kfar Saba–Nordau) count for that city. There's no official Israeli data on how rents change near stations. Studies of <em>sale</em> prices find homes near Tel Aviv's light rail rose faster (<a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Globes</a>), so the transport choice applies a rule of thumb: about +5% rent within walking distance of a station, and about −5% further out if you drive.</p>
           <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Cities use their own sub-district (Herzliya uses Tel Aviv's, Ra'anana and Kfar Saba use Sharon's), and other towns use their district. Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
-          <p><strong>Shabbat.</strong> In the CBS survey, households that keep Shabbat spend about the same on groceries per person as secular ones overall (about ₪1,100 a month at 2026 prices). They spend more on Shabbat foods (about ₪27 more per person a month) and much less eating out. So the Shabbat line adds that ₪27 per person, plus the cost of feeding the guests you host.</p>
+          <p><strong>Shabbat.</strong> Each festive meal is costed at about three times an ordinary meal of groceries (an ordinary person-meal is about ₪12, from CBS national grocery spending ÷ 90 meals a month). Your household already buys its ordinary food, so the extra is about ₪25 per family member per festive meal, and each guest adds about ₪37. Both are multiplied by the meals you host (Friday night, or Friday night and lunch) over about 4.3 Shabbatot a month. For context, the CBS survey (Table 13) shows households that keep Shabbat spend only about ₪27 more per person a month on Shabbat foods <em>on average</em>, partly because they eat out much less. That's an average over all households, so this page uses the per-meal estimate instead.</p>
           <p>Rent figures exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities, which the cost breakdown adds separately.</p>
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
@@ -700,6 +704,10 @@
             <strong>Yad2 region, area and city codes</strong>
             Yad2 needs its own region and area codes as well as the city code, otherwise it opens a default region. City codes match CBS locality codes. The list comes from the open-source <a href="https://github.com/ron-levi/yad2-analyzer" target="_blank" rel="noopener noreferrer">yad2-analyzer</a> project (Dec 2025).
             <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/yad2_locations.csv" target="_blank" rel="noopener noreferrer">Codes used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/neighbourhoods.csv" target="_blank" rel="noopener noreferrer">Neighbourhood list</a></span></li>
+          <li><span class="used">Links to the listing sites</span>
+            <strong>How each site's link was checked</strong>
+            Komo: city, rooms, price and feature filters use the field names of Komo's own search form, and were checked to narrow the results (e.g. Tel Aviv 410 ads → 95 with 4 rooms → 40 under ₪8,000). OnMap: city pages, rooms and price were opened and checked for all cities listed. Homeless: city pages were checked for all 19 cities. Yad2: region, area and city codes from the list above; the rooms, price and feature filter names come from open-source Yad2 projects and couldn't be opened here because Yad2 blocks automated browsers. Madlan: city pages (Herzliya checked).
+            </li>
           <li><span class="used">Public transport monthly pass</span>
             <strong>Rav-Kav Online: monthly contracts</strong>
             Nationwide monthly pass ₪315 (all transport except trains); periphery bus-only pass ₪139.
@@ -726,7 +734,7 @@
             <li>Education with children: twice the survey average, which includes households without children.</li>
             <li>Ra'anana uses Kfar Saba's rents, and smaller towns use their district's, because CBS doesn't publish them.</li>
             <li>Areas in a city: which neighbourhoods are beach-side, pricier or cheaper is a local guide, not official data. Choosing one adjusts rent by about +15% (pricier, or by the beach), 0% (around average) or −10% (cheaper).</li>
-            <li>Shabbat hosting: each guest at a hosted meal costs about ₪37, which is three times an average person-meal of groceries (CBS national groceries ÷ 90 meals a month), over about 4.3 Shabbatot a month.</li>
+            <li>Shabbat: a festive meal costs about three times an ordinary meal (≈₪37 per person). Family members add ≈₪25 per meal on top of their normal food, and guests add ≈₪37, over about 4.3 Shabbatot a month.</li>
           </ul>
         </div>
       </section>
@@ -757,7 +765,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="rent-data.js?v=2026q2-6"></script>
-<script src="living-data.js?v=2"></script>
+<script src="living-data.js?v=3"></script>
 <script src="city-media.js?v=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
@@ -808,6 +816,7 @@
     level: ["budget", "comfortable", "luxury"].includes(saved.level) ? saved.level : null,
     compare: byName[saved.compare] ? saved.compare : "Israel",
     showStations: saved.showStations === true,
+    features: Array.isArray(saved.features) ? saved.features.filter((w) => typeof w === "string").slice(0, 20) : [],
     hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else area name
     shabbat: saved.shabbat === true,
     guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
@@ -965,7 +974,9 @@
       health: R.health * sp,
       clothing: R.clothing * sp * life,
       // Shabbat: extra Shabbat foods for the household (CBS, observant vs secular) + guests at hosted meals
-      shabbat: state.shabbat ? sh.extraPerStd * sp + state.guests * state.shabbatMeals * 4.33 * sh.guestMeal : 0
+      // Shabbat: every person at a festive meal costs about 3x an ordinary meal, so the household pays
+      // the extra 2x on top of the groceries it already buys, and each guest costs the full 3x
+      shabbat: state.shabbat ? (people * 2 * sh.personMeal + state.guests * sh.guestMeal) * state.shabbatMeals * 4.33 : 0
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
@@ -1228,7 +1239,22 @@
     bus: [["קרוב לתחבורה ציבורית", "near public transport"], ["קרוב לתחנת אוטובוס", "near a bus stop"], ["מרכזי", "central"]],
     car: [["חניה", "parking"], ["חניה בטאבו", "registered private parking"], ["שקט", "quiet area"]]
   };
-  const kwBtn = ([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>";
+  // Keywords that the listing sites can filter on (checked by hand; see Sources & data)
+  const FEATURES = {
+    "ללא תיווך": { komo: "privateOnly" },
+    "מעלית": { yad2: "elevator", komo: "yesElevator" },
+    "חניה": { yad2: "parking", komo: "yesParking" },
+    "חניה בטאבו": { yad2: "parking", komo: "yesParking" },
+    "מזגנים": { yad2: "airConditioner", komo: "yesAC" },
+    "ממ\"ד": { yad2: "shelter", komo: "yesMamad" },
+    "מרפסת שמש": { yad2: "balcony", komo: "yesBalcony" },
+    "כניסה מיידית": { yad2: "immediate", komo: "enterNow" },
+    "מותר בעלי חיים": { yad2: "pets", komo: "petsFriendly" },
+    "פנטהאוז": { onmap: "types_penthouse" }
+  };
+  const kwOn = (w) => state.features.includes(w);
+  const kwBtn = ([w, en]) => '<button type="button" class="kw' + (kwOn(w) ? " on" : "") + '" data-kw="' + esc(w) + '" aria-pressed="' + kwOn(w) + '">' +
+    he(esc(w)) + "<span>" + (kwOn(w) ? "✓ " : "") + en + (FEATURES[w] ? " · filter" : "") + "</span></button>";
 
   function renderGuide(area, band, avg) {
     const isTown = !!area.hebrew && !state.town;
@@ -1241,7 +1267,7 @@
     const placeHe = hood ? (hood.beach && !hood.hood && hood.members ? cityHe + " ליד הים" : hood.he + ", " + cityHe) : cityHe;
     const placeEn = hood ? hood.en + ", " + cityEn : cityEn;
     const phrases = [
-      ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + placeHe, true],
+      ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + placeHe + (state.features.length ? " " + state.features.join(" ") : ""), true],
       ["English", roomsShort(r) + " room apartment for rent in " + placeEn, false],
       ["Facebook", "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " + cityHe : cityHe), true]
     ];
@@ -1283,17 +1309,55 @@
   // Direct links. Yad2 takes the CBS locality code and Madlan "<hebrew-name>-ישראל"; both open the
   // city's rental listings, and rooms and price are then set on the site.
   const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  // City pages on the other sites (all opened and checked by hand)
+  const ONMAP = { "Tel Aviv": "tel-aviv-yafo", "Jerusalem": "jerusalem", "Haifa": "haifa", "Herzliya": "herzliya", "Ra'anana": "raanana",
+    "Kfar Saba": "kfar-saba", "Ramat Gan": "ramat-gan", "Holon": "holon", "Bat Yam": "bat-yam", "Bnei Brak": "bnei-brak",
+    "Petah Tikva": "petah-tikva", "Rishon LeZion": "rishon-letsiyon", "Rehovot": "rehovot", "Netanya": "netanya", "Hadera": "hadera",
+    "Ashdod": "ashdod", "Ashkelon": "ashkelon", "Be'er Sheva": "beer-sheva", "Beit Shemesh": "bet-shemesh", "Givatayim": "givatayim",
+    "Ness Ziona": "ness-ziona", "Modi'in": "modiin-maccabim-reut", "Kiryat Bialik": "kiryat-bialik", "Kiryat Ata": "kiryat-ata",
+    "Kiryat Motzkin": "kiryat-motzkin", "Kiryat Yam": "kiryat-yam", "Lod": "lod", "Ramla": "ramla", "Nesher": "nesher",
+    "Yavne": "yavne", "Kiryat Shmona": "qiryat-shemona" };
+  function priceCap(area) {
+    if (state.noLimit) return null;
+    if (state.budget) return Math.round(state.budget);
+    const avg = bandOf(area, bandFor(state.rooms)).rent;
+    return round50(avg * TIERS[currentLevel(avg)].hi);
+  }
   function siteLinks(area) {
     const city = !state.town && area.cbsCode ? area : null;
     const hood = city ? currentHood(city.name) : null;
+    const r = state.rooms, maxP = priceCap(area);
+    const feats = state.features.map((w) => FEATURES[w]).filter(Boolean);
     // Yad2 needs its region (topArea) and area codes as well as the city, otherwise it opens a default region
     const y = LD.yad2[city ? city.name : state.town || ""];
     let yad2 = "https://www.yad2.co.il/realestate/rent";
-    if (y) yad2 += "?topArea=" + y.topArea + "&area=" + y.area + "&city=" + y.city + (hood && hood.hood ? "&neighborhood=" + hood.hood : "");
+    if (y) {
+      const q = ["topArea=" + y.topArea, "area=" + y.area, "city=" + y.city];
+      if (hood && hood.hood) q.push("neighborhood=" + hood.hood);
+      q.push("rooms=" + (r >= MAX_ROOMS ? "6-12" : r + "-" + r));
+      if (maxP) q.push("price=-1-" + maxP);
+      [...new Set(feats.map((f) => f.yad2).filter(Boolean))].forEach((k) => q.push(k + "=1"));
+      yad2 += "?" + q.join("&");
+    }
+    // Komo: its search form's own field names
+    let komo = "https://www.komo.co.il/code/rent/";
+    if (city) {
+      const q = ["nehes=1", "cityName=" + encodeURIComponent(city.hebrew).replace(/%20/g, "+"), "fromRooms=" + Math.min(r, 6)];
+      if (r < MAX_ROOMS) q.push("toRooms=" + r);
+      if (maxP) q.push("toPrice=" + maxP);
+      [...new Set(feats.map((f) => f.komo).filter(Boolean))].forEach((k) => q.push(k + "=1"));
+      komo = "https://www.komo.co.il/code/nadlan/apartments-for-rent.asp?" + q.join("&");
+    }
+    const om = ONMAP[city ? city.name : state.town || ""];
+    const onmap = om ? "https://www.onmap.co.il/search/homes/rent/" + om + "/rooms_" + Math.min(Math.floor(r), 6) +
+      (maxP ? "/price_0-" + maxP : "") + (feats.some((f) => f.onmap) ? "/types_penthouse" : "") : "https://www.onmap.co.il/search/homes/rent";
+    const homeless = city ? "https://www.homeless.co.il/rent/city=" + encodeURIComponent(SEARCH_NAME[city.name] || city.hebrew) : "https://www.homeless.co.il/rent/";
     const cityHe = city ? (SEARCH_NAME[city.name] || city.hebrew) : "";
-    const fbQuery = city ? "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " : "") + cityHe : "apartments for rent " + (state.town || "");
+    const fbQuery = city ? "דירות להשכרה ב" + (hood && !hood.members ? hood.he + " " : "") + cityHe + (state.features.length ? " " + state.features.slice(0, 2).join(" ") : "")
+      : "apartments for rent " + (state.town || "");
     return {
-      city, hood, yad2, yad2Town: !city && !!y,
+      city, hood, yad2, yad2Town: !city && !!y, komo, onmap, homeless, maxP,
+      janglo: "https://www.janglo.net/real-estate-rentals/apartments",
       madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
       facebook: "https://www.facebook.com/search/groups/?q=" + encodeURIComponent(fbQuery.trim())
     };
@@ -1301,22 +1365,26 @@
   const SITES = [
     ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings.", "#6c3cf0", "yad2"],
     ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices.", "#ff3d8b", "madlan"],
-    ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6", "https://www.komo.co.il/"],
-    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff", "https://www.homeless.co.il/"],
-    ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a", "https://www.onmap.co.il/"],
+    ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6", "komo"],
+    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff", "homeless"],
+    ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a", "onmap"],
     ["Facebook groups", "facebook.com", "Opens a group search for your city. " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90", "facebook"],
-    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", "#e0a400", "https://www.janglo.net/", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
+    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh. Pick your region on the site.", "#e0a400", "janglo", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
   ];
   function renderSites(area) {
     const L = siteLinks(area);
     const place = L.city ? L.city.name : state.town || null;
     $("go-title").textContent = place ? "Go straight to the listings in " + place : "Go straight to the listings";
-    $("go-row").innerHTML = [["Yad2", L.yad2, "#6c3cf0"], ["Madlan", L.madlan, "#ff3d8b"], ["Facebook groups", L.facebook, "#0a9d90"]]
+    $("go-row").innerHTML = [["Yad2", L.yad2, "#6c3cf0"], ["Komo", L.komo, "#0fb5a6"], ["OnMap", L.onmap, "#e0338a"], ["Madlan", L.madlan, "#ff3d8b"],
+      ["Homeless", L.homeless, "#9b5cff"], ["Facebook groups", L.facebook, "#0a9d90"]]
       .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + n + " " + EXT + "</a>").join("");
+    const fl = state.features.filter((w) => FEATURES[w]);
+    const incl = [roomsText(state.rooms), L.maxP ? "up to " + fmt(L.maxP) + "/month" : "any price", ...fl.map((w) => he(esc(w)))];
+    $("go-incl").innerHTML = "<b>Included in the links:</b> " + incl.join(" · ") +
+      "<br>Yad2 and Komo get all of these" + (L.hood && L.hood.hood ? " (and the neighbourhood)" : "") + "; OnMap gets rooms and price; Homeless and Madlan open your city, so set the rest there.";
     const where = L.hood ? L.hood.en + ", " + L.city.name : L.city ? L.city.name : state.town;
     $("go-note").textContent = L.city
-      ? "Opens " + L.city.name + "'s rental listings in a new tab" + (L.hood && L.hood.hood ? " (Yad2 opens " + L.hood.en + " directly)" : L.hood ? ". On the site, add the neighbourhood " + (L.hood.members ? "names" : "\u201c" + L.hood.he + "\u201d") + " in the location box" : "") +
-        ". Then set " + roomsText(state.rooms) + " and your price, using the filters below."
+      ? "Each button opens " + L.city.name + "'s rental listings in a new tab" + (L.hood && L.hood.hood ? " (Yad2 opens " + L.hood.en + " directly)" : L.hood ? ". Add the neighbourhood " + (L.hood.members ? "names" : "\u201c" + L.hood.he + "\u201d") + " in the site's location box" : "") + "."
       : L.yad2Town ? "Yad2 opens " + state.town + "'s listings; on the other sites pick " + state.town + " in the search, then use the filters below."
       : "Opens the site's rental search in a new tab. Pick " + (state.town || "your town") + " there, then use the filters below.";
     if (where) $("go-title").textContent = "Go straight to the listings in " + where;
@@ -1375,8 +1443,9 @@
         (areaAdj(hood) ? ", " + (areaAdj(hood) > 0 ? "+" : "−") + Math.abs(Math.round(areaAdj(hood) * 100)) + "% for " + hood.en : ""),
       transport: state.transport === "car" ? "Typical car costs: fuel, insurance, upkeep" : state.adults + " × Rav-Kav nationwide monthly pass (₪" + LD.costs.passes.national + ")",
       education: "Schools, kindergarten, after-school activities",
-      shabbat: "Shabbat foods for your household (+₪" + Math.round(LD.costs.shabbat.extraPerStd) + " per person, CBS)" +
-        (state.guests ? " + " + state.guests + " guest" + (state.guests > 1 ? "s" : "") + " × " + state.shabbatMeals + " meal" + (state.shabbatMeals > 1 ? "s" : "") + " × ₪" + LD.costs.shabbat.guestMeal + ", about 4.3 Shabbatot a month" : ""),
+      shabbat: (state.adults + state.kids) + " of you" + (state.guests ? " + " + state.guests + " guest" + (state.guests > 1 ? "s" : "") : "") +
+        " × " + state.shabbatMeals + " festive meal" + (state.shabbatMeals > 1 ? "s" : "") + " a week (₪" + Math.round(LD.costs.shabbat.personMeal * 2) +
+        " extra per family member, ₪" + LD.costs.shabbat.guestMeal + " per guest), about 4.3 Shabbatot a month",
       leisure: "Gym, classes, events, outings",
       groceries: "Supermarket food, fruit & veg"
     };
@@ -1480,7 +1549,7 @@
   document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => {
     const on = b.dataset.shabbat === "1", was = state.shabbat;
     state.shabbat = on; persist(); render();
-    if (on && !was) toast(state.guests ? "Shabbat added to your costs" : "Shabbat foods add ₪" + Math.round(LD.costs.shabbat.extraPerStd) + " per person. Add guests to include hosting.");
+    if (on && !was) toast("Shabbat meals added to your costs" + (state.guests ? "" : ". Add guests to include hosting."));
   }));
   document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
   $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
@@ -1498,6 +1567,14 @@
   sortEl.addEventListener("change", () => { state.sort = sortEl.value; persist(); renderFeed(bandFor(state.rooms)); });
 
   document.addEventListener("click", (e) => {
+    const kw = e.target.closest("[data-kw]");
+    if (kw) {
+      const w = kw.getAttribute("data-kw");
+      state.features = kwOn(w) ? state.features.filter((x) => x !== w) : [...state.features, w];
+      persist(); render();
+      toast((kwOn(w) ? "Added " : "Removed ") + w + (FEATURES[w] ? (kwOn(w) ? " as a filter on the links" : " from the links") : (kwOn(w) ? " to your search words" : "")));
+      return;
+    }
     const c = e.target.closest("[data-copy]");
     if (c) { copy(c.getAttribute("data-copy")); return; }
     const f = e.target.closest("[data-fav]");
