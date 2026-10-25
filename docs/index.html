@@ -3,335 +3,540 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Israel Rent Calculator</title>
-<meta name="description" content="Estimate monthly rent in Israel by city and number of rooms, at budget, comfortable and luxury levels. Based on official CBS data.">
+<title>Israel Rent Finder</title>
+<meta name="description" content="Find what it costs to rent in Israel's cities: budget, comfortable and luxury prices by city and number of rooms, on an interactive map. Based on official CBS data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
+  /* Palette: violet (primary) + hot pink (accent) + teal, with a sunny yellow */
   :root {
     color-scheme: light;
-    --bg: #f6f5f2;
+    --bg: #f7f5fd;
     --surface: #ffffff;
-    --surface-2: #f0efeb;
-    --border: #e3e1db;
-    --text: #1b1b1a;
-    --text-2: #55534f;
-    --text-3: #7a7873;
-    --accent: #2a78d6;
-    --accent-ink: #1d5fae;
-    --accent-soft: #e6effb;
-    --bar: #2a78d6;
-    --bar-muted: #c9d9ef;
-    --tier-budget: #8fb5e6;
-    --tier-comfort: #2a78d6;
-    --tier-luxury: #12407a;
-    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+    --surface-2: #f1edfb;
+    --line: #e7e1f5;
+    --ink: #1c1433;
+    --ink-2: #4d4566;
+    --ink-3: #847c9c;
+    --primary: #6c3cf0;
+    --primary-deep: #4a1fc4;
+    --primary-soft: #efe8ff;
+    --accent: #ff3d8b;
+    --accent-soft: #ffe6f0;
+    --teal: #0fb5a6;
+    --teal-soft: #dff7f4;
+    --sun: #ffc83d;
+    --over: #9a93ad;
+    --shadow-sm: 0 1px 2px rgba(28,20,51,.06), 0 2px 8px rgba(28,20,51,.06);
+    --shadow-md: 0 6px 24px rgba(28,20,51,.12);
+    --radius: 14px;
+    --top-h: 132px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --bg: #121211;
-      --surface: #1c1c1b;
-      --surface-2: #252524;
-      --border: #33332f;
-      --text: #f0efec;
-      --text-2: #c3c2b7;
-      --text-3: #94938b;
-      --accent: #3987e5;
-      --accent-ink: #8db8f0;
-      --accent-soft: #1d2a3b;
-      --bar: #3987e5;
-      --bar-muted: #2f3d52;
-      --tier-budget: #5f8fcc;
-      --tier-comfort: #3987e5;
-      --tier-luxury: #a9c8f2;
-      --shadow: none;
+      --bg: #110d1f; --surface: #1a1430; --surface-2: #241c40; --line: #33295a;
+      --ink: #f4f0ff; --ink-2: #c4bbdf; --ink-3: #9389b1;
+      --primary: #9a74ff; --primary-deep: #c6b2ff; --primary-soft: #2c2254;
+      --accent: #ff5c9e; --accent-soft: #3d1a2d; --teal: #2fd6c6; --teal-soft: #123733;
+      --over: #6f6889;
+      --shadow-sm: none; --shadow-md: 0 6px 24px rgba(0,0,0,.4);
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #121211; --surface: #1c1c1b; --surface-2: #252524; --border: #33332f;
-    --text: #f0efec; --text-2: #c3c2b7; --text-3: #94938b;
-    --accent: #3987e5; --accent-ink: #8db8f0; --accent-soft: #1d2a3b;
-    --bar: #3987e5; --bar-muted: #2f3d52;
-    --tier-budget: #5f8fcc; --tier-comfort: #3987e5; --tier-luxury: #a9c8f2;
-    --shadow: none;
+    --bg: #110d1f; --surface: #1a1430; --surface-2: #241c40; --line: #33295a;
+    --ink: #f4f0ff; --ink-2: #c4bbdf; --ink-3: #9389b1;
+    --primary: #9a74ff; --primary-deep: #c6b2ff; --primary-soft: #2c2254;
+    --accent: #ff5c9e; --accent-soft: #3d1a2d; --teal: #2fd6c6; --teal-soft: #123733;
+    --over: #6f6889;
+    --shadow-sm: none; --shadow-md: 0 6px 24px rgba(0,0,0,.4);
   }
 
   * { box-sizing: border-box; }
+  html, body { margin: 0; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink);
+    font: 15px/1.5 "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; }
-  header h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
-  header p { margin: 0; color: var(--text-2); max-width: 62ch; }
-  .eyebrow { font-size: 13px; font-weight: 600; color: var(--accent-ink); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  button, input, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  [lang="he"] { font-family: "Plus Jakarta Sans", "Arial Hebrew", Arial, sans-serif; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
+  /* ================= Top bar ================= */
+  .topbar { position: sticky; top: 0; z-index: 1000; background: var(--surface); box-shadow: var(--shadow-sm); }
+  .topbar::after { /* colourful stripe */
+    content: ""; display: block; height: 4px;
+    background: linear-gradient(90deg, var(--primary) 0 40%, var(--accent) 40% 70%, var(--sun) 70% 85%, var(--teal) 85%);
   }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .brand-mark { width: 38px; height: 38px; flex: none; }
+  .brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; line-height: 1; }
+  .brand-name span { color: var(--primary); }
+  .brand-sub { font-size: 12px; color: var(--ink-3); font-weight: 500; margin-top: 3px; }
+  .data-chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700;
+    padding: 6px 10px; border-radius: 999px; background: var(--teal-soft); color: var(--teal); white-space: nowrap;
+  }
+  .data-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); display: inline-block; }
 
-  /* ---- Inputs ---- */
-  .controls { margin-top: 24px; padding: 20px; display: grid; gap: 20px; grid-template-columns: 1.2fr 0.9fr 1.4fr; }
-  @media (max-width: 760px) { .controls { grid-template-columns: 1fr; } }
-  label.field-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-  .hint { font-size: 13px; color: var(--text-3); margin-top: 6px; }
-  select, input[type="number"] {
-    width: 100%; height: 44px; padding: 0 12px;
-    font: inherit; color: var(--text);
-    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+  .filters { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; padding: 4px 20px 14px; }
+  .f-box {
+    display: flex; flex-direction: column; justify-content: center; gap: 1px;
+    background: var(--surface-2); border: 2px solid transparent; border-radius: 12px;
+    padding: 6px 12px; min-height: 52px; transition: border-color .15s;
   }
-  select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .stepper { display: flex; align-items: stretch; height: 44px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface-2); }
+  .f-box:focus-within { border-color: var(--primary); background: var(--surface); }
+  .f-box > label, .f-box > .f-label { font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .f-area { flex: 1 1 230px; }
+  .f-area select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; width: 100%; cursor: pointer; }
+  .f-area select:focus { outline: none; }
+  .stepper { display: flex; align-items: center; gap: 10px; }
   .stepper button {
-    width: 44px; border: 0; background: transparent; color: var(--text); font-size: 20px; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--primary); color: #fff; font-size: 18px; line-height: 1; display: grid; place-items: center;
   }
-  .stepper button:hover { background: var(--accent-soft); }
-  .stepper button:disabled { color: var(--text-3); cursor: default; background: transparent; }
-  .stepper output { flex: 1; display: grid; place-items: center; font-weight: 600; font-variant-numeric: tabular-nums; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
-  .budget-input { position: relative; }
-  .budget-input span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-3); pointer-events: none; }
-  .budget-input input { padding-left: 28px; }
-
-  /* ---- Results ---- */
-  .summary { margin: 28px 0 12px; }
-  .summary h2 { font-size: 20px; margin: 0 0 4px; }
-  .summary p { margin: 0; color: var(--text-2); font-size: 15px; }
-
-  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  @media (max-width: 760px) { .tiers { grid-template-columns: 1fr; } }
-  .tier { padding: 18px 18px 16px; position: relative; overflow: hidden; }
-  .tier::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--tier-color); }
-  .tier.budget { --tier-color: var(--tier-budget); }
-  .tier.comfortable { --tier-color: var(--tier-comfort); }
-  .tier.luxury { --tier-color: var(--tier-luxury); }
-  .tier h3 { margin: 0; font-size: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .tier .badge { font-size: 12px; font-weight: 600; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-  .tier .price { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 0; font-variant-numeric: tabular-nums; }
-  .tier .price small { font-size: 15px; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
-  .tier .range { font-size: 14px; color: var(--text-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
-  .tier .desc { font-size: 14px; color: var(--text-2); margin: 12px 0 0; }
-  .tier.fits { outline: 2px solid var(--accent); outline-offset: -1px; }
-
-  .facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 14px; color: var(--text-2); }
-  .facts strong { color: var(--text); font-variant-numeric: tabular-nums; }
-  .note { font-size: 13px; color: var(--text-3); margin-top: 10px; }
-
-  .budget-row { display: flex; gap: 8px; }
-  .budget-row .budget-input { flex: 1; }
-  .chip {
-    height: 44px; padding: 0 14px; border-radius: 10px; white-space: nowrap;
-    font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-    color: var(--text); background: var(--surface-2); border: 1px solid var(--border);
+  .stepper button:disabled { background: var(--line); color: var(--ink-3); cursor: default; }
+  .stepper output { min-width: 26px; text-align: center; font-weight: 800; font-size: 16px; font-variant-numeric: tabular-nums; }
+  .f-rooms small { font-size: 11px; color: var(--ink-3); }
+  .f-budget { flex: 0 1 190px; }
+  .f-budget .money { display: flex; align-items: center; gap: 4px; font-weight: 700; }
+  .f-budget input { border: 0; background: transparent; width: 100%; font-weight: 700; font-size: 15px; padding: 0; }
+  .f-budget input:focus { outline: none; }
+  .f-budget input:disabled { opacity: .4; }
+  .nolimit {
+    align-self: center; height: 52px; padding: 0 16px; border-radius: 12px; cursor: pointer;
+    border: 2px solid var(--line); background: var(--surface); font-weight: 700; font-size: 14px; white-space: nowrap;
   }
-  .chip:hover { background: var(--accent-soft); }
-  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .budget-input input:disabled { opacity: .5; }
+  .nolimit:hover { border-color: var(--accent); }
+  .nolimit[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  .budget-verdict { margin-top: 14px; padding: 14px 16px; font-size: 15px; }
+  /* ================= Split layout ================= */
+  .split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); height: calc(100dvh - var(--top-h)); }
+  .pane-list { overflow-y: auto; overscroll-behavior: contain; }
+  .pane-map { position: relative; border-left: 1px solid var(--line); }
+  #map { position: absolute; inset: 0; background: var(--surface-2); }
+  .map-legend { position: absolute; z-index: 500; top: 14px; left: 14px; right: 14px; pointer-events: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .map-legend > div {
+    pointer-events: auto; background: var(--surface); border-radius: 999px; box-shadow: var(--shadow-md);
+    padding: 7px 12px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+  .map-legend .sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); padding: 24px; text-align: center; }
 
-  .guide { margin-top: 14px; padding: 20px; }
-  .guide h2, .sites h2 { font-size: 18px; margin: 0 0 2px; }
-  .guide .sub, .sites .sub { color: var(--text-2); font-size: 14px; margin: 0 0 16px; }
-  .guide h3 { font-size: 14px; margin: 18px 0 8px; color: var(--text); }
-  .guide h3:first-of-type { margin-top: 0; }
+  .list-inner { padding: 20px 20px 40px; max-width: 900px; margin: 0 auto; }
+
+  /* ================= Hero (selected area) ================= */
+  .hero { background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .hero-media { position: relative; aspect-ratio: 16 / 8; overflow: hidden; background: var(--primary-soft); }
+  .hero-media img, .hero-media > svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-media::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(25,10,50,.78)); pointer-events: none; }
+  .hero-over { position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 2; color: #fff; }
+  .hero-over .kicker { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+  .hero-over h1 { margin: 2px 0 0; font-size: clamp(26px, 4vw, 38px); line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; text-shadow: 0 2px 12px rgba(0,0,0,.25); }
+  .tags { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 70px); }
+  .tag {
+    font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    padding: 5px 9px; border-radius: 6px; background: #fff; color: #1c1433; box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  }
+  .tag i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: currentColor; }
+  .tag.hot { background: var(--accent); color: #fff; }
+  .tag.ok { background: var(--teal); color: #fff; }
+  .tag.over { background: #fff; color: #b4235a; }
+  .tag.est { background: var(--sun); color: #3a2a00; }
+  .tag.top { background: var(--primary); color: #fff; }
+  .tag.value { background: #fff; color: var(--teal); }
+  .credit { position: absolute; right: 10px; bottom: 6px; z-index: 3; font-size: 10px; color: rgba(255,255,255,.75); text-decoration: none; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .credit:hover { color: #fff; text-decoration: underline; }
+
+  .hero-body { padding: 20px; }
+  .hero-price { font-size: clamp(34px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .hero-price small { font-size: 16px; font-weight: 600; color: var(--ink-3); letter-spacing: 0; }
+  .hero-addr { color: var(--ink-3); font-size: 15px; margin-top: 6px; }
+  .metrics { display: flex; flex-wrap: wrap; row-gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+  .metrics span { padding: 0 10px; border-left: 2px solid var(--line); }
+  .metrics span:first-child { padding-left: 0; border-left: 0; }
+  .metrics b { color: var(--ink); }
+  .metrics .up, .metrics .up b { color: var(--teal); }
+
+  /* tiers */
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+  @media (max-width: 640px) { .tiers { grid-template-columns: 1fr; } }
+  .tier { border-radius: 12px; padding: 14px 14px 12px; position: relative; overflow: hidden; border: 2px solid transparent; }
+  .tier.budget { background: var(--teal-soft); --c: var(--teal); }
+  .tier.comfortable { background: var(--primary-soft); --c: var(--primary); }
+  .tier.luxury { background: var(--accent-soft); --c: var(--accent); }
+  .tier.fits { border-color: var(--c); }
+  .tier .ill { position: absolute; right: -6px; bottom: -6px; width: 74px; height: 74px; opacity: .95; }
+  .tier .t-name { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); display: flex; align-items: center; gap: 6px; }
+  .tier .t-fit { font-size: 10px; background: var(--c); color: #fff; border-radius: 4px; padding: 2px 6px; letter-spacing: .06em; }
+  .tier .t-price { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .tier .t-price small { font-size: 13px; color: var(--ink-3); font-weight: 600; }
+  .tier .t-range { font-size: 13px; color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tier .t-desc { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; padding-right: 54px; }
+
+  .verdict { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-size: 14.5px; display: flex; gap: 10px; align-items: flex-start; }
+  .verdict svg { flex: none; width: 22px; height: 22px; margin-top: 1px; stroke: var(--primary); }
+  .verdict[hidden] { display: none; }
+  .note { font-size: 13px; color: var(--ink-3); margin-top: 10px; }
+  .note:empty { display: none; }
+
+  /* ================= Panels (guide, sites, method) ================= */
+  .panel { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-top: 16px; overflow: hidden; }
+  .panel > summary { list-style: none; cursor: pointer; padding: 16px 20px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 16px; }
+  .panel > summary::-webkit-details-marker { display: none; }
+  .panel > summary .ico { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+  .panel > summary .ico svg { width: 20px; height: 20px; }
+  .panel > summary .chev { margin-left: auto; transition: transform .2s; color: var(--ink-3); flex: none; }
+  .panel[open] > summary .chev { transform: rotate(180deg); }
+  .panel > summary small { display: block; font-weight: 500; font-size: 13px; color: var(--ink-3); }
+  .panel-body { padding: 0 20px 20px; }
+
+  .step { display: flex; gap: 12px; margin-top: 18px; }
+  .step:first-child { margin-top: 0; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 800; font-size: 14px; color: #fff; }
+  .step-body { flex: 1; min-width: 0; }
+  .step h3 { margin: 3px 0 8px; font-size: 15px; }
   .copy-line {
     display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 8px;
-    padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2);
-    font: inherit; color: var(--text); text-align: start; cursor: pointer;
+    padding: 10px 12px; border-radius: 10px; border: 2px solid var(--line); background: var(--surface);
+    text-align: start; cursor: pointer; transition: border-color .15s, background .15s;
   }
-  .copy-line:hover { border-color: var(--accent); }
-  .copy-line .txt { flex: 1; font-size: 16px; font-weight: 600; }
-  .copy-line .lang { font-size: 12px; color: var(--text-3); width: 52px; flex: none; }
-  .copy-line .act { font-size: 13px; color: var(--accent-ink); font-weight: 600; flex: none; }
-  .filters { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .filters th, .filters td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
-  .filters th { font-weight: 600; width: 32%; }
-  .filters th bdi { display: block; font-weight: 400; color: var(--text-3); }
-  .filters td small { display: block; color: var(--text-3); }
-  .kw-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  @media (max-width: 760px) { .kw-groups { grid-template-columns: 1fr; } }
-  .kw-group { padding: 12px; border-radius: 10px; background: var(--surface-2); }
-  .kw-group.active { outline: 2px solid var(--accent); }
-  .kw-group h4 { margin: 0 0 8px; font-size: 13px; color: var(--text-2); }
+  .copy-line:hover { border-color: var(--primary); background: var(--primary-soft); }
+  .copy-line .lang { font-size: 11px; font-weight: 800; color: var(--ink-3); width: 62px; flex: none; text-transform: uppercase; letter-spacing: .05em; }
+  .copy-line .txt { flex: 1; font-size: 16px; font-weight: 700; }
+  .copy-line .act { font-size: 12px; font-weight: 800; color: #fff; background: var(--primary); padding: 4px 10px; border-radius: 999px; flex: none; }
+  .filter-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .filter-table th, .filter-table td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .filter-table th { font-weight: 700; width: 34%; }
+  .filter-table th bdi { display: block; font-weight: 500; color: var(--ink-3); }
+  .filter-table td { font-weight: 600; }
+  .filter-table td small { display: block; color: var(--ink-3); font-weight: 500; }
+  .kw-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 640px) { .kw-groups { grid-template-columns: 1fr; } }
+  .kw-group { padding: 10px; border-radius: 12px; border: 2px solid transparent; }
+  .kw-group.budget { background: var(--teal-soft); --c: var(--teal); }
+  .kw-group.comfortable { background: var(--primary-soft); --c: var(--primary); }
+  .kw-group.luxury { background: var(--accent-soft); --c: var(--accent); }
+  .kw-group.any { background: var(--surface-2); --c: var(--ink-2); grid-column: 1 / -1; }
+  .kw-group.any .kw-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 10px; }
+  @media (max-width: 640px) { .kw-group.any .kw-wrap { grid-template-columns: 1fr; } }
+  .kw-group.active { border-color: var(--c); }
+  .kw-group h4 { margin: 0 0 8px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
   .kw { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 100%;
-        padding: 6px 8px; margin: 0 0 4px; border: 0; border-radius: 6px; background: var(--surface);
-        font: inherit; font-size: 14px; color: var(--text); cursor: pointer; text-align: start; }
-  .kw:hover { outline: 1px solid var(--accent); }
-  .kw bdi { font-weight: 600; }
-  .kw span { color: var(--text-3); font-size: 13px; }
-  .tip { font-size: 13px; color: var(--text-3); margin: 10px 0 0; }
-  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--text); color: var(--bg);
-           padding: 8px 14px; border-radius: 8px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
-  .toast.show { opacity: 1; }
+        padding: 7px 9px; margin: 0 0 4px; border: 0; border-radius: 8px; background: var(--surface);
+        font-size: 14px; cursor: pointer; text-align: start; }
+  .kw:hover { box-shadow: inset 0 0 0 2px var(--c); }
+  .kw bdi { font-weight: 800; }
+  .kw span { color: var(--ink-3); font-size: 12.5px; }
+  .tip { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
 
-  .sites { margin-top: 14px; padding: 20px; }
-  .site-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  @media (max-width: 760px) { .site-list { grid-template-columns: 1fr; } }
-  .site-list li { padding: 12px 14px; border-radius: 10px; background: var(--surface-2); font-size: 14px; color: var(--text-2); }
-  .site-list li strong { display: block; color: var(--text); font-size: 15px; }
-  .site-list li .domain { color: var(--text-3); font-size: 13px; }
-  .site-list li.highlight { outline: 2px solid var(--accent); }
-  .budget-verdict[hidden] { display: none; }
+  .site-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 640px) { .site-grid { grid-template-columns: 1fr; } }
+  .site { display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 2px solid transparent; }
+  .site.highlight { border-color: var(--accent); }
+  .site .logo { width: 40px; height: 40px; border-radius: 10px; flex: none; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px; }
+  .site strong { display: block; font-size: 15px; }
+  .site .domain { font-size: 12px; color: var(--ink-3); font-weight: 600; }
+  .site p { margin: 3px 0 0; font-size: 13px; color: var(--ink-2); }
+  .method-body p, .method-body li { color: var(--ink-2); font-size: 14px; }
+  .method-body a { color: var(--primary); }
 
-  /* ---- Comparison chart ---- */
-  .compare { margin-top: 28px; padding: 20px; }
-  .compare h2 { font-size: 18px; margin: 0 0 2px; }
-  .compare .sub { color: var(--text-2); font-size: 14px; margin: 0 0 14px; }
-  .bars { display: grid; gap: 4px; }
-  .bar-row {
-    display: grid; grid-template-columns: 120px 1fr 72px; align-items: center; gap: 10px;
-    padding: 3px 6px; margin: 0 -6px; border-radius: 6px; cursor: pointer; border: 0; background: transparent;
-    font: inherit; color: inherit; text-align: left; width: calc(100% + 12px);
+  /* ================= Feed ================= */
+  .feed-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px; margin: 30px 0 14px; }
+  .feed-head h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .feed-head p { margin: 2px 0 0; color: var(--ink-3); font-size: 14px; }
+  .sort { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-3); }
+  .sort select { border: 2px solid var(--line); background: var(--surface); border-radius: 10px; padding: 6px 10px; font-weight: 700; color: var(--ink); cursor: pointer; }
+  .feed { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1280px) and (min-width: 1001px) { .feed { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .feed { grid-template-columns: 1fr; } }
+  .listing {
+    background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+    position: relative; cursor: pointer; transition: box-shadow .2s;
+    opacity: 0; transform: translateY(14px);
   }
-  .bar-row:hover, .bar-row:focus-visible { background: var(--surface-2); }
-  .bar-row .name { font-size: 14px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bar-row.selected .name { color: var(--text); font-weight: 600; }
-  .bar-track { position: relative; height: 16px; }
-  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar-muted); border-radius: 0 4px 4px 0; }
-  .bar-row.selected .bar-fill { background: var(--bar); }
-  .budget-line { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--text); pointer-events: none; }
-  .bar-row .val { font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text-2); }
-  .bar-row.selected .val { color: var(--text); font-weight: 600; }
-  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--text-3); margin-top: 12px; }
-  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
-  @media (max-width: 520px) { .bar-row { grid-template-columns: 92px 1fr 62px; } }
+  .listing.in { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease, box-shadow .2s; }
+  .listing:hover { box-shadow: var(--shadow-md); }
+  .listing.selected { box-shadow: 0 0 0 3px var(--accent), var(--shadow-md); }
+  .listing .media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--primary-soft); }
+  .listing .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+  .listing:hover .media img { transform: scale(1.05); }
+  .listing .media::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(25,10,50,.45)); pointer-events: none; }
+  .fav {
+    position: absolute; top: 10px; right: 10px; z-index: 3; width: 36px; height: 36px; border-radius: 50%;
+    border: 0; background: rgba(255,255,255,.92); display: grid; place-items: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  }
+  .fav svg { width: 18px; height: 18px; stroke: #1c1433; fill: none; stroke-width: 2.2; transition: transform .15s; }
+  .fav:hover svg { transform: scale(1.15); }
+  .fav[aria-pressed="true"] svg { fill: #ff3d8b; stroke: #ff3d8b; }
+  .listing .body { padding: 12px 14px 14px; }
+  .l-price { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 6px; }
+  .l-price small { font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: 0; }
+  .l-metrics { margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .l-metrics span + span::before { content: "|"; color: var(--line); margin: 0 7px; font-weight: 400; }
+  .l-metrics .up { color: var(--teal); }
+  .l-metrics .down { color: #b4235a; }
+  .l-addr { font-size: 13.5px; color: var(--ink-3); margin-top: 2px; }
+  .l-bar { margin-top: 10px; height: 6px; border-radius: 99px; background: var(--surface-2); position: relative; }
+  .l-bar i { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .l-bar b { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--teal); }
+  .feed-end { text-align: center; color: var(--ink-3); font-size: 13px; margin: 26px 0 4px; display: flex; align-items: center; gap: 12px; }
+  .feed-end::before, .feed-end::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  footer { margin-top: 26px; font-size: 12.5px; color: var(--ink-3); }
+  footer a { color: var(--primary); }
 
-  details.method { margin-top: 28px; padding: 16px 20px; }
-  details.method summary { cursor: pointer; font-weight: 600; }
-  details.method p, details.method li { color: var(--text-2); font-size: 14px; }
-  footer { margin-top: 28px; font-size: 13px; color: var(--text-3); }
-  footer a, details a { color: var(--accent-ink); }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* ================= Map pins ================= */
+  .pin-wrap { background: none; border: 0; }
+  .pin {
+    transform: translate(-50%, -100%); display: inline-block; white-space: nowrap;
+    background: var(--primary); color: #fff; font-weight: 800; font-size: 12.5px; font-family: "Plus Jakarta Sans", sans-serif;
+    padding: 5px 9px; border-radius: 999px; box-shadow: 0 3px 10px rgba(80,30,200,.35); border: 2px solid #fff;
+    position: relative; cursor: pointer; transition: transform .15s, background .15s;
+  }
+  .pin::after { content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -5px; border: 5px solid transparent; border-top-color: #fff; }
+  .pin.over { background: var(--over); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  .pin.est { background: var(--sun); color: #3a2a00; }
+  .pin.hover { transform: translate(-50%, -100%) scale(1.12); }
+  .pin.selected { background: var(--accent); transform: translate(-50%, -100%) scale(1.22); box-shadow: 0 4px 16px rgba(255,61,139,.5); }
+  .leaflet-container { font-family: "Plus Jakarta Sans", sans-serif; }
+  .leaflet-control-attribution { font-size: 10px; }
+
+  .toast { position: fixed; left: 50%; bottom: 24px; z-index: 2000; transform: translateX(-50%) translateY(10px); background: var(--ink); color: var(--bg);
+           padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  /* mobile: list first, floating map toggle */
+  .map-toggle { display: none; }
+  @media (max-width: 1000px) {
+    .split { display: block; height: auto; }
+    .pane-list { overflow: visible; }
+    .pane-map { position: fixed; z-index: 900; left: 0; right: 0; bottom: 0; top: var(--top-h); border: 0; transform: translateY(105%); transition: transform .3s ease; }
+    body.show-map .pane-map { transform: none; }
+    .map-toggle {
+      display: inline-flex; align-items: center; gap: 8px; position: fixed; z-index: 1100; left: 50%; bottom: 20px; transform: translateX(-50%);
+      background: var(--primary); color: #fff; border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 800; box-shadow: var(--shadow-md); cursor: pointer;
+    }
+    .map-toggle svg { width: 18px; height: 18px; }
+    .list-inner { padding: 16px 16px 90px; }
+    .brand-row, .filters { padding-left: 16px; padding-right: 16px; }
+  }
+  @media (max-width: 560px) {
+    .data-chip { display: none; }
+    .f-area { flex-basis: 100%; }
+    .f-rooms, .f-budget { flex: 1 1 0; }
+    .nolimit { flex: 1 1 100%; height: 42px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .listing, .listing.in, .listing .media img { transition: none !important; }
+    .listing { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Israel rental market</div>
-    <h1>How much will it cost to rent?</h1>
-    <p>Pick where you want to live and how many rooms you need. You'll get an estimated monthly rent at three levels: budget, comfortable and luxury.</p>
-  </header>
 
-  <section class="card controls" aria-label="Your search">
-    <div>
-      <label class="field-label" for="area">Where do you want to live?</label>
+<header class="topbar" id="topbar">
+  <div class="brand-row">
+    <a class="brand" href="./" aria-label="Israel Rent Finder home">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="11" fill="#6c3cf0"/>
+        <path d="M8 21 20 10l12 11" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 19v11h16V19" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/>
+        <circle cx="29" cy="11" r="4" fill="#ffc83d"/>
+        <rect x="17.5" y="23" width="5" height="7" rx="1" fill="#ff3d8b"/>
+      </svg>
+      <div>
+        <div class="brand-name">Israel Rent <span>Finder</span></div>
+        <div class="brand-sub">What renting really costs, city by city</div>
+      </div>
+    </a>
+    <span class="data-chip"><i></i><span id="data-chip">Official CBS data</span></span>
+  </div>
+  <div class="filters" role="search" aria-label="Your search">
+    <div class="f-box f-area">
+      <label for="area">Where</label>
       <select id="area"></select>
-      <div class="hint">19 cities, or a whole district if your town isn't listed.</div>
     </div>
-    <div>
-      <span class="field-label" id="rooms-label">Number of rooms</span>
+    <div class="f-box f-rooms">
+      <span class="f-label" id="rooms-label">Rooms</span>
       <div class="stepper" role="group" aria-labelledby="rooms-label">
         <button type="button" id="rooms-down" aria-label="Fewer rooms">&minus;</button>
         <output id="rooms-value" aria-live="polite">3</output>
         <button type="button" id="rooms-up" aria-label="More rooms">+</button>
+        <small id="rooms-hint"></small>
       </div>
-      <div class="hint" id="rooms-hint">Israeli count: the living room is a room.</div>
     </div>
-    <div>
-      <label class="field-label" for="budget">Your monthly budget <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
-      <div class="budget-row">
-        <div class="budget-input"><span>₪</span><input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="e.g. 6000"></div>
-        <button type="button" class="chip" id="no-budget" aria-pressed="false">No budget limit</button>
+    <div class="f-box f-budget">
+      <label for="budget">Max budget / month</label>
+      <div class="money">₪<input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="Any"></div>
+    </div>
+    <button type="button" class="nolimit" id="no-budget" aria-pressed="false">No budget limit</button>
+  </div>
+</header>
+
+<main class="split">
+  <section class="pane-list" id="pane-list" aria-label="Results">
+    <div class="list-inner">
+
+      <article class="hero" aria-live="polite">
+        <div class="hero-media" id="hero-media"></div>
+        <div class="hero-body">
+          <div class="hero-price" id="hero-price"></div>
+          <div class="hero-addr" id="hero-addr"></div>
+          <div class="metrics" id="metrics"></div>
+
+          <div class="tiers">
+            <div class="tier budget" id="tier-budget">
+              <div class="t-name">Budget <span class="t-fit" hidden>Your level</span></div>
+              <div class="t-price" data-price></div>
+              <div class="t-range" data-range></div>
+              <p class="t-desc">Older building, often no lift or parking, in a less central area.</p>
+              <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="14" y="30" width="36" height="44" rx="3" fill="#0fb5a6" opacity=".25"/>
+                <rect x="20" y="38" width="8" height="8" rx="1.5" fill="#0fb5a6"/><rect x="36" y="38" width="8" height="8" rx="1.5" fill="#0fb5a6"/>
+                <rect x="20" y="52" width="8" height="8" rx="1.5" fill="#0fb5a6"/><rect x="36" y="52" width="8" height="8" rx="1.5" fill="#0fb5a6" opacity=".5"/>
+                <circle cx="60" cy="56" r="13" fill="#ffc83d"/><text x="60" y="61" text-anchor="middle" font-size="14" font-weight="800" fill="#7a5600" font-family="Arial">₪</text>
+              </svg>
+            </div>
+            <div class="tier comfortable" id="tier-comfortable">
+              <div class="t-name">Comfortable <span class="t-fit" hidden>Your level</span></div>
+              <div class="t-price" data-price></div>
+              <div class="t-range" data-range></div>
+              <p class="t-desc">The average contract here: a decent, maintained flat.</p>
+              <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
+                <path d="M10 44 38 20l28 24" fill="none" stroke="#6c3cf0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="18" y="40" width="40" height="34" rx="3" fill="#6c3cf0" opacity=".25"/>
+                <rect x="32" y="54" width="12" height="20" rx="2" fill="#ff3d8b"/>
+                <rect x="22" y="46" width="8" height="8" rx="1.5" fill="#6c3cf0"/><rect x="46" y="46" width="8" height="8" rx="1.5" fill="#6c3cf0"/>
+                <circle cx="64" cy="20" r="7" fill="#ffc83d"/>
+              </svg>
+            </div>
+            <div class="tier luxury" id="tier-luxury">
+              <div class="t-name">Luxury <span class="t-fit" hidden>Your level</span></div>
+              <div class="t-price" data-price></div>
+              <div class="t-range" data-range></div>
+              <p class="t-desc">New tower with lift, parking, safe room and a big balcony.</p>
+              <svg class="ill" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="24" y="8" width="26" height="68" rx="3" fill="#ff3d8b" opacity=".28"/>
+                <g fill="#ff3d8b"><rect x="29" y="16" width="6" height="6" rx="1"/><rect x="39" y="16" width="6" height="6" rx="1"/><rect x="29" y="28" width="6" height="6" rx="1"/><rect x="39" y="28" width="6" height="6" rx="1"/><rect x="29" y="40" width="6" height="6" rx="1"/><rect x="39" y="40" width="6" height="6" rx="1"/><rect x="29" y="52" width="6" height="6" rx="1"/><rect x="39" y="52" width="6" height="6" rx="1"/></g>
+                <path d="M62 14l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z" fill="#ffc83d"/>
+                <path d="M16 30l1.5 3 3.3.5-2.4 2.3.6 3.3-3-1.6-3 1.6.6-3.3-2.4-2.3 3.3-.5z" fill="#6c3cf0"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="verdict" id="verdict" hidden></div>
+          <div class="note" id="note"></div>
+        </div>
+      </article>
+
+      <details class="panel" open>
+        <summary>
+          <span class="ico" style="background:var(--primary-soft);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+          <span><span id="guide-title">How to search</span><small>Copy-and-paste searches and filters for Israeli rental sites</small></span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="panel-body">
+          <div class="step">
+            <div class="step-num" style="background:var(--primary)">1</div>
+            <div class="step-body"><h3>Type this into the search box</h3><div id="guide-phrases"></div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--accent)">2</div>
+            <div class="step-body"><h3>Set these filters</h3><table class="filter-table"><tbody id="guide-filters"></tbody></table></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--teal)">3</div>
+            <div class="step-body"><h3>Add keywords for your level</h3><div class="kw-groups" id="guide-keywords"></div>
+              <p class="tip">Click any word to copy it. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="panel">
+        <summary>
+          <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
+          <span>Where to look<small>Rental sites and groups worth checking</small></span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="panel-body"><div class="site-grid" id="site-list"></div></div>
+      </details>
+
+      <div class="feed-head">
+        <div>
+          <h2 id="feed-title">Compare cities</h2>
+          <p id="feed-sub"></p>
+        </div>
+        <label class="sort">Sort
+          <select id="sort">
+            <option value="price-desc">Price: high to low</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="growth">Fastest rising</option>
+            <option value="saved">Saved first</option>
+          </select>
+        </label>
       </div>
-      <div class="hint">See which level and which cities it covers.</div>
+      <div class="feed" id="feed"></div>
+      <div class="feed-end" id="feed-end"></div>
+
+      <details class="panel">
+        <summary>
+          <span class="ico" style="background:var(--teal-soft);color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></span>
+          <span>How the estimates work<small>Data source, price levels and photo credits</small></span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="panel-body method-body">
+          <p><strong>Comfortable</strong> is the official average monthly rent from the Israel Central Bureau of Statistics (CBS) for that area and size, for <span id="m-quarter"></span>. It covers new and renewed contracts.</p>
+          <p>CBS publishes averages only, not the spread of prices. <strong>Budget</strong> and <strong>luxury</strong> are rules of thumb applied to the CBS average:</p>
+          <ul>
+            <li>Budget: about 80% of the average (range 70-90%)</li>
+            <li>Comfortable: the average (range 90-115%)</li>
+            <li>Luxury: about 140% of the average (range 125-170%)</li>
+          </ul>
+          <p>Rents vary a lot within a city, so check real listings in the neighbourhoods you like. Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band runs from 4.5 rooms to large penthouses, so treat it as a rough guide. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). Those are estimated from the city's 2.5-3 room rent and its district's price ratio.</p>
+          <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ.</p>
+          <p>Prices exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
+          <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
+        </div>
+      </details>
+
+      <footer>
+        Data: Israel Central Bureau of Statistics, Price Statistics Monthly, Table 4.9. Map © OpenStreetMap contributors, © CARTO.
+        Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
+      </footer>
     </div>
   </section>
 
-  <section aria-live="polite">
-    <div class="summary">
-      <h2 id="summary-title"></h2>
-      <p id="summary-sub"></p>
+  <aside class="pane-map" aria-label="Map of rents">
+    <div id="map"></div>
+    <div class="map-legend">
+      <div id="legend-title">Avg rent</div>
+      <div><span class="sw" style="background:var(--primary)"></span>City</div>
+      <div><span class="sw" style="background:var(--accent)"></span>Selected</div>
+      <div id="legend-over" hidden><span class="sw" style="background:var(--over)"></span>Over budget</div>
     </div>
-    <div class="tiers">
-      <article class="card tier budget" id="tier-budget">
-        <h3>Budget <span class="badge">Cheapest</span></h3>
-        <div class="price" data-price></div>
-        <div class="range" data-range></div>
-        <p class="desc">Older building, often no lift or parking. A less central neighbourhood or a flat that needs some work.</p>
-      </article>
-      <article class="card tier comfortable" id="tier-comfortable">
-        <h3>Comfortable <span class="badge">Typical</span></h3>
-        <div class="price" data-price></div>
-        <div class="range" data-range></div>
-        <p class="desc">The average contract in this area. A decent, maintained flat in an ordinary neighbourhood.</p>
-      </article>
-      <article class="card tier luxury" id="tier-luxury">
-        <h3>Luxury <span class="badge">Premium</span></h3>
-        <div class="price" data-price></div>
-        <div class="range" data-range></div>
-        <p class="desc">New building or tower with a lift, parking, a safe room (mamad) and a balcony, in a sought-after neighbourhood.</p>
-      </article>
-    </div>
-    <div class="facts" id="facts"></div>
-    <div class="note" id="note"></div>
-    <div class="card budget-verdict" id="verdict" hidden></div>
-  </section>
+  </aside>
+</main>
 
-  <section class="card guide" aria-labelledby="guide-title">
-    <h2 id="guide-title"></h2>
-    <p class="sub">Most Israeli rental sites are in Hebrew. Click any line to copy it, then paste it into the site's search box or a Facebook group search.</p>
+<button type="button" class="map-toggle" id="map-toggle" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>
+  <span>Map</span>
+</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <h3>1. Type this into the search box</h3>
-    <div id="guide-phrases"></div>
-
-    <h3>2. Set these filters</h3>
-    <table class="filters"><tbody id="guide-filters"></tbody></table>
-
-    <h3>3. Add keywords for the level you want</h3>
-    <div class="kw-groups" id="guide-keywords"></div>
-    <p class="tip">Tip: your browser can translate listings (right-click → Translate to English). Listings marked <bdi dir="rtl" lang="he">תיווך</bdi> come through an agent, who may charge a fee.</p>
-  </section>
-
-  <section class="card sites" aria-labelledby="sites-title">
-    <h2 id="sites-title">Where to look</h2>
-    <p class="sub">Check several sites: many landlords only post on one.</p>
-    <ul class="site-list" id="site-list"></ul>
-  </section>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <section class="card compare" aria-labelledby="compare-title">
-    <h2 id="compare-title"></h2>
-    <p class="sub" id="compare-sub"></p>
-    <div class="bars" id="bars"></div>
-    <div class="legend">
-      <span><i style="background:var(--bar)"></i>Your choice</span>
-      <span><i style="background:var(--bar-muted)"></i>Other cities</span>
-      <span id="legend-budget" hidden><i style="border:2px dashed var(--text);background:transparent"></i>Your budget</span>
-    </div>
-  </section>
-
-  <details class="card method">
-    <summary>How the estimates work</summary>
-    <p><strong>Comfortable</strong> is the official average monthly rent from the Israel Central Bureau of Statistics (CBS) for that area and size, for <span id="m-quarter"></span>. It covers new and renewed contracts.</p>
-    <p>CBS publishes averages only, not the spread of prices. The <strong>budget</strong> and <strong>luxury</strong> levels are rules of thumb, applied to the CBS average:</p>
-    <ul>
-      <li>Budget: about 80% of the average (range 70-90%)</li>
-      <li>Comfortable: the average (range 90-115%)</li>
-      <li>Luxury: about 140% of the average (range 125-170%)</li>
-    </ul>
-    <p>Treat them as a starting point and check real listings (Yad2, Madlan, Komo) in the neighbourhoods you like. Prices vary a lot within a city: north Tel Aviv and south Tel Aviv are very different markets.</p>
-    <p>Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band covers everything from 4.5 rooms to large penthouses, so its average is less precise. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). For those, the estimate uses the city's 2.5-3 room rent scaled by its district's price ratio.</p>
-    <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ, so check real listings.</p>
-    <p>Prices are estimates and exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities.</p>
-  </details>
-
-  <footer>
-    Data: Israel Central Bureau of Statistics, Price Statistics Monthly, Table 4.9.
-    Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
-  </footer>
-</div>
-
-<!-- Bump ?v= when the data is re-exported so browsers don't keep a stale copy -->
-<script src="rent-data.js?v=2026q2-4"></script>
+<script src="rent-data.js?v=2026q2-5"></script>
+<script src="city-media.js?v=1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
   const D = window.RENT_DATA;
+  const M = window.CITY_MEDIA;
   const TIERS = {
     budget:      { mid: 0.80, lo: 0.70, hi: 0.90 },
     comfortable: { mid: 1.00, lo: 0.90, hi: 1.15 },
@@ -341,33 +546,36 @@
 
   const $ = (id) => document.getElementById(id);
   const fmt = (n) => "₪" + Math.round(n).toLocaleString("en-US");
+  const fmtK = (n) => "₪" + (n / 1000).toFixed(1) + "k";
   const round50 = (n) => Math.round(n / 50) * 50;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const he = (t) => '<bdi dir="rtl" lang="he">' + t + "</bdi>";
   const quarterLabel = (q) => {
     const [y, n] = q.split("Q");
     return ["Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"][+n - 1] + " " + y;
   };
-  const bandFor = (rooms) => rooms <= 2 ? "1-2" : rooms <= 3 ? "2.5-3" : rooms <= 4 ? "3.5-4" : "4.5+";
-  const roomsText = (r) => (r >= MAX_ROOMS ? "6+" : String(r)) + (r === 1 ? " room" : " rooms");
-  const bedrooms = (r) => {
-    const b = Math.max(0, Math.floor(r) - 1);
-    return b === 0 ? "a studio" : b === 1 ? "1 bedroom + living room" : b + " bedrooms + living room";
-  };
+  const bandFor = (r) => r <= 2 ? "1-2" : r <= 3 ? "2.5-3" : r <= 4 ? "3.5-4" : "4.5+";
+  const roomsShort = (r) => (r >= MAX_ROOMS ? "6+" : String(r));
+  const roomsText = (r) => roomsShort(r) + (r === 1 ? " room" : " rooms");
+  const bedCount = (r) => Math.max(0, Math.floor(r) - 1);
 
   const byName = Object.fromEntries(D.areas.map((a) => [a.name, a]));
   const cities = D.areas.filter((a) => a.type === "City");
-  // Towns without their own CBS figures (they borrow a nearby city's) stay out of comparisons
-  const measured = cities.filter((c) => !c.proxyFor);
+  const measured = cities.filter((c) => !c.proxyFor);   // towns with their own CBS figures
   const bandOf = (area, band) => area.bands.find((b) => b.rooms === band);
 
-  // ---- State (remembered per viewer) ----
+  // ---- State, remembered per viewer ----
   const saved = (() => { try { return JSON.parse(localStorage.getItem("rent-calc") || "{}"); } catch (e) { return {}; } })();
   const state = {
     area: byName[saved.area] ? saved.area : "Tel Aviv",
     rooms: saved.rooms >= MIN_ROOMS && saved.rooms <= MAX_ROOMS ? saved.rooms : 3,
     budget: saved.budget > 0 ? saved.budget : null,
-    noLimit: saved.noLimit === true
+    noLimit: saved.noLimit === true,
+    sort: ["price-desc", "price-asc", "growth", "saved"].includes(saved.sort) ? saved.sort : "price-desc",
+    favs: Array.isArray(saved.favs) ? saved.favs.filter((n) => byName[n]) : []
   };
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
+  const effBudget = () => (state.noLimit ? null : state.budget);
 
   // ---- Area picker, grouped by district ----
   const sel = $("area");
@@ -386,150 +594,230 @@
   other.append(new Option("Israel average", "Israel"));
   sel.append(other);
 
-  // ---- Render ----
-  function render() {
-    const area = byName[state.area];
-    const band = bandFor(state.rooms);
-    const b = bandOf(area, band);
-    const avg = b.rent;
-    const place = area.type === "City" ? area.name
-      : area.type === "National" ? "Israel (national average)"
-      : area.name;
+  $("data-chip").textContent = "Official CBS data · " + quarterLabel(D.quarter);
+  $("m-quarter").textContent = quarterLabel(D.quarter);
 
-    $("rooms-value").textContent = state.rooms >= MAX_ROOMS ? "6+" : state.rooms;
-    $("rooms-down").disabled = state.rooms <= MIN_ROOMS;
-    $("rooms-up").disabled = state.rooms >= MAX_ROOMS;
-    $("rooms-hint").textContent = roomsText(state.rooms) + " = " + bedrooms(state.rooms) + ".";
-
-    $("summary-title").textContent = roomsText(state.rooms) + " in " + place;
-    $("summary-sub").textContent = "Estimated monthly rent, based on CBS data for " + band +
-      " room homes, " + quarterLabel(D.quarter) + ".";
-
-    for (const [key, t] of Object.entries(TIERS)) {
-      const el = $("tier-" + key);
-      el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>/ month</small>";
-      el.querySelector("[data-range]").textContent = fmt(round50(avg * t.lo)) + " - " + fmt(round50(avg * t.hi));
-      el.classList.remove("fits");
-    }
-
-    // Facts line
-    const nat = bandOf(byName["Israel"], band).rent;
-    const diff = avg / nat - 1;
-    const facts = [];
-    facts.push("CBS average: <strong>" + fmt(avg) + "</strong>");
-    if (area.name !== "Israel") {
-      facts.push("vs Israel average: <strong>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</strong>");
-    }
-    if (b.yoy != null) {
-      facts.push("Change in a year: <strong>" + (b.yoy >= 0 ? "+" : "") + (b.yoy * 100).toFixed(1) + "%</strong>");
-    }
-    if (b.se != null) {
-      facts.push("95% confidence: <strong>" + fmt(avg - 1.96 * b.se) + " - " + fmt(avg + 1.96 * b.se) + "</strong>");
-    }
-    $("facts").innerHTML = facts.join("");
-
-    const notes = [];
-    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ". Use the search guide below to check real prices.");
-    else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
-    if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
-    if (area.type === "District" && area.name !== "Israel") notes.push("District figures average all towns in the district, including the big cities in it.");
-    $("note").textContent = notes.join(" ");
-
-    renderBudget(avg, band);
-    renderGuide(area, band, avg);
-    renderBars(band);
+  // ---- Illustration for areas without a photo (districts, Israel) ----
+  function skyline() {
+    const windows = [];
+    for (let i = 0; i < 6; i++) windows.push('<rect x="' + (312 + (i % 2) * 26) + '" y="' + (160 + Math.floor(i / 2) * 34) + '" width="16" height="18" rx="2"/>');
+    return '<svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' +
+      '<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f6bff"/><stop offset=".6" stop-color="#ff8fbf"/><stop offset="1" stop-color="#ffd6e6"/></linearGradient></defs>' +
+      '<rect width="800" height="400" fill="url(#sky)"/>' +
+      '<circle cx="640" cy="110" r="52" fill="#ffc83d"/><circle cx="640" cy="110" r="74" fill="#ffc83d" opacity=".25"/>' +
+      '<path d="M90 80q14-10 28 0q14-10 28 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M190 120q10-7 20 0q10-7 20 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>' +
+      '<g fill="#4a1fc4" opacity=".35"><rect x="30" y="210" width="70" height="190"/><rect x="230" y="170" width="60" height="230"/><rect x="520" y="190" width="80" height="210"/><rect x="700" y="230" width="70" height="170"/></g>' +
+      '<g fill="#4a1fc4"><rect x="90" y="250" width="90" height="150" rx="4"/><rect x="300" y="140" width="70" height="260" rx="4"/><rect x="380" y="220" width="110" height="180" rx="4"/><rect x="610" y="260" width="90" height="140" rx="4"/></g>' +
+      '<g fill="#ffc83d" opacity=".9">' + windows.join("") +
+      '<rect x="400" y="240" width="18" height="18" rx="2"/><rect x="440" y="240" width="18" height="18" rx="2"/><rect x="104" y="270" width="16" height="16" rx="2"/></g>' +
+      '<path d="M500 400V300l40-30 40 30v100z" fill="#ff3d8b"/><rect x="528" y="340" width="24" height="60" fill="#fff" opacity=".9"/>' +
+      '<g stroke="#0fb5a6" stroke-width="6" stroke-linecap="round" fill="none"><path d="M200 400v-70"/><path d="M200 330q-26-6-40 8M200 330q26-6 40 8M200 330q-12-22-32-22M200 330q12-22 32-22"/></g>' +
+      '<g stroke="#0fb5a6" stroke-width="6" stroke-linecap="round" fill="none"><path d="M740 400v-60"/><path d="M740 340q-22-5-34 7M740 340q22-5 34 7M740 340q-10-19-27-19M740 340q10-19 27-19"/></g>' +
+      '<rect y="384" width="800" height="16" fill="#1c1433" opacity=".25"/>' +
+      "</svg>";
   }
 
-  function renderBudget(avg, band) {
+  // ---- Map ----
+  let map = null, tiles = null;
+  const markers = {};
+  const tileUrls = {
+    light: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+  };
+  const isDark = () => {
+    const t = document.documentElement.getAttribute("data-theme");
+    return t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+  function setTiles() {
+    if (!map) return;
+    if (tiles) map.removeLayer(tiles);
+    tiles = L.tileLayer(tileUrls[isDark() ? "dark" : "light"], {
+      subdomains: "abcd", maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+  }
+  function initMap() {
+    if (!window.L) {
+      $("map").innerHTML = '<div class="map-fallback">The map couldn\'t load. Everything else still works.</div>';
+      return;
+    }
+    map = L.map("map", { zoomControl: false }).setView([31.9, 34.9], 9);
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    setTiles();
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", setTiles);
+    for (const c of cities) {
+      const m = M.cities[c.name];
+      if (!m) continue;
+      const mk = L.marker([m.lat, m.lng], {
+        icon: L.divIcon({ className: "pin-wrap", html: '<div class="pin"></div>', iconSize: null }),
+        title: c.name, riseOnHover: true
+      }).addTo(map);
+      mk.on("click", () => select(c.name, { fly: false, scroll: true }));
+      markers[c.name] = mk;
+    }
+  }
+  function updatePins(band) {
+    const B = effBudget();
+    for (const [name, mk] of Object.entries(markers)) {
+      const b = bandOf(byName[name], band);
+      const el = mk.getElement() && mk.getElement().querySelector(".pin");
+      if (!el) continue;
+      el.textContent = fmtK(b.rent) + (byName[name].proxyFor ? "*" : "");
+      el.className = "pin" + (name === state.area ? " selected" : B && b.rent > B ? " over" : byName[name].proxyFor ? " est" : "");
+      mk.setZIndexOffset(name === state.area ? 1000 : 0);
+    }
+  }
+  function flyToArea(area) {
+    if (!map) return;
+    const m = M.cities[area.name];
+    if (m) map.flyTo([m.lat, m.lng], 12, { duration: 0.8 });
+    else if (M.views[area.name]) { const v = M.views[area.name]; map.flyTo([v[0], v[1]], v[2], { duration: 0.8 }); }
+  }
+
+  // ---- Tags ----
+  function tagsFor(area, band, b) {
+    const tags = [];
+    const B = effBudget();
+    if (area.type === "City" && !area.proxyFor) {
+      const ranked = [...measured].sort((x, y) => bandOf(y, band).rent - bandOf(x, band).rent);
+      const growth = measured.filter((c) => bandOf(c, band).yoy != null).sort((x, y) => bandOf(y, band).yoy - bandOf(x, band).yoy);
+      if (ranked[0].name === area.name) tags.push(["top", "Most expensive"]);
+      if (ranked[ranked.length - 1].name === area.name) tags.push(["value", "Best value"]);
+      if (growth[0] && growth[0].name === area.name) tags.push(["hot", "Fastest rising"]);
+    }
+    if (b.estimated) tags.push(["est", "Estimate"]);
+    if (B) tags.push(b.rent <= B ? ["ok", "In budget"] : ["over", "Over budget"]);
+    return tags;
+  }
+  const tagHtml = (tags) => tags.slice(0, 3).map(([cls, t]) => '<span class="tag ' + cls + '"><i></i>' + t + "</span>").join("");
+
+  // ---- Hero ----
+  function renderHero(area, band, b) {
+    const media = M.cities[area.name];
+    const avg = b.rent;
+    const kicker = area.type === "City" ? area.district : area.type === "National" ? "Nationwide" : "Whole district";
+    const title = area.type === "National" ? "All of Israel" : area.name;
+    $("hero-media").innerHTML =
+      (media ? '<img src="' + esc(media.photo) + '" alt="' + esc(area.name) + '" decoding="async">' : skyline()) +
+      '<div class="tags">' + tagHtml(tagsFor(area, band, b)) + "</div>" +
+      '<div class="hero-over"><div class="kicker">' + esc(kicker) + "</div><h1>" + esc(title) + "</h1></div>" +
+      (media ? '<a class="credit" href="' + esc(media.source) + '" target="_blank" rel="noopener noreferrer">Photo: ' + esc(media.credit) + " · " + esc(media.license) + "</a>" : "");
+
+    $("hero-price").innerHTML = fmt(round50(avg)) + " <small>/ month</small>";
+    $("hero-addr").textContent = "Typical " + roomsText(state.rooms) + " apartment in " + title + " · CBS data for " + band + " rooms, " + quarterLabel(D.quarter);
+
+    const nat = bandOf(byName["Israel"], band).rent;
+    const diff = avg / nat - 1;
+    const beds = bedCount(state.rooms);
+    const parts = ["<span><b>" + roomsShort(state.rooms) + "</b> RM</span>", "<span>" + (beds ? "<b>" + beds + "</b> BD" : "<b>Studio</b>") + "</span>"];
+    if (area.name !== "Israel") parts.push("<span><b>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</b> vs Israel</span>");
+    if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> in a year</span>");
+    if (b.se != null) parts.push("<span>±<b>" + fmt(1.96 * b.se) + "</b> margin</span>");
+    $("metrics").innerHTML = parts.join("");
+
+    const B = effBudget();
+    const level = B ? (["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || null) : null;
+    for (const [key, t] of Object.entries(TIERS)) {
+      const el = $("tier-" + key);
+      el.querySelector("[data-price]").innerHTML = fmt(round50(avg * t.mid)) + " <small>/mo</small>";
+      el.querySelector("[data-range]").textContent = fmt(round50(avg * t.lo)) + " - " + fmt(round50(avg * t.hi));
+      el.classList.toggle("fits", key === level);
+      el.querySelector(".t-fit").hidden = key !== level;
+    }
+
+    const notes = [];
+    if (area.proxyFor) notes.push("CBS doesn't publish rents for " + area.name + " (under 100,000 residents), so these figures use neighbouring " + area.proxyFor + ".");
+    else if (b.estimated) notes.push("CBS doesn't publish a 1-2 room figure for " + area.name + ", so this one is estimated from its 2.5-3 room rent.");
+    if (band === "4.5+") notes.push("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide.");
+    if (area.type === "District") notes.push("District figures average all towns in the district, including its big cities.");
+    $("note").textContent = notes.join(" ");
+
+    renderVerdict(avg, band, level);
+  }
+
+  const BULB = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>';
+  function renderVerdict(avg, band, level) {
     const v = $("verdict");
     $("no-budget").setAttribute("aria-pressed", String(state.noLimit));
     $("budget").disabled = state.noLimit;
+    let msg = null;
     if (state.noLimit) {
-      $("legend-budget").hidden = true;
-      v.innerHTML = "<strong>No budget limit.</strong> Here the full range runs from about " +
-        fmt(round50(avg * TIERS.budget.lo)) + " for a basic flat to " + fmt(round50(avg * TIERS.luxury.hi)) +
-        " or more for the best homes. The most expensive big city for " + band + " rooms is " +
-        measured.reduce((m, c) => bandOf(c, band).rent > bandOf(m, band).rent ? c : m).name + ".";
-      v.hidden = false;
-      return;
+      const top = measured.reduce((m, c) => bandOf(c, band).rent > bandOf(m, band).rent ? c : m);
+      msg = "<strong>No budget limit.</strong> Here the range runs from about " + fmt(round50(avg * TIERS.budget.lo)) +
+        " for a basic flat to " + fmt(round50(avg * TIERS.luxury.hi)) + " or more for the best homes. The priciest big city for " +
+        band + " rooms is " + top.name + ".";
+    } else if (state.budget) {
+      const B = state.budget;
+      if (level === "luxury") msg = "<strong>" + fmt(B) + "</strong> covers a <strong>luxury</strong> flat here.";
+      else if (level === "comfortable") msg = "<strong>" + fmt(B) + "</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about " + fmt(round50(avg * TIERS.luxury.mid)) + ".";
+      else if (level === "budget") msg = "<strong>" + fmt(B) + "</strong> fits the <strong>budget</strong> level here. A typical flat costs about " + fmt(round50(avg)) + ".";
+      else msg = "<strong>" + fmt(B) + "</strong> is below the budget level here (about " + fmt(round50(avg * TIERS.budget.mid)) + "). Try fewer rooms or another city.";
+      const fits = measured.filter((c) => bandOf(c, band).rent <= B).length;
+      msg += " It covers the average " + band + " room rent in <strong>" + fits + " of " + measured.length + "</strong> big cities (marked In budget below).";
     }
-    if (!state.budget) { v.hidden = true; $("legend-budget").hidden = true; return; }
-    $("legend-budget").hidden = false;
-    const B = state.budget;
-    let level = null;
-    for (const key of ["luxury", "comfortable", "budget"]) {
-      if (B >= round50(avg * TIERS[key].mid)) { level = key; break; }
-    }
-    if (level) $("tier-" + level).classList.add("fits");
-
-    const affordable = measured
-      .map((c) => ({ name: c.name, rent: bandOf(c, band).rent }))
-      .filter((c) => c.rent <= B)
-      .sort((a, z) => z.rent - a.rent);
-
-    let msg;
-    if (level === "luxury") msg = "<strong>" + fmt(B) + "</strong> covers a <strong>luxury</strong> flat here.";
-    else if (level === "comfortable") msg = "<strong>" + fmt(B) + "</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about " + fmt(round50(avg * TIERS.luxury.mid)) + ".";
-    else if (level === "budget") msg = "<strong>" + fmt(B) + "</strong> fits the <strong>budget</strong> level here. A typical flat costs about " + fmt(round50(avg)) + ".";
-    else msg = "<strong>" + fmt(B) + "</strong> is below the budget level here (about " + fmt(round50(avg * TIERS.budget.mid)) + "). Consider fewer rooms or another area.";
-
-    if (affordable.length) {
-      const names = affordable.slice(0, 6).map((c) => c.name);
-      msg += " In these cities your budget covers an average " + band + " room flat: " + names.join(", ") +
-        (affordable.length > 6 ? " and " + (affordable.length - 6) + " more" : "") + ".";
-    } else {
-      msg += " None of the big cities has an average " + band + " room rent within this budget.";
-    }
-    v.innerHTML = msg;
-    v.hidden = false;
+    if (msg) { v.innerHTML = BULB + "<div>" + msg + "</div>"; v.hidden = false; } else v.hidden = true;
   }
 
-  function renderBars(band) {
-    const rows = measured.map((c) => ({ name: c.name, rent: bandOf(c, band).rent, est: bandOf(c, band).estimated }))
-      .sort((a, z) => z.rent - a.rent);
-    const budget = state.noLimit ? null : state.budget;
-    const max = Math.max(...rows.map((r) => r.rent), budget || 0) * 1.04;
-    $("compare-title").textContent = band + " room homes across the big cities";
-    $("compare-sub").textContent = "Average monthly rent (comfortable level), " + quarterLabel(D.quarter) + ". Click a city to select it.";
+  // ---- Feed ----
+  let observer = null;
+  function renderFeed(band) {
+    const B = effBudget();
+    const maxRent = Math.max(...measured.map((c) => bandOf(c, band).rent));
+    const rows = cities.map((c) => ({ c, b: bandOf(c, band) }));
+    const s = state.sort;
+    rows.sort((x, y) =>
+      s === "price-asc" ? x.b.rent - y.b.rent :
+      s === "growth" ? (y.b.yoy ?? -1) - (x.b.yoy ?? -1) :
+      s === "saved" ? (state.favs.includes(y.c.name) - state.favs.includes(x.c.name)) || y.b.rent - x.b.rent :
+      y.b.rent - x.b.rent);
 
-    const wrap = $("bars");
-    wrap.innerHTML = "";
-    for (const r of rows) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "bar-row" + (r.name === state.area ? " selected" : "");
-      btn.title = r.name + ": " + fmt(r.rent) + (r.est ? " (estimated)" : "");
-      btn.setAttribute("aria-label", r.name + ", " + fmt(r.rent) + " per month" + (r.est ? ", estimated" : ""));
-      btn.innerHTML =
-        '<span class="name">' + r.name + '</span>' +
-        '<span class="bar-track"><span class="bar-fill" style="width:' + (r.rent / max * 100).toFixed(2) + '%"></span>' +
-        (budget ? '<span class="budget-line" style="left:' + (budget / max * 100).toFixed(2) + '%"></span>' : '') +
-        '</span>' +
-        '<span class="val">' + fmt(r.rent) + (r.est ? "*" : "") + '</span>';
-      btn.addEventListener("click", () => { state.area = r.name; sel.value = r.name; persist(); render(); });
-      wrap.append(btn);
-    }
+    $("feed-title").textContent = roomsText(state.rooms) + " across " + cities.length + " cities";
+    $("feed-sub").textContent = "Average monthly rent (comfortable level). Tap a city to see its prices.";
+
+    const feed = $("feed");
+    feed.innerHTML = rows.map(({ c, b }) => {
+      const m = M.cities[c.name] || {};
+      const fav = state.favs.includes(c.name);
+      const beds = bedCount(state.rooms);
+      const yoy = b.yoy != null ? '<span class="' + (b.yoy >= 0 ? "up" : "down") + '">' + (b.yoy >= 0 ? "▲ " : "▼ ") + (b.yoy * 100).toFixed(1) + "%/yr</span>" : "";
+      return '<article class="listing' + (c.name === state.area ? " selected" : "") + '" data-city="' + esc(c.name) + '" tabindex="0" aria-label="' + esc(c.name + ", " + fmt(b.rent) + " a month") + '">' +
+        '<div class="media">' + (m.photo ? '<img src="' + esc(m.photo) + '" alt="" loading="lazy" decoding="async">' : "") +
+          '<div class="tags">' + tagHtml(tagsFor(c, band, b)) + "</div>" +
+          '<button type="button" class="fav" data-fav="' + esc(c.name) + '" aria-pressed="' + fav + '" aria-label="' + (fav ? "Remove " : "Save ") + esc(c.name) + '">' +
+          '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-9A5 5 0 0 1 12 6a5 5 0 0 1 9.2 5C19 15.6 12 20 12 20z"/></svg></button>' +
+        "</div>" +
+        '<div class="body">' +
+          '<div class="l-price">' + fmt(b.rent) + "<small>/mo</small></div>" +
+          '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " rm</span><span>" + (beds ? beds + " bd" : "Studio") + "</span>" + yoy + "</div>" +
+          '<div class="l-addr">' + esc(c.name) + ", " + esc(c.district) + (c.proxyFor ? " · based on " + esc(c.proxyFor) : "") + "</div>" +
+          '<div class="l-bar" title="Compared with the most expensive city"><i style="width:' + Math.min(100, b.rent / maxRent * 100).toFixed(1) + '%"></i>' +
+          (B && B < maxRent ? '<b style="left:' + (B / maxRent * 100).toFixed(1) + '%" title="Your budget"></b>' : "") + "</div>" +
+        "</div></article>";
+    }).join("");
+    $("feed-end").textContent = "You've seen all " + cities.length + " cities";
+
+    // fade cards in as they scroll into view
+    if (observer) observer.disconnect();
+    const cards = feed.querySelectorAll(".listing");
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("in"); observer.unobserve(e.target); }
+      }), { root: window.innerWidth > 1000 ? $("pane-list") : null, rootMargin: "0px 0px -30px 0px" });
+      cards.forEach((el) => observer.observe(el));
+    } else cards.forEach((el) => el.classList.add("in"));
   }
 
   // ---- Search guide ----
-  const he = (t) => '<bdi dir="rtl" lang="he">' + t + "</bdi>";
-  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-  // Shorter names people actually type (CBS uses the official long form)
-  const SEARCH_NAME = { "Tel Aviv": "תל אביב" };
+  const SEARCH_NAME = { "Tel Aviv": "תל אביב" };   // the short name people type
   const roomsHe = (r) => r >= MAX_ROOMS ? "6 חדרים ומעלה" : r === 1 ? "חדר" : r + " חדרים";
   const KEYWORDS = {
-    budget: [["ללא תיווך", "no agent's fee"], ["יחידת דיור", "self-contained unit, often cheaper"],
-             ["גמיש במחיר", "price is negotiable"], ["דירה ישנה", "older flat"]],
+    budget: [["ללא תיווך", "no agent's fee"], ["יחידת דיור", "self-contained unit"], ["גמיש במחיר", "price negotiable"], ["דירה ישנה", "older flat"]],
     comfortable: [["מעלית", "lift"], ["חניה", "parking"], ["משופצת", "renovated"], ["מזגנים", "air-conditioning"]],
     luxury: [["ממ\"ד", "safe room"], ["בניין חדש", "new building"], ["מרפסת שמש", "sun balcony"], ["פנטהאוז", "penthouse"]]
   };
   const ALWAYS = [["כניסה מיידית", "available now"], ["מרוהטת", "furnished"], ["מותר בעלי חיים", "pets allowed"]];
-
-  function copy(text) {
-    const done = () => { const t = $("toast"); t.textContent = "Copied: " + text; t.classList.add("show"); clearTimeout(copy.t); copy.t = setTimeout(() => t.classList.remove("show"), 1600); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => {});
-    else { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
-  }
+  const kwBtn = ([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>";
 
   function renderGuide(area, band, avg) {
     const isTown = !!area.hebrew;
@@ -540,89 +828,160 @@
 
     const phrases = [
       ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + cityHe, true],
-      ["English", (r >= MAX_ROOMS ? "6+" : r) + " room apartment for rent in " + cityEn, false],
+      ["English", roomsShort(r) + " room apartment for rent in " + cityEn, false],
       ["Facebook", "דירות להשכרה ב" + cityHe, true]
     ];
     $("guide-phrases").innerHTML = phrases.map(([lang, text, rtl]) =>
-      '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + lang + '</span>' +
-      '<span class="txt"' + (rtl ? ' dir="rtl" lang="he"' : '') + '>' + esc(text) + '</span><span class="act">Copy</span></button>').join("");
+      '<button type="button" class="copy-line" data-copy="' + esc(text) + '"><span class="lang">' + lang + "</span>" +
+      '<span class="txt"' + (rtl ? ' dir="rtl" lang="he"' : "") + ">" + esc(text) + '</span><span class="act">Copy</span></button>').join("");
 
-    // Price filter follows the budget if there is one, otherwise the comfortable range
     let price;
     if (state.noLimit) price = ["Leave empty", "No budget limit, so don't cap the price."];
     else if (state.budget) price = ["Up to " + fmt(state.budget), "Your budget."];
     else price = [fmt(round50(avg * TIERS.comfortable.lo)) + " - " + fmt(round50(avg * TIERS.comfortable.hi)),
-                  "The comfortable range. Budget: up to " + fmt(round50(avg * TIERS.budget.hi)) +
-                  ", luxury: from " + fmt(round50(avg * TIERS.luxury.lo)) + "."];
+      "The comfortable range. Budget: up to " + fmt(round50(avg * TIERS.budget.hi)) + ", luxury: from " + fmt(round50(avg * TIERS.luxury.lo)) + "."];
     const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? "any" : r + STEP;
     const rows = [
       ["City", "עיר", isTown ? he(area.hebrew) + " (" + area.name + ")" : "Your town", isTown ? "" : "Type your town's name in Hebrew or English."],
-      ["Rooms", "חדרים", (r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r), "Widen it to " + lo + " - " + hi + " to see more homes."],
+      ["Rooms", "חדרים", r >= MAX_ROOMS ? "From 6" : "From " + r + " to " + r, "Widen it to " + lo + " - " + hi + " to see more homes."],
       ["Price per month", "מחיר", price[0], price[1]],
       ["Property type", "סוג נכס", he("דירה") + " (apartment)", "For luxury also try " + he("דירת גן") + " (garden flat) and " + he("פנטהאוז") + "."]
     ];
     $("guide-filters").innerHTML = rows.map(([en, h, val, note]) =>
       "<tr><th>" + en + he(h) + "</th><td>" + val + (note ? "<small>" + note + "</small>" : "") + "</td></tr>").join("");
 
-    // Highlight the level the budget reaches (or comfortable by default)
     let level = "comfortable";
     if (state.noLimit) level = "luxury";
-    else if (state.budget) {
-      level = ["luxury", "comfortable", "budget"].find((k) => state.budget >= round50(avg * TIERS[k].mid)) || "budget";
-    }
-    const groups = [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
-      '<div class="kw-group' + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " (your level)" : "") + "</h4>" +
-      KEYWORDS[k].map(([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>").join("") +
-      "</div>");
-    groups.push('<div class="kw-group" style="grid-column:1/-1"><h4>Useful at any level</h4><div class="kw-groups">' +
-      ALWAYS.map(([w, en]) => '<button type="button" class="kw" data-copy="' + esc(w) + '">' + he(esc(w)) + "<span>" + en + "</span></button>").join("") +
-      "</div></div>");
-    $("guide-keywords").innerHTML = groups.join("");
-
-    renderSites(area);
+    else if (state.budget) level = ["luxury", "comfortable", "budget"].find((k) => state.budget >= round50(avg * TIERS[k].mid)) || "budget";
+    $("guide-keywords").innerHTML =
+      [["budget", "Budget"], ["comfortable", "Comfortable"], ["luxury", "Luxury"]].map(([k, label]) =>
+        '<div class="kw-group ' + k + (k === level ? " active" : "") + '"><h4>' + label + (k === level ? " · your level" : "") + "</h4>" +
+        KEYWORDS[k].map(kwBtn).join("") + "</div>").join("") +
+      '<div class="kw-group any"><h4>Useful at any level</h4><div class="kw-wrap">' + ALWAYS.map(kwBtn).join("") + "</div></div>";
   }
 
+  // ---- Where to look ----
   const SITES = [
-    ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings."],
-    ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices."],
-    ["Komo", "komo.co.il", "Classifieds with many private landlords."],
-    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere."],
-    ["OnMap", "onmap.co.il", "Map-based search, with an English version."],
-    ["Facebook groups", "facebook.com", "Search the Facebook phrase above for your city's groups. \"דירות מפה לאוזן\" is a large group for flats without agents."],
-    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
+    ["Yad2", "yad2.co.il", "Israel's biggest classifieds site, with the most rental listings.", "#6c3cf0"],
+    ["Madlan", "madlan.co.il", "Listings plus neighbourhood info: schools, transport and past prices.", "#ff3d8b"],
+    ["Komo", "komo.co.il", "Classifieds with many private landlords.", "#0fb5a6"],
+    ["Homeless", "homeless.co.il", "Long-running classifieds site. Some listings don't appear elsewhere.", "#9b5cff"],
+    ["OnMap", "onmap.co.il", "Map-based search, with an English version.", "#e0338a"],
+    ["Facebook groups", "facebook.com", "Search the Facebook phrase above for your city's groups. " + he("דירות מפה לאוזן") + " is a big group for flats without agents.", "#0a9d90"],
+    ["Janglo", "janglo.net", "English-speaking community board, strongest in Jerusalem and Beit Shemesh.", "#e0a400", ["Jerusalem", "Beit Shemesh", "Jerusalem District"]]
   ];
   function renderSites(area) {
-    $("site-list").innerHTML = SITES.map(([name, domain, desc, local]) => {
+    $("site-list").innerHTML = SITES.map(([name, domain, desc, color, local]) => {
       const hl = local && local.includes(area.name);
-      return '<li' + (hl ? ' class="highlight"' : '') + '><strong>' + name + (hl ? " (good for " + area.name + ")" : "") + '</strong>' +
-        '<span class="domain">' + domain + '</span><br>' + desc.replace(/"([^"]*[֐-׿][^"]*)"/g, (m, t) => "“" + he(t) + "”") + '</li>';
+      return '<div class="site' + (hl ? " highlight" : "") + '"><span class="logo" style="background:' + color + '">' + name[0] + "</span>" +
+        "<div><strong>" + name + (hl ? " · great for " + area.name : "") + '</strong><span class="domain">' + domain + "</span><p>" + desc + "</p></div></div>";
     }).join("");
   }
-  document.addEventListener("click", (e) => {
-    const el = e.target.closest("[data-copy]");
-    if (el) copy(el.getAttribute("data-copy"));
-  });
+
+  // ---- Main render ----
+  function render() {
+    const area = byName[state.area];
+    const band = bandFor(state.rooms);
+    const b = bandOf(area, band);
+
+    $("rooms-value").textContent = roomsShort(state.rooms);
+    $("rooms-down").disabled = state.rooms <= MIN_ROOMS;
+    $("rooms-up").disabled = state.rooms >= MAX_ROOMS;
+    $("rooms-hint").textContent = bedCount(state.rooms) ? "= " + bedCount(state.rooms) + " bed + living" : "= studio";
+    $("legend-title").textContent = "Avg rent · " + band + " rooms";
+    $("legend-over").hidden = !effBudget();
+
+    renderHero(area, band, b);
+    renderGuide(area, band, b.rent);
+    renderSites(area);
+    renderFeed(band);
+    updatePins(band);
+  }
+
+  function select(name, opts = {}) {
+    state.area = name; sel.value = name; persist(); render();
+    if (opts.fly !== false) flyToArea(byName[name]);
+    if (opts.scroll) {
+      if (window.innerWidth > 1000) $("pane-list").scrollTo({ top: 0, behavior: "smooth" });
+      else { setMapOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }
+    }
+  }
+
+  // ---- Copy + toast ----
+  function toast(text) {
+    const t = $("toast"); t.textContent = text; t.classList.add("show");
+    clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 1600);
+  }
+  function copy(text) {
+    const done = () => toast("Copied: " + text);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => {});
+    else { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
+  }
 
   // ---- Events ----
   sel.value = state.area;
-  sel.addEventListener("change", () => { state.area = sel.value; persist(); render(); });
+  sel.addEventListener("change", () => select(sel.value));
   $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });
   $("rooms-up").addEventListener("click", () => { state.rooms = Math.min(MAX_ROOMS, state.rooms + STEP); persist(); render(); });
   const budgetEl = $("budget");
   if (state.budget) budgetEl.value = state.budget;
-  budgetEl.addEventListener("input", () => {
-    const v = parseFloat(budgetEl.value);
-    state.budget = v > 0 ? v : null;
-    persist(); render();
-  });
-  $("no-budget").addEventListener("click", () => {
-    state.noLimit = !state.noLimit;
-    persist(); render();
-    if (!state.noLimit) budgetEl.focus();
-  });
-  $("m-quarter").textContent = quarterLabel(D.quarter);
+  budgetEl.addEventListener("input", () => { const v = parseFloat(budgetEl.value); state.budget = v > 0 ? v : null; persist(); render(); });
+  $("no-budget").addEventListener("click", () => { state.noLimit = !state.noLimit; persist(); render(); if (!state.noLimit) budgetEl.focus(); });
+  const sortEl = $("sort");
+  sortEl.value = state.sort;
+  sortEl.addEventListener("change", () => { state.sort = sortEl.value; persist(); renderFeed(bandFor(state.rooms)); });
 
+  document.addEventListener("click", (e) => {
+    const c = e.target.closest("[data-copy]");
+    if (c) { copy(c.getAttribute("data-copy")); return; }
+    const f = e.target.closest("[data-fav]");
+    if (f) {
+      const n = f.getAttribute("data-fav");
+      state.favs = state.favs.includes(n) ? state.favs.filter((x) => x !== n) : [...state.favs, n];
+      persist();
+      const on = state.favs.includes(n);
+      f.setAttribute("aria-pressed", String(on));
+      f.setAttribute("aria-label", (on ? "Remove " : "Save ") + n);
+      toast(on ? "Saved " + n : "Removed " + n);
+      return;
+    }
+    const card = e.target.closest(".listing");
+    if (card) select(card.dataset.city, { scroll: true });
+  });
+  $("feed").addEventListener("keydown", (e) => {
+    const card = e.target.closest(".listing");
+    if (card && e.target === card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); select(card.dataset.city, { scroll: true }); }
+  });
+  // hovering a card lifts its pin on the map
+  const clearHover = () => document.querySelectorAll(".pin.hover").forEach((p) => p.classList.remove("hover"));
+  $("feed").addEventListener("mouseover", (e) => {
+    const card = e.target.closest(".listing");
+    clearHover();
+    const mk = card && markers[card.dataset.city];
+    if (mk && mk.getElement()) mk.getElement().querySelector(".pin").classList.add("hover");
+  });
+  $("feed").addEventListener("mouseleave", clearHover);
+
+  const mt = $("map-toggle");
+  function setMapOpen(on) {
+    document.body.classList.toggle("show-map", on);
+    mt.setAttribute("aria-pressed", String(on));
+    mt.querySelector("span").textContent = on ? "List" : "Map";
+    if (on && map) setTimeout(() => map.invalidateSize(), 320);
+  }
+  mt.addEventListener("click", () => setMapOpen(!document.body.classList.contains("show-map")));
+
+  // keep the split pane height in step with the top bar
+  const setTop = () => document.documentElement.style.setProperty("--top-h", $("topbar").offsetHeight + "px");
+  setTop();
+  if ("ResizeObserver" in window) new ResizeObserver(() => { setTop(); if (map) map.invalidateSize(); }).observe($("topbar"));
+
+  $("credits").innerHTML = Object.entries(M.cities).map(([n, m]) =>
+    esc(n) + ': <a href="' + esc(m.source) + '" target="_blank" rel="noopener noreferrer">' + esc(m.credit) + "</a> (" + esc(m.license) + ")").join("; ") + ".";
+
+  initMap();
   render();
+  flyToArea(byName[state.area]);
 })();
 </script>
 </body>
