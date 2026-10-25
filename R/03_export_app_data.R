@@ -44,11 +44,11 @@ latest <- rent |>
   group_by(area, rooms) |>
   summarise(
     area_type = first(area_type),
-    rent = rent[quarter == latest_q],
-    se = se[quarter == latest_q],
     # 4.5+ was redefined in 2026, so a year-on-year change would mix definitions
     yoy = if (first(rooms) == "4.5+" || !any(quarter == year_ago_q)) NA_real_
           else rent[quarter == latest_q] / rent[quarter == year_ago_q] - 1,
+    se = se[quarter == latest_q],
+    rent = rent[quarter == latest_q],   # last, so the lines above still see every quarter
     .groups = "drop"
   ) |>
   mutate(estimated = FALSE)

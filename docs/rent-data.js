@@ -13,21 +13,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3119.3,
           "se": 113,
-          "yoy": null,
+          "yoy": 0.0272,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3905.7,
           "se": 65,
-          "yoy": null,
+          "yoy": 0.0197,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4855.4,
           "se": 66,
-          "yoy": null,
+          "yoy": 0.0159,
           "estimated": false
         },
         {
@@ -48,21 +48,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2739.9,
           "se": 92,
-          "yoy": null,
+          "yoy": 0.0427,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3260.8,
           "se": 56,
-          "yoy": null,
+          "yoy": 0.0236,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4031.3,
           "se": 49,
-          "yoy": null,
+          "yoy": 0.0181,
           "estimated": false
         },
         {
@@ -83,21 +83,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3692.4,
           "se": 73,
-          "yoy": null,
+          "yoy": 0.0567,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4107.4,
           "se": 46,
-          "yoy": null,
+          "yoy": 0.0225,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5249.3,
           "se": 101,
-          "yoy": null,
+          "yoy": 0.0036,
           "estimated": false
         },
         {
@@ -118,21 +118,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2321.3,
           "se": 102,
-          "yoy": null,
+          "yoy": 0.0261,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 2787.8,
           "se": 48,
-          "yoy": null,
+          "yoy": 0.027,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 3500.8,
           "se": 60,
-          "yoy": null,
+          "yoy": 0.0526,
           "estimated": false
         },
         {
@@ -160,14 +160,14 @@ window.RENT_DATA = {
           "rooms": "2.5-3",
           "rent": 4438.5,
           "se": 111,
-          "yoy": null,
+          "yoy": 0.1414,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4992.6,
           "se": 108,
-          "yoy": null,
+          "yoy": 0.1082,
           "estimated": false
         },
         {
@@ -188,21 +188,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3442.5,
           "se": 105,
-          "yoy": null,
+          "yoy": 0.0739,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4235.8,
           "se": 61,
-          "yoy": null,
+          "yoy": 0.0505,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5029.6,
           "se": 79,
-          "yoy": null,
+          "yoy": 0.0013,
           "estimated": false
         },
         {
@@ -223,21 +223,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2791.8,
           "se": 123,
-          "yoy": null,
+          "yoy": 0.0543,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3550.2,
           "se": 96,
-          "yoy": null,
+          "yoy": 0.076,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4437.7,
           "se": 105,
-          "yoy": null,
+          "yoy": 0.0536,
           "estimated": false
         },
         {
@@ -258,21 +258,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2477.9,
           "se": 51,
-          "yoy": null,
+          "yoy": 0.0206,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3118.5,
           "se": 34,
-          "yoy": null,
+          "yoy": 0.0229,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4060.6,
           "se": 56,
-          "yoy": null,
+          "yoy": 0.0406,
           "estimated": false
         },
         {
@@ -293,21 +293,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 4443.9,
           "se": 284,
-          "yoy": null,
+          "yoy": -0.031,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 5605.7,
           "se": 164,
-          "yoy": null,
+          "yoy": 0.0514,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 7040.8,
           "se": 136,
-          "yoy": null,
+          "yoy": 0.0269,
           "estimated": false
         },
         {
@@ -328,21 +328,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3556.8,
           "se": 94,
-          "yoy": null,
+          "yoy": 0.0068,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4320.9,
           "se": 50,
-          "yoy": null,
+          "yoy": 0.0329,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5433.5,
           "se": 66,
-          "yoy": null,
+          "yoy": 0.0223,
           "estimated": false
         },
         {
@@ -363,21 +363,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3800,
           "se": 88,
-          "yoy": null,
+          "yoy": 0.0061,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4889.9,
           "se": 60,
-          "yoy": null,
+          "yoy": 0.0433,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 6179.6,
           "se": 78,
-          "yoy": null,
+          "yoy": 0.0401,
           "estimated": false
         },
         {
@@ -405,14 +405,14 @@ window.RENT_DATA = {
           "rooms": "2.5-3",
           "rent": 4771,
           "se": 119,
-          "yoy": null,
+          "yoy": 0.0393,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 6041.6,
           "se": 110,
-          "yoy": null,
+          "yoy": 0.0327,
           "estimated": false
         },
         {
@@ -433,21 +433,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3083.6,
           "se": 88,
-          "yoy": null,
+          "yoy": -0.0044,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4116.1,
           "se": 74,
-          "yoy": null,
+          "yoy": 0.0419,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5272.9,
           "se": 91,
-          "yoy": null,
+          "yoy": 0.0299,
           "estimated": false
         },
         {
@@ -468,21 +468,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3387.7,
           "se": 78,
-          "yoy": null,
+          "yoy": 0.0082,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4203,
           "se": 54,
-          "yoy": null,
+          "yoy": 0.0324,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5311.1,
           "se": 63,
-          "yoy": null,
+          "yoy": 0.038,
           "estimated": false
         },
         {
@@ -503,21 +503,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 4168.3,
           "se": 73,
-          "yoy": null,
+          "yoy": 0.0115,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 5468.9,
           "se": 63,
-          "yoy": null,
+          "yoy": 0.0309,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 6826.5,
           "se": 99,
-          "yoy": null,
+          "yoy": 0.0408,
           "estimated": false
         },
         {
@@ -538,21 +538,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3280.6,
           "se": 116,
-          "yoy": null,
+          "yoy": 0.0554,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4171,
           "se": 66,
-          "yoy": null,
+          "yoy": 0.0522,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5102.2,
           "se": 75,
-          "yoy": null,
+          "yoy": 0.0455,
           "estimated": false
         },
         {
@@ -573,21 +573,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3732.3,
           "se": 100,
-          "yoy": null,
+          "yoy": 0.0406,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4701.8,
           "se": 57,
-          "yoy": null,
+          "yoy": 0.0511,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5554.7,
           "se": 71,
-          "yoy": null,
+          "yoy": 0.0292,
           "estimated": false
         },
         {
@@ -608,21 +608,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 5486.7,
           "se": 72,
-          "yoy": null,
+          "yoy": 0.0229,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 7092.6,
           "se": 68,
-          "yoy": null,
+          "yoy": 0.0167,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 8871.6,
           "se": 119,
-          "yoy": null,
+          "yoy": 0.0231,
           "estimated": false
         },
         {
@@ -643,21 +643,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3392.9,
           "se": 53,
-          "yoy": null,
+          "yoy": 0.0119,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4402.5,
           "se": 29,
-          "yoy": null,
+          "yoy": 0.0405,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5591.7,
           "se": 33,
-          "yoy": null,
+          "yoy": 0.0358,
           "estimated": false
         },
         {
@@ -678,21 +678,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2468.4,
           "se": 45,
-          "yoy": null,
+          "yoy": 0.0106,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3200.4,
           "se": 31,
-          "yoy": null,
+          "yoy": 0.036,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 4073.5,
           "se": 43,
-          "yoy": null,
+          "yoy": 0.0371,
           "estimated": false
         },
         {
@@ -713,21 +713,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3753.8,
           "se": 82,
-          "yoy": null,
+          "yoy": 0.0046,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4805.9,
           "se": 52,
-          "yoy": null,
+          "yoy": 0.0493,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 6034.3,
           "se": 68,
-          "yoy": null,
+          "yoy": 0.0446,
           "estimated": false
         },
         {
@@ -748,21 +748,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2243.9,
           "se": 63,
-          "yoy": null,
+          "yoy": -0.0075,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 2764.4,
           "se": 40,
-          "yoy": null,
+          "yoy": 0.0365,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 3517.5,
           "se": 55,
-          "yoy": null,
+          "yoy": 0.0378,
           "estimated": false
         },
         {
@@ -783,21 +783,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 2652,
           "se": 57,
-          "yoy": null,
+          "yoy": 0.0541,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 3179.3,
           "se": 32,
-          "yoy": null,
+          "yoy": 0.0218,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 3999.3,
           "se": 36,
-          "yoy": null,
+          "yoy": 0.0316,
           "estimated": false
         },
         {
@@ -818,21 +818,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 4833.5,
           "se": 51,
-          "yoy": null,
+          "yoy": 0.0245,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 5890.3,
           "se": 41,
-          "yoy": null,
+          "yoy": 0.024,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 7206,
           "se": 59,
-          "yoy": null,
+          "yoy": 0.0271,
           "estimated": false
         },
         {
@@ -853,21 +853,21 @@ window.RENT_DATA = {
           "rooms": "1-2",
           "rent": 3759.9,
           "se": 35,
-          "yoy": null,
+          "yoy": 0.0094,
           "estimated": false
         },
         {
           "rooms": "2.5-3",
           "rent": 4466.2,
           "se": 21,
-          "yoy": null,
+          "yoy": 0.0268,
           "estimated": false
         },
         {
           "rooms": "3.5-4",
           "rent": 5453.8,
           "se": 27,
-          "yoy": null,
+          "yoy": 0.0251,
           "estimated": false
         },
         {

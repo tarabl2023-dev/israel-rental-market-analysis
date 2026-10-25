@@ -6,6 +6,10 @@ The project looks at how monthly rent varies by **city**, **district** and **dwe
 
 **Tools:** R, Tidyverse (dplyr, tidyr, readr, stringr, forcats, lubridate), ggplot2, data visualisation
 
+### 🏠 [Try the interactive rent calculator →](https://tarabl2023-dev.github.io/israel-rental-market-analysis/)
+
+Pick a city (or district) and the number of rooms you need. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget to see which level it covers and which cities it stretches to.
+
 ---
 
 ## Key findings
@@ -59,7 +63,10 @@ Each CBS edition only covers seven quarters, so five editions were combined, kee
 
 1. **Clean and reshape** ([`R/01_clean_data.R`](R/01_clean_data.R)): pivot the wide CBS layout (one column per quarter) into tidy long format with `pivot_longer()`, standardise city names, harmonise the 4.5+ size band (CBS renamed and redefined it in 2026), build proper quarter dates, and run sanity checks (no duplicate keys, 12 quarters, positive rents).
 2. **Analyse and visualise** ([`R/02_analysis.R`](R/02_analysis.R)): compare cities and districts in the latest quarter, add 95% confidence intervals from CBS sampling errors, calculate year-on-year and three-year growth, index rents to a common base to compare size bands, and calculate the size premium in each city.
-3. **Outputs:** six charts in [`figures/`](figures/) and summary tables in [`output/`](output/).
+3. **Export for the calculator** ([`R/03_export_app_data.R`](R/03_export_app_data.R)): take the latest-quarter rent for every area and size band, fill the two cells CBS suppresses using district price ratios, and write JSON for the web page in [`docs/`](docs/).
+4. **Outputs:** six charts in [`figures/`](figures/), summary tables in [`output/`](output/) and the [interactive calculator](https://tarabl2023-dev.github.io/israel-rental-market-analysis/).
+
+**How the calculator's levels work:** *comfortable* is the CBS average for that area and size. CBS doesn't publish the spread of rents, so *budget* (about 80% of the average) and *luxury* (about 140%) are rule-of-thumb multipliers. The page says this.
 
 ## Run it yourself
 
@@ -84,7 +91,9 @@ israel-rental-market/
 │   └── processed/      # tidy long-format data
 ├── R/
 │   ├── 01_clean_data.R
-│   └── 02_analysis.R
+│   ├── 02_analysis.R
+│   └── 03_export_app_data.R
+├── docs/               # interactive calculator (GitHub Pages)
 ├── figures/            # charts (PNG)
 ├── output/             # summary tables (CSV)
 └── run_all.R
