@@ -1,95 +1,95 @@
-name,realta_slug,district,cost_region
-Tel Aviv,tel-aviv-yafo,Tel Aviv District,tel_aviv
-Jerusalem,jerusalem,Jerusalem District,jerusalem
-Haifa,haifa,Haifa District,haifa
-Herzliya,herzliya,Tel Aviv District,tel_aviv
-Ra'anana,raanana,Central District,sharon
-Kfar Saba,kfar-saba,Central District,sharon
-Ramat Gan,ramat-gan,Tel Aviv District,ramat_gan
-Holon,holon,Tel Aviv District,holon
-Bat Yam,bat-yam,Tel Aviv District,holon
-Bnei Brak,bnei-brak,Tel Aviv District,ramat_gan
-Petah Tikva,petakh-tikva,Central District,petah_tiqwa
-Rishon LeZion,rishon-le-tsiyon,Central District,rehovot
-Rehovot,rekhovot,Central District,rehovot
-Netanya,netanya,Central District,sharon
-Hadera,hadera,Haifa District,hadera
-Ashdod,ashdod,South District,ashqelon
-Ashkelon,ashkelon,South District,ashqelon
-Be'er Sheva,beer-sheva,South District,beer_sheva
-Beit Shemesh,beit-shemesh,Jerusalem District,jerusalem
-Givatayim,givatayim,Tel Aviv District,ramat_gan
-Ramat HaSharon,ramat-ha-sharon,Tel Aviv District,tel_aviv
-Kiryat Ono,kiryat-ono,Tel Aviv District,ramat_gan
-Or Yehuda,or-yehuda,Tel Aviv District,ramat_gan
-Hod HaSharon,hod-ha-sharon,Central District,sharon
-Rosh HaAyin,rosh-ha-ayin,Central District,petah_tiqwa
-Modi'in,modiin-maccabim-reut,Central District,ramla
-Ness Ziona,nes-tsiyona,Central District,rehovot
-Yavne,yavne,Central District,rehovot
-Lod,lod,Central District,ramla
-Ramla,ramla,Central District,ramla
-Yehud,yehud-monosun,Central District,petah_tiqwa
-Shoham,shoham,Central District,petah_tiqwa
-Gedera,gedera,Central District,rehovot
-Kiryat Ata,kiryat-ata,Haifa District,haifa
-Kiryat Bialik,kiryat-bialik,Haifa District,haifa
-Kiryat Motzkin,kiryat-motskin,Haifa District,haifa
-Kiryat Yam,kiryat-yam,Haifa District,haifa
-Nesher,nesher,Haifa District,haifa
-Tirat Carmel,tirat-carmel,Haifa District,haifa
-Or Akiva,or-akiva,Haifa District,hadera
-Zikhron Ya'akov,zikhron-yaakov,Haifa District,hadera
-Pardes Hanna-Karkur,pardes-khana-karkur,Haifa District,hadera
-Nazareth,nazareth,North District,yizreel
-Nof HaGalil,nof-hagalil,North District,yizreel
-Afula,afula,North District,yizreel
-Tiberias,tiberias,North District,zefat_kinneret_golan
-Karmiel,karmiel,North District,akko
-Nahariya,nahariya,North District,akko
-Akko,acre,North District,akko
-Kiryat Shmona,kiryat-shmona,North District,zefat_kinneret_golan
-Yokneam Illit,yokneam-illit,North District,yizreel
-Eilat,eilat,South District,beer_sheva
-Dimona,dimona,South District,beer_sheva
-Kiryat Gat,kiryat-gat,South District,ashqelon
-Sderot,sderot,South District,ashqelon
-Netivot,netivot,South District,beer_sheva
-Ofakim,ofakim,South District,beer_sheva
-Arad,arad,South District,beer_sheva
-Kiryat Malakhi,kiryat-malakhi,South District,ashqelon
-Mevaseret Zion,mevaseret-tsiyon,Jerusalem District,jerusalem
-Givat Shmuel,givat-shmuel,Central District,petah_tiqwa
-Safed,safed-(tsefat),North District,zefat_kinneret_golan
-Migdal HaEmek,migdal-ha-emek,North District,yizreel
-Ariel,ariel,Judea & Samaria,judea_samaria
-Harish,harish,Haifa District,hadera
-Kfar Yona,kfar-yona,Central District,sharon
-Givat Ze'ev,givat-zeev,Judea & Samaria,judea_samaria
-Be'er Ya'akov,beer-yaakov,Central District,ramla
-Caesarea,caesarea,Haifa District,hadera
-Azor,azor,Tel Aviv District,holon
-Ma'alot-Tarshiha,maalot-tarshikha,North District,akko
-Beit She'an,beit-shean,North District,yizreel
-Kadima-Tzoran,kadima-tsoran,Central District,sharon
-Oranit,oranit,Judea & Samaria,judea_samaria
-Even Yehuda,even-yehuda,Central District,sharon
-Tel Mond,tel-mond,Central District,sharon
-Kiryat Tivon,kiryat-tivon,Haifa District,haifa
-Ma'ale Adumim,maale-adumim,Judea & Samaria,judea_samaria
-Shlomi,shlomi,North District,akko
-Savyon,savyon,Central District,petah_tiqwa
-Beit Dagan,beit-dagan,Central District,rehovot
-Ganei Tikva,ganei-tikva,Central District,petah_tiqwa
-Atlit,atlit,Haifa District,haifa
-Hatzor HaGlilit,khatsor-ha-glilit,North District,zefat_kinneret_golan
-Elad,elad,Central District,petah_tiqwa
-Gan Yavne,gan-yavne,Central District,rehovot
-Omer,omer,South District,beer_sheva
-Abu Ghosh,abu-ghosh,Jerusalem District,jerusalem
-Binyamina,binyamina-givat-ada,Haifa District,hadera
-Yeruham,yerukham,South District,beer_sheva
-Etz Efraim,ets-efrayim,Judea & Samaria,judea_samaria
-Rekhasim,rekhasim,Haifa District,haifa
-Beit Aryeh,beit-arye,Judea & Samaria,judea_samaria
-Rosh Pina,rosh-pina,North District,zefat_kinneret_golan
+name,realta_slug,district,cost_region,onmap_slug,komo_name,homeless_name
+Tel Aviv,tel-aviv-yafo,Tel Aviv District,tel_aviv,tel-aviv-yafo,תל אביב יפו,תל אביב
+Jerusalem,jerusalem,Jerusalem District,jerusalem,jerusalem,ירושלים,ירושלים
+Haifa,haifa,Haifa District,haifa,haifa,חיפה,חיפה
+Herzliya,herzliya,Tel Aviv District,tel_aviv,herzliya,הרצליה,הרצליה
+Ra'anana,raanana,Central District,sharon,raanana,רעננה,רעננה
+Kfar Saba,kfar-saba,Central District,sharon,kfar-saba,כפר סבא,כפר סבא
+Ramat Gan,ramat-gan,Tel Aviv District,ramat_gan,ramat-gan,רמת גן,רמת גן
+Holon,holon,Tel Aviv District,holon,holon,חולון,חולון
+Bat Yam,bat-yam,Tel Aviv District,holon,bat-yam,בת ים,בת ים
+Bnei Brak,bnei-brak,Tel Aviv District,ramat_gan,bnei-brak,בני ברק,בני ברק
+Petah Tikva,petakh-tikva,Central District,petah_tiqwa,petah-tikva,פתח תקווה,פתח תקווה
+Rishon LeZion,rishon-le-tsiyon,Central District,rehovot,rishon-letsiyon,ראשון לציון,ראשון לציון
+Rehovot,rekhovot,Central District,rehovot,rehovot,רחובות,רחובות
+Netanya,netanya,Central District,sharon,netanya,נתניה,נתניה
+Hadera,hadera,Haifa District,hadera,hadera,חדרה,חדרה
+Ashdod,ashdod,South District,ashqelon,ashdod,אשדוד,אשדוד
+Ashkelon,ashkelon,South District,ashqelon,ashkelon,אשקלון,אשקלון
+Be'er Sheva,beer-sheva,South District,beer_sheva,beer-sheva,באר שבע,באר שבע
+Beit Shemesh,beit-shemesh,Jerusalem District,jerusalem,bet-shemesh,בית שמש,בית שמש
+Givatayim,givatayim,Tel Aviv District,ramat_gan,givatayim,גבעתיים,גבעתיים
+Ramat HaSharon,ramat-ha-sharon,Tel Aviv District,tel_aviv,ramat-hasharon,רמת השרון,רמת השרון
+Kiryat Ono,kiryat-ono,Tel Aviv District,ramat_gan,kiryat-ono,קריית אונו,קריית אונו
+Or Yehuda,or-yehuda,Tel Aviv District,ramat_gan,or-yehuda,אור יהודה,אור יהודה
+Hod HaSharon,hod-ha-sharon,Central District,sharon,hod-hasharon,הוד השרון,הוד השרון
+Rosh HaAyin,rosh-ha-ayin,Central District,petah_tiqwa,rosh-haayin,ראש העין,ראש העין
+Modi'in,modiin-maccabim-reut,Central District,ramla,modiin-maccabim-reut,מודיעין מכבים רעות,מודיעין
+Ness Ziona,nes-tsiyona,Central District,rehovot,ness-ziona,נס ציונה,נס ציונה
+Yavne,yavne,Central District,rehovot,yavne,יבנה,יבנה
+Lod,lod,Central District,ramla,lod,לוד,לוד
+Ramla,ramla,Central District,ramla,ramla,רמלה,רמלה
+Yehud,yehud-monosun,Central District,petah_tiqwa,yehud-monosson,יהוד מונוסון,יהוד
+Shoham,shoham,Central District,petah_tiqwa,shoham,שוהם,
+Gedera,gedera,Central District,rehovot,gedera,גדרה,גדרה
+Kiryat Ata,kiryat-ata,Haifa District,haifa,kiryat-ata,קריית אתא,קרית אתא
+Kiryat Bialik,kiryat-bialik,Haifa District,haifa,kiryat-bialik,קריית ביאליק,קרית ביאליק
+Kiryat Motzkin,kiryat-motskin,Haifa District,haifa,kiryat-motzkin,קריית מוצקין,קריית מוצקין
+Kiryat Yam,kiryat-yam,Haifa District,haifa,kiryat-yam,קריית ים,קריית ים
+Nesher,nesher,Haifa District,haifa,nesher,נשר,נשר
+Tirat Carmel,tirat-carmel,Haifa District,haifa,tirat-carmel,טירת כרמל,טירת כרמל
+Or Akiva,or-akiva,Haifa District,hadera,or-akiva,אור עקיבא,אור עקיבא
+Zikhron Ya'akov,zikhron-yaakov,Haifa District,hadera,zichron-yaakov,זכרון יעקב,זכרון יעקב
+Pardes Hanna-Karkur,pardes-khana-karkur,Haifa District,hadera,pardes-hanna-karkur,פרדס חנה כרכור,פרדס חנה כרכור
+Nazareth,nazareth,North District,yizreel,nazareth,נצרת,נצרת
+Nof HaGalil,nof-hagalil,North District,yizreel,nof-hagalil,נוף הגליל,נוף הגליל
+Afula,afula,North District,yizreel,afula,עפולה,עפולה
+Tiberias,tiberias,North District,zefat_kinneret_golan,tiberias,טבריה,טבריה
+Karmiel,karmiel,North District,akko,karmiel,כרמיאל,כרמיאל
+Nahariya,nahariya,North District,akko,nahariyya,נהריה,נהריה
+Akko,acre,North District,akko,acre,עכו,עכו
+Kiryat Shmona,kiryat-shmona,North District,zefat_kinneret_golan,qiryat-shemona,קריית שמונה,קריית שמונה
+Yokneam Illit,yokneam-illit,North District,yizreel,yokneam-illit,יקנעם עילית,
+Eilat,eilat,South District,beer_sheva,eilat,אילת,אילת
+Dimona,dimona,South District,beer_sheva,dimona,דימונה,דימונה
+Kiryat Gat,kiryat-gat,South District,ashqelon,kiryat-gat,קריית גת,קרית גת
+Sderot,sderot,South District,ashqelon,sderot,שדרות,
+Netivot,netivot,South District,beer_sheva,netivot,נתיבות,
+Ofakim,ofakim,South District,beer_sheva,ofakim,אופקים,
+Arad,arad,South District,beer_sheva,arad,ערד,ערד
+Kiryat Malakhi,kiryat-malakhi,South District,ashqelon,,קריית מלאכי,קרית מלאכי
+Mevaseret Zion,mevaseret-tsiyon,Jerusalem District,jerusalem,mevaseret-zion,מבשרת ציון,מבשרת ציון
+Givat Shmuel,givat-shmuel,Central District,petah_tiqwa,givat-shmuel,גבעת שמואל,גבעת שמואל
+Safed,safed-(tsefat),North District,zefat_kinneret_golan,safed,צפת,צפת
+Migdal HaEmek,migdal-ha-emek,North District,yizreel,migdal-haemek,מגדל העמק,מגדל העמק
+Ariel,ariel,Judea & Samaria,judea_samaria,ariel,אריאל,אריאל
+Harish,harish,Haifa District,hadera,harish,חריש,חריש
+Kfar Yona,kfar-yona,Central District,sharon,kfar-yona,כפר יונה,כפר יונה
+Givat Ze'ev,givat-zeev,Judea & Samaria,judea_samaria,givat-zeev,גבעת זאב,גבעת זאב
+Be'er Ya'akov,beer-yaakov,Central District,ramla,beer-yaakov,באר יעקב,באר יעקב
+Caesarea,caesarea,Haifa District,hadera,caesarea,קיסריה,קיסריה
+Azor,azor,Tel Aviv District,holon,azor,אזור,אזור
+Ma'alot-Tarshiha,maalot-tarshikha,North District,akko,maalot-tarshiha,מעלות תרשיחא,
+Beit She'an,beit-shean,North District,yizreel,beit-shean,בית שאן,בית שאן
+Kadima-Tzoran,kadima-tsoran,Central District,sharon,kadima-zoran,קדימה צורן,קדימה צורן
+Oranit,oranit,Judea & Samaria,judea_samaria,oranit,אורנית,אורנית
+Even Yehuda,even-yehuda,Central District,sharon,even-yehuda,אבן יהודה,אבן יהודה
+Tel Mond,tel-mond,Central District,sharon,tel-mond,תל מונד,תל מונד
+Kiryat Tivon,kiryat-tivon,Haifa District,haifa,kiryat-tivon,קריית טבעון,קרית טבעון
+Ma'ale Adumim,maale-adumim,Judea & Samaria,judea_samaria,maale-adumim,מעלה אדומים,מעלה אדומים
+Shlomi,shlomi,North District,akko,shlomi,שלומי,שלומי
+Savyon,savyon,Central District,petah_tiqwa,savyon,סביון,
+Beit Dagan,beit-dagan,Central District,rehovot,beit-dagan,בית דגן,
+Ganei Tikva,ganei-tikva,Central District,petah_tiqwa,ganei-tikva,גני תקווה,גני תקווה
+Atlit,atlit,Haifa District,haifa,atlit,עתלית,עתלית
+Hatzor HaGlilit,khatsor-ha-glilit,North District,zefat_kinneret_golan,hatzor-haglilit,חצור הגלילית,
+Elad,elad,Central District,petah_tiqwa,elad,אלעד,
+Gan Yavne,gan-yavne,Central District,rehovot,gan-yavne,גן יבנה,
+Omer,omer,South District,beer_sheva,omer,עומר,עומר
+Abu Ghosh,abu-ghosh,Jerusalem District,jerusalem,abu-ghosh,אבו גוש,אבו גוש
+Binyamina,binyamina-givat-ada,Haifa District,hadera,binyamina-givat-ada,בנימינה גבעת עדה,בנימינה
+Yeruham,yerukham,South District,beer_sheva,yeruham,ירוחם,ירוחם
+Etz Efraim,ets-efrayim,Judea & Samaria,judea_samaria,,עץ אפרים,עץ אפרים
+Rekhasim,rekhasim,Haifa District,haifa,rekhasim,רכסים,
+Beit Aryeh,beit-arye,Judea & Samaria,judea_samaria,beit-arye,בית אריה,
+Rosh Pina,rosh-pina,North District,zefat_kinneret_golan,rosh-pina,ראש פינה,

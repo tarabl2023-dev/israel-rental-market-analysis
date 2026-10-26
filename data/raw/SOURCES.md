@@ -57,3 +57,11 @@ byte for byte (SHA-256) against the browser copy.
 
 Notes: asking rents are what landlords ask, not signed contracts. Neighbourhood averages mix all flat sizes. Room cells
 with fewer than 3 listings are treated as missing by `R/05_export_market_data.R`.
+
+# Opening a neighbourhood on the listing sites
+
+- **`yad2_neighbourhoods.csv`**: Yad2 neighbourhood codes for 104 of our neighbourhoods (Tel Aviv, Ramat Gan, Givatayim, plus Herzliya Pituach = 170). The codes come from the open-source project https://github.com/OmerS16/apartments (`neighborhoods_database.pkl`, read with a pickle disassembler so nothing in it ran) and were matched to Realta's neighbourhoods by Hebrew name, with the Old North / New North splits and a few others set by hand. Yad2 blocks automated browsers, so the codes couldn't be checked on the site itself.
+- **`onmap_pages_2026-10-26.csv`**: every town and neighbourhood page in OnMap's sitemap (`sitemap-search-*.xml`), with the Hebrew heading of each page, read on 26 Oct 2026 (OnMap's robots.txt allows these pages). SHA-256 of the transcribed list: `4abd8d5c250950e29715348afe91b95b929f3a6bd5544f3b5f8d4004b3305e23`.
+- **`onmap_neighbourhoods.csv`**: 396 Realta neighbourhoods matched to an OnMap neighbourhood page by Hebrew name. OnMap pages take the same `rooms_` and `price_` filters (checked on Rehavia).
+- **`places.csv`** columns `onmap_slug`, `komo_name`, `homeless_name`: each town's OnMap page and its spelling on Komo and Homeless, each checked by opening the town's page on the site (Komo falls back to a generic page for names it doesn't know; Homeless names left empty had no listings on 26 Oct 2026).
+- Komo's neighbourhood filter needs Komo's own internal IDs, which come only from its `/api/` (disallowed in its robots.txt), and Madlan and Homeless don't take a neighbourhood in a link, so those three open the town.

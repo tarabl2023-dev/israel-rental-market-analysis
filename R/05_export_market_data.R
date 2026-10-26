@@ -11,8 +11,11 @@
 # Inputs : data/raw/realta_city_rooms_2026-10-26.csv          (60 towns, by English name)
 #          data/raw/realta_town_rooms_2026-10-26.csv          (34 smaller towns, by Realta slug)
 #          data/raw/realta_neighbourhood_rents_2026-10-26.csv (mean asking rent per neighbourhood)
-#          data/raw/places.csv                                (district and CBS cost sub-district per town)
+#          data/raw/places.csv                                (district, CBS cost sub-district, and the town's
+#                                                              page or spelling on OnMap, Komo and Homeless)
 #          data/raw/beach_neighbourhoods.csv                  (seaside neighbourhoods, local knowledge)
+#          data/raw/yad2_neighbourhoods.csv                   (Yad2 neighbourhood codes, where known)
+#          data/raw/onmap_neighbourhoods.csv                  (OnMap neighbourhood pages)
 # Output : docs/market-data.js  (loaded by docs/index.html)
 
 library(tidyverse)
@@ -37,6 +40,13 @@ hoods <- read_csv("data/raw/realta_neighbourhood_rents_2026-10-26.csv", show_col
   left_join(select(towns, city_slug = realta_slug, city = name, city_mean = mean), by = "city_slug") |>
   left_join(read_csv("data/raw/beach_neighbourhoods.csv", show_col_types = FALSE,
                      col_types = cols(.default = "c")) |> mutate(beach = TRUE),
+            by = c("city_slug", "slug")) |>
+  # the same neighbourhood on the listing sites, so their links can open it
+  left_join(read_csv("data/raw/yad2_neighbourhoods.csv", show_col_types = FALSE, col_types = cols(.default = "c")) |>
+              select(city_slug, slug, yad2_hood),
+            by = c("city_slug", "slug")) |>
+  left_join(read_csv("data/raw/onmap_neighbourhoods.csv", show_col_types = FALSE, col_types = cols(.default = "c")) |>
+              select(city_slug, slug, onmap_path),
             by = c("city_slug", "slug")) |>
   mutate(
     beach = coalesce(beach, FALSE),
@@ -65,6 +75,9 @@ payload <- list(
       slug = t$realta_slug,
       he = t$name_he,
       district = t$district,
+      onmap = t$onmap_slug,
+      komo = t$komo_name,
+      homeless = t$homeless_name,
       region = t$cost_region,
       listings = t$listings,
       median = t$median,
@@ -78,7 +91,7 @@ payload <- list(
       filter(city == c) |>
       arrange(en) |>
       transmute(s = slug, he = name_he, en, avg = mean_rent, n = listings, f = round(factor, 3),
-                beach, yad2 = yad2_hood)
+                beach, yad2 = yad2_hood, om = onmap_path)
   })
 )
 
@@ -90,5 +103,5 @@ writeLines(
   useBytes = TRUE
 )
 
-message(sprintf("Market data: %d towns, %d neighbourhoods (%d by the beach), snapshot %s",
-                nrow(towns), nrow(hoods), sum(hoods$beach), snapshot_date))
+message(sprintf("Market data: %d towns, %d neighbourhoods (%d by the beach, %d with a Yad2 code, %d with an OnMap page), snapshot %s",
+                nrow(towns), nrow(hoods), sum(hoods$beach), sum(!is.na(hoods$yad2_hood)), sum(!is.na(hoods$onmap_path)), snapshot_date))

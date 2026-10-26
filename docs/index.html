@@ -799,7 +799,7 @@
             <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/yad2_locations.csv" target="_blank" rel="noopener noreferrer">Codes used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/beach_neighbourhoods.csv" target="_blank" rel="noopener noreferrer">Beach neighbourhoods</a></span></li>
           <li><span class="used">Links to the listing sites</span>
             <strong>How each site's link was checked</strong>
-            Realta (which combines listings from all these sites): city pages checked for every town listed, plus its near-the-sea, no-agent and furnished pages for the coastal cities; rooms and price fill in from the link. Neighbourhood pages take the same rooms and price filters (checked: Rehavia, 4 rooms, 7 of its 25 listings). Komo: city, rooms, price and feature filters use the field names of Komo's own search form, and were checked to narrow the results (e.g. Tel Aviv 410 ads → 95 with 4 rooms → 40 under ₪8,000). OnMap: city pages, rooms and price were opened and checked for all cities listed. Homeless: city pages were checked for all 19 cities. Yad2: region, area and city codes from the list above; the rooms, price and feature filter names come from open-source Yad2 projects and couldn't be opened here because Yad2 blocks automated browsers. Madlan: city pages (Herzliya checked). Facebook: a Google search for the city's Facebook rental groups, which works without logging in.
+            Realta (which combines listings from all these sites): city pages checked for every town listed, plus its near-the-sea, no-agent and furnished pages for the coastal cities; rooms and price fill in from the link. Neighbourhood pages take the same rooms and price filters (checked: Rehavia, 4 rooms, 7 of its 25 listings). Neighbourhoods: Realta opens every neighbourhood on this page with your rooms and budget; OnMap opens its own neighbourhood pages (396 of ours, matched by Hebrew name from OnMap's sitemap, e.g. Rehavia); Yad2 opens 104 neighbourhoods in Tel Aviv, Ramat Gan, Givatayim and Herzliya Pituach whose codes come from an open-source Yad2 dataset; the Facebook search adds the neighbourhood name. Komo and Homeless town names were checked one by one on each site. Komo: city, rooms, price and feature filters use the field names of Komo's own search form, and were checked to narrow the results (e.g. Tel Aviv 410 ads → 95 with 4 rooms → 40 under ₪8,000). OnMap: city pages, rooms and price were opened and checked for all cities listed. Homeless: city pages were checked for all 19 cities. Yad2: region, area and city codes from the list above; the rooms, price and feature filter names come from open-source Yad2 projects and couldn't be opened here because Yad2 blocks automated browsers. Madlan: city pages (Herzliya checked). Facebook: a Google search for the city's Facebook rental groups, which works without logging in.
             </li>
           <li><span class="used">Public transport monthly pass</span>
             <strong>Rav-Kav Online: monthly contracts</strong>
@@ -860,12 +860,12 @@
 
 <script src="rent-data.js?v=2026q2-6"></script>
 <script src="living-data.js?v=4"></script>
-<script src="market-data.js?v=1"></script>
+<script src="market-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=4"></script>
-<script src="i18n-ru.js?v=5"></script>
-<script src="i18n-ar.js?v=4"></script>
+<script src="i18n-he.js?v=6"></script>
+<script src="i18n-ru.js?v=7"></script>
+<script src="i18n-ar.js?v=6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1557,14 +1557,6 @@
   // Direct links. Yad2 takes the CBS locality code and Madlan "<hebrew-name>-ישראל"; both open the
   // city's rental listings, and rooms and price are then set on the site.
   const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
-  // City pages on the other sites (all opened and checked by hand)
-  const ONMAP = { "Tel Aviv": "tel-aviv-yafo", "Jerusalem": "jerusalem", "Haifa": "haifa", "Herzliya": "herzliya", "Ra'anana": "raanana",
-    "Kfar Saba": "kfar-saba", "Ramat Gan": "ramat-gan", "Holon": "holon", "Bat Yam": "bat-yam", "Bnei Brak": "bnei-brak",
-    "Petah Tikva": "petah-tikva", "Rishon LeZion": "rishon-letsiyon", "Rehovot": "rehovot", "Netanya": "netanya", "Hadera": "hadera",
-    "Ashdod": "ashdod", "Ashkelon": "ashkelon", "Be'er Sheva": "beer-sheva", "Beit Shemesh": "bet-shemesh", "Givatayim": "givatayim",
-    "Ness Ziona": "ness-ziona", "Modi'in": "modiin-maccabim-reut", "Kiryat Bialik": "kiryat-bialik", "Kiryat Ata": "kiryat-ata",
-    "Kiryat Motzkin": "kiryat-motzkin", "Kiryat Yam": "kiryat-yam", "Lod": "lod", "Ramla": "ramla", "Nesher": "nesher",
-    "Yavne": "yavne", "Kiryat Shmona": "qiryat-shemona" };
   // Only cap the price when the person gave a budget, so the links don't come back empty
   // Realta collects listings from Yad2, Madlan, OnMap, Homeless, Komo and Facebook (city pages checked by hand)
   const REALTA_SEA = ["Tel Aviv", "Herzliya", "Netanya", "Haifa", "Ashkelon", "Ashdod", "Bat Yam", "Hadera"];
@@ -1592,20 +1584,24 @@
       yad2 += "?" + q.join("&");
     }
     // Komo: its search form's own field names
+    // Komo and Homeless: the town name exactly as each site spells it (checked town by town)
+    const mt = city && MK.towns[city.name];
     let komo = "https://www.komo.co.il/code/rent/";
-    if (city) {
-      const q = ["nehes=1", "cityName=" + encodeURIComponent(city.hebrew).replace(/%20/g, "+")];
+    if (mt && mt.komo) {
+      const q = ["nehes=1", "cityName=" + encodeURIComponent(mt.komo).replace(/%20/g, "+")];
       if (useRooms) { q.push("fromRooms=" + rMin); if (r < MAX_ROOMS) q.push("toRooms=" + rMax); }
       if (maxP) q.push("toPrice=" + maxP);
       [...new Set(feats.map((f) => f.komo).filter(Boolean))].forEach((k) => q.push(k + "=1"));
       komo = "https://www.komo.co.il/code/nadlan/apartments-for-rent.asp?" + q.join("&");
     }
-    const om = city && ONMAP[city.name];
-    // OnMap takes whole-room ranges ("rooms_3-5" = 3, 4 or 5 rooms)
+    // OnMap: its town page, or the neighbourhood's own page where OnMap has one (from its sitemap);
+    // it takes whole-room ranges ("rooms_3-5" = 3, 4 or 5 rooms)
+    const omHood = hood && !hood.members && hood.om;
+    const om = omHood || (city && MK.towns[city.name] && MK.towns[city.name].onmap);
     const omRooms = useRooms ? "/rooms_" + Math.floor(rMin) + "-" + Math.min(6, Math.ceil(rMax)) : "";
     const onmap = om ? "https://www.onmap.co.il/search/homes/rent/" + om + omRooms +
       (maxP ? "/price_0-" + maxP : "") + (feats.some((f) => f.onmap) ? "/types_penthouse" : "") : "https://www.onmap.co.il/search/homes/rent";
-    const homeless = city ? "https://www.homeless.co.il/rent/city=" + encodeURIComponent(SEARCH_NAME[city.name] || city.hebrew) : "https://www.homeless.co.il/rent/";
+    const homeless = mt && mt.homeless ? "https://www.homeless.co.il/rent/city=" + encodeURIComponent(mt.homeless) : "https://www.homeless.co.il/rent/";
     // Realta: a neighbourhood's own page, or its themed pages (near the sea / no agent / furnished)
     // when they match, otherwise a filtered city search; rooms and price go in the query either way
     const placeName = city ? city.name : "";
@@ -1625,10 +1621,12 @@
       }
     }
     const cityHe = city ? (SEARCH_NAME[city.name] || city.hebrew) : "";
-    const fbPlace = cityHe;
-    const fbQuery = 'site:facebook.com/groups "דירות להשכרה" ' + (fbPlace ? '"' + fbPlace + '"' : "");
+    const fbHood = hood && !hood.members ? hood.he : "";
+    const fbQuery = 'site:facebook.com/groups "דירות להשכרה" ' + (cityHe ? '"' + cityHe + '"' : "") + (fbHood ? ' "' + fbHood + '"' : "");
+    // which links open the chosen neighbourhood itself
+    const hoodOn = hood ? { realta: realtaPage === "hood" || realtaPage === "near-the-sea", yad2: !!(y && hood.yad2), onmap: !!omHood, facebook: !!fbHood } : {};
     return {
-      city, hood, yad2, komo, onmap, homeless, maxP, realta, realtaPage,
+      city, hood, hoodOn, yad2, komo, onmap, homeless, maxP, realta, realtaPage,
       janglo: "https://www.janglo.net/real-estate-rentals/apartments",
       madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
       facebook: "https://www.google.com/search?q=" + encodeURIComponent(fbQuery.trim())
@@ -1648,9 +1646,13 @@
     const L = siteLinks(area);
     const place = L.city ? L.city.name : null;
     $("go-title").textContent = place ? T("Go straight to the listings in {place}", { place: P(place) }) : T("Go straight to the listings");
-    $("go-row").innerHTML = [["Realta · all sites in one", L.realta, "#1c1433"], ["Yad2", L.yad2, "#6c3cf0"], ["Komo", L.komo, "#0fb5a6"], ["OnMap", L.onmap, "#e0338a"], ["Madlan", L.madlan, "#ff3d8b"],
-      ["Homeless", L.homeless, "#9b5cff"], ["Facebook groups", L.facebook, "#0a9d90"]]
-      .map(([n, url, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + T(n) + " " + EXT + "</a>").join("");
+    // 📍 marks the buttons that open the chosen neighbourhood, not just the town
+    const BTNS = [["Realta · all sites in one", "realta", "#1c1433"], ["Yad2", "yad2", "#6c3cf0"], ["Komo", "komo", "#0fb5a6"], ["OnMap", "onmap", "#e0338a"], ["Madlan", "madlan", "#ff3d8b"],
+      ["Homeless", "homeless", "#9b5cff"], ["Facebook groups", "facebook", "#0a9d90"]];
+    $("go-row").innerHTML = BTNS.map(([n, k, c]) => '<a class="go-btn" style="background:' + c + '" href="' + esc(L[k]) + '" target="_blank" rel="noopener noreferrer"' +
+      (L.hoodOn[k] ? ' title="' + esc(T("Opens {hood}", { hood: hoodName(L.hood) })) + '">📍 ' : ">") + T(n) + " " + EXT + "</a>").join("");
+    const hoodSites = BTNS.filter(([, k]) => L.hoodOn[k]).map(([n]) => T(n.split(" · ")[0]));
+    const cityOnly = BTNS.filter(([, k]) => !L.hoodOn[k]).map(([n]) => T(n.split(" · ")[0]));
     document.querySelectorAll("[data-linkmode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.linkmode === state.linkMode)));
     const fl = state.linkMode === "all" ? state.features.filter((w) => FEATURES[w]) : [];
     const roomsTxt = state.rooms >= MAX_ROOMS ? T("6+ rooms") : T("{a}-{b} rooms", { a: Math.max(1, state.rooms - 0.5), b: state.rooms + 0.5 });
@@ -1661,12 +1663,13 @@
       (state.linkMode === "city" ? "" : "<br>" +
         (L.realtaPage === "hood" ? T("Realta opens {hood} with your rooms and budget; ", { hood: hoodName(L.hood) })
           : L.realtaPage ? T("Realta opens its \u201c{page}\u201d page for your city; ", { page: T({ "near-the-sea": "near the sea", "from-owners": "no agent", furnished: "furnished" }[L.realtaPage]) }) : T("Realta gets rooms and budget; ")) +
-        T(L.hood && L.hood.yad2 ? "Yad2 and Komo get all of these (and the neighbourhood); OnMap gets rooms and price; Homeless and Madlan open your city." : "Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.")) +
+        T("Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.")) +
       "<br>" + T("<b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try {next}.", { next: nextMode });
     const where = L.hood ? hoodName(L.hood) + ", " + P(L.city.name) : L.city ? P(L.city.name) : null;
     $("go-note").textContent = L.city
-      ? (L.hood && L.hood.yad2 ? T("Each button opens {city}'s rental listings in a new tab (Yad2 opens {hood} directly).", { city: P(L.city.name), hood: hoodName(L.hood) })
-        : L.hood ? T("Each button opens {city}'s rental listings in a new tab. Add the neighbourhood {names} in the site's location box.", { city: P(L.city.name), names: L.hood.members ? T("names") : "\u201c" + L.hood.he + "\u201d" })
+      ? (L.hood ? (hoodSites.length ? T("📍 Opens {hood} directly: {sites}.", { sites: hoodSites.join(", "), hood: hoodName(L.hood) }) + " " : "") +
+          T("Opens {city} only (add {names} in the site's location box): {sites}.",
+            { sites: cityOnly.join(", "), city: P(L.city.name), names: L.hood.members ? T("the beach-side neighbourhoods") : "\u201c" + L.hood.he + "\u201d" })
         : T("Each button opens {city}'s rental listings in a new tab.", { city: P(L.city.name) }))
       : T("Opens the site's rental search in a new tab. Pick {town} there, then use the filters below.", { town: T("your town") });
     if (where) $("go-title").textContent = T("Go straight to the listings in {place}", { place: where });
