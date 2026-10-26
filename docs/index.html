@@ -111,6 +111,7 @@
   .combo-list li b { font-weight: 700; }
   .combo-list li span { font-size: 12px; color: var(--ink-3); text-align: end; }
   .combo-list li.empty { cursor: default; color: var(--ink-3); background: none; }
+  .combo-list li.grp { cursor: default; background: none; padding: 10px 10px 4px; font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
   .f-transport select, .f-hood select { border: 0; background: transparent; font-weight: 700; font-size: 15px; padding: 0; cursor: pointer; max-width: 230px; }
   .f-hood select:focus { outline: none; }
   .f-hood[hidden] { display: none; }
@@ -613,13 +614,19 @@
               <div class="seg" role="group" aria-labelledby="shabbat-label">
                 <button type="button" data-shabbat="0" data-i18n>Not included</button><button type="button" data-shabbat="1" data-i18n>I keep Shabbat</button>
               </div></div>
-            <div class="cc" id="cc-guests"><span id="guests-label" data-i18n>Guests each Shabbat</span>
-              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests" data-i18n-aria>&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests" data-i18n-aria>+</button></div>
-              <span class="nudge" id="guests-nudge"></span></div>
-            <div class="cc" id="cc-meals"><span id="meals-label" data-i18n>Meals you host</span>
+            <div class="cc" id="cc-meals"><span id="meals-label" data-i18n>Your own Shabbat meals</span>
               <div class="seg" role="group" aria-labelledby="meals-label">
                 <button type="button" data-meals="1" data-i18n>Friday night</button><button type="button" data-meals="2" data-i18n>Friday + lunch</button>
               </div></div>
+            <div class="cc" id="cc-host"><span id="hostWeeks-label" data-i18n>Shabbatot you host a month</span>
+              <div class="stepper" role="group" aria-labelledby="hostWeeks-label"><button type="button" id="hostWeeks-down" aria-label="Fewer Shabbatot" data-i18n-aria>&minus;</button><output id="hostWeeks-value">2</output><button type="button" id="hostWeeks-up" aria-label="More Shabbatot" data-i18n-aria>+</button></div></div>
+            <div class="cc" id="cc-dinners"><span id="hostDinners-label" data-i18n>Friday dinners with guests</span>
+              <div class="stepper" role="group" aria-labelledby="hostDinners-label"><button type="button" id="hostDinners-down" aria-label="Fewer dinners" data-i18n-aria>&minus;</button><output id="hostDinners-value">2</output><button type="button" id="hostDinners-up" aria-label="More dinners" data-i18n-aria>+</button></div></div>
+            <div class="cc" id="cc-lunches"><span id="hostLunches-label" data-i18n>Shabbat lunches with guests</span>
+              <div class="stepper" role="group" aria-labelledby="hostLunches-label"><button type="button" id="hostLunches-down" aria-label="Fewer lunches" data-i18n-aria>&minus;</button><output id="hostLunches-value">1</output><button type="button" id="hostLunches-up" aria-label="More lunches" data-i18n-aria>+</button></div></div>
+            <div class="cc" id="cc-guests"><span id="guests-label" data-i18n>Guests at each hosted meal</span>
+              <div class="stepper" role="group" aria-labelledby="guests-label"><button type="button" id="guests-down" aria-label="Fewer guests" data-i18n-aria>&minus;</button><output id="guests-value">0</output><button type="button" id="guests-up" aria-label="More guests" data-i18n-aria>+</button></div>
+              <span class="nudge" id="guests-nudge"></span></div>
           </div>
           <div class="extras">
             <button type="button" class="extras-toggle" id="extras-toggle" aria-expanded="false" aria-controls="extras-body">
@@ -718,18 +725,18 @@
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <div class="panel-body method-body" data-i18n-html="@method">
-          <p><strong>Comfortable</strong> is the official average monthly rent from the Israel Central Bureau of Statistics (CBS) for that area and size, for <span id="m-quarter"></span>. It covers new and renewed contracts.</p>
-          <p>CBS publishes averages only, not the spread of prices. <strong>Budget</strong> and <strong>luxury</strong> are rules of thumb applied to the CBS average:</p>
+          <p><strong>Comfortable</strong> is today's median asking rent for that town and size: the middle price of the flats for rent right now on Yad2, Madlan, OnMap, Homeless, Komo and Facebook, as collected by Realta (snapshot of <span id="m-date"></span>). Half sizes such as 3.5 rooms sit between the whole sizes either side. Where a town has fewer than 3 listings of a size, that size is estimated from its nearest size and from how rent rises with rooms across Israel.</p>
+          <p><strong>Why not the official CBS figure?</strong> CBS (Table 4.9) averages every lease signed in a quarter, including renewals of contracts that started years ago at lower rents. So it runs well below what you pay when you move in. For a 4-room flat in Jerusalem, CBS gives about ₪6,200 for <span id="m-quarter"></span>, while the median listing today is about ₪9,100. Each price on the page shows the CBS average next to it as the official reference. Districts and Israel as a whole have no listing medians, so they use the CBS average brought up to asking rents with their big cities' market-to-CBS ratio.</p>
+          <p>Listing sites don't publish the spread of prices either. <strong>Budget</strong> and <strong>luxury</strong> are rules of thumb around the median:</p>
           <ul>
-            <li>Budget: about 80% of the average (range 70-90%)</li>
-            <li>Comfortable: the average (range 90-115%)</li>
-            <li>Luxury: about 140% of the average (range 125-170%)</li>
+            <li>Budget: about 80% of the median (range 70-90%)</li>
+            <li>Comfortable: the median (range 90-115%)</li>
+            <li>Luxury: about 140% of the median (range 125-170%)</li>
           </ul>
-          <p>Rents vary a lot within a city, so check real listings in the neighbourhoods you like. Size bands follow CBS: 1-2, 2.5-3, 3.5-4 and 4.5+ rooms. The 4.5+ band runs from 4.5 rooms to large penthouses, so treat it as a rough guide. CBS hides 1-2 room figures for Kfar Saba and Beit Shemesh (too few contracts). Those are estimated from the city's 2.5-3 room rent and its district's price ratio.</p>
-          <p><strong>Ra'anana</strong> has fewer than 100,000 residents, so CBS doesn't publish its rents. Its figures use neighbouring Kfar Saba, the closest comparable city. Real Ra'anana rents may differ.</p>
+          <p><strong>Neighbourhoods.</strong> You can pick any neighbourhood with listings on Realta (about 1,000 across 94 towns). Each one's average asking rent is compared with its town's, and that ratio moves every price on the page. A neighbourhood with only a few ads is pulled towards the town average, so one unusual listing can't swing it. Neighbourhood averages mix all flat sizes, so an area full of small (or very large) flats can read a little low (or high). Which neighbourhoods count as "by the beach" is my local guide.</p>
           <p><strong>Public transport.</strong> Station counts are train stations, light-rail stops and Haifa's Carmelit underground stations inside each city's boundary, from OpenStreetMap. Stations named after a city but just over its border (such as Kfar Saba–Nordau) count for that city. There's no official Israeli data on how rents change near stations. Studies of <em>sale</em> prices find homes near Tel Aviv's light rail rose faster (<a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Globes</a>), so the transport choice applies a rule of thumb: about +5% rent within walking distance of a station, and about −5% further out if you drive.</p>
-          <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Cities use their own sub-district (Herzliya uses Tel Aviv's, Ra'anana and Kfar Saba use Sharon's), and other towns use their district. Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
-          <p><strong>Shabbat.</strong> Each festive meal is costed at about three times an ordinary meal of groceries (an ordinary person-meal is about ₪12, from CBS national grocery spending ÷ 90 meals a month). Your household already buys its ordinary food, so the extra is about ₪25 per family member per festive meal, and each guest adds about ₪37. Both are multiplied by the meals you host (Friday night, or Friday night and lunch) over about 4.3 Shabbatot a month. For context, the CBS survey (Table 13) shows households that keep Shabbat spend only about ₪27 more per person a month on Shabbat foods <em>on average</em>, partly because they eat out much less. That's an average over all households, so this page uses the per-meal estimate instead.</p>
+          <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Every town uses its own sub-district (Herzliya uses Tel Aviv's, Ra'anana Sharon's, Givat Shmuel Petah Tikva's, and so on). Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
+          <p><strong>Shabbat.</strong> Each festive meal is costed at about three times an ordinary meal of groceries (an ordinary person-meal is about ₪12, from CBS national grocery spending ÷ 90 meals a month). Your household already buys its ordinary food, so the extra is about ₪25 per family member per festive meal, every week: Friday night, or Friday night and lunch, over about 4.3 Shabbatot a month. Each guest adds about ₪37 per meal at the meals you host. You choose how many Shabbatot a month you host, and how many Friday dinners and Shabbat lunches have guests. For context, the CBS survey (Table 13) shows households that keep Shabbat spend only about ₪27 more per person a month on Shabbat foods <em>on average</em>, partly because they eat out much less. That's an average over all households, so this page uses the per-meal estimate instead.</p>
           <p>Rent figures exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities, which the cost breakdown adds separately.</p>
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
@@ -739,7 +746,11 @@
         <h2 id="sources-title"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></span><span data-i18n>Sources &amp; data</span></h2>
         <p data-i18n>Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.</p>
         <ul class="src-list" data-i18n-html="@sources">
-          <li><span class="used">Rent by city and rooms</span>
+          <li><span class="used">Rent today, by town, rooms and neighbourhood</span>
+            <strong>Realta: rent prices by city and neighbourhood (snapshot 26 Oct 2026)</strong>
+            Median asking rent of live listings by number of rooms for 94 towns, and average asking rent for about 1,000 neighbourhoods. Realta collects listings from Yad2, Madlan, OnMap, Homeless, Komo and Facebook. Towns with fewer than 20 listings are left out.
+            <span class="links"><a href="https://realta.co.il/he/jerusalem/rent-prices/" target="_blank" rel="noopener noreferrer">Example: Jerusalem</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/realta_city_rooms_2026-10-26.csv" target="_blank" rel="noopener noreferrer">Cities file</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/realta_town_rooms_2026-10-26.csv" target="_blank" rel="noopener noreferrer">Smaller towns file</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/realta_neighbourhood_rents_2026-10-26.csv" target="_blank" rel="noopener noreferrer">Neighbourhoods file</a></span></li>
+          <li><span class="used">Official rent reference</span>
             <strong>Israel Central Bureau of Statistics (CBS): Average Monthly Prices of Rent, Table 4.9</strong>
             Official average rent of new and renewed contracts, by district, big city and number of rooms, Q3 2023 to Q2 2026 (Price Statistics Monthly, Jun 2025 to Sep 2026 editions).
             <span class="links"><a href="https://www.cbs.gov.il/en/subjects/Pages/Average-Monthly-Prices-of-Rent.aspx" target="_blank" rel="noopener noreferrer">CBS topic page</a><a href="https://www.cbs.gov.il/he/publications/Madad/DocLib/2026/price09a/a4_9_e.xlsx" target="_blank" rel="noopener noreferrer">Original table (Sep 2026, Excel)</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/cbs_rent_table_4_9.csv" target="_blank" rel="noopener noreferrer">Data file used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/SOURCES.md" target="_blank" rel="noopener noreferrer">All editions used</a></span></li>
@@ -762,10 +773,10 @@
           <li><span class="used">Yad2 search links</span>
             <strong>Yad2 region, area and city codes</strong>
             Yad2 needs its own region and area codes as well as the city code, otherwise it opens a default region. City codes match CBS locality codes. The list comes from the open-source <a href="https://github.com/ron-levi/yad2-analyzer" target="_blank" rel="noopener noreferrer">yad2-analyzer</a> project (Dec 2025).
-            <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/yad2_locations.csv" target="_blank" rel="noopener noreferrer">Codes used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/neighbourhoods.csv" target="_blank" rel="noopener noreferrer">Neighbourhood list</a></span></li>
+            <span class="links"><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/yad2_locations.csv" target="_blank" rel="noopener noreferrer">Codes used</a><a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis/blob/main/data/raw/beach_neighbourhoods.csv" target="_blank" rel="noopener noreferrer">Beach neighbourhoods</a></span></li>
           <li><span class="used">Links to the listing sites</span>
             <strong>How each site's link was checked</strong>
-            Realta (which combines listings from all these sites): city pages checked for every city and town listed except Safed, plus its near-the-sea, no-agent and furnished pages for the coastal cities; rooms and price fill in from the link. Komo: city, rooms, price and feature filters use the field names of Komo's own search form, and were checked to narrow the results (e.g. Tel Aviv 410 ads → 95 with 4 rooms → 40 under ₪8,000). OnMap: city pages, rooms and price were opened and checked for all cities listed. Homeless: city pages were checked for all 19 cities. Yad2: region, area and city codes from the list above; the rooms, price and feature filter names come from open-source Yad2 projects and couldn't be opened here because Yad2 blocks automated browsers. Madlan: city pages (Herzliya checked). Facebook: a Google search for the city's Facebook rental groups, which works without logging in.
+            Realta (which combines listings from all these sites): city pages checked for every town listed, plus its near-the-sea, no-agent and furnished pages for the coastal cities; rooms and price fill in from the link. Neighbourhood pages take the same rooms and price filters (checked: Rehavia, 4 rooms, 7 of its 25 listings). Komo: city, rooms, price and feature filters use the field names of Komo's own search form, and were checked to narrow the results (e.g. Tel Aviv 410 ads → 95 with 4 rooms → 40 under ₪8,000). OnMap: city pages, rooms and price were opened and checked for all cities listed. Homeless: city pages were checked for all 19 cities. Yad2: region, area and city codes from the list above; the rooms, price and feature filter names come from open-source Yad2 projects and couldn't be opened here because Yad2 blocks automated browsers. Madlan: city pages (Herzliya checked). Facebook: a Google search for the city's Facebook rental groups, which works without logging in.
             </li>
           <li><span class="used">Public transport monthly pass</span>
             <strong>Rav-Kav Online: monthly contracts</strong>
@@ -787,20 +798,20 @@
         <div class="assume" data-i18n-html="@assume">
           <strong>My assumptions (not from official data)</strong>, so you know what is an estimate:
           <ul>
-            <li>Budget and luxury rent: about 80% and 140% of the CBS average (CBS only publishes averages).</li>
+            <li>Budget and luxury rent: about 80% and 140% of the median asking rent (the sites don't publish the spread of prices).</li>
+            <li>Room sizes with fewer than 3 listings in a town are estimated from its nearest size. Districts use the CBS average scaled up by their big cities' market-to-CBS ratio.</li>
             <li>Transport choice: about +5% rent near a station, −5% further out if you drive.</li>
             <li>Lifestyle: eating out, leisure and clothing ×0.75 (budget) or ×1.5 (luxury).</li>
             <li>Education with children: twice the survey average, which includes households without children.</li>
-            <li>Ra'anana uses Kfar Saba's rents, and smaller towns use their district's, because CBS doesn't publish them.</li>
-            <li>Areas in a city: which neighbourhoods are beach-side, pricier or cheaper is a local guide, not official data. Choosing one adjusts rent by about +15% (pricier, or by the beach), 0% (around average) or −10% (cheaper).</li>
-            <li>Shabbat: a festive meal costs about three times an ordinary meal (≈₪37 per person). Family members add ≈₪25 per meal on top of their normal food, and guests add ≈₪37, over about 4.3 Shabbatot a month.</li>
+            <li>Neighbourhoods: prices move with each neighbourhood's average asking rent compared with its town's, pulled towards the town average when it has few ads. Which neighbourhoods are by the beach is my local guide.</li>
+            <li>Shabbat: a festive meal costs about three times an ordinary meal (≈₪37 per person). Family members add ≈₪25 per meal on top of their normal food every week, and each guest adds ≈₪37 at the dinners and lunches you host.</li>
             <li>Extras & treats (nails, massages, a premium gym and so on): rough typical Israeli prices that you can change. They're added on top of the survey averages, which already include some spending on leisure and personal care.</li>
           </ul>
         </div>
       </section>
 
       <footer data-i18n-html="@footer">
-        Data: Israel Central Bureau of Statistics (Price Statistics Monthly Table 4.9; Household Expenditure Survey 2021). Map and stations © OpenStreetMap contributors.
+        Data: Realta listings (26 Oct 2026); Israel Central Bureau of Statistics (Price Statistics Monthly Table 4.9; Household Expenditure Survey 2021). Map and stations © OpenStreetMap contributors.
         Part of the <a href="https://github.com/tarabl2023-dev/israel-rental-market-analysis">Israel Rental Market Analysis</a> project (R &amp; Tidyverse).
       </footer>
     </div>
@@ -825,12 +836,13 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="rent-data.js?v=2026q2-6"></script>
-<script src="living-data.js?v=3"></script>
+<script src="living-data.js?v=4"></script>
+<script src="market-data.js?v=1"></script>
 <script src="city-media.js?v=1"></script>
-<script src="i18n-places.js?v=1"></script>
-<script src="i18n-he.js?v=2"></script>
-<script src="i18n-ru.js?v=3"></script>
-<script src="i18n-ar.js?v=2"></script>
+<script src="i18n-places.js?v=2"></script>
+<script src="i18n-he.js?v=3"></script>
+<script src="i18n-ru.js?v=4"></script>
+<script src="i18n-ar.js?v=3"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -864,7 +876,8 @@
     if (v) out = out.replace(/\{(\w+)\}/g, (m, k) => (v[k] !== undefined ? v[k] : m));
     return out;
   };
-  const P = (name) => (lang !== "en" && I18N.places && I18N.places[lang] && I18N.places[lang][name]) || name;
+  const P = (name) => (lang !== "en" && I18N.places && I18N.places[lang] && I18N.places[lang][name]) ||
+    (lang === "he" && window.MARKET_DATA.towns[name] && window.MARKET_DATA.towns[name].he) || name;
   const cap = (w) => w[0].toUpperCase() + w.slice(1);
   const fmt = (n) => "₪" + Math.round(n).toLocaleString("en-US");
   const fmtK = (n) => "₪" + (n / 1000).toFixed(1) + "k";
@@ -875,26 +888,94 @@
     const [y, n] = q.split("Q");
     return T(["Jan-Mar", "Apr-Jun", "Jul-Sep", "Oct-Dec"][+n - 1]) + " " + y;
   };
-  const bandFor = (r) => r <= 2 ? "1-2" : r <= 3 ? "2.5-3" : r <= 4 ? "3.5-4" : "4.5+";
+  const dateLabel = (d) => new Date(d + "T12:00:00").toLocaleDateString({ en: "en-GB", he: "he-IL", ru: "ru-RU", ar: "ar-EG-u-nu-latn" }[lang], { day: "numeric", month: "short", year: "numeric" });
+  const bandFor = (r) => r <= 2 ? "1-2" : r <= 3 ? "2.5-3" : r <= 4 ? "3.5-4" : "4.5+";   // CBS size band
   const roomsShort = (r) => (r >= MAX_ROOMS ? "6+" : String(r));
   const roomsText = (r) => (r === 1 ? T("{n} room", { n: 1 }) : T("{n} rooms", { n: roomsShort(r) }));
   const bedCount = (r) => Math.max(0, Math.floor(r) - 1);
 
   const byName = Object.fromEntries(D.areas.map((a) => [a.name, a]));
   const cities = D.areas.filter((a) => a.type === "City");
-  const measured = cities.filter((c) => !c.proxyFor);   // towns with their own CBS figures
-  const bandOf = (area, band) => area.bands.find((b) => b.rooms === band);
+  const measured = cities;   // every big city has its own market figures
+  const cbsBand = (area, band) => (area.bands ? area.bands.find((b) => b.rooms === band) : null);
+
+  // ---- Market rents ----
+  // What someone moving in pays today: the median asking rent of live listings by town and room
+  // count (Realta, see R/05_export_market_data.R). CBS averages every lease in a quarter, including
+  // long-running renewals, so it runs well below that and stays on the page as the official reference.
+  const MK = window.MARKET_DATA;
+  // Smaller towns CBS doesn't publish, with their own market figures
+  const towns = Object.entries(MK.towns).filter(([n]) => !byName[n]).map(([name, t]) => {
+    const a = { name, type: "Town", district: t.district, hebrew: t.he || (I18N.places && I18N.places.he && I18N.places.he[name]) || null, cbsCode: null, proxyFor: null, bands: null };
+    byName[name] = a;
+    return a;
+  });
+  const isPlace = (a) => a.type === "City" || a.type === "Town";
+  const solidCell = (c) => c[0] != null && c[1] >= 3;
+  // How rent rises with room count, relative to 3 rooms (median over towns with plenty of ads)
+  const ROOM_CURVE = [0, 1, 2, 3, 4, 5].map((k) => {
+    const rs = Object.values(MK.towns).filter((t) => t.rooms[2][1] >= 20 && t.rooms[k][0] != null && t.rooms[k][1] >= 10)
+      .map((t) => t.rooms[k][0] / t.rooms[2][0]).sort((a, b) => a - b);
+    return rs.length ? rs[Math.floor(rs.length / 2)] : 1;
+  });
+  const curveAt = (r) => (ROOM_CURVE[Math.floor(r) - 1] + ROOM_CURVE[Math.ceil(r) - 1]) / 2;
+  // Median per whole room count; a size with under 3 ads is estimated from the nearest solid one
+  function roomRents(t) {
+    const solid = t.rooms.map((c, k) => (solidCell(c) ? k : -1)).filter((k) => k >= 0);
+    const out = t.rooms.map((c, k) => {
+      if (solidCell(c)) return { rent: c[0], n: c[1], filled: false };
+      if (!solid.length) return { rent: t.median * ROOM_CURVE[k] / ROOM_CURVE[2], n: 0, filled: true };
+      const j = solid.reduce((a, b) => (Math.abs(b - k) < Math.abs(a - k) ? b : a));
+      return { rent: t.rooms[j][0] * ROOM_CURVE[k] / ROOM_CURVE[j], n: 0, filled: true };
+    });
+    for (let k = 1; k < 6; k++) if (out[k].rent < out[k - 1].rent) out[k].rent = out[k - 1].rent;   // more rooms never cheaper
+    return out;
+  }
+  // Half rooms (3.5, 4.5) sit between the whole sizes either side; 6 means 6 or more
+  function marketAt(t, r) {
+    const rr = roomRents(t), lo = rr[Math.floor(r) - 1], hi = rr[Math.ceil(r) - 1];
+    return { rent: (lo.rent + hi.rent) / 2, n: lo === hi ? lo.n : lo.n + hi.n, filled: lo.filled || hi.filled };
+  }
+  // Districts and Israel have no listing medians, so their CBS average is brought up to asking
+  // rents with the market / CBS ratio of their big cities (weighted by number of listings)
+  const BAND_STEPS = { "1-2": [1, 1.5, 2], "2.5-3": [2.5, 3], "3.5-4": [3.5, 4], "4.5+": [4.5, 5] };
+  function marketRatio(names, band) {
+    let w = 0, s = 0;
+    for (const n of names) {
+      const t = MK.towns[n], c = cbsBand(byName[n], band);
+      if (!t || !c || byName[n].proxyFor) continue;
+      const m = BAND_STEPS[band].reduce((a, r) => a + marketAt(t, r).rent, 0) / BAND_STEPS[band].length;
+      s += m / c.rent * t.listings; w += t.listings;
+    }
+    return w ? s / w : 1;
+  }
+  const rentCache = new Map();
+  function rentOf(area, r) {
+    const key = area.name + "|" + r;
+    if (rentCache.has(key)) return rentCache.get(key);
+    const band = bandFor(r), c = cbsBand(area, band), t = MK.towns[area.name];
+    let out;
+    if (t) { const m = marketAt(t, r); out = { rent: m.rent, n: m.n, estimated: m.filled, market: true }; }
+    else {
+      const names = cities.filter((x) => area.type === "National" || x.district === area.name).map((x) => x.name);
+      const shape = curveAt(r) / (BAND_STEPS[band].reduce((a, x) => a + curveAt(x), 0) / BAND_STEPS[band].length);
+      out = { rent: c.rent * marketRatio(names, band) * shape, n: null, estimated: false, market: false };
+    }
+    // the official CBS figure for the same size band, where CBS publishes one
+    Object.assign(out, { cbs: c && !area.proxyFor ? c.rent : null, band, yoy: c && !area.proxyFor ? c.yoy : null });
+    rentCache.set(key, out);
+    return out;
+  }
 
   // ---- State, remembered per viewer ----
   const saved = (() => { try { return JSON.parse(localStorage.getItem("rent-calc") || "{}"); } catch (e) { return {}; } })();
   const state = {
-    area: byName[saved.area] ? saved.area : "Tel Aviv",
+    area: byName[saved.town] ? saved.town : byName[saved.area] ? saved.area : "Tel Aviv",   // "town" is from an older version
     rooms: saved.rooms >= MIN_ROOMS && saved.rooms <= MAX_ROOMS ? saved.rooms : 3,
     budget: saved.budget > 0 ? saved.budget : null,
     noLimit: saved.noLimit === true,
     sort: ["price-desc", "price-asc", "growth", "saved", "transit", "total"].includes(saved.sort) ? saved.sort : "price-desc",
     favs: Array.isArray(saved.favs) ? saved.favs.filter((n) => byName[n]) : [],
-    town: LD.costs.otherTowns[saved.town] ? saved.town : null,      // a typed town CBS has no rent for
     transport: ["rail", "bus", "car"].includes(saved.transport) ? saved.transport : "bus",
     adults: saved.adults >= 1 && saved.adults <= 4 ? saved.adults : 1,
     kids: saved.kids >= 0 && saved.kids <= 5 ? saved.kids : 0,
@@ -903,50 +984,60 @@
     showStations: saved.showStations === true,
     linkMode: ["all", "basic", "city"].includes(saved.linkMode) ? saved.linkMode : "all",   // how strict the site links are
     features: Array.isArray(saved.features) ? saved.features.filter((w) => typeof w === "string").slice(0, 20) : [],
-    hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else area name
+    hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else neighbourhood slug
     shabbat: saved.shabbat === true,
     guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
-    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2,
+    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2,                 // the household's own festive meals each week
+    hostWeeks: saved.hostWeeks >= 0 && saved.hostWeeks <= 5 ? saved.hostWeeks : 2,      // Shabbatot a month with guests
+    hostDinners: saved.hostDinners >= 0 && saved.hostDinners <= 5 ? saved.hostDinners : 2,
+    hostLunches: saved.hostLunches >= 0 && saved.hostLunches <= 5 ? saved.hostLunches : 1,
     // extras: { id: { price, qty } } for chosen catalogue items; custom: [{ name, price, qty }]
     extras: saved.extras && typeof saved.extras === "object" && !Array.isArray(saved.extras) ? saved.extras : {},
     custom: Array.isArray(saved.custom) ? saved.custom.filter((c) => c && c.name).slice(0, 12) : [],
     lang
   };
-  if (state.town) state.area = LD.costs.otherTowns[state.town];
+  state.hostDinners = Math.min(state.hostDinners, state.hostWeeks);
+  state.hostLunches = Math.min(state.hostLunches, state.hostWeeks);
   const persist = () => { try { localStorage.setItem("rent-calc", JSON.stringify(state)); } catch (e) {} };
   const effBudget = () => (state.noLimit ? null : state.budget);
 
   // ---- Typeable place search ----
-  // Everything a person might type: big cities (English or Hebrew), districts,
-  // Israel, and other towns that fall back to their district's figures
+  // Everything a person might type: big cities and towns (in any of the four languages),
+  // districts and Israel
   const norm = (t) => String(t).toLowerCase().replace(/[\u2019'`\-\s.]/g, "");
   // A place can be typed in any of the four languages
   const allNames = (n) => [n, ...["he", "ru", "ar"].map((l) => (I18N.places && I18N.places[l] && I18N.places[l][n]) || "")];
   const places = [
-    ...cities.map((c) => ({ id: c.name, kind: "city", district: c.district, area: c.name, town: null, keys: [...allNames(c.name), c.hebrew || ""] })),
-    ...D.areas.filter((a) => a.type === "District").map((a) => ({ id: a.name, kind: "district", area: a.name, town: null, keys: allNames(a.name) })),
-    { id: "Israel", kind: "national", area: "Israel", town: null, keys: [...allNames("Israel"), "national"] },
-    ...Object.entries(LD.costs.otherTowns).map(([t, d]) => ({ id: t, kind: "town", district: d, area: d, town: t, keys: allNames(t) }))
+    ...cities.map((c) => ({ id: c.name, kind: "city", district: c.district, area: c.name, keys: [...allNames(c.name), c.hebrew || ""] })),
+    ...towns.map((c) => ({ id: c.name, kind: "town", district: c.district, area: c.name, keys: [...allNames(c.name), c.hebrew || ""] })),
+    ...D.areas.filter((a) => a.type === "District").map((a) => ({ id: a.name, kind: "district", area: a.name, keys: allNames(a.name) })),
+    { id: "Israel", kind: "national", area: "Israel", keys: [...allNames("Israel"), "national"] }
   ];
-  const placeSub = (p) => p.kind === "city" ? P(p.district) + (lang !== "he" && byName[p.id].hebrew ? " · " + byName[p.id].hebrew : "")
-    : p.kind === "district" ? T("Whole district average") : p.kind === "national" ? T("National average") : T("{district} · district estimate", { district: P(p.district) });
+  const placeSub = (p) => p.kind === "city" || p.kind === "town" ? P(p.district) + (lang !== "he" && byName[p.id].hebrew ? " · " + byName[p.id].hebrew : "")
+    : p.kind === "district" ? T("Whole district average") : T("National average");
   const areaInput = $("area"), areaList = $("area-list");
   let matches = [], active = -1;
-  const placeLabel = () => (state.town ? P(state.town) : state.area === "Israel" ? T("Israel (national average)") : P(state.area));
+  const placeLabel = () => (state.area === "Israel" ? T("Israel (national average)") : P(state.area));
+  const GROUPS = [["city", "Big cities"], ["town", "Towns"], ["district", "Districts"], ["national", "Whole country"]];
+  // With nothing typed, every place is listed (grouped, A to Z); typing narrows it down
   function searchPlaces(q) {
     const n = norm(q);
-    if (!n) return places.filter((p) => !p.town && cities.some((c) => c.name === p.area)).slice(0, 8);
+    const byLabel = (a, b) => P(a.id).localeCompare(P(b.id), lang);
+    if (!n) return GROUPS.flatMap(([k]) => places.filter((p) => p.kind === k).sort(byLabel));
     const starts = [], contains = [];
     for (const p of places) {
       const ks = p.keys.map(norm);
       if (ks.some((k) => k.startsWith(n))) starts.push(p); else if (ks.some((k) => k.includes(n))) contains.push(p);
     }
-    return [...starts, ...contains].slice(0, 8);
+    return [...starts, ...contains].slice(0, 30);
   }
   function openList(q) {
     matches = searchPlaces(q); active = matches.length ? 0 : -1;
+    const grouped = !norm(q);
     areaList.innerHTML = matches.length
-      ? matches.map((p, i) => '<li role="option" id="opt-' + i + '" data-i="' + i + '" aria-selected="' + (i === active) + '"><b>' + esc(P(p.id)) + "</b><span>" + esc(placeSub(p)) + "</span></li>").join("")
+      ? matches.map((p, i) => (grouped && (i === 0 || matches[i - 1].kind !== p.kind)
+          ? '<li class="grp" role="presentation">' + esc(T(GROUPS.find(([k]) => k === p.kind)[1])) + "</li>" : "") +
+        '<li role="option" id="opt-' + i + '" data-i="' + i + '" aria-selected="' + (i === active) + '"><b>' + esc(P(p.id)) + "</b><span>" + esc(placeSub(p)) + "</span></li>").join("")
       : '<li class="empty" role="option" aria-disabled="true">' + T("No match. Try the nearest big city or pick its district.") + "</li>";
     areaList.hidden = false; areaInput.setAttribute("aria-expanded", "true");
     areaInput.setAttribute("aria-activedescendant", active >= 0 ? "opt-" + active : "");
@@ -954,15 +1045,14 @@
   function closeList() { areaList.hidden = true; areaInput.setAttribute("aria-expanded", "false"); areaInput.removeAttribute("aria-activedescendant"); }
   function choose(p) {
     closeList();
-    state.town = p.town;
-    select(p.area, { keepTown: true });
+    select(p.area);
     areaInput.value = placeLabel();
     areaInput.blur();
   }
   function moveActive(d) {
     if (!matches.length) return;
     active = (active + d + matches.length) % matches.length;
-    areaList.querySelectorAll("li").forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+    areaList.querySelectorAll("li[data-i]").forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
     areaInput.setAttribute("aria-activedescendant", "opt-" + active);
     const li = areaList.querySelector("#opt-" + active); if (li) li.scrollIntoView({ block: "nearest" });
   }
@@ -995,21 +1085,23 @@
     return parts.join(long ? " · " : " ");
   }
 
-  // ---- Areas within a city ----
-  // Price hints are a local guide (not official data) and nudge the rent by a rule of thumb
-  const AREA_ADJ = { higher: 0.15, around: 0, lower: -0.10 };
-  const HINT_TEXT = { higher: "usually pricier than the city average", around: "around the city average", lower: "usually cheaper than the city average" };
-  function hoodsOf(cityName) { return (!state.town && LD.areas[cityName]) || []; }
+  // ---- Neighbourhoods ----
+  // Every neighbourhood with listings on Realta. f = its asking rents relative to the town's
+  // (a neighbourhood with few ads is pulled towards the town average, see R/05)
+  function hoodsOf(cityName) { return MK.hoods[cityName] || []; }
   function currentHood(cityName) {
     const list = hoodsOf(cityName);
     if (!state.hood || !list.length) return null;
     if (state.hood === "__beach") {
       const beach = list.filter((h) => h.beach);
-      return beach.length ? { en: "By the beach", he: "ליד הים", beach: true, hint: "higher", hood: null, members: beach } : null;
+      if (!beach.length) return null;
+      const w = beach.reduce((a, h) => a + h.n, 0);
+      return { en: "By the beach", he: "ליד הים", beach: true, yad2: null, members: beach, n: w, f: beach.reduce((a, h) => a + h.f * h.n, 0) / w };
     }
-    return list.find((h) => h.en === state.hood) || null;
+    return list.find((h) => h.s === state.hood || h.en === state.hood) || null;   // en: saved by an older version
   }
-  const areaAdj = (hood) => (hood ? AREA_ADJ[hood.hint] || 0 : 0);
+  const areaAdj = (hood) => (hood ? hood.f - 1 : 0);
+  const pctText = (x) => (Math.abs(x) < 0.03 ? "≈" : (x > 0 ? "+" : "−") + Math.abs(Math.round(x * 100)) + "%");
   // Neighbourhood names: Hebrew in Hebrew, otherwise the English transliteration
   const hoodName = (h) => (h.members ? T("By the beach") : lang === "he" ? h.he : h.en);
 
@@ -1056,11 +1148,11 @@
     return out;
   }
   const extrasTotal = () => extrasList().reduce((t, e) => t + e.price * e.qty, 0);
+  const hostedMeals = () => (state.hostWeeks ? state.hostDinners + state.hostLunches : 0);   // per month
 
-  function regionFor(areaName, town) {
-    if (town) return LD.costs.otherTowns[town];
+  function regionFor(areaName) {
     const a = byName[areaName];
-    if (a.type === "City") return LD.costs.cityRegion[a.name];
+    if (isPlace(a)) return MK.towns[a.name].region;   // its CBS sub-district
     return a.type === "National" ? "Israel" : a.name;
   }
   // The level the budget points to; the person can still pick another one
@@ -1077,12 +1169,12 @@
     if (B) return ["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || "budget";
     return state.noLimit ? "luxury" : "comfortable";
   }
-  function costFor(areaName, town, band, level, hood = null) {
-    const R = LD.costs.regions[regionFor(areaName, town)];
+  function costFor(areaName, rooms, level, hood = null) {
+    const R = LD.costs.regions[regionFor(areaName)];
     const people = Math.min(9, state.adults + state.kids);
     const sp = STD_PERSONS[people];
     const life = LIFESTYLE[level];
-    const rent = bandOf(byName[areaName], band).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]) * (1 + areaAdj(hood));
+    const rent = rentOf(byName[areaName], rooms).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]) * (1 + areaAdj(hood));
     const sh = LD.costs.shabbat;
     const car = state.transport === "car";
     const v = {
@@ -1097,10 +1189,10 @@
       health: R.health * sp,
       clothing: R.clothing * sp * life,
       extras: extrasTotal(),
-      // Shabbat: extra Shabbat foods for the household (CBS, observant vs secular) + guests at hosted meals
       // Shabbat: every person at a festive meal costs about 3x an ordinary meal, so the household pays
-      // the extra 2x on top of the groceries it already buys, and each guest costs the full 3x
-      shabbat: state.shabbat ? (people * 2 * sh.personMeal + state.guests * sh.guestMeal) * state.shabbatMeals * 4.33 : 0
+      // the extra 2x on top of the groceries it already buys (every week), and each guest costs the
+      // full 3x at the dinners and lunches it hosts in a month
+      shabbat: state.shabbat ? people * 2 * sh.personMeal * state.shabbatMeals * 4.33 + state.guests * sh.guestMeal * hostedMeals() : 0
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
@@ -1173,31 +1265,32 @@
     }
     if (stationLayer) { if (on) stationLayer.addTo(map); else stationLayer.remove(); }
   }
-  function updatePins(band) {
+  function updatePins(rooms) {
     const B = effBudget();
     for (const [name, mk] of Object.entries(markers)) {
-      const b = bandOf(byName[name], band);
+      const b = rentOf(byName[name], rooms);
       const el = mk.getElement() && mk.getElement().querySelector(".pin");
       if (!el) continue;
-      el.textContent = fmtK(b.rent) + (byName[name].proxyFor ? "*" : "");
-      el.className = "pin" + (name === state.area ? " selected" : B && b.rent > B ? " over" : byName[name].proxyFor ? " est" : "");
+      el.textContent = fmtK(b.rent) + (b.estimated ? "*" : "");
+      el.className = "pin" + (name === state.area ? " selected" : B && b.rent > B ? " over" : b.estimated ? " est" : "");
       mk.setZIndexOffset(name === state.area ? 1000 : 0);
     }
   }
   function flyToArea(area) {
     if (!map) return;
-    const m = !state.town && M.cities[area.name];
+    const m = M.cities[area.name];
+    const v = M.views[area.name] || (area.type === "Town" && M.views[area.district]);   // a town: show its district
     if (m) map.flyTo([m.lat, m.lng], 12, { duration: 0.8 });
-    else if (M.views[area.name]) { const v = M.views[area.name]; map.flyTo([v[0], v[1]], v[2], { duration: 0.8 }); }
+    else if (v) map.flyTo([v[0], v[1]], v[2], { duration: 0.8 });
   }
 
   // ---- Tags ----
-  function tagsFor(area, band, b) {
+  function tagsFor(area, rooms, b) {
     const tags = [];
     const B = effBudget();
-    if (area.type === "City" && !area.proxyFor) {
-      const ranked = [...measured].sort((x, y) => bandOf(y, band).rent - bandOf(x, band).rent);
-      const growth = measured.filter((c) => bandOf(c, band).yoy != null).sort((x, y) => bandOf(y, band).yoy - bandOf(x, band).yoy);
+    if (area.type === "City") {
+      const ranked = [...measured].sort((x, y) => rentOf(y, rooms).rent - rentOf(x, rooms).rent);
+      const growth = measured.filter((c) => rentOf(c, rooms).yoy != null).sort((x, y) => rentOf(y, rooms).yoy - rentOf(x, rooms).yoy);
       if (ranked[0].name === area.name) tags.push(["top", "Most expensive"]);
       if (ranked[ranked.length - 1].name === area.name) tags.push(["value", "Best value"]);
       if (growth[0] && growth[0].name === area.name) tags.push(["hot", "Fastest rising"]);
@@ -1209,40 +1302,45 @@
   const tagHtml = (tags) => tags.slice(0, 3).map(([cls, t]) => '<span class="tag ' + cls + '"><i></i>' + T(t) + "</span>").join("");
 
   // ---- Hero ----
-  function renderHero(area, band, b) {
-    const town = state.town;
-    const media = !town && M.cities[area.name];
-    const avg = b.rent;
-    const kicker = town ? T("{district} · district figures", { district: P(area.name) }) : area.type === "City" ? P(area.district) : area.type === "National" ? T("Nationwide") : T("Whole district");
-    const title = town ? P(town) : area.type === "National" ? T("All of Israel") : P(area.name);
+  function renderHero(area, rooms, b) {
+    const media = M.cities[area.name];
+    const hood = currentHood(area.name);
+    const avg = b.rent * (1 + areaAdj(hood));   // a chosen neighbourhood moves every price on the page
+    const kicker = isPlace(area) ? P(area.district) : area.type === "National" ? T("Nationwide") : T("Whole district");
+    const title = area.type === "National" ? T("All of Israel") : P(area.name);
     $("hero-media").innerHTML =
       (media ? '<img src="' + esc(media.photo) + '" alt="' + esc(area.name) + '" decoding="async">' : skyline()) +
-      '<div class="tags">' + tagHtml(town ? [["est", "District estimate"]] : tagsFor(area, band, b)) + "</div>" +
+      '<div class="tags">' + tagHtml(tagsFor(area, rooms, b)) + "</div>" +
       '<div class="hero-over"><div class="kicker">' + esc(kicker) + "</div><h1>" + esc(title) + "</h1></div>" +
       (media ? '<a class="credit" href="' + esc(media.source) + '" target="_blank" rel="noopener noreferrer">' + T("Photo:") + " " + esc(media.credit) + " · " + esc(media.license) + "</a>" : "");
 
     $("hero-price").innerHTML = fmt(round50(avg)) + " <small>" + T("/ month") + "</small>";
-    $("hero-addr").textContent = T("Typical {rooms} apartment in {place} · CBS data for {band} rooms, {quarter}", { rooms: roomsText(state.rooms), place: title, band, quarter: quarterLabel(D.quarter) });
+    const date = dateLabel(MK.date);
+    $("hero-addr").textContent = hood && b.market && !b.estimated
+      ? T("Median asking rent for {rooms} in {place}, adjusted to {hood} ({n} listings there), {date}", { rooms: roomsText(rooms), place: title, hood: hoodName(hood), n: hood.n, date })
+      : !b.market
+      ? T("Typical {rooms} apartment in {place} · CBS average brought up to today's asking rents, {date}", { rooms: roomsText(rooms), place: title, date })
+      : b.estimated ? T("Typical {rooms} apartment in {place} · estimated from its other sizes (few listings right now), {date}", { rooms: roomsText(rooms), place: title, date })
+      : T("Median asking rent for {rooms} in {place} · {n} listings, {date}", { rooms: roomsText(rooms), place: title, n: b.n.toLocaleString("en-US"), date });
 
-    const nat = bandOf(byName["Israel"], band).rent;
+    const nat = rentOf(byName["Israel"], rooms).rent;
     const diff = avg / nat - 1;
     const beds = bedCount(state.rooms);
     const parts = ["<span><b>" + roomsShort(state.rooms) + "</b> " + T("RM") + "</span>", "<span>" + (beds ? "<b>" + beds + "</b> " + T("BD") : "<b>" + T("Studio") + "</b>") + "</span>"];
     if (area.name !== "Israel") parts.push("<span><b>" + (diff >= 0 ? "+" : "") + Math.round(diff * 100) + "%</b> " + T("vs Israel") + "</span>");
-    if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> " + T("in a year") + "</span>");
-    if (b.se != null) parts.push("<span>±<b>" + fmt(1.96 * b.se) + "</b> " + T("margin") + "</span>");
-    const tr = !town && transitOf(area.name);
+    if (b.cbs != null) parts.push("<span>" + T("CBS average") + " <b>" + fmt(round50(b.cbs)) + "</b></span>");
+    if (b.yoy != null) parts.push('<span class="up"><b>' + (b.yoy >= 0 ? "▲ +" : "▼ ") + (b.yoy * 100).toFixed(1) + "%</b> " + T("in a year (CBS)") + "</span>");
+    const tr = transitOf(area.name);
     if (tr) parts.push("<span>" + (stopCount(tr) ? transitText(tr, true) : T("No rail stations")) + "</span>");
     $("metrics").innerHTML = parts.join("");
 
     const adj = RENT_ADJ[state.transport];
-    const hood = currentHood(area.name);
     const hAdj = areaAdj(hood);
-    const bits = [];
-    if (hood) bits.push((hAdj ? "<i>" + (hAdj > 0 ? "+" : "−") + Math.abs(Math.round(hAdj * 100)) + "%</i> " : "") + esc(hoodName(hood)) + ": " + T(HINT_TEXT[hood.hint]));
-    if (adj > 0) bits.push("<i>+5%</i> " + T("near a train or light-rail station"));
-    else if (adj < 0) bits.push("<i>−5%</i> " + T("further from public transport"));
-    $("hero-adj").innerHTML = bits.length ? bits.join(" · ") + " → " + T("about {price}/month", { price: "<b>" + fmt(round50(avg * (1 + adj) * (1 + hAdj))) + "</b>" }) : "";
+    const hoodLine = hood ? "<i>" + pctText(hAdj) + "</i> " + esc(hoodName(hood)) + ": " +
+      T("asking rents vs the {city} average ({n} listings), already in the prices above", { city: P(area.name), n: hood.n }) : "";
+    const trLine = adj > 0 ? "<i>+5%</i> " + T("near a train or light-rail station") : adj < 0 ? "<i>−5%</i> " + T("further from public transport") : "";
+    $("hero-adj").innerHTML = hoodLine + (hoodLine && trLine ? "<br>" : "") +
+      (trLine ? trLine + " → " + T("about {price}/month", { price: "<b>" + fmt(round50(avg * (1 + adj))) + "</b>" }) : "");
 
     const level = fitLevel(avg);            // what the budget covers
     const chosen = currentLevel(avg);       // what the person picked (or the budget's level)
@@ -1258,30 +1356,30 @@
     $("auto-level").hidden = !(state.level && state.level !== autoLevel(avg));
 
     const notes = [];
-    if (town) notes.push(T("CBS doesn't publish rents for {town}, so these figures use the {district} average. Rents in {town} may differ.", { town: P(town), district: P(area.name) }));
+    if (b.cbs != null && b.market) notes.push(T("The official CBS average for {band} rooms here is {cbs}. It includes long-running leases and renewals, so it runs below what you'd pay moving in today.", { band: b.band, cbs: fmt(round50(b.cbs)) }));
+    else if (area.type === "Town") notes.push(T("CBS doesn't publish rents for {town} (under 100,000 residents), so these figures come from its current listings only.", { town: P(area.name) }));
     if (state.transport === "rail" && tr && stopCount(tr) <= 2)
       notes.push(T(stopCount(tr) === 1 ? "{city} has only one rail station, so fewer homes are within walking distance of one."
         : stopCount(tr) === 0 ? "{city} has no rail stations, so fewer homes are within walking distance of one."
         : "{city} has only two rail stations, so fewer homes are within walking distance of one.", { city: P(area.name) }));
-    if (area.proxyFor) notes.push(T("CBS doesn't publish rents for {city} (under 100,000 residents), so these figures use neighbouring {proxy}.", { city: P(area.name), proxy: P(area.proxyFor) }));
-    else if (b.estimated) notes.push(T("CBS doesn't publish a 1-2 room figure for {city}, so this one is estimated from its 2.5-3 room rent.", { city: P(area.name) }));
-    if (band === "4.5+") notes.push(T("The 4.5+ band includes everything from 4.5 rooms to large penthouses, so treat it as a rough guide."));
+    if (b.estimated) notes.push(T("There are few {rooms} listings in {place} right now, so this one is estimated from its other sizes.", { rooms: roomsText(rooms), place: P(area.name) }));
+    if (rooms >= MAX_ROOMS) notes.push(T("6+ rooms covers everything from large flats to villas and penthouses, so treat it as a rough guide."));
     if (area.type === "District") notes.push(T("District figures average all towns in the district, including its big cities."));
     $("note").textContent = notes.join(" ");
 
-    renderVerdict(avg, band, level);
+    renderVerdict(avg, rooms, level);
   }
 
   const BULB = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>';
-  function renderVerdict(avg, band, level) {
+  function renderVerdict(avg, rooms, level) {
     const v = $("verdict");
     $("no-budget").setAttribute("aria-pressed", String(state.noLimit));
     $("budget").disabled = state.noLimit;
     let msg = null;
     if (state.noLimit) {
-      const top = measured.reduce((m, c) => bandOf(c, band).rent > bandOf(m, band).rent ? c : m);
+      const top = measured.reduce((m, c) => rentOf(c, rooms).rent > rentOf(m, rooms).rent ? c : m);
       msg = T("<strong>No budget limit.</strong> Here the range runs from about {lo} for a basic flat to {hi} or more for the best homes. The priciest big city for {band} rooms is {top}.",
-        { lo: fmt(round50(avg * TIERS.budget.lo)), hi: fmt(round50(avg * TIERS.luxury.hi)), band, top: P(top.name) });
+        { lo: fmt(round50(avg * TIERS.budget.lo)), hi: fmt(round50(avg * TIERS.luxury.hi)), band: roomsShort(rooms), top: P(top.name) });
     } else if (state.budget) {
       const B = state.budget;
       const v = { b: fmt(B), lux: fmt(round50(avg * TIERS.luxury.mid)), avg: fmt(round50(avg)), min: fmt(round50(avg * TIERS.budget.mid)) };
@@ -1289,20 +1387,20 @@
       else if (level === "comfortable") msg = T("<strong>{b}</strong> gets you a <strong>comfortable</strong> flat here. Luxury starts at about {lux}.", v);
       else if (level === "budget") msg = T("<strong>{b}</strong> fits the <strong>budget</strong> level here. A typical flat costs about {avg}.", v);
       else msg = T("<strong>{b}</strong> is below the budget level here (about {min}). Try fewer rooms or another city.", v);
-      const fits = measured.filter((c) => bandOf(c, band).rent <= B).length;
-      msg += " " + T("It covers the average {band} room rent in <strong>{n} of {total}</strong> big cities (marked In budget below).", { band, n: fits, total: measured.length });
+      const fits = measured.filter((c) => rentOf(c, rooms).rent <= B).length;
+      msg += " " + T("It covers the average {band} room rent in <strong>{n} of {total}</strong> big cities (marked In budget below).", { band: roomsShort(rooms), n: fits, total: measured.length });
     }
     if (msg) { v.innerHTML = BULB + "<div>" + msg + "</div>"; v.hidden = false; } else v.hidden = true;
   }
 
   // ---- Feed ----
   let observer = null;
-  function renderFeed(band) {
+  function renderFeed(rooms) {
     const B = effBudget();
-    const maxRent = Math.max(...measured.map((c) => bandOf(c, band).rent));
+    const maxRent = Math.max(...measured.map((c) => rentOf(c, rooms).rent));
     const rows = cities.map((c) => {
-      const b = bandOf(c, band);
-      return { c, b, total: costFor(c.name, null, band, currentLevel(b.rent), c.name === state.area ? currentHood(c.name) : null).total, stops: stopCount(transitOf(c.name)) };
+      const b = rentOf(c, rooms);
+      return { c, b, total: costFor(c.name, rooms, currentLevel(b.rent), c.name === state.area ? currentHood(c.name) : null).total, stops: stopCount(transitOf(c.name)) };
     });
     const s = state.sort;
     rows.sort((x, y) =>
@@ -1314,7 +1412,7 @@
       y.b.rent - x.b.rent);
 
     $("feed-title").textContent = T("{rooms} across {n} cities", { rooms: roomsText(state.rooms), n: cities.length });
-    $("feed-sub").textContent = T("Average monthly rent (comfortable level). Tap a city to see its prices.");
+    $("feed-sub").textContent = T("Median asking rent today (comfortable level). Tap a city to see its prices, or type any town in the search.");
 
     const feed = $("feed");
     feed.innerHTML = rows.map(({ c, b, total }) => {
@@ -1324,7 +1422,7 @@
       const yoy = b.yoy != null ? '<span class="' + (b.yoy >= 0 ? "up" : "down") + '">' + (b.yoy >= 0 ? "▲ " : "▼ ") + (b.yoy * 100).toFixed(1) + "%" + T("/yr") + "</span>" : "";
       return '<article class="listing' + (c.name === state.area ? " selected" : "") + '" data-city="' + esc(c.name) + '" tabindex="0" aria-label="' + esc(P(c.name) + ", " + fmt(b.rent) + " " + T("a month")) + '">' +
         '<div class="media">' + (m.photo ? '<img src="' + esc(m.photo) + '" alt="" loading="lazy" decoding="async">' : "") +
-          '<div class="tags">' + tagHtml(tagsFor(c, band, b)) + "</div>" +
+          '<div class="tags">' + tagHtml(tagsFor(c, rooms, b)) + "</div>" +
           '<button type="button" class="fav" data-fav="' + esc(c.name) + '" aria-pressed="' + fav + '" aria-label="' + esc(T(fav ? "Remove {name}" : "Save {name}", { name: P(c.name) })) + '">' +
           '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-9A5 5 0 0 1 12 6a5 5 0 0 1 9.2 5C19 15.6 12 20 12 20z"/></svg></button>' +
         "</div>" +
@@ -1332,7 +1430,7 @@
           '<div class="l-price">' + fmt(b.rent) + "<small>" + T("/mo") + "</small></div>" +
           '<div class="l-metrics"><span>' + roomsShort(state.rooms) + " " + T("rm") + "</span><span>" + (beds ? beds + " " + T("bd") : T("Studio")) + "</span>" + yoy +
           (stopCount(transitOf(c.name)) ? '<span class="l-transit" title="' + esc(T("Train / light rail / Carmelit stations")) + '">' + transitText(transitOf(c.name), false) + "</span>" : "") + "</div>" +
-          '<div class="l-addr">' + esc(P(c.name)) + ", " + esc(P(c.district)) + (c.proxyFor ? " · " + esc(T("based on {city}", { city: P(c.proxyFor) })) : "") + "</div>" +
+          '<div class="l-addr">' + esc(P(c.name)) + ", " + esc(P(c.district)) + "</div>" +
           '<div class="l-bar" title="' + esc(T("Compared with the most expensive city")) + '"><i style="width:' + Math.min(100, b.rent / maxRent * 100).toFixed(1) + '%"></i>' +
           (B && B < maxRent ? '<b style="inset-inline-start:' + (B / maxRent * 100).toFixed(1) + '%" title="' + esc(T("Your budget")) + '"></b>' : "") + "</div>" +
           '<div class="l-allin">' + T("≈ {price}/mo all-in for your household", { price: fmt(total) }) + "</div>" +
@@ -1382,15 +1480,15 @@
   const kwBtn = ([w, en]) => '<button type="button" class="kw' + (kwOn(w) ? " on" : "") + '" data-kw="' + esc(w) + '" aria-pressed="' + kwOn(w) + '">' +
     he(esc(w)) + "<span>" + (kwOn(w) ? "✓ " : "") + T(en) + (FEATURES[w] ? " · " + T("filter") : "") + "</span></button>";
 
-  function renderGuide(area, band, avg) {
-    const isTown = !!area.hebrew && !state.town;
+  function renderGuide(area, rooms, avg) {
+    const isTown = isPlace(area) && !!area.hebrew;
     const cityHe = isTown ? (SEARCH_NAME[area.name] || area.hebrew) : "[שם העיר]";
-    const cityEn = isTown ? area.name : state.town || "[your town]";
-    const r = state.rooms;
-    $("guide-title").textContent = T("How to search for {rooms} in {place}", { rooms: roomsText(r), place: isTown ? P(area.name) : state.town ? P(state.town) : T("your town") });
+    const cityEn = isTown ? area.name : "[your town]";
+    const r = rooms;
+    $("guide-title").textContent = T("How to search for {rooms} in {place}", { rooms: roomsText(r), place: isTown ? P(area.name) : T("your town") });
 
     const hood = isTown ? currentHood(area.name) : null;
-    const placeHe = hood ? (hood.beach && !hood.hood && hood.members ? cityHe + " ליד הים" : hood.he + ", " + cityHe) : cityHe;
+    const placeHe = hood ? (hood.members ? cityHe + " ליד הים" : hood.he + ", " + cityHe) : cityHe;
     const placeEn = hood ? hood.en + ", " + cityEn : cityEn;
     const phrases = [
       ["Hebrew", "דירת " + roomsHe(r) + " להשכרה ב" + placeHe + (state.features.length ? " " + state.features.join(" ") : ""), true],
@@ -1408,10 +1506,10 @@
       T("The comfortable range. Budget: up to {b}, luxury: from {l}.", { b: fmt(round50(avg * TIERS.budget.hi)), l: fmt(round50(avg * TIERS.luxury.lo)) })];
     const lo = Math.max(MIN_ROOMS, r - STEP), hi = r >= MAX_ROOMS ? T("any") : r + STEP;
     const rows = [
-      ["City", "עיר", isTown ? he(area.hebrew) + (lang === "he" ? "" : " (" + esc(P(area.name)) + ")") : state.town ? esc(P(state.town)) : T("Your town"), isTown ? "" : T("Type your town's name in Hebrew or English.")],
+      ["City", "עיר", isTown ? he(area.hebrew) + (lang === "he" ? "" : " (" + esc(P(area.name)) + ")") : T("Your town"), isTown ? "" : T("Type your town's name in Hebrew or English.")],
       ...(hood ? [["Neighbourhood", "שכונה",
         hood.members ? hood.members.map((m) => he(m.he)).join(", ") : he(hood.he) + (lang === "he" ? "" : " (" + esc(hood.en) + ")"),
-        T(hood.members ? "Tick these beach-side neighbourhoods on the site." : hood.hood ? "The Yad2 button already opens this neighbourhood." : "Type it into the site's location box after the city.")]] : []),
+        T(hood.members ? "Tick these beach-side neighbourhoods on the site." : hood.yad2 ? "The Yad2 button already opens this neighbourhood." : "Realta opens this neighbourhood directly. On other sites, type it into the location box after the city.")]] : []),
       ["Rooms", "חדרים", r >= MAX_ROOMS ? T("From 6") : T("From {a} to {b}", { a: r, b: r }), T("Widen it to {lo} - {hi} to see more homes.", { lo, hi })],
       ["Price per month", "מחיר", price[0], price[1]],
       ["Property type", "סוג נכס", he("דירה") + (lang === "he" ? "" : " " + T("(apartment)")), T("For luxury also try {a} (garden flat) and {b}.", { a: he("דירת גן"), b: he("פנטהאוז") })]
@@ -1446,26 +1544,13 @@
     "Yavne": "yavne", "Kiryat Shmona": "qiryat-shemona" };
   // Only cap the price when the person gave a budget, so the links don't come back empty
   // Realta collects listings from Yad2, Madlan, OnMap, Homeless, Komo and Facebook (city pages checked by hand)
-  const REALTA = { "Tel Aviv": "tel-aviv-yafo", "Jerusalem": "jerusalem", "Haifa": "haifa", "Herzliya": "herzliya", "Ra'anana": "raanana",
-    "Kfar Saba": "kfar-saba", "Ramat Gan": "ramat-gan", "Holon": "holon", "Bat Yam": "bat-yam", "Bnei Brak": "bnei-brak",
-    "Petah Tikva": "petakh-tikva", "Rishon LeZion": "rishon-le-tsiyon", "Rehovot": "rekhovot", "Netanya": "netanya", "Hadera": "hadera",
-    "Ashdod": "ashdod", "Ashkelon": "ashkelon", "Be'er Sheva": "beer-sheva", "Beit Shemesh": "beit-shemesh",
-    "Givatayim": "givatayim", "Ramat HaSharon": "ramat-ha-sharon", "Kiryat Ono": "kiryat-ono", "Or Yehuda": "or-yehuda",
-    "Hod HaSharon": "hod-ha-sharon", "Rosh HaAyin": "rosh-ha-ayin", "Modi'in": "modiin-maccabim-reut", "Ness Ziona": "nes-tsiyona",
-    "Yavne": "yavne", "Lod": "lod", "Ramla": "ramla", "Yehud": "yehud-monosun", "Shoham": "shoham", "Gedera": "gedera",
-    "Kiryat Ata": "kiryat-ata", "Kiryat Bialik": "kiryat-bialik", "Kiryat Motzkin": "kiryat-motskin", "Kiryat Yam": "kiryat-yam",
-    "Nesher": "nesher", "Tirat Carmel": "tirat-carmel", "Or Akiva": "or-akiva", "Zikhron Ya'akov": "zikhron-yaakov",
-    "Pardes Hanna-Karkur": "pardes-khana-karkur", "Nazareth": "nazareth", "Nof HaGalil": "nof-hagalil", "Afula": "afula",
-    "Tiberias": "tiberias", "Karmiel": "karmiel", "Nahariya": "nahariya", "Akko": "acre", "Kiryat Shmona": "kiryat-shmona",
-    "Yokneam Illit": "yokneam-illit", "Eilat": "eilat", "Dimona": "dimona", "Kiryat Gat": "kiryat-gat", "Sderot": "sderot",
-    "Netivot": "netivot", "Ofakim": "ofakim", "Arad": "arad", "Kiryat Malakhi": "kiryat-malakhi", "Mevaseret Zion": "mevaseret-tsiyon" };
   const REALTA_SEA = ["Tel Aviv", "Herzliya", "Netanya", "Haifa", "Ashkelon", "Ashdod", "Bat Yam", "Hadera"];
   function priceCap() {
     if (state.noLimit || !state.budget || state.linkMode === "city") return null;
     return Math.round(state.budget);
   }
   function siteLinks(area) {
-    const city = !state.town && area.cbsCode ? area : null;
+    const city = isPlace(area) && area.hebrew ? area : null;
     const hood = city ? currentHood(city.name) : null;
     // Rooms: half a room either side, since listings are often 3.5 or 4.5 rather than exactly 4
     const r = state.rooms, maxP = priceCap();
@@ -1473,11 +1558,11 @@
     const rMin = Math.max(1, r - 0.5), rMax = r >= MAX_ROOMS ? 12 : r + 0.5;
     const feats = state.linkMode === "all" ? state.features.map((w) => FEATURES[w]).filter(Boolean) : [];
     // Yad2 needs its region (topArea) and area codes as well as the city, otherwise it opens a default region
-    const y = LD.yad2[city ? city.name : state.town || ""];
+    const y = city && LD.yad2[city.name];
     let yad2 = "https://www.yad2.co.il/realestate/rent";
     if (y) {
       const q = ["topArea=" + y.topArea, "area=" + y.area, "city=" + y.city];
-      if (hood && hood.hood) q.push("neighborhood=" + hood.hood);
+      if (hood && hood.yad2) q.push("neighborhood=" + hood.yad2);
       if (useRooms) q.push("rooms=" + rMin + "-" + rMax);
       if (maxP) q.push("price=-1-" + maxP);
       [...new Set(feats.map((f) => f.yad2).filter(Boolean))].forEach((k) => q.push(k + "=1"));
@@ -1492,33 +1577,35 @@
       [...new Set(feats.map((f) => f.komo).filter(Boolean))].forEach((k) => q.push(k + "=1"));
       komo = "https://www.komo.co.il/code/nadlan/apartments-for-rent.asp?" + q.join("&");
     }
-    const om = ONMAP[city ? city.name : state.town || ""];
+    const om = city && ONMAP[city.name];
     // OnMap takes whole-room ranges ("rooms_3-5" = 3, 4 or 5 rooms)
     const omRooms = useRooms ? "/rooms_" + Math.floor(rMin) + "-" + Math.min(6, Math.ceil(rMax)) : "";
     const onmap = om ? "https://www.onmap.co.il/search/homes/rent/" + om + omRooms +
       (maxP ? "/price_0-" + maxP : "") + (feats.some((f) => f.onmap) ? "/types_penthouse" : "") : "https://www.onmap.co.il/search/homes/rent";
     const homeless = city ? "https://www.homeless.co.il/rent/city=" + encodeURIComponent(SEARCH_NAME[city.name] || city.hebrew) : "https://www.homeless.co.il/rent/";
-    // Realta: its themed pages (near the sea / no agent / furnished) when they match, otherwise a filtered city search
-    const placeName = city ? city.name : state.town || "";
-    const rs = REALTA[placeName];
+    // Realta: a neighbourhood's own page, or its themed pages (near the sea / no agent / furnished)
+    // when they match, otherwise a filtered city search; rooms and price go in the query either way
+    const placeName = city ? city.name : "";
+    const rs = MK.towns[placeName] && MK.towns[placeName].slug;
     let realta = "https://realta.co.il/he/", realtaPage = null;
     if (rs) {
-      if (hood && hood.beach && REALTA_SEA.includes(placeName)) realtaPage = "near-the-sea";
-      else if (state.linkMode === "all" && state.features.includes("ללא תיווך")) realtaPage = "from-owners";
-      else if (state.linkMode === "all" && state.features.includes("מרוהטת")) realtaPage = "furnished";
-      if (realtaPage) realta += rs + "/" + realtaPage + "/";
+      const q = [];
+      if (useRooms) q.push("minRooms=" + Math.floor(rMin), "maxRooms=" + Math.min(6, Math.ceil(rMax)));
+      if (maxP) q.push("maxPrice=" + maxP);
+      if (hood && !hood.members) { realtaPage = "hood"; realta += rs + "/" + hood.s + "/" + (q.length ? "?" + q.join("&") : ""); }
       else {
-        const q = ["city=" + rs];
-        if (useRooms) q.push("minRooms=" + Math.floor(rMin), "maxRooms=" + Math.min(6, Math.ceil(rMax)));
-        if (maxP) q.push("maxPrice=" + maxP);
-        realta += "?" + q.join("&");
+        if (hood && hood.beach && REALTA_SEA.includes(placeName)) realtaPage = "near-the-sea";
+        else if (state.linkMode === "all" && state.features.includes("ללא תיווך")) realtaPage = "from-owners";
+        else if (state.linkMode === "all" && state.features.includes("מרוהטת")) realtaPage = "furnished";
+        if (realtaPage) realta += rs + "/" + realtaPage + "/";
+        else realta += "?" + ["city=" + rs, ...q].join("&");
       }
     }
     const cityHe = city ? (SEARCH_NAME[city.name] || city.hebrew) : "";
-    const fbPlace = city ? cityHe : state.town || "";
+    const fbPlace = cityHe;
     const fbQuery = 'site:facebook.com/groups "דירות להשכרה" ' + (fbPlace ? '"' + fbPlace + '"' : "");
     return {
-      city, hood, yad2, yad2Town: !city && !!y, komo, onmap, homeless, maxP, realta, realtaPage,
+      city, hood, yad2, komo, onmap, homeless, maxP, realta, realtaPage,
       janglo: "https://www.janglo.net/real-estate-rentals/apartments",
       madlan: city ? "https://www.madlan.co.il/for-rent/" + encodeURIComponent(city.hebrew.replace(/ /g, "-") + "-ישראל") : "https://www.madlan.co.il/",
       facebook: "https://www.google.com/search?q=" + encodeURIComponent(fbQuery.trim())
@@ -1536,7 +1623,7 @@
   ];
   function renderSites(area) {
     const L = siteLinks(area);
-    const place = L.city ? L.city.name : state.town || null;
+    const place = L.city ? L.city.name : null;
     $("go-title").textContent = place ? T("Go straight to the listings in {place}", { place: P(place) }) : T("Go straight to the listings");
     $("go-row").innerHTML = [["Realta · all sites in one", L.realta, "#1c1433"], ["Yad2", L.yad2, "#6c3cf0"], ["Komo", L.komo, "#0fb5a6"], ["OnMap", L.onmap, "#e0338a"], ["Madlan", L.madlan, "#ff3d8b"],
       ["Homeless", L.homeless, "#9b5cff"], ["Facebook groups", L.facebook, "#0a9d90"]]
@@ -1549,16 +1636,16 @@
     const nextMode = state.linkMode === "all" ? "\u201c" + T("Rooms & budget only") + "\u201d" : state.linkMode === "basic" ? "\u201c" + T("Just the city") + "\u201d" : T("Realta, which combines all the sites");
     $("go-incl").innerHTML = "<b>" + T("Included in the links:") + "</b> " + incl.join(" · ") +
       (state.linkMode === "city" ? "" : "<br>" +
-        (L.realtaPage ? T("Realta opens its \u201c{page}\u201d page for your city; ", { page: T({ "near-the-sea": "near the sea", "from-owners": "no agent", furnished: "furnished" }[L.realtaPage]) }) : T("Realta gets rooms and budget; ")) +
-        T(L.hood && L.hood.hood ? "Yad2 and Komo get all of these (and the neighbourhood); OnMap gets rooms and price; Homeless and Madlan open your city." : "Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.")) +
+        (L.realtaPage === "hood" ? T("Realta opens {hood} with your rooms and budget; ", { hood: hoodName(L.hood) })
+          : L.realtaPage ? T("Realta opens its \u201c{page}\u201d page for your city; ", { page: T({ "near-the-sea": "near the sea", "from-owners": "no agent", furnished: "furnished" }[L.realtaPage]) }) : T("Realta gets rooms and budget; ")) +
+        T(L.hood && L.hood.yad2 ? "Yad2 and Komo get all of these (and the neighbourhood); OnMap gets rooms and price; Homeless and Madlan open your city." : "Yad2 and Komo get all of these; OnMap gets rooms and price; Homeless and Madlan open your city.")) +
       "<br>" + T("<b>Nothing found?</b> Smaller sites have few ads in some cities, and many ads don't tag features like a lift or safe room. Try {next}.", { next: nextMode });
-    const where = L.hood ? hoodName(L.hood) + ", " + P(L.city.name) : L.city ? P(L.city.name) : state.town ? P(state.town) : null;
+    const where = L.hood ? hoodName(L.hood) + ", " + P(L.city.name) : L.city ? P(L.city.name) : null;
     $("go-note").textContent = L.city
-      ? (L.hood && L.hood.hood ? T("Each button opens {city}'s rental listings in a new tab (Yad2 opens {hood} directly).", { city: P(L.city.name), hood: hoodName(L.hood) })
+      ? (L.hood && L.hood.yad2 ? T("Each button opens {city}'s rental listings in a new tab (Yad2 opens {hood} directly).", { city: P(L.city.name), hood: hoodName(L.hood) })
         : L.hood ? T("Each button opens {city}'s rental listings in a new tab. Add the neighbourhood {names} in the site's location box.", { city: P(L.city.name), names: L.hood.members ? T("names") : "\u201c" + L.hood.he + "\u201d" })
         : T("Each button opens {city}'s rental listings in a new tab.", { city: P(L.city.name) }))
-      : L.yad2Town ? T("Yad2 opens {town}'s listings; on the other sites pick {town} in the search, then use the filters below.", { town: P(state.town) })
-      : T("Opens the site's rental search in a new tab. Pick {town} there, then use the filters below.", { town: state.town ? P(state.town) : T("your town") });
+      : T("Opens the site's rental search in a new tab. Pick {town} there, then use the filters below.", { town: T("your town") });
     if (where) $("go-title").textContent = T("Go straight to the listings in {place}", { place: where });
     $("site-list").innerHTML = SITES.map(([name, domain, desc, color, link, local]) => {
       const hl = local && local.includes(area.name);
@@ -1575,16 +1662,16 @@
   function fillCompare() {
     cmpSel.innerHTML = "";
     cmpSel.append(new Option(T("Israel average"), "Israel"));
-    [...cities].sort((a, b) => P(a.name).localeCompare(P(b.name), lang)).forEach((c) => cmpSel.append(new Option(P(c.name), c.name)));
+    [...cities, ...towns].sort((a, b) => P(a.name).localeCompare(P(b.name), lang)).forEach((c) => cmpSel.append(new Option(P(c.name), c.name)));
   }
   fillCompare();
-  function renderCosts(area, band, avg) {
+  function renderCosts(area, rooms, avg) {
     const level = currentLevel(avg);
     const hood = currentHood(area.name);
-    const here = costFor(area.name, state.town, band, level, hood);
-    const cmpName = state.compare === area.name && !state.town ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
-    const there = costFor(cmpName, null, band, level);
-    const placeName = state.town ? P(state.town) : P(area.type === "National" ? "Israel" : area.name);
+    const here = costFor(area.name, rooms, level, hood);
+    const cmpName = state.compare === area.name ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
+    const there = costFor(cmpName, rooms, level);
+    const placeName = P(area.type === "National" ? "Israel" : area.name);
     const cmpLabel = cmpName === "Israel" ? T("Israel avg") : P(cmpName);
     const people = state.adults + state.kids;
 
@@ -1597,9 +1684,12 @@
     $("cost-title").textContent = T("What it will really cost in {place}", { place: (hood ? hoodName(hood) + ", " : "") + placeName });
     document.querySelectorAll("[data-shabbat]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.shabbat === "1") === state.shabbat)));
     document.querySelectorAll("[data-meals]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.meals === state.shabbatMeals)));
-    $("cc-guests").hidden = $("cc-meals").hidden = !state.shabbat;
-    $("guests-value").textContent = state.guests;
-    $("guests-down").disabled = state.guests <= 0; $("guests-up").disabled = state.guests >= 12;
+    $("cc-meals").hidden = $("cc-host").hidden = !state.shabbat;
+    $("cc-dinners").hidden = $("cc-lunches").hidden = $("cc-guests").hidden = !state.shabbat || !state.hostWeeks;
+    for (const [k, max] of [["guests", 12], ["hostWeeks", 5], ["hostDinners", state.hostWeeks], ["hostLunches", state.hostWeeks]]) {
+      $(k + "-value").textContent = state[k];
+      $(k + "-down").disabled = state[k] <= 0; $(k + "-up").disabled = state[k] >= max;
+    }
     $("ct-amount").innerHTML = fmt(here.total) + " <small>" + T("/ month") + "</small>";
     $("ct-sub").textContent = (people === 1 ? T("1 person") : T("{n} people", { n: people })) + " · " + roomsText(state.rooms) + " · " +
       T(cap(level) + " lifestyle") + " · " + T({ rail: "near a station", bus: "public transport", car: "with a car" }[state.transport]);
@@ -1607,7 +1697,7 @@
     $("ct-vs").innerHTML = T("vs {place}", { place: esc(cmpLabel) }) + "<b>" + (diff === 0 ? T("Same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</b>" +
       (diff === 0 ? "" : diff > 0 ? T("more a month") : T("less a month")) + (state.shabbat ? "<br>" + T("(both include Shabbat)") : "");
     $("sh-badge").textContent = state.shabbat ? T("🕯 Shabbat adds +{price} a month", { price: fmt(here.shabbat) }) : "";
-    $("guests-nudge").textContent = state.shabbat && !state.guests ? T("Add guests to include hosting") : "";
+    $("guests-nudge").textContent = state.shabbat && state.hostWeeks && !state.guests ? T("Add guests to include hosting") : "";
     $("allin").innerHTML = T("≈ {price}/mo all-in →", { price: fmt(here.total) });
 
     $("cost-bar").innerHTML = COST_LINES.filter(([k]) => here[k] > 0)
@@ -1616,12 +1706,13 @@
     $("col-a").textContent = placeName; $("col-b").textContent = cmpLabel;
     const hint = {
       rent: T(cap(level) + " level") + (RENT_ADJ[state.transport] ? T(RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : "") +
-        (areaAdj(hood) ? T(", {pct} for {area}", { pct: (areaAdj(hood) > 0 ? "+" : "−") + Math.abs(Math.round(areaAdj(hood) * 100)) + "%", area: hoodName(hood) }) : ""),
+        (Math.abs(areaAdj(hood)) >= 0.03 ? T(", {pct} for {area}", { pct: pctText(areaAdj(hood)), area: hoodName(hood) }) : ""),
       transport: state.transport === "car" ? T("Typical car costs: fuel, insurance, upkeep") : T("{n} × Rav-Kav nationwide monthly pass (₪{price})", { n: state.adults, price: LD.costs.passes.national }),
       education: T("Schools, kindergarten, after-school activities"),
-      shabbat: T(state.guests ? "{people} of you + {guests} guests × {meals} festive meals a week (₪{fam} extra per family member, ₪{guest} per guest), about 4.3 Shabbatot a month"
-        : "{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
-        { people: state.adults + state.kids, guests: state.guests, meals: state.shabbatMeals, fam: Math.round(LD.costs.shabbat.personMeal * 2), guest: LD.costs.shabbat.guestMeal }),
+      shabbat: T("{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
+        { people: state.adults + state.kids, meals: state.shabbatMeals, fam: Math.round(LD.costs.shabbat.personMeal * 2) }) +
+        (state.guests && hostedMeals() ? "; " + T("hosted each month: {d} × Friday dinner, {l} × Shabbat lunch, {guests} guests each time (₪{guest} per guest per meal)",
+          { guests: state.guests, d: state.hostDinners, l: state.hostLunches, guest: LD.costs.shabbat.guestMeal }) : ""),
       leisure: T("Gym, classes, events, outings"),
       groceries: T("Supermarket food, fruit & veg"),
       extras: extrasList().map((e) => e.name + (e.qty !== 1 ? " ×" + e.qty : "")).join(", ")
@@ -1636,7 +1727,7 @@
     $("cost-foot").innerHTML = "<td>" + T("Total") + "</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
       (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? T("≈ same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
 
-    const region = regionFor(area.name, state.town);
+    const region = regionFor(area.name);
     $("cost-note").innerHTML = T("Everyday costs: typical spending in the {region} (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.",
       { region: esc(P(LD.costs.regionNames[region] || region)) });
   }
@@ -1667,9 +1758,9 @@
   }
   // recompute the money without rebuilding the inputs (keeps the cursor where it is)
   function refreshCosts() {
-    const area = byName[state.area], band = bandFor(state.rooms), b = bandOf(area, band);
-    renderCosts(area, band, b.rent);
-    renderFeed(band);
+    const area = byName[state.area], b = rentOf(area, state.rooms);
+    renderCosts(area, state.rooms, b.rent * (1 + areaAdj(currentHood(area.name))));
+    renderFeed(state.rooms);
     updateExtrasSum();
   }
   $("extras-toggle").addEventListener("click", () => {
@@ -1719,10 +1810,14 @@
     if (!list.length) return;
     const opts = ['<option value="">' + esc(T("Anywhere in {city}", { city: P(area.name) })) + "</option>"];
     if (list.some((h) => h.beach)) opts.push('<option value="__beach">🏖 ' + esc(T("By the beach")) + "</option>");
-    for (const h of list) opts.push('<option value="' + esc(h.en) + '">' + (h.beach ? "🏖 " : "") + esc(lang === "he" ? h.he : h.en + " · " + h.he) +
-      (h.hint === "higher" ? " " + T("(pricier)") : h.hint === "lower" ? " " + T("(cheaper)") : "") + "</option>");
+    // A to Z, each with how its asking rents compare with the town's
+    const sorted = [...list].sort((a, b) => (lang === "he" ? a.he.localeCompare(b.he, "he") : a.en.localeCompare(b.en, "en")));
+    for (const h of sorted) opts.push('<option value="' + esc(h.s) + '">' + (h.beach ? "🏖 " : "") + esc(lang === "he" ? h.he : h.en + " · \u2068" + h.he + "\u2069") +   // isolate the Hebrew so the % stays in place
+      " (" + pctText(h.f - 1) + ")</option>");
     hoodSel.innerHTML = opts.join("");
-    if (state.hood && !currentHood(area.name)) state.hood = "";
+    const cur = currentHood(area.name);
+    if (state.hood && !cur) state.hood = "";
+    if (cur && !cur.members) state.hood = cur.s;
     hoodSel.value = state.hood;
   }
   hoodSel.addEventListener("change", () => { state.hood = hoodSel.value; persist(); render(); });
@@ -1730,28 +1825,28 @@
   // ---- Main render ----
   function render() {
     const area = byName[state.area];
-    const band = bandFor(state.rooms);
-    const b = bandOf(area, band);
+    const rooms = state.rooms;
+    const b = rentOf(area, rooms);
 
     $("rooms-value").textContent = roomsShort(state.rooms);
     $("rooms-down").disabled = state.rooms <= MIN_ROOMS;
     $("rooms-up").disabled = state.rooms >= MAX_ROOMS;
     $("rooms-hint").textContent = bedCount(state.rooms) ? T("= {n} bed + living", { n: bedCount(state.rooms) }) : T("= studio");
-    $("legend-title").textContent = T("Avg rent · {band} rooms", { band });
+    $("legend-title").textContent = T("Avg rent · {band} rooms", { band: roomsShort(rooms) });
     $("legend-over").hidden = !effBudget();
 
     renderHoodPicker(area);
-    renderHero(area, band, b);
+    const avg = b.rent * (1 + areaAdj(currentHood(area.name)));
+    renderHero(area, rooms, b);
     renderExtras();
-    renderCosts(area, band, b.rent);
-    renderGuide(area, band, b.rent);
+    renderCosts(area, rooms, avg);
+    renderGuide(area, rooms, avg);
     renderSites(area);
-    renderFeed(band);
-    updatePins(band);
+    renderFeed(rooms);
+    updatePins(rooms);
   }
 
   function select(name, opts = {}) {
-    if (!opts.keepTown) state.town = null;
     if (name !== state.area) state.hood = "";
     state.area = name; persist(); render();
     if (document.activeElement !== areaInput) areaInput.value = placeLabel();
@@ -1803,6 +1898,18 @@
   document.querySelectorAll("[data-linkmode]").forEach((b) => b.addEventListener("click", () => { state.linkMode = b.dataset.linkmode; persist(); render(); }));
   $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
   $("guests-up").addEventListener("click", () => bump("guests", 1, 0, 12));
+  // dinners and lunches with guests can't outnumber the Shabbatot you host
+  const hostBump = (key, d) => {
+    if (key === "hostWeeks") {
+      state.hostWeeks = Math.min(5, Math.max(0, state.hostWeeks + d));
+      state.hostDinners = Math.min(state.hostDinners, state.hostWeeks); state.hostLunches = Math.min(state.hostLunches, state.hostWeeks);
+    } else state[key] = Math.min(state.hostWeeks, Math.max(0, state[key] + d));
+    persist(); render();
+  };
+  for (const k of ["hostWeeks", "hostDinners", "hostLunches"]) {
+    $(k + "-down").addEventListener("click", () => hostBump(k, -1));
+    $(k + "-up").addEventListener("click", () => hostBump(k, 1));
+  }
   cmpSel.addEventListener("change", () => { state.compare = cmpSel.value; persist(); render(); });
   $("allin").addEventListener("click", () => { const p = $("cost-panel"); p.open = true; p.scrollIntoView({ behavior: "smooth", block: "start" }); });
   $("rooms-down").addEventListener("click", () => { state.rooms = Math.max(MIN_ROOMS, state.rooms - STEP); persist(); render(); });
@@ -1813,7 +1920,7 @@
   $("no-budget").addEventListener("click", () => { state.noLimit = !state.noLimit; state.level = null; persist(); render(); if (!state.noLimit) budgetEl.focus(); });
   const sortEl = $("sort");
   sortEl.value = state.sort;
-  sortEl.addEventListener("change", () => { state.sort = sortEl.value; persist(); renderFeed(bandFor(state.rooms)); });
+  sortEl.addEventListener("change", () => { state.sort = sortEl.value; persist(); renderFeed(state.rooms); });
 
   document.addEventListener("click", (e) => {
     const kw = e.target.closest("[data-kw]");
@@ -1886,8 +1993,9 @@
       el.setAttribute("aria-label", T(el.dataset.srcAria));
     });
     // filled-in bits inside the translated blocks
-    $("data-chip").textContent = T("Official CBS data") + " · " + quarterLabel(D.quarter);
+    $("data-chip").textContent = T("Live listings + CBS data") + " · " + dateLabel(window.MARKET_DATA.date);
     if ($("m-quarter")) $("m-quarter").textContent = quarterLabel(D.quarter);
+    if ($("m-date")) $("m-date").textContent = dateLabel(window.MARKET_DATA.date);
     if ($("credits")) $("credits").innerHTML = Object.entries(M.cities).map(([n, m]) =>
       esc(P(n)) + ': <a href="' + esc(m.source) + '" target="_blank" rel="noopener noreferrer">' + esc(m.credit) + "</a> (" + esc(m.license) + ")").join("; ") + ".";
     mt.querySelector("span").textContent = document.body.classList.contains("show-map") ? T("List") : T("Map");

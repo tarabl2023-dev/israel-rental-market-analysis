@@ -1,6 +1,6 @@
 # Israel Rental Market Analysis
 
-An analysis of rents across Israel's major cities, written in **R** with the **Tidyverse**, using official data from the Israel Central Bureau of Statistics (CBS).
+An analysis of rents across Israel's major cities, written in **R** with the **Tidyverse**, using official data from the Israel Central Bureau of Statistics (CBS) and, for the calculator, a snapshot of today's asking rents from live listings.
 
 The project looks at how monthly rent varies by **city**, **district** and **dwelling size**, and how prices have moved over three years, from Q3 2023 to Q2 2026.
 
@@ -10,10 +10,10 @@ The project looks at how monthly rent varies by **city**, **district** and **dwe
 
 Available in **English, Hebrew (עברית), Russian (Русский) and Arabic (العربية)**.
 
-Type any city or town (in English or Hebrew) and the number of rooms you need, then browse every city as photo listing cards next to an interactive map with price pins. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check.
+Type any of 94 cities and towns (in English, Hebrew, Russian or Arabic), pick any of about 1,000 neighbourhoods, and the number of rooms you need, then browse every city as photo listing cards next to an interactive map with price pins. The calculator gives an estimated monthly rent at **budget**, **comfortable** and **luxury** levels. You can also enter your budget, or choose "No budget limit", to see which level it covers and which cities it stretches to. A search guide then tells you exactly what to type into Israeli rental sites: a ready-made Hebrew search phrase, the filters to set (city, rooms, price for your level) and Hebrew keywords for budget, comfortable or luxury flats. It also lists which sites to check.
 
 - **Public transport:** choose whether you want to walk to a train or light-rail station, use buses, or drive. Each city shows its train, light-rail and Carmelit stations (from OpenStreetMap), which can also appear on the map.
-- **What it will really cost:** rent plus arnona, bills, groceries, eating out, transport, education, sport and fitness, health, and clothing for your household size and lifestyle, compared side by side with any other city. Everyday costs come from the CBS Household Expenditure Survey (2021, by sub-district), brought to 2026 prices with the CBS price index. Ra'anana is included as an estimate: CBS doesn't publish rents for towns under 100,000 residents, so it borrows neighbouring Kfar Saba's figures, and the page says so.
+- **What it will really cost:** rent plus arnona, bills, groceries, eating out, transport, education, sport and fitness, health, and clothing for your household size and lifestyle, compared side by side with any other city. Everyday costs come from the CBS Household Expenditure Survey (2021, by sub-district), brought to 2026 prices with the CBS price index. If you keep Shabbat, you can set how many Shabbatot a month you host and how many Friday dinners and Shabbat lunches have guests.
 
 ---
 
@@ -70,9 +70,10 @@ Each CBS edition only covers seven quarters, so five editions were combined, kee
 2. **Analyse and visualise** ([`R/02_analysis.R`](R/02_analysis.R)): compare cities and districts in the latest quarter, add 95% confidence intervals from CBS sampling errors, calculate year-on-year and three-year growth, index rents to a common base to compare size bands, and calculate the size premium in each city.
 3. **Export for the calculator** ([`R/03_export_app_data.R`](R/03_export_app_data.R)): take the latest-quarter rent for every area and size band, fill the two cells CBS suppresses using district price ratios, and write JSON for the web page in [`docs/`](docs/).
 4. **Export living costs and transport** ([`R/04_export_living_costs.R`](R/04_export_living_costs.R)): count rail stations per city from OpenStreetMap, then turn CBS household spending by sub-district into monthly costs per person at 2026 prices.
-5. **Outputs:** six charts in [`figures/`](figures/), summary tables in [`output/`](output/) and the [interactive calculator](https://tarabl2023-dev.github.io/israel-rental-market-analysis/).
+5. **Export market rents** ([`R/05_export_market_data.R`](R/05_export_market_data.R)): join a snapshot of Realta's median asking rents (by town and room count, 94 towns) and neighbourhood averages (about 1,000 neighbourhoods) to each town's district and CBS sub-district, and work out each neighbourhood's price relative to its town, pulling neighbourhoods with few ads towards the town average.
+6. **Outputs:** six charts in [`figures/`](figures/), summary tables in [`output/`](output/) and the [interactive calculator](https://tarabl2023-dev.github.io/israel-rental-market-analysis/).
 
-**How the calculator's levels work:** *comfortable* is the CBS average for that area and size. CBS doesn't publish the spread of rents, so *budget* (about 80% of the average) and *luxury* (about 140%) are rule-of-thumb multipliers. The page says this.
+**How the calculator's levels work:** *comfortable* is today's median asking rent for that town and size (Realta, which aggregates Yad2, Madlan, OnMap, Homeless, Komo and Facebook). The CBS average is shown next to it as the official reference. It runs well below asking rents because it averages every lease, including long-running renewals (4 rooms in Jerusalem: CBS ≈ ₪6,200, listings ≈ ₪9,100). Neither source publishes the spread of rents, so *budget* (about 80% of the median) and *luxury* (about 140%) are rule-of-thumb multipliers. The page says this.
 
 ## Run it yourself
 
@@ -112,4 +113,4 @@ israel-rental-market/
 - From Q1 2026 the 4.5+ band includes homes with more than 6 rooms, so the 4.5+ figures for 2026 are not directly comparable with earlier quarters. That band is left out of the growth-by-size chart.
 - Three years is a short window, so these figures describe recent trends rather than the long-run market.
 
-*Data © Israel Central Bureau of Statistics, used with attribution. Map © OpenStreetMap contributors. City photos from Wikimedia Commons; authors and licences are credited in the calculator.*
+*Data © Israel Central Bureau of Statistics, used with attribution. Asking rents from Realta (realta.co.il), snapshot of 26 Oct 2026. Map © OpenStreetMap contributors. City photos from Wikimedia Commons; authors and licences are credited in the calculator.*

@@ -1,0 +1,1036 @@
+city_slug,slug,name_he,mean_rent,listings
+tel-aviv-yafo,orot,"אורות",3933,3
+tel-aviv-yafo,holon-junction,"צומת חולון",4433,3
+tel-aviv-yafo,hatikva,"התקווה",4556,125
+tel-aviv-yafo,ramat-hatayasim,"רמת הטייסים",4775,10
+tel-aviv-yafo,jaffa-d,"יפו ד",5330,34
+tel-aviv-yafo,levana-and-yedidya,"לבנה וידידיה",5558,25
+tel-aviv-yafo,ezra-vehaarguzim,"עזרא והארגזים",5691,36
+tel-aviv-yafo,south-florentin,"דרום פלורנטין",5705,37
+tel-aviv-yafo,kfar-shalem,"כפר שלם",5742,108
+tel-aviv-yafo,neve-sharet,"נוה שרת",5775,44
+tel-aviv-yafo,shapira,"שפירא",5931,95
+tel-aviv-yafo,neve-tzahal,"נוה צה""ל",6029,7
+tel-aviv-yafo,dakar,"דקר",6040,28
+tel-aviv-yafo,jaffa-center,"מרכז יפו",6046,25
+tel-aviv-yafo,neve-ofer,"נווה עופר",6135,80
+tel-aviv-yafo,ramat-israel,"רמת ישראל",6173,15
+tel-aviv-yafo,neve-shanan,"נוה שאנן",6209,143
+tel-aviv-yafo,neve-hen,"נוה חן",6263,57
+tel-aviv-yafo,givat-herzl,"גבעת הרצל",6375,14
+tel-aviv-yafo,neve-golan,"נוה גולן",6529,21
+tel-aviv-yafo,kiryat-shalom,"קרית שלום",7197,83
+tel-aviv-yafo,yad-eliyahu,"יד אליהו",7274,138
+tel-aviv-yafo,florentin,"פלורנטין",7488,263
+tel-aviv-yafo,montefiore,"מונטיפיורי",7545,35
+tel-aviv-yafo,tel-haim,"תל חיים",7840,27
+tel-aviv-yafo,yad-harutzim,"יד חרוצים",7871,14
+tel-aviv-yafo,jaffa-g,"יפו ג",8400,16
+tel-aviv-yafo,tzahalon-and-savings-housing,"צהלון ושיכוני חסכון",8585,23
+tel-aviv-yafo,bitzaron,"ביצרון",8952,37
+tel-aviv-yafo,neot-afeka-b,"נאות אפקה ב",9425,18
+tel-aviv-yafo,ramat-hahayal,"רמת החייל",10200,9
+tel-aviv-yafo,tzahala,"צהלה",10300,5
+tel-aviv-yafo,noga,"נגה",10600,12
+tel-aviv-yafo,ramat-aviv,"רמת אביב",10880,25
+tel-aviv-yafo,neve-avivim,"נוה אביבים",11664,80
+tel-aviv-yafo,neot-afeka-a,"נאות אפקה א",11790,10
+tel-aviv-yafo,south-rothschild,"דרום רוטשילד",11837,66
+tel-aviv-yafo,old-north-central-part,"הצפון הישן החלק המרכזי",11886,127
+tel-aviv-yafo,hadar-yosef,"הדר יוסף",11977,32
+tel-aviv-yafo,flea-market-and-north-jaffa,"שוק הפשפשים וצפון יפו",12206,20
+tel-aviv-yafo,nahlat-yitzhak,"נחלת יצחק",12240,74
+tel-aviv-yafo,maar-north,"מע""ר צפוני",12389,63
+tel-aviv-yafo,plan-l,"תוכנית ל",12582,32
+tel-aviv-yafo,hamishtala,"המשתלה",12612,27
+tel-aviv-yafo,tel-baruch-north,"תל ברוך צפון",12730,27
+tel-aviv-yafo,shikun-dan,"שיכון דן",12840,31
+tel-aviv-yafo,nahlat-binyamin,"נחלת בנימין",13002,92
+tel-aviv-yafo,lev-tel-aviv-west,"לב תל אביב החלק המערבי",13220,121
+tel-aviv-yafo,old-north-southeast-part,"הצפון הישן החלק הדרום מזרחי",13288,152
+tel-aviv-yafo,l-new,"ל' החדשה",13346,13
+tel-aviv-yafo,new-north-southern-part,"הצפון החדש החלק הדרומי",13575,110
+tel-aviv-yafo,kerem-hateimanim,"כרם התימנים",13575,89
+tel-aviv-yafo,revivim,"רביבים",13944,25
+tel-aviv-yafo,old-north-southwest-part,"הצפון הישן החלק הדרום מערבי",14146,150
+tel-aviv-yafo,ramat-aviv-hahadasha,"רמת אביב החדשה",14369,25
+tel-aviv-yafo,lev-tel-aviv,"לב תל אביב",14577,235
+tel-aviv-yafo,old-north-northern-part,"הצפון הישן החלק הצפוני",15434,191
+tel-aviv-yafo,ramot-tsahala,"רמות צהלה",15438,26
+tel-aviv-yafo,sharona,"שרונה",15566,272
+tel-aviv-yafo,new-north-kikar-hamedina-area,"הצפון החדש סביבת כיכר המדינה",15600,258
+tel-aviv-yafo,ajami,"עג'מי",16424,78
+tel-aviv-yafo,ganei-tzahala,"גני צהלה",16527,15
+tel-aviv-yafo,new-north-northern-part,"הצפון החדש החלק הצפוני",16557,82
+tel-aviv-yafo,maoz-aviv-b,"מעוז אביב ב'",16733,3
+tel-aviv-yafo,hen-areas,"אזורי חן",17848,37
+tel-aviv-yafo,ramat-aviv-g,"רמת אביב ג",18275,79
+tel-aviv-yafo,neve-tzedek,"נווה צדק",19366,71
+tel-aviv-yafo,nofei-yam-(big-block),"נופי ים (הגוש הגדול)",19843,54
+tel-aviv-yafo,old-jaffa,"יפו העתיקה",19970,24
+tel-aviv-yafo,northern-star,"כוכב הצפון",20272,47
+tel-aviv-yafo,shikun-bavli,"שיכון בבלי",20776,107
+tel-aviv-yafo,complex-2000,"מתחם  2000",21992,13
+tel-aviv-yafo,afeka,"אפקה",22503,20
+tel-aviv-yafo,glilot,"גלילות",22531,46
+tel-aviv-yafo,tzameret-park,"פארק צמרת",22727,82
+tel-aviv-yafo,tel-baruch,"תל ברוך",22928,17
+tel-aviv-yafo,tel-aviv-port,"נמל תל אביב",42650,11
+jerusalem,givat-hamevater,"גבעת המבתר",2875,4
+jerusalem,ir-ganim-a,"עיר גנים א'",4817,6
+jerusalem,ir-ganim-b-g,"עיר גנים ב', ג'",5203,22
+jerusalem,zikhron-moshe,"זכרון משה",5625,5
+jerusalem,neve-yaakov,"נוה יעקב",5724,23
+jerusalem,pat,"פת",5750,6
+jerusalem,kiryat-menahem,"קרית מנחם",5829,22
+jerusalem,armon-hanatziv,"ארמון הנציב",5855,94
+jerusalem,katamon-h-t,"קטמון ח-ט",5876,30
+jerusalem,kiryat-hayovel,"קרית היובל",6018,92
+jerusalem,pisgat-zeev,"פסגת זאב",6180,94
+jerusalem,gilo,"גילה",6215,87
+jerusalem,talpiot-housing,"שיכוני תלפיות",6427,12
+jerusalem,ramat-motza,"רמת מוצא",6613,4
+jerusalem,beit-vegan,"בית וגן",6786,33
+jerusalem,givat-mordechai,"גבעת מרדכי",6793,16
+jerusalem,beit-hakerem,"בית הכרם",6801,39
+jerusalem,talpiot-industrial-zone,"א.ת. תלפיות",7100,6
+jerusalem,kiryat-shmuel,"קרית שמואל",7186,11
+jerusalem,katamon-a-v,"קטמון א-ו",7259,70
+jerusalem,givat-masua,"גבעת משואה",7367,6
+jerusalem,french-hill,"הגבעה הצרפתית",7405,24
+jerusalem,nahlaot,"נחלאות",7470,116
+jerusalem,har-nof,"הר נוף",7630,15
+jerusalem,kiryat-moshe,"קרית משה",7719,20
+jerusalem,har-homa,"הר חומה",7731,35
+jerusalem,makor-baruch,"מקור ברוך",7878,29
+jerusalem,givat-shaul,"גבעת שאול",8094,18
+jerusalem,ramot-rachel-new-arnona,"רמות רחל , ארנונה החדשה",8108,26
+jerusalem,arnona-(talpiot),"ארנונה (תלפיות)",8187,85
+jerusalem,arnona-slopes,"מורדות ארנונה",8225,120
+jerusalem,ramat-danya,"רמת דניה",8479,19
+jerusalem,mamilla,"ממילא",8507,7
+jerusalem,ein-kerem,"עין כרם",8625,4
+jerusalem,city-center,"מרכז העיר",8767,125
+jerusalem,baka,"בקעה",9183,48
+jerusalem,ramat-sharet,"רמת שרת",9302,43
+jerusalem,makor-haim,"מקור חיים",9304,9
+jerusalem,maalot-dafna,"מעלות דפנה",9320,5
+jerusalem,old-katamon,"קטמון הישנה",9349,24
+jerusalem,raseko-(givat-havradim),"רסקו (גבעת הורדים)",9350,17
+jerusalem,ramat-shlomo,"רמת שלמה",9433,9
+jerusalem,ramot,"רמות",9561,57
+jerusalem,abu-tor,"אבו תור",9684,37
+jerusalem,malha,"מלחה",9786,42
+jerusalem,rehavia,"רחביה",9873,25
+jerusalem,ramat-beit-hakerem,"רמת בית הכרם",9972,20
+jerusalem,ramat-eshkol,"רמת אשכול",10029,7
+jerusalem,kiryat-haleom,"קרית הלאום",10225,10
+jerusalem,holyland-complex,"מתחם הולילנד",10500,11
+jerusalem,talbieh,"טלביה",11090,35
+jerusalem,yemin-moshe,"ימין משה",11833,3
+jerusalem,german-colony,"המושבה הגרמנית",11979,21
+jerusalem,romema,"רוממה",12462,38
+jerusalem,musrara-morasha,"מוסררה - מורשה",13060,5
+jerusalem,nayot,"ניות",15000,4
+jerusalem,shaarei-hesed,"שערי חסד",17967,4
+jerusalem,north-talpiot,"צפון תלפיות",22377,9
+haifa,neve-yosef,"נוה יוסף",2259,45
+haifa,geula,"גאולה",2405,21
+haifa,neve-paz,"נוה פז",2455,148
+haifa,halisa,"חליסה",2532,30
+haifa,tel-amal,"תל עמל",2549,110
+haifa,kibbutz-galuyot,"קיבוץ גלויות",2559,45
+haifa,kiryat-shmuel,"קריית שמואל",2716,30
+haifa,wadi-nisnas,"ואדי ניסנאס",2794,20
+haifa,upper-hadar,"הדר עליון",2822,122
+haifa,hadar-hacarmel,"הדר הכרמל",2886,476
+haifa,mai,"מאי",3133,9
+haifa,ramot-remez,"רמות רמז",3290,85
+haifa,yizraelia,"יזרעאליה",3299,38
+haifa,abbas,"עבאס",3386,33
+haifa,kiryat-eliyahu,"קרית אליהו",3389,22
+haifa,kiryat-eliezer,"קרית אליעזר",3408,67
+haifa,lower-city,"עיר תחתית",3489,87
+haifa,neve-david,"נווה דוד",3500,32
+haifa,kiryat-haim-west,"קרית חיים מערבית",3546,110
+haifa,kiryat-shprintsak,"קרית שפרינצק",3559,55
+haifa,kiryat-haim-east,"קרית חיים מזרחית",3668,101
+haifa,neve-shanan,"נוה שאנן",3690,125
+haifa,immigration-gate,"שער העליה",3741,11
+haifa,kababir,"כבביר",3817,3
+haifa,ramat-hadar,"רמת הדר",3852,24
+haifa,ein-hayam,"עין הים",4122,10
+haifa,romema-hahadasha,"רוממה החדשה",4214,8
+haifa,ramat-hen,"רמת חן",4350,4
+haifa,german-colony,"המושבה הגרמנית",4406,17
+haifa,wadi-salib,"ואדי סליב",4410,18
+haifa,romema-hayeshana,"רוממה הישנה",4558,14
+haifa,givat-downs,"גבעת דאונס",4789,22
+haifa,ramat-hatishbi,"רמת התשבי",4864,11
+haifa,north-carmel,"כרמל צפוני",4886,38
+haifa,west-carmel,"כרמל מערבי",5016,42
+haifa,french-carmel,"כרמל צרפתי",5041,11
+haifa,ahuza,"אחוזה",5110,68
+haifa,ramat-almogi,"רמת אלמוגי",5159,11
+haifa,carmel-center,"מרכז הכרמל",5468,52
+haifa,ramat-shaul,"רמת שאול",5542,12
+haifa,hof-hacarmel,"חוף הכרמל",5714,14
+haifa,carmeliya,"כרמליה",5746,15
+haifa,ramat-begin,"רמת בגין",5843,15
+haifa,shambur,"שמבור",5990,21
+haifa,vardiya,"ורדיה",5991,6
+haifa,bat-galim,"בת גלים",6090,22
+haifa,danya,"דניה",6382,25
+haifa,carmel-vatik,"כרמל ותיק",6623,22
+haifa,nof-shanan,"נוף שאנן",6750,4
+haifa,ramat-eshkol,"רמת אשכול",6938,8
+haifa,ramat-golda,"רמת גולדה",7485,14
+haifa,savyonei-danya,"סביוני דניה",7735,20
+haifa,givat-oranim,"גבעת אורנים",7867,4
+haifa,neot-peres,"נאות פרס",9056,9
+herzliya,yad-hatisha,"יד התשעה",5073,28
+herzliya,center,"מרכז",7940,99
+herzliya,neve-amal,"נוה עמל",8128,27
+herzliya,eastern-green,"הירוקה המזרחית",8428,11
+herzliya,central-green,"הירוקה המרכזית",9064,63
+herzliya,gan-rashal,"גן רש""ל",9225,15
+herzliya,young-herzliya,"הרצליה הצעירה",9320,30
+herzliya,neve-israel,"נוה ישראל",9577,12
+herzliya,neve-amirim,"נוה אמירים",10632,19
+herzliya,zerubavel,"זרובבל",13125,4
+herzliya,western-green,"הירוקה המערבית",15475,5
+herzliya,herzliya-b,"הרצליה ב'",17234,75
+herzliya,hamarina,"המרינה",17883,61
+herzliya,herzliya-pituah,"הרצליה פיתוח",28335,187
+herzliya,nof-yam,"נוף ים",31688,9
+raanana,kiryat-sharet,"קרית שרת",7222,13
+raanana,kiryat-david-remez,"קרית דוד רמז",9056,54
+raanana,lev-hapark,"לב הפארק",9340,5
+raanana,2004,"2004",9430,10
+raanana,lester,"לסטר",9675,12
+raanana,2008,"2008",9975,4
+raanana,south-center,"מרכז דרום",10683,66
+raanana,shazar,"שז""ר",10980,5
+raanana,2005,"2005",11178,9
+raanana,kiryat-weizmann,"קרית ויצמן",12048,23
+raanana,2003,"2003",12800,3
+raanana,neve-zemer,"נווה זמר",12818,22
+raanana,southeast,"דרום מזרח",15080,17
+raanana,shikun-asher,"שיכון אשר",34700,8
+raanana,kiryat-eliyahu-golomb,"קרית אליהו גולומב",37750,8
+kfar-saba,eliezer,"אליעזר",4500,3
+kfar-saba,beit-venof,"בית ונוף",4700,4
+kfar-saba,yoseftal,"יוספטל",4768,16
+kfar-saba,eli-cohen,"אלי כהן",5300,4
+kfar-saba,lampert;-poalim-b,"למפרט;פועלים ב",5300,3
+kfar-saba,veterans-housing,"שיכון ותיקים",5557,7
+kfar-saba,aliya-housing,"שיכון עליה",5950,8
+kfar-saba,hadarim,"הדרים",6133,4
+kfar-saba,givat-eshkol,"גבעת אשכול",6780,5
+kfar-saba,tkuma-harishonim,"תקומה, הראשונים",6817,23
+kfar-saba,city-center-south,"מרכז העיר דרום",6819,63
+kfar-saba,prahim;-deganya,"פרחים;דגניה",6863,12
+kfar-saba,kiryat-sapir,"קרית ספיר",6950,8
+kfar-saba,motzkin;-duvdevan-hakfar;-kisufim,"מוצקין;דובדבן הכפר;כיסופים",6963,8
+kfar-saba,eastern-housing,"שיכון מזרחי",7150,20
+kfar-saba,hatzrot-hadar,"חצרות הדר",7160,6
+kfar-saba,city-center-north,"מרכז העיר צפון",7360,30
+kfar-saba,maoz,"מעוז",8322,9
+kfar-saba,hazemer-haivri,"הזמר העברי",9667,6
+kfar-saba,green-district,"השכונה הירוקה",9789,18
+kfar-saba,savyonei-hakfar,"סביוני הכפר",9800,3
+ramat-gan,ramat-amidar,"רמת עמידר",5081,61
+ramat-gan,paratroopers-housing,"שיכון צנחנים",5383,3
+ramat-gan,hillel-neighborhood,"שכונת הלל",5472,41
+ramat-gan,hagefen-neighborhood,"שכונת הגפן",5757,62
+ramat-gan,yad-labanim,"יד לבנים",5847,57
+ramat-gan,negba-complex,"מתחם נגבה",6188,106
+ramat-gan,ramat-shikma,"רמת שקמה",6270,48
+ramat-gan,city-center-b,"מרכז העיר ב'",6394,39
+ramat-gan,habiluyim,"הבילויים",6482,48
+ramat-gan,ramat-yitzhak,"רמת יצחק",6494,82
+ramat-gan,tel-yehuda,"תל יהודה",6534,76
+ramat-gan,hahashmonaim-(city-center-a),"החשמונאים (מרכז העיר א')",6594,47
+ramat-gan,city-center-g,"מרכז העיר ג'",6601,82
+ramat-gan,neve-ram,"נווה רם",6656,71
+ramat-gan,neve-yehoshua,"נווה יהושע",6698,39
+ramat-gan,nahlat-ganim,"נחלת גנים",6991,46
+ramat-gan,armonim,"ערמונים",7300,16
+ramat-gan,kiryat-krinitsi,"קרית קריניצי",7471,21
+ramat-gan,merom-neve,"מרום נווה",7592,9
+ramat-gan,habursa,"הבורסה",7967,52
+ramat-gan,ramat-efal,"רמת אפעל",8000,5
+ramat-gan,founders-neighborhood,"שכונת הראשונים",8497,51
+ramat-gan,veterans-housing,"שיכון ותיקים",8533,16
+ramat-gan,tel-ganim,"תל גנים",8820,10
+ramat-gan,kiryat-borochov,"קרית בורוכוב",8883,6
+ramat-gan,haharuzim,"החרוזים",9074,22
+ramat-gan,kfar-azar,"כפר אז""ר",9567,6
+ramat-gan,ramat-hen,"רמת חן",12090,15
+ramat-gan,tel-binyamin,"תל בנימין",16313,12
+holon,jesse-cohen,"ג'סי כהן",4487,57
+holon,neot-yehudit,"נאות יהודית",4788,4
+holon,green-vaam,"גרין ועם",4932,85
+holon,neot-shoshanim,"נאות שושנים",5081,28
+holon,agrobank,"אגרובנק",5126,106
+holon,tel-giborim,"תל גיבורים",5192,75
+holon,kiryat-avoda,"קרית עבודה",5302,122
+holon,neve-arazim,"נוה ארזים",5329,19
+holon,neot-rachel,"נאות רחל",5411,97
+holon,raseko-b,"רסקו ב",5430,46
+holon,raseko-a,"רסקו א",5472,101
+holon,veterans-housing,"שיכון ותיקים",5496,30
+holon,new-housing,"שיכון חדש",5690,42
+holon,kiryat-sharet,"קריית שרת",6061,100
+holon,civil-command,"המפדה האזרחי",6700,12
+holon,neve-remez,"נווה רמז",7213,10
+holon,kiryat-ben-gurion,"קרית בן גוריון",7311,36
+holon,towers-boulevard,"שדרת המגדלים",8032,16
+holon,kiryat-ilon,"קרית אילון",8695,27
+holon,kiryat-rabin,"קרית רבין",11356,10
+bat-yam,amidar;-nitzana,"עמידר;ניצנה",4880,114
+bat-yam,beit-vegan,"בית וגן",5216,75
+bat-yam,city-center,"מרכז העיר",5495,204
+bat-yam,southwest,"דרום מערב",5572,249
+bat-yam,veterans-housing,"שיכון ותיקים",5587,94
+bat-yam,northwest,"צפון מערב",6177,209
+bat-yam,ramat-yosef,"רמת יוסף",6467,208
+bat-yam,ramat-hanasi,"רמת הנשיא",6676,229
+bat-yam,business-quarter,"רובע העסקים",7389,31
+bat-yam,city-garden-complex,"מתחם גן העיר",8100,3
+bat-yam,sea-park,"פארק הים",9062,147
+bnei-brak,kiryat-herzog,"קרית הרצוג",4114,15
+bnei-brak,har-shalom,"הר שלום",4230,25
+bnei-brak,tel-giborim,"תל גיבורים",4356,42
+bnei-brak,ramat-elchanan,"רמת אלחנן",4400,5
+bnei-brak,shekun-b-and-d,"שכון ב ושכון ד",4450,5
+bnei-brak,givat-rokah,"גבעת רוקח",4627,11
+bnei-brak,givat-sokolov,"גבעת סוקולוב",4806,22
+bnei-brak,pardes-katz-veyesodot,"פרדס כץ ויסודות",4983,30
+bnei-brak,shekun-a,"שכון א",5035,9
+bnei-brak,nahlat-shimon,"נחלת שמעון",5291,11
+bnei-brak,ramat-aharon,"רמת אהרון",5492,6
+bnei-brak,kiryat-vizhnitz,"קרית ויז'ניץ",5675,4
+bnei-brak,histadrut-housing,"שכון ההסתדרות",5769,7
+bnei-brak,kiryat-hayeshiva,"קרית הישיבה",6000,3
+bnei-brak,neve-ahiezer,"נוה אחיעזר",6042,12
+bnei-brak,north-industrial-zone,"אזור תעשיה צפון",6117,3
+bnei-brak,kiryat-ayelet-hashahar,"קריית איילת השחר",6613,8
+bnei-brak,industrial-zone,"אזור תעשיה",6867,6
+bnei-brak,shekun-h,"שכון ה'",7125,8
+petakh-tikva,yoseftal,"יוספטל",4194,17
+petakh-tikva,kiryat-arye-industrial-zone,"אזור תעשיה קרית אריה",4300,3
+petakh-tikva,kiryat-harav-salomon,"קרית הרב סלומון",4327,12
+petakh-tikva,bat-ganim,"בת גנים",4538,4
+petakh-tikva,shaarya,"שעריה",4553,26
+petakh-tikva,neve-ganim,"נווה גנים",4700,4
+petakh-tikva,ahdut,"אחדות",4827,26
+petakh-tikva,city-center,"מרכז העיר",4965,156
+petakh-tikva,haahim-israelit,"האחים ישראלית",5200,4
+petakh-tikva,kiryat-david-elazar,"קרית דוד אלעזר",5400,6
+petakh-tikva,kiryat-hazani,"קריית חזני",5447,17
+petakh-tikva,amishav,"עמישב",5478,9
+petakh-tikva,kiryat-alon,"קרית אלון",5542,12
+petakh-tikva,kiryat-eliezer-pri,"קרית אליעזר פרי",5568,14
+petakh-tikva,kfar-avraham,"כפר אברהם",5780,5
+petakh-tikva,hadar-ganim,"הדר גנים",5844,16
+petakh-tikva,kiryat-matalon,"קרית מטלון",5850,8
+petakh-tikva,bar-yehuda,"בר יהודה",5895,10
+petakh-tikva,carol,"קרול",5976,19
+petakh-tikva,ein-ganim,"עין גנים",6196,43
+petakh-tikva,quiet-center,"המרכז השקט",6216,166
+petakh-tikva,shifer,"שיפר",6408,31
+petakh-tikva,mahane-yehuda,"מחנה יהודה",6460,28
+petakh-tikva,ramat-varber,"רמת ורבר",6553,61
+petakh-tikva,kfar-ganim-a,"כפר גנים א",6577,27
+petakh-tikva,kfar-ganim-b,"כפר גנים ב",7128,16
+petakh-tikva,tzameret-ganim,"צמרת גנים",7433,3
+petakh-tikva,kfar-ganim-g,"כפר גנים ג",7448,9
+petakh-tikva,em-hamoshavot-havatika,"אם המושבות הותיקה",7577,11
+petakh-tikva,em-hamoshavot-hahadasha,"אם המושבות החדשה",8467,15
+petakh-tikva,neve-gan,"נווה גן",8490,20
+petakh-tikva,neve-oz,"נווה עוז",9774,22
+petakh-tikva,beilinson,"בילינסון",13760,5
+rishon-le-tsiyon,kfar-arye,"כפר אריה",3150,8
+rishon-le-tsiyon,tzamrot,"צמרות",3700,3
+rishon-le-tsiyon,ramat-eliyahu,"רמת אליהו",4397,78
+rishon-le-tsiyon,mabat-west,"מב""ת מערב",4475,4
+rishon-le-tsiyon,kiryat-nobel-prize-laureates,"קרית חתני פרס נובל",4742,14
+rishon-le-tsiyon,bnot-hail,"בנות חיל",4756,9
+rishon-le-tsiyon,eastern-housing-projects,"שיכוני המזרח",5067,58
+rishon-le-tsiyon,neve-dekalim,"נווה דקלים",5210,24
+rishon-le-tsiyon,abramovich,"אברמוביץ",5244,124
+rishon-le-tsiyon,kiryat-simcha,"קרית שמחה",5400,3
+rishon-le-tsiyon,harishonim,"הראשונים",5735,52
+rishon-le-tsiyon,remez,"רמז",5765,121
+rishon-le-tsiyon,rambam,"רמב""ם",5772,130
+rishon-le-tsiyon,katzenelson,"כצנלסון",5847,72
+rishon-le-tsiyon,kiryat-ganim,"קרית גנים",5942,12
+rishon-le-tsiyon,neve-yam,"נווה ים",6067,79
+rishon-le-tsiyon,revivim,"רביבים",6165,28
+rishon-le-tsiyon,kiryat-rishon,"קרית ראשון",6222,10
+rishon-le-tsiyon,neve-hadarim,"נוה הדרים",6464,16
+rishon-le-tsiyon,hashomer,"השומר",6605,23
+rishon-le-tsiyon,nahlat-yehuda,"נחלת יהודה",6661,29
+rishon-le-tsiyon,neurim,"נעורים",6669,8
+rishon-le-tsiyon,kidmat-rishon,"קדמת ראשון",6770,10
+rishon-le-tsiyon,mishor-hanof,"מישור הנוף",6856,9
+rishon-le-tsiyon,neve-hof,"נווה חוף",7811,58
+rishon-le-tsiyon,kiryat-kramim,"קריית כרמים",7813,10
+rishon-le-tsiyon,nuriyot,"נוריות",7963,60
+rishon-le-tsiyon,narkisim,"נרקיסים",8182,17
+rishon-le-tsiyon,harakafot,"הרקפות",8270,9
+rishon-le-tsiyon,neot-shikma,"נאות שקמה",8350,13
+rishon-le-tsiyon,neot-ashalim,"נאות אשלים",8562,20
+rishon-le-tsiyon,kiryat-haleom,"קרית הלאום",9625,4
+rishon-le-tsiyon,hairus,"האירוס",10300,4
+rishon-le-tsiyon,sea-gate,"שער הים",11557,30
+rekhovot,milchan,"מילצ'ן",3690,5
+rekhovot,ramat-aharon,"רמת אהרון",3800,3
+rekhovot,ushiot,"אושיות",3845,21
+rekhovot,danya,"דניה",4238,8
+rekhovot,shaarayim,"שעריים",4251,48
+rekhovot,avnei-hen,"אבני חן",4342,6
+rekhovot,ibn-gabirol,"אבן גבירול",4487,15
+rekhovot,city-northwest,"צפון מערב העיר",5084,67
+rekhovot,havatzelet,"חבצלת",5100,5
+rekhovot,city-center,"מרכז העיר",5113,82
+rekhovot,efraim-sela,"אפריים;סלע",5121,18
+rekhovot,city-northeast,"צפון מזרח העיר",5579,59
+rekhovot,neve-yehuda,"נווה יהודה",5584,18
+rekhovot,marmorek,"מרמורק",5646,12
+rekhovot,kiryat-moshe,"קרית משה",6767,3
+rekhovot,rehovot-hahadasha,"רחובות החדשה",6944,8
+rekhovot,dutch-rehovot,"רחובות ההולנדית",7233,3
+rekhovot,givati,"גבעתי",7633,3
+rekhovot,young-rehovot,"רחובות הצעירה",8000,3
+rekhovot,science-rehovot,"רחובות המדע",8143,7
+rekhovot,makuv,"מקוב",9300,4
+rekhovot,kiryat-hahagana,"קרית ההגנה",11500,4
+netanya,neot-herzl,"נאות הרצל",4283,61
+netanya,ramat-yadin,"רמת ידין",4472,36
+netanya,ramat-hen,"רמת חן",4500,3
+netanya,neot-ganim,"נאות גנים",4504,25
+netanya,neot-shaked,"נאות שקד",4682,23
+netanya,pardes-hagdud,"פרדס הגדוד",4847,17
+netanya,city-center-south,"מרכז העיר דרום",5501,161
+netanya,ramat-efraim,"רמת אפרים",5628,21
+netanya,city-center-north,"מרכז העיר צפון",5783,226
+netanya,kiryat-rabin,"קרית רבין",6000,3
+netanya,ben-zion,"בן ציון",6002,22
+netanya,kiryat-nordau,"קרית נורדאו",6057,75
+netanya,neot-golda,"נאות גולדה",6143,8
+netanya,mishkenot-zevulun,"משכנות זבולון",6380,5
+netanya,givat-hairusim,"גבעת האירוסים",6578,11
+netanya,neve-shalom,"נווה שלום",6875,4
+netanya,kiryat-hasharon,"קרית השרון",7247,32
+netanya,hotel-strip,"רצועת המלונות",7938,128
+netanya,sea-park,"פארק הים",8560,79
+netanya,northern-star,"כוכב הצפון",8679,28
+netanya,agamim,"אגמים",8692,45
+netanya,galei-hayam,"גלי הים",9000,22
+netanya,ramat-poleg,"רמת פולג",9006,41
+netanya,ein-hatchelet,"עין התכלת",9233,9
+netanya,nof-galim,"נוף גלים",9458,13
+netanya,nof-hatayelet,"נוף הטיילת",9995,40
+netanya,ir-yamim,"עיר ימים",12544,67
+hadera,beit-eliezer,"בית אליעזר",3861,20
+hadera,haotzar,"האוצר",4338,9
+hadera,nahliel;-givat-bilu,"נחליאל;גבעת ביל""ו",4588,17
+hadera,city-center,"מרכז העיר",5333,34
+hadera,shimshon;shlomo;bialik,"שמשון;שלמה;ביאליק",5514,7
+hadera,park-neighborhood,"שכונת הפארק",6173,11
+hadera,peer,"פאר",6433,4
+hadera,givat-olga-a-and-b,"'גבעת אולגה א' ו-ב'",6534,31
+hadera,rambam,"רמב""ם",6657,19
+hadera,brandeis,"ברנדייס",7250,6
+hadera,ein-hayam,"עין הים",7334,20
+hadera,kidmat-yam,"קדמת ים",7644,18
+hadera,givat-olga-g-and-d,"גבעת אולגה ג' ו-ד'",8182,30
+hadera,neve-haim;-weizmann,"נווה חיים;ויצמן",8291,23
+ashdod,quarter-b,"רובע ב",3768,63
+ashdod,quarter-g,"רובע ג",4262,13
+ashdod,quarter-t,"רובע ט",4569,16
+ashdod,quarter-v,"רובע ו",4813,19
+ashdod,quarter-y,"רובע י",5090,10
+ashdod,quarter-a,"רובע א",5724,67
+ashdod,heavy-industry-zone,"אזור תעשיה כבדה",5790,5
+ashdod,city,"סיטי",5819,30
+ashdod,quarter-he,"רובע ה",5830,18
+ashdod,quarter-d,"רובע ד",5889,30
+ashdod,quarter-11,"רובע יא",6102,24
+ashdod,quarter-12,"רובע יב",6828,20
+ashdod,quarter-h,"רובע ח",7108,14
+ashdod,quarter-16,"רובע טז",7367,6
+ashdod,quarter-13,"רובע יג",7725,4
+ashdod,bakama,"בקמה",8223,13
+ashdod,quarter-17,"רובע יז",8295,12
+ashdod,hakirya,"הקריה",8556,25
+ashdod,marina,"מרינה",9720,5
+ashdod,maar-south,"מע""ר דרום",9733,4
+ashdod,quarter-15,"רובע טו",10750,10
+ashkelon,shikmim,"שקמים",2504,15
+ashkelon,ben-gurion,"בן גוריון",2633,46
+ashkelon,golda,"גולדה",2753,9
+ashkelon,neve-alonim,"נווה אלונים",2958,13
+ashkelon,neve-yam,"נווה ים",2975,12
+ashkelon,jabotinsky,"ז'בוטינסקי",3086,26
+ashkelon,shai-agnon,"ש""י עגנון",3217,6
+ashkelon,nafta-center,"המרכז הנפתי",3460,5
+ashkelon,migdal,"מגדל",3475,4
+ashkelon,neve-dekalim,"נווה דקלים",3665,10
+ashkelon,givat-zion,"גבעת ציון",3778,25
+ashkelon,afridar,"אפרידר",4011,56
+ashkelon,northern-star,"כוכב הצפון",4025,4
+ashkelon,neve-ilan,"נווה אילן",4160,10
+ashkelon,mitzpe-barnea,"מצפה ברנע",4350,5
+ashkelon,ganei-barnea,"גני ברנע",4375,18
+ashkelon,neot-ashkelon,"נאות אשקלון",4388,8
+ashkelon,ramat-eshkol,"רמת אשכול",4430,11
+ashkelon,barnea,"ברנע",4729,16
+ashkelon,agamim,"אגמים",5065,20
+ashkelon,marina,"מרינה",5204,42
+ashkelon,wine-city,"עיר היין",5234,29
+ashkelon,ramot-ashkelon,"רמות אשקלון",5320,5
+ashkelon,neve-hadarim,"נווה הדרים",6300,5
+ashkelon,ramat-kramim,"רמת כרמים",6593,20
+ashkelon,barnea-b,"ברנע ב",6620,5
+ashkelon,the-city,"הסיטי",7520,9
+ashkelon,ir-yamim,"עיר ימים",7700,9
+ashkelon,herzog,"הרצוג",8160,6
+beer-sheva,neighborhood-d,"שכונה ד",2576,432
+beer-sheva,neighborhood-h,"שכונה ה",2598,155
+beer-sheva,neighborhood-v,"שכונה ו",2614,136
+beer-sheva,neighborhood-g,"שכונה ג",2715,210
+beer-sheva,neighborhood-11,"שכונה יא",2720,91
+beer-sheva,old-city-and-rasko,"העיר העתיקה ורסקו",2916,32
+beer-sheva,neighborhood-a,"שכונה א",3004,152
+beer-sheva,neighborhood-b,"שכונה ב",3069,54
+beer-sheva,neighborhood-t,"שכונה ט",3444,35
+beer-sheva,neve-menahem-(nahal-ashan),"נווה מנחם (נחל עשן)",3550,10
+beer-sheva,hakalaniot,"הכלניות",3589,9
+beer-sheva,shikun-south,"שיכון דרום",3770,11
+beer-sheva,civic-center,"מרכז אזרחי",3815,25
+beer-sheva,neot-lon,"נאות לון",3868,15
+beer-sheva,neve-zeev,"נווה זאב",4330,32
+beer-sheva,ramot-b,"רמות ב'",4355,23
+beer-sheva,neve-noy,"נווה נוי",4375,16
+beer-sheva,ramot,"רמות",4729,32
+beer-sheva,stream-park,"פארק הנחל",5055,39
+beer-sheva,industrial-zone,"אזור תעשיה",5125,4
+beer-sheva,pisgat-ramot,"פסגת רמות",5440,5
+beer-sheva,neot-ilan,"נאות אילן",5567,3
+beer-sheva,sigaliyot,"סיגליות",5680,11
+beer-sheva,neot-hadarim,"נאות הדרים",5708,19
+beer-sheva,kiryat-ganim,"קרית גנים",6000,3
+beit-shemesh,ramat-avraham,"רמת אברהם",4840,5
+beit-shemesh,kiryat-arye,"קרית אריה",5336,8
+beit-shemesh,givat-savyon,"גבעת סביון",5520,5
+beit-shemesh,water-tower,"מגדל המים",6262,5
+beit-shemesh,city-center,"מרכז העיר",6514,40
+beit-shemesh,ramat-avi-ezri,"רמת אבי עזרי",6531,13
+beit-shemesh,neve-shamir,"נוה שמיר",7050,10
+beit-shemesh,shefa-haim-and-ayelet-hashahar,"שפע חיים ואיילת השחר",7240,5
+beit-shemesh,givat-sharet,"גבעת שרת",7929,13
+beit-shemesh,shazar,"שז""ר",8160,6
+beit-shemesh,dovev-mesharim,"דובב מישרים",8300,3
+beit-shemesh,netivot-israel,"נתיבות ישראל",8500,4
+beit-shemesh,ramat-hanhalim,"רמת הנחלים",9780,10
+givatayim,popular-housing-g,"שיכון עממי ג'",6016,21
+givatayim,halamed-heh,"הל""ה",6157,24
+givatayim,poalei-harakevet,"פועלי הרכבת",6572,28
+givatayim,sheinkin,"שיינקין",6611,65
+givatayim,tel-ganim,"תל גנים",6883,37
+givatayim,givat-rambam,"גבעת רמב""ם",6930,56
+givatayim,kiryat-yosef,"קריית יוסף",7357,7
+givatayim,givat-kozlovsky,"גבעת קוזלובסקי",7470,7
+givatayim,borochov,"בורוכוב",7616,66
+givatayim,arlozorov,"ארלוזרוב",7781,42
+givatayim,shikun-hevrat-hashmal,"שיכון חברת חשמל",7794,26
+givatayim,area-9-(ben-tzvi),"שטח 9 (בן צבי)",9523,14
+givatayim,city,"סיטי",12590,10
+ramat-ha-sharon,morasha,"מורשה",7507,42
+ramat-ha-sharon,golan,"גולן",10532,16
+ramat-ha-sharon,hadar,"הדר",11249,76
+ramat-ha-sharon,neve-gan,"נווה גן",14481,60
+ramat-ha-sharon,alon,"אלון",14952,26
+ramat-ha-sharon,neve-magen,"נווה מגן",15503,32
+ramat-ha-sharon,kiryat-yearim,"קרית יערים",16663,24
+ramat-ha-sharon,neve-rasko,"נווה רסקו",17493,7
+ramat-ha-sharon,neve-rom,"נווה רום",25927,29
+kiryat-ono,rimon,"רימון",6421,7
+kiryat-ono,old-kiryat-ono,"קרית אונו הותיקה",7126,35
+kiryat-ono,shikun-raseko,"שיכון רסקו",7300,9
+kiryat-ono,kiryaon,"קיראון",7745,98
+kiryat-ono,ono-park,"אונו פארק",8358,6
+kiryat-ono,pardes-reisfeld,"פרדס רייספלד",11171,7
+kiryat-ono,pisgat-ono,"פסגת אונו",11580,5
+or-yehuda,amidar-housing,"שיכון עמידר",4825,4
+or-yehuda,shprintsak,"שפרינצק",5142,12
+or-yehuda,hahistadrut,"ההסתדרות",5539,18
+or-yehuda,sakiya,"סקיה",5664,14
+or-yehuda,giora,"גיורא",6466,42
+or-yehuda,government-housing,"שיכון ממשלתי",6600,3
+or-yehuda,neve-savyon,"נווה סביון",6687,15
+or-yehuda,beit-bapark,"בית בפארק",8182,11
+or-yehuda,neve-ayalon,"נווה איילון",8223,58
+or-yehuda,ramat-pincas,"רמת פנקס",8675,4
+hod-ha-sharon,city-center,"מרכז העיר",5426,9
+hod-ha-sharon,magdiel,"מגדיאל",6702,21
+hod-ha-sharon,gil-amal,"גיל עמל",6750,4
+hod-ha-sharon,ramatayim,"רמתיים",7758,19
+hod-ha-sharon,neve-hadar,"נווה הדר",7767,3
+hod-ha-sharon,neve-neeman,"נווה נאמן",8023,15
+hod-ha-sharon,raseko,"רסקו",8025,4
+hod-ha-sharon,hadar,"הדר",8554,26
+hod-ha-sharon,shikun-giora,"שיכון גיורא",9433,6
+hod-ha-sharon,complex-1200,"מתחם 1200",10963,8
+hod-ha-sharon,ramot-menachem,"רמות מנחם",11550,5
+hod-ha-sharon,education-axis,"ציר החינוך",13174,19
+hod-ha-sharon,greenberg,"גרינברג",14666,3
+hod-ha-sharon,ganei-tzvi,"גני צבי",18883,6
+rosh-ha-ayin,shabazi,"שבזי",4040,6
+rosh-ha-ayin,rambam,"רמב""ם",4705,11
+rosh-ha-ayin,harakafot,"הרקפות",4983,6
+rosh-ha-ayin,tzahal,"צה""ל",5800,4
+rosh-ha-ayin,heh-beiyar,"ה' באייר",6075,4
+rosh-ha-ayin,aviv,"אביב",6412,26
+rosh-ha-ayin,givat-haslaim,"גבעת הסלעים",6750,4
+rosh-ha-ayin,pisgot-afek,"פסגות אפק",6823,29
+rosh-ha-ayin,givat-tal,"גבעת טל",6950,12
+modiin-maccabim-reut,avnei-hen-(kaiser),"אבני חן (קייזר)",7900,3
+modiin-maccabim-reut,hanehalim-(sefardia),"הנחלים (ספדיה)",8328,9
+modiin-maccabim-reut,moreshet,"מורשת",8329,14
+modiin-maccabim-reut,haneviim-(north-shimshoni),"הנביאים (השמשוני צפון)",8900,3
+modiin-maccabim-reut,hamaginim-(south-shimshoni),"המגינים (השמשוני דרום)",9020,5
+modiin-maccabim-reut,hamaar,"המע""ר",9470,7
+modiin-maccabim-reut,hakeramim-(tzipor),"הכרמים (ציפור)",9883,6
+modiin-maccabim-reut,masua-(givat-c),"משואה (גבעת C)",12917,3
+modiin-maccabim-reut,reut,"רעות",13967,3
+nes-tsiyona,tirat-shalom,"טירת שלום",4281,8
+nes-tsiyona,ramat-ben-tzvi,"רמת בן צבי",4778,9
+nes-tsiyona,yad-elazar,"יד אלעזר",5650,3
+nes-tsiyona,amidar,"עמידר",5900,3
+nes-tsiyona,savyonei-netzer-sireni,"סביוני נצר סירני",6633,3
+nes-tsiyona,city-center-east,"מרכז העיר מזרח",6668,33
+nes-tsiyona,city-center-west,"מרכז העיר מערב",8442,12
+yavne,neot-shazar,"נאות שז""ר",4669,8
+yavne,ramot-weizmann,"רמות וייצמן",5800,7
+yavne,neot-eshkol,"נאות אשכול",5913,6
+yavne,neve-ilan,"נווה אילן",6150,19
+yavne,neot-rabin-green-yavne,"נאות רבין-יבנה הירוקה",7033,6
+yavne,neot-ben-gurion,"נאות בן גוריון",7567,7
+yavne,neot-shamir,"נאות שמיר",7900,3
+lod,international-quarter,"הרובע הבינלאומי",2730,5
+lod,givat-hazeitim,"גבעת הזיתים",3167,6
+lod,sharet,"שרת",3517,6
+lod,amidar,"עמידר",3567,3
+lod,ramat,"רמט",3629,7
+lod,government,"ממשלתי",3842,6
+lod,raseko,"רסקו",3967,3
+lod,neve-zait,"נווה זית",4000,9
+lod,city-center,"מרכז העיר",4133,6
+lod,hisakhon-g,"חיסכון ג'",4313,4
+lod,ganei-aviv,"גני אביב",4766,27
+lod,neve-nof,"נווה נוף",4850,4
+lod,ben-gurion,"בן גוריון",5225,4
+lod,ganei-yaar,"גני יער",5580,6
+lod,nofei-ben-shemen,"נופי בן שמן",6616,30
+lod,young-lod,"לוד הצעירה",6933,4
+lod,ahisamakh,"אחיסמך",7673,22
+ramla,ben-gurion,"בן גוריון",3920,5
+ramla,giora,"גיורא",3978,9
+ramla,mishkenot,"משכנות",4180,10
+ramla,agash,"אג""ש",4200,4
+ramla,shprintsak,"שפרינצק",4300,6
+ramla,eshkol,"אשכול",4460,5
+ramla,hashoftim,"השופטים",4517,7
+ramla,weizmann,"וייצמן",4667,7
+ramla,neve-david,"נווה דוד",5218,11
+ramla,kiryat-menachem-begin,"קריית מנחם בגין",5300,6
+ramla,ramat-dan-and-givat-hadar,"רמת דן וגבעת הדר",5498,4
+ramla,neot-peres,"נאות פרס",6380,5
+ramla,kiryat-haamanim,"קרית האמנים",6760,5
+ramla,civic-center,"המרכז האזרחי",6971,7
+ramla,neot-shamir,"נאות שמיר",7138,17
+yehud-monosun,kiryat-bialystok,"קרית ביאליסטוק",5620,10
+yehud-monosun,maccabi,"מכבי",5766,16
+yehud-monosun,city-center,"מרכז העיר",6576,39
+yehud-monosun,gadot,"גדות",8746,24
+yehud-monosun,neve-efraim,"נווה אפרים",9014,7
+yehud-monosun,kiryat-savyonim,"קרית סביונים",10050,10
+shoham,rakafot,"רקפות",4467,3
+shoham,yaelim,"יעלים",5300,3
+shoham,hamaniot,"חמניות",8100,3
+gedera,neve-moshe,"נווה משה",4140,5
+gedera,golda,"גולדה",5000,3
+gedera,hamoshava,"המושבה",5267,3
+gedera,young-gedera,"גדרה הצעירה",6200,3
+gedera,german-colony,"המושבה הגרמנית",7667,3
+gedera,kfar-uriel,"כפר אוריאל",8000,3
+gedera,tzameret-gedera,"צמרת גדרה",8700,3
+gedera,reshafim,"רשפים",10667,3
+kiryat-ata,givat-harakafot,"גבעת הרקפות",2559,67
+kiryat-ata,giva-a,"גבעה א",2916,82
+kiryat-ata,neve-hen,"נווה חן",3262,11
+kiryat-ata,city-center,"מרכז העיר",3437,166
+kiryat-ata,kiryat-prostig,"קרית פרוסטיג",3617,3
+kiryat-ata,kiryat-binyamin,"קרית בנימין",4325,25
+kiryat-ata,abramsky,"אברמסקי",5267,9
+kiryat-bialik,tzur-shalom,"צור שלום",3201,58
+kiryat-bialik,south,"דרום",3353,43
+kiryat-bialik,afek,"אפק",3613,8
+kiryat-bialik,city-center-savinia-vatika,"מרכז העיר, סביניה, הוותיקה",3771,27
+kiryat-bialik,city-center,"מרכז העיר",4101,57
+kiryat-bialik,parpar,"פרפר",6700,3
+kiryat-bialik,industrial-zone,"אזור תעשייה",7575,4
+kiryat-motskin,motzkin-vatika,"מוצקין הותיקה",3203,127
+kiryat-motskin,city-center,"לב העיר",3938,75
+kiryat-motskin,neve-ganim-and-young-motzkin,"נווה גנים ומוצקין הצעירה",6100,5
+kiryat-motskin,artists-housing-(kurdani),"משכנות אומנים (כורדני)",6738,8
+kiryat-yam,kiryat-yam-g,"קרית ים ג",2615,69
+kiryat-yam,kiryat-yam-b,"קרית ים ב",2838,78
+kiryat-yam,kiryat-yam-d,"קרית ים ד",3373,24
+kiryat-yam,kiryat-yam-a,"קרית ים א",3586,34
+kiryat-yam,almogim,"אלמוגים",5225,5
+kiryat-yam,gan-avraham,"גן אברהם",5750,6
+kiryat-yam,pisgot-yam,"פסגות ים",5933,6
+nesher,tel-hanan,"תל חנן",2649,51
+nesher,givat-amos,"גבעת עמוס",2650,23
+nesher,ben-dor,"בן דור",2783,54
+nesher,givat-nesher,"גבעת נשר",3163,28
+nesher,ramot-yitzhak,"רמות יצחק",4079,33
+tirat-carmel,giora,"גיורא",3286,7
+tirat-carmel,bialik,"ביאליק",3600,7
+tirat-carmel,amidar,"עמידר",3900,6
+tirat-carmel,cohen,"כהן",4000,8
+tirat-carmel,shazar-dekar,"שז""ר דקר",4870,12
+tirat-carmel,rambam,"רמב""ם",5608,6
+tirat-carmel,galei-carmel-jabotinsky,"גלי כרמל, ז'בוטינסקי",7083,6
+tirat-carmel,hahotrim-complex,"מתחם החותרים",7861,9
+or-akiva,orot,"אורות",2900,3
+or-akiva,shazar,"שז""ר",4127,15
+or-akiva,hayovel,"היובל",4600,3
+or-akiva,ben-gurion-neve-alon,"בן גוריון, נווה אלון",5111,9
+or-akiva,or-yam,"אור ים",7457,27
+zikhron-yaakov,mul-hayekev,"מול היקב",4200,3
+zikhron-yaakov,ramat-tzvi,"רמת צבי",5371,7
+zikhron-yaakov,hamoshava,"המושבה",6033,6
+zikhron-yaakov,neve-habaron,"נווה הברון",6800,3
+zikhron-yaakov,yaakov,"יעקב",6809,11
+zikhron-yaakov,neve-sharet,"נווה שרת",7817,6
+zikhron-yaakov,hashmura,"השמורה",12681,8
+pardes-khana-karkur,neve-hadarim,"נווה הדרים",4450,4
+pardes-khana-karkur,kennedy,"קנדי",4967,3
+pardes-khana-karkur,government-housing,"שיכון ממשלתי",5467,3
+pardes-khana-karkur,neve-pardesim,"נוה פרדסים",6100,4
+pardes-khana-karkur,colony-center,"מרכז המושבה",6150,8
+pardes-khana-karkur,neve-merhav,"נווה מרחב",7475,4
+pardes-khana-karkur,hanahal,"הנחל",8200,5
+pardes-khana-karkur,shikun-remez,"שיכון רמז",8333,3
+pardes-khana-karkur,raseko,"רסקו",8640,5
+pardes-khana-karkur,omarim,"עומרים",8983,6
+pardes-khana-karkur,karkur-center,"מרכז כרכור",10286,7
+nazareth,namsawi,"נמסאווי",3500,3
+nof-hagalil,northern,"צפונית",2493,28
+nof-hagalil,eshkol,"אשכול",2567,11
+nof-hagalil,sapir,"ספיר",2720,18
+nof-hagalil,southern,"דרומית",2882,28
+nof-hagalil,ben-gurion,"בן גוריון",2938,12
+nof-hagalil,shalom,"שלום",2955,11
+nof-hagalil,zeev,"זאב",3086,7
+nof-hagalil,har-yona,"הר יונה",3586,12
+nof-hagalil,nof-yizreel,"נוף יזרעאל",5542,6
+afula,givat-hamoreh,"גבעת המורה",2384,26
+afula,city-center,"מרכז העיר",3221,147
+afula,geulim;-build-your-home,"גאולים ; בנה ביתך",3888,9
+afula,upper-afula,"עפולה עילית",4089,33
+afula,young-afula,"עפולה הצעירה",4119,23
+afula,green-afula,"עפולה הירוקה",4332,19
+afula,jezreel-quarter,"רובע יזרעאל",4982,26
+afula,c1,"C1",5360,10
+tiberias,industry-and-crafts-zone,"אזור תעשייה ומלאכה",1967,3
+tiberias,sharet,"שרת",2508,13
+tiberias,shikun-d-(ramat-egoz),"שיכון ד' (רמת אגוז)",2757,25
+tiberias,ben-gurion,"בן גוריון",2950,6
+tiberias,shikun-g,"שיכון ג'",3200,8
+tiberias,kiryat-moshe,"קרית משה",3452,20
+tiberias,geulim,"גאולים",3550,8
+tiberias,tiberias-slopes,"מורדות טבריה",3569,41
+tiberias,plus-200,"פלוס 200",3802,25
+tiberias,harambam,"הרמב""ם",3840,21
+tiberias,ramat-kineret,"רמת כנרת",3873,57
+tiberias,kiryat-shmuel,"קרית שמואל",3897,47
+tiberias,rabbi-akiva,"רבי עקיבא",4260,15
+tiberias,david-remez,"דוד רמז",4746,34
+tiberias,don-yosef-hanasi,"דון יוסף הנשיא",4979,26
+tiberias,tiberias-colony,"טבריה המושבה",5650,10
+karmiel,hameyasdim,"המייסדים",2671,41
+karmiel,tana,"טנא",3072,28
+karmiel,eshkol,"אשכול",3113,33
+karmiel,megadim,"מגדים",3214,43
+karmiel,hairusim,"האירוסים",3255,11
+karmiel,haarava,"הערבה",3282,19
+karmiel,hadar,"הדר",3521,14
+karmiel,givat-ram,"גבעת רם",3688,13
+karmiel,givat-makosh,"גבעת מכוש",3912,26
+karmiel,hagalil,"הגליל",4010,20
+karmiel,sagi,"שגיא",4200,5
+karmiel,ramat-rabin,"רמת רבין",4386,21
+karmiel,ramat-navon,"רמת נבון",5798,21
+nahariya,yoseftal,"יוספטל",2202,8
+nahariya,trumpeldor,"טרומפלדור",2426,25
+nahariya,givat-katzenelson-givat-sharet-kiryat-asur,"גבעת כצנלסון, גבעת שרת וקרית עשור",2885,33
+nahariya,ussishkin,"אוסישקין",3202,21
+nahariya,neve-alon-(amidar),"נוה אלון (עמידר)",3445,14
+nahariya,neve-yitzhak-rabin-(green-nahariya),"נווה יצחק רבין (נהריה הירוקה)",4100,10
+nahariya,neve-menachem-begin,"נוה מנחם בגין",4488,8
+nahariya,ein-sara,"עין שרה",4496,8
+nahariya,city-center,"מרכז העיר",4511,95
+nahariya,achziv,"אכזיב",4809,11
+nahariya,yitzhak-shamir,"יצחק שמיר",5866,12
+acre,kiryat-wolfson,"קרית וולפסון",2673,39
+acre,menachem-begin,"מנחם בגין",2821,23
+acre,neve-alon,"נווה אלון",2925,6
+acre,neve-aviv,"נווה אביב",3113,8
+acre,neot-yam,"נאות ים",3467,3
+acre,avraham-danino-ben-gurion,"אברהם דנינו, בן גוריון",3611,10
+acre,city-center,"מרכז העיר",3645,19
+acre,argaman-beach-complex,"מתחם חוף ארגמן",5300,4
+acre,ramot-yam,"רמות ים",5526,17
+kiryat-shmona,zone-b-(hayarden),"אזור ב (הירדן)",2386,40
+kiryat-shmona,zone-g,"אזור ג",2428,47
+kiryat-shmona,mount-scopus,"הר הצופים",2450,17
+kiryat-shmona,zone-a,"אזור א",2527,29
+kiryat-shmona,halevanon,"הלבנון",2653,14
+kiryat-shmona,hayovelim,"היובלים",3157,7
+kiryat-shmona,havradim,"הורדים",3326,27
+yokneam-illit,nof-lacarmel,"נוף לכרמל",3529,7
+yokneam-illit,ramat-yokneam,"רמת יוקנעם",4306,8
+yokneam-illit,nof-haemek,"נוף העמק",4570,5
+eilat,neve-midbar-yaelim,"נווה מדבר, יעלים",3365,34
+eilat,ganim-b,"גנים ב",3383,3
+eilat,arava,"ערבה",3417,42
+eilat,ofir,"אופיר",3714,38
+eilat,hadekel,"הדקל",3850,12
+eilat,urim,"אורים",3969,18
+eilat,tzealim,"צאלים",3994,17
+eilat,city-center,"מרכז העיר",4398,25
+eilat,mitzpe-yam,"מצפה ים",4564,15
+eilat,bneh-beitcha-amdar,"בנה ביתך, אמדר",4729,34
+eilat,hamelonot,"המלונות",5248,4
+eilat,ganim-a,"גנים א",6033,10
+eilat,field-quarter,"רובע השדה",7300,5
+eilat,shahamon,"שחמון",7739,86
+kiryat-gat,haneviim,"הנביאים",2698,19
+kiryat-gat,glikson,"גליקסון",2983,6
+kiryat-gat,hashoftim,"השופטים",3065,13
+kiryat-gat,haprahim,"הפרחים",3121,7
+kiryat-gat,megadim,"מגדים",3230,14
+kiryat-gat,hakomemiyut,"הקוממיות",3364,7
+kiryat-gat,bnei-yisrael,"בני ישראל",3715,22
+kiryat-gat,hahaapala,"ההעפלה",4163,4
+kiryat-gat,karmei-gat,"כרמי גת",6564,25
+dimona,neve-david,"נווה דוד",1875,5
+dimona,neot-katif,"נאות קטיף",2133,4
+dimona,hanitzahon,"הנצחון",2246,12
+dimona,neve-gan,"נווה גן",2250,9
+dimona,gan-eshkol,"גן אשכול",2275,6
+dimona,model-neighborhood,"שכונה לדוגמא",2329,7
+dimona,three-story-housing,"שיכון שלוש קומות",2342,14
+dimona,malkhei-israel,"מלכי ישראל",2376,21
+dimona,yoseftal,"יוספטל",2419,22
+dimona,hakhmei-israel-(tashloz),"חכמי ישראל (תשלוז)",2775,4
+dimona,prahei-artzenu,"פרחי ארצנו",2875,4
+dimona,shivat-haminim,"שבעת המינים",3100,8
+dimona,hashahar,"השחר",4075,4
+dimona,mamshit,"ממשית",4500,3
+dimona,best,"בסט",4583,3
+sderot,neot-yitzhak-rabin,"נאות יצחק רבין",2900,3
+sderot,neot-hameyasdim,"נאות המייסדים",5179,7
+sderot,neot-eshkol,"נאות אשכול",5438,5
+sderot,hakalaniot,"הכלניות",5729,7
+netivot,brit-kehuna,"ברית כהונה",4250,3
+netivot,neve-sharon,"נווה שרון",4426,17
+netivot,mevo-yoram,"מבוא יורם",4476,43
+netivot,netivot-west,"נתיבות מערב",4800,6
+netivot,baba-sali,"בבא סאלי",8567,3
+ofakim,mishor-hagefen,"מישור הגפן",3775,8
+ofakim,ben-gurion,"בן גוריון",5177,13
+ofakim,afikei-hanahal,"אפיקי הנחל",5566,32
+ofakim,park-neighborhood,"שכונת הפארק",6075,4
+arad,city-center,"מרכז העיר",2254,13
+arad,yaelim,"יעלים",2500,7
+arad,neurim,"נעורים",2675,12
+arad,levaot,"לבאות",3075,8
+arad,hatzavim,"חצבים",3170,5
+arad,avishur,"אבישור",3338,8
+arad,tlalim,"טללים",3492,6
+arad,maof,"מעוף",3729,7
+arad,gavim,"גבים",3967,3
+arad,yehoshafat,"יהושפט",5590,5
+arad,renanim,"רננים",6067,3
+kiryat-malakhi,nahlat-har-chabad,"נחלת הר חב""ד",2450,4
+kiryat-malakhi,city-center,"מרכז העיר",2954,5
+kiryat-malakhi,hanarkisim,"הנרקיסים",3325,4
+kiryat-malakhi,kibbutz-galuyot,"קיבוץ גלויות",3358,18
+kiryat-malakhi,weizmann,"וייצמן",3558,6
+kiryat-malakhi,ganei-shmuel,"גני שמואל",5000,3
+kiryat-malakhi,hameyasdim,"המיסדים",6033,3
+kiryat-malakhi,karmei-hanadiv,"כרמי הנדיב",6067,15
+mevaseret-tsiyon,maoz-zion-b,"מעוז ציון ב'",4033,3
+mevaseret-tsiyon,neighborhood-t,"שכונה ט",4163,4
+mevaseret-tsiyon,neighborhood-b,"שכונה ב",5283,3
+mevaseret-tsiyon,maoz-zion-a,"מעוז ציון א'",5424,17
+mevaseret-tsiyon,rekhes-halilim,"רכס חלילים",6188,6
+mevaseret-tsiyon,neighborhood-g,"שכונה ג",6703,16
+mevaseret-tsiyon,neighborhoods-h-and-v,"שכונה ה' ו-ו'",7338,8
+mevaseret-tsiyon,nofei-sela,"נופי סלע",7925,4
+givat-shmuel,hashahar,"השחר",3667,5
+givat-shmuel,giora,"גיורא",5671,25
+givat-shmuel,ramat-ilan,"רמת אילן",5843,23
+givat-shmuel,ramat-hadekalim-beit-and-country,"רמת הדקלים-בית וקאנטרי",7946,14
+givat-shmuel,old-district,"השכונה הותיקה",8095,33
+givat-shmuel,new-ramat-hadar,"רמת הדר החדשה",8536,14
+givat-shmuel,ramat-hadar,"רמת הדר",8917,19
+safed-(tsefat),ben-gurion-canaan,"בן גוריון כנען",2860,26
+safed-(tsefat),popular-housing,"שיכון עממי",3013,4
+safed-(tsefat),yitzhak-rabin,"יצחק רבין",3083,7
+safed-(tsefat),hadar,"הדר",3592,19
+safed-(tsefat),nof-kinneret,"נוף כינרת",3768,17
+safed-(tsefat),neve-oranim,"נווה אורנים",3840,10
+safed-(tsefat),kiryat-haomanim,"קרית האומנים",4089,9
+safed-(tsefat),old-city,"העיר העתיקה",4225,15
+safed-(tsefat),merom-canaan-ivikur,"מרום כנען איביקור",5017,6
+safed-(tsefat),ramat-menachem-begin,"רמת מנחם בגין",5033,6
+safed-(tsefat),kiryat-sara,"קרית שרה",5833,3
+migdal-ha-emek,gan-israel,"גן ישראל",2139,9
+migdal-ha-emek,pinhas-sapir,"פנחס ספיר",2425,14
+migdal-ha-emek,ramat-eshkol,"רמת אשכול",2686,7
+migdal-ha-emek,havered,"הורד",2800,7
+migdal-ha-emek,ramat-balfour,"רמת בלפור",2839,26
+migdal-ha-emek,shalom-aleichem,"שלום עליכם",2945,13
+migdal-ha-emek,nof-haemek,"נוף העמק",3364,12
+migdal-ha-emek,kiryat-rabin,"קרית רבין",3956,8
+migdal-ha-emek,mitzpe-haemek,"מצפה העמק",4264,7
+migdal-ha-emek,yaarat-haemek,"יערת העמק",4290,4
+migdal-ha-emek,kiryat-begin,"קרית בגין",5367,3
+ariel,neighborhood-a,"שכונה א",2750,12
+ariel,neighborhood-d,"שכונה ד",3207,18
+ariel,neighborhood-h,"שכונה ה",3275,34
+ariel,neighborhood-b,"שכונה ב",3338,16
+ariel,neighborhood-g,"שכונה ג",3589,21
+ariel,ariel-south,"אריאל דרום",9300,5
+harish,hahoresh,"החורש",4786,32
+harish,avnei-hen,"אבני חן",4874,28
+harish,haprahim,"הפרחים",4875,19
+harish,hamaar,"המע""ר",5121,14
+kfar-yona,shikun-b,"שיכון ב'",4250,9
+kfar-yona,shikun-a,"שיכון א'",5248,22
+kfar-yona,neve-nitzanim,"נווה ניצנים",5440,10
+kfar-yona,western-district,"השכונה המערבית",5700,5
+kfar-yona,sharona,"שרונה",7581,17
+kfar-yona,yefe-nof,"יפה נוף",7800,4
+givat-zeev,har-shmuel,"הר שמואל",5520,15
+givat-zeev,neve-menahem,"נווה מנחם",5671,7
+givat-zeev,kiryat-yearim,"קרית יערים",5939,28
+givat-zeev,hamaccabim,"המכבים",6186,18
+givat-zeev,ramat-givat-zeev,"רמת גבעת זאב",8600,7
+givat-zeev,mishkenot-givat-zeev,"משכנות גבעת זאב",9980,5
+beer-yaakov,new-colony,"המושבה החדשה",4125,4
+beer-yaakov,old-colony,"המושבה הישנה",4600,3
+beer-yaakov,ganei-menahem,"גני מנחם",4786,7
+beer-yaakov,herzl,"הרצל",5357,7
+beer-yaakov,beer-yaakov-center,"באר יעקב מרכז",7321,14
+beer-yaakov,rambam,"רמב""ם",8080,5
+beer-yaakov,haeucalyptus,"האקליפטוס",8580,10
+beer-yaakov,tzamrot-hamoshava,"צמרות המושבה",8950,3
+caesarea,neot-hagolf,"נאות הגולף",6967,20
+caesarea,neighborhood-3-hatzmarot,"שכונה 3 - הצמרות",7900,3
+caesarea,neighborhood-7-hatziporim,"שכונה 7 - הציפורים",10563,4
+caesarea,neighborhood-10-hamaof,"שכונה 10 - המעוף",10625,4
+caesarea,neighborhood-8-habikurim,"שכונה 8 - הביכורים",12233,3
+caesarea,neighborhood-12,"שכונה 12",18817,6
+caesarea,neighborhood-13-harakia,"שכונה 13 - הרקיע",47667,3
+azor,yitzhak-sade,"יצחק שדה",4748,29
+azor,ben-gurion,"בן גוריון",5308,26
+azor,new-housing,"שיכון חדש",5993,7
+maalot-tarshikha,herzl,"הרצל",2400,10
+maalot-tarshikha,harishonim,"הראשונים",2670,14
+maalot-tarshikha,ben-gurion,"בן גוריון",2913,4
+maalot-tarshikha,savyonim,"סביונים",2914,7
+maalot-tarshikha,givat-harakafot,"גבעת הרקפות",3125,4
+maalot-tarshikha,yefe-nof,"יפה נוף",3792,6
+beit-shean,neve-rachel,"נוה רחל",2425,4
+beit-shean,nof-ganim,"נוף גנים",2529,14
+beit-shean,nof-kedumim,"נוף קדומים",2733,6
+beit-shean,city-center,"מרכז העיר",2782,11
+beit-shean,nof-hayarden,"נוף הירדן",2864,11
+beit-shean,nof-hagilboa,"נוף הגלבוע",3180,5
+beit-shean,nof-hagilad,"נוף הגלעד",3663,4
+beit-shean,kidmat-eden,"קידמת עדן",3667,3
+kadima-tsoran,bneh-beitcha,"בנה ביתך",3610,5
+kadima-tsoran,ramat-amir,"רמת אמיר",5383,6
+kadima-tsoran,kadima,"קדימה",5548,35
+even-yehuda,veterans-neighborhood,"שכונת ותיקים",4680,5
+even-yehuda,212-west,"212 מערב",5167,3
+even-yehuda,hagiva,"הגבעה",6850,4
+even-yehuda,colony-center,"מרכז המושבה",10363,4
+even-yehuda,212-east,"212 מזרח",12540,5
+even-yehuda,west-colony,"מערב המושבה",14460,5
+tel-mond,eli-cohen-and-shprintzak,"אלי כהן ושפרינצק",4900,3
+tel-mond,wolfson,"וולפסון",5163,8
+tel-mond,haharim,"ההרים",5500,4
+tel-mond,hayearot,"היערות",8833,3
+kiryat-tivon,ramat-tivon,"רמת טבעון",3467,6
+kiryat-tivon,elroei,"אלרואי",4500,3
+kiryat-tivon,kiryat-haroshet,"קרית חרושת",4517,6
+kiryat-tivon,tivon,"טבעון",5995,21
+kiryat-tivon,kiryat-amal,"קריית עמל",8064,7
+maale-adumim,tzemah-hasade,"צמח השדה",4517,6
+maale-adumim,musical-instruments,"כלי שיר",5480,12
+maale-adumim,nofei-hasela,"נופי הסלע",6188,8
+maale-adumim,megadim,"מגדים",7879,7
+maale-adumim,hamitzadim,"המיצדים",8633,3
+shlomi,nof-harim,"נוף הרים",2553,17
+shlomi,dado,"דדו",3067,3
+shlomi,natan-elbaz,"נתן אלבז",3275,4
+shlomi,pisgat-shlomit,"פסגת שלומית",4133,3
+shlomi,morad-hahar,"מורד ההר",4775,4
+shlomi,adamit-yaarit,"אדמית, יערית",5786,7
+beit-dagan,bneh-beitcha,"בנה ביתך",3167,3
+beit-dagan,neve-hadarim,"נווה הדרים",4533,3
+beit-dagan,city-center,"מרכז העיר",5220,5
+ganei-tikva,nof-savyon,"נוף סביון",5558,6
+ganei-tikva,city-center,"מרכז העיר",6550,6
+ganei-tikva,givat-savyon,"גבעת סביון",7128,14
+atlit,old-settlement,"היישוב הוותיק",6272,9
+atlit,neve-prahim,"נווה פרחים",8660,5
+atlit,neve-yam,"נווה ים",8767,6
+atlit,savyonei-atlit,"סביוני עתלית",8938,4
+atlit,ridge-complex,"מתחם הרכס",9567,3
+atlit,ein-carmel-triangle,"משולש עין כרמל",11433,3
+elad,quarter-z,"רובע ז",4800,4
+elad,quarter-a,"רובע א",5217,3
+elad,quarter-v,"רובע ו",5440,5
+elad,quarter-d-and-cbd,"רובע ד והמע""ר",5650,6
+elad,quarter-g,"רובע ג",5690,5
+elad,quarter-het,"רובע ח",6433,3
+gan-yavne,neot-haprahim,"נאות הפרחים",6115,10
+omer,hahadasha,"החדשה",5475,4
+omer,hayeshana,"הישנה",6580,20
+binyamina-givat-ada,binyamina,"בנימינה",7261,18
+binyamina-givat-ada,givat-ada,"גבעת עדה",9967,9
+yerukham,neot-hadar,"נאות הדר",1757,3
+yerukham,eliyahu-hanavi,"אליהו הנביא",1867,3
+yerukham,eli-cohen,"אלי כהן",1980,5
+yerukham,city-center,"מרכז העיר",2437,4
+yerukham,hairusim,"האירוסים",4517,6
+rekhasim,giva-g,"גבעה ג'",4863,4
+rekhasim,mishkenot,"משכנות",4933,3
+rekhasim,giva-d,"גבעה ד'",5500,3
+rekhasim,giva-a,"גבעה א'",6000,3
+beit-arye,beit-arye,"בית אריה",4729,12
+beit-arye,ofrim,"עופרים",5500,7
+rosh-pina,hashkedim-(expansion-b),"השקדים (הרחבה ב')",3043,7
+rosh-pina,hagfanim-(expansion-g),"הגפנים (הרחבה ג')",5725,4

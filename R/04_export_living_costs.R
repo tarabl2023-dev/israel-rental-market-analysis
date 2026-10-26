@@ -6,7 +6,6 @@
 #          data/raw/cbs_cpi_factors.csv       (CBS price-index change 2021 -> 2026 by group)
 #          data/raw/cbs_hes_2021_table13.csv  (CBS Household Expenditure Survey 2021, Table 13, by religiosity)
 #          data/raw/yad2_locations.csv        (Yad2 region / area / city codes for search links)
-#          data/raw/neighbourhoods.csv        (areas within each city for the area picker)
 # Output : docs/living-data.js  (loaded by docs/index.html)
 
 library(tidyverse)
@@ -159,54 +158,6 @@ city_region <- c(
   "Ashkelon" = "ashqelon", "Be'er Sheva" = "beer_sheva"
 )
 
-# Other towns people may type: CBS publishes no rent for them, so the
-# calculator falls back to their district
-other_towns <- tribble(
-  ~town,               ~district,
-  "Givatayim",         "Tel Aviv District",
-  "Ramat HaSharon",    "Tel Aviv District",
-  "Kiryat Ono",        "Tel Aviv District",
-  "Or Yehuda",         "Tel Aviv District",
-  "Hod HaSharon",      "Central District",
-  "Rosh HaAyin",       "Central District",
-  "Modi'in",           "Central District",
-  "Ness Ziona",        "Central District",
-  "Yavne",             "Central District",
-  "Lod",               "Central District",
-  "Ramla",             "Central District",
-  "Yehud",             "Central District",
-  "Shoham",            "Central District",
-  "Gedera",            "Central District",
-  "Kiryat Ata",        "Haifa District",
-  "Kiryat Bialik",     "Haifa District",
-  "Kiryat Motzkin",    "Haifa District",
-  "Kiryat Yam",        "Haifa District",
-  "Nesher",            "Haifa District",
-  "Tirat Carmel",      "Haifa District",
-  "Or Akiva",          "Haifa District",
-  "Zikhron Ya'akov",   "Haifa District",
-  "Pardes Hanna-Karkur", "Haifa District",
-  "Nazareth",          "North District",
-  "Nof HaGalil",       "North District",
-  "Afula",             "North District",
-  "Tiberias",          "North District",
-  "Karmiel",           "North District",
-  "Nahariya",          "North District",
-  "Akko",              "North District",
-  "Safed",             "North District",
-  "Kiryat Shmona",     "North District",
-  "Yokneam Illit",     "North District",
-  "Eilat",             "South District",
-  "Dimona",            "South District",
-  "Kiryat Gat",        "South District",
-  "Sderot",            "South District",
-  "Netivot",           "South District",
-  "Ofakim",            "South District",
-  "Arad",              "South District",
-  "Kiryat Malakhi",    "South District",
-  "Mevaseret Zion",    "Jerusalem District"
-)
-
 # ---- Shabbat ----------------------------------------------------------------
 
 # Per standard person, households that keep Shabbat (religious + traditional)
@@ -251,7 +202,7 @@ shabbat <- list(
 message(sprintf("Shabbat: +%.0f NIS per standard person on Shabbat foods; guest meal %d NIS",
                 shabbat$extraPerStd, shabbat$guestMeal))
 
-# ---- Yad2 links and neighbourhoods ------------------------------------------
+# ---- Yad2 links -------------------------------------------------------------
 
 yad2 <- read_csv("data/raw/yad2_locations.csv", show_col_types = FALSE)
 city_yad2 <- tibble(area = names(city_region)) |>
@@ -265,13 +216,11 @@ city_yad2 <- tibble(area = names(city_region)) |>
     "Givatayim", 6300, "Ramat HaSharon", 2650, "Hod HaSharon", 9700, "Rosh HaAyin", 2640,
     "Ness Ziona", 7200, "Yavne", 2660, "Tiberias", 6700, "Safed", 8000, "Karmiel", 1139,
     "Nahariya", 9100, "Akko", 7600, "Eilat", 2600, "Ofakim", 31, "Dimona", 2200,
-    "Mevaseret Zion", 1015, "Afula", 7700, "Or Akiva", 1020
+    "Mevaseret Zion", 1015, "Afula", 7700, "Or Akiva", 1020, "Ariel", 3570, "Ma'ale Adumim", 3616,
+    "Caesarea", 1167
   )) |>
   inner_join(yad2, by = "yad2_city")
 stopifnot(all(names(city_region) %in% city_yad2$area))
-
-neighbourhoods <- read_csv("data/raw/neighbourhoods.csv", show_col_types = FALSE,
-                           col_types = cols(yad2_hood = "c"))
 
 flagged <- hes |>
   filter(rough | filled, region != "judea_samaria",
@@ -289,11 +238,6 @@ payload <- list(
     r <- filter(city_yad2, area == a)
     list(topArea = r$yad2_top_area, area = r$yad2_area, city = r$yad2_city)
   }),
-  areas = map(set_names(unique(neighbourhoods$city)), \(c) {
-    neighbourhoods |>
-      filter(city == c) |>
-      transmute(en = area_en, he = area_he, beach = beach == 1, hint = price_hint, hood = na_if(yad2_hood, ""))
-  }),
   stations = stations |>
     filter(!is.na(lat)) |>
     transmute(n = name, k = kind, c = city, la = round(lat, 5), lo = round(lon, 5)),
@@ -301,7 +245,6 @@ payload <- list(
     regions = regions,
     regionNames = as.list(c(region_names, set_names(names(district_regions)), Israel = "Israel")),
     cityRegion = as.list(city_region),
-    otherTowns = as.list(deframe(other_towns)),
     passes = list(national = 315, periphery = 139),
     shabbat = shabbat,
     source = paste("CBS Household Expenditure Survey 2021 (Table 10, by sub-district),",
@@ -317,5 +260,4 @@ writeLines(
   useBytes = TRUE
 )
 
-message(sprintf("Living-cost data: %d stations, %d regions, %d extra towns",
-                nrow(stations), length(regions), nrow(other_towns)))
+message(sprintf("Living-cost data: %d stations, %d regions", nrow(stations), length(regions)))

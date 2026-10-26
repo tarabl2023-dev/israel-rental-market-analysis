@@ -47,7 +47,8 @@ window.I18N.places = {
     "Nazareth": "Назарет", "Nof HaGalil": "Ноф-ха-Галиль", "Afula": "Афула", "Tiberias": "Тверия", "Karmiel": "Кармиэль",
     "Nahariya": "Нагария", "Akko": "Акко", "Safed": "Цфат", "Kiryat Shmona": "Кирьят-Шмона", "Yokneam Illit": "Йокнеам-Илит",
     "Eilat": "Эйлат", "Dimona": "Димона", "Kiryat Gat": "Кирьят-Гат", "Sderot": "Сдерот", "Netivot": "Нетивот", "Ofakim": "Офаким",
-    "Arad": "Арад", "Kiryat Malakhi": "Кирьят-Малахи", "Mevaseret Zion": "Мевасерет-Цион"
+    "Arad": "Арад", "Kiryat Malakhi": "Кирьят-Малахи", "Mevaseret Zion": "Мевасерет-Цион",
+    "Givat Shmuel": "Гиват-Шмуэль", "Migdal HaEmek": "Мигдаль-ха-Эмек", "Ariel": "Ариэль", "Harish": "Хариш", "Kfar Yona": "Кфар-Йона", "Givat Ze'ev": "Гиват-Зеэв", "Be'er Ya'akov": "Беэр-Яаков", "Caesarea": "Кейсария", "Azor": "Азор", "Ma'alot-Tarshiha": "Маалот-Таршиха", "Beit She'an": "Бейт-Шеан", "Kadima-Tzoran": "Кадима-Цоран", "Oranit": "Оранит", "Even Yehuda": "Эвен-Йехуда", "Tel Mond": "Тель-Монд", "Kiryat Tivon": "Кирьят-Тивон", "Ma'ale Adumim": "Маале-Адумим", "Shlomi": "Шломи", "Savyon": "Савьон", "Beit Dagan": "Бейт-Даган", "Ganei Tikva": "Ганей-Тиква", "Atlit": "Атлит", "Hatzor HaGlilit": "Хацор-ха-Глилит", "Elad": "Эльад", "Gan Yavne": "Ган-Явне", "Omer": "Омер", "Abu Ghosh": "Абу-Гош", "Binyamina": "Биньямина", "Yeruham": "Йерухам", "Etz Efraim": "Эц-Эфраим", "Rekhasim": "Рехасим", "Beit Aryeh": "Бейт-Арье", "Rosh Pina": "Рош-Пина"
   },
   ar: {
     "Israel": "إسرائيل",
@@ -71,6 +72,7 @@ window.I18N.places = {
     "Nazareth": "الناصرة", "Nof HaGalil": "نوف هچليل", "Afula": "العفولة", "Tiberias": "طبريا", "Karmiel": "كرميئيل",
     "Nahariya": "نهاريا", "Akko": "عكا", "Safed": "صفد", "Kiryat Shmona": "كريات شمونة", "Yokneam Illit": "يوكنعام عيليت",
     "Eilat": "إيلات", "Dimona": "ديمونا", "Kiryat Gat": "كريات جات", "Sderot": "سديروت", "Netivot": "نتيفوت", "Ofakim": "أوفاكيم",
-    "Arad": "عراد", "Kiryat Malakhi": "كريات ملاخي", "Mevaseret Zion": "مفسيرت تسيون"
+    "Arad": "عراد", "Kiryat Malakhi": "كريات ملاخي", "Mevaseret Zion": "مفسيرت تسيون",
+    "Givat Shmuel": "جفعات شموئيل", "Migdal HaEmek": "مجدال هعيمك", "Ariel": "أريئيل", "Harish": "حريش", "Kfar Yona": "كفار يونا", "Givat Ze'ev": "جفعات زئيف", "Be'er Ya'akov": "بئير يعكوف", "Caesarea": "قيسارية", "Azor": "أزور", "Ma'alot-Tarshiha": "معالوت ترشيحا", "Beit She'an": "بيسان", "Kadima-Tzoran": "كديما تسوران", "Oranit": "أورانيت", "Even Yehuda": "إيفن يهودا", "Tel Mond": "تل موند", "Kiryat Tivon": "كريات طبعون", "Ma'ale Adumim": "معاليه أدوميم", "Shlomi": "شلومي", "Savyon": "سافيون", "Beit Dagan": "بيت داغان", "Ganei Tikva": "جاني تكفا", "Atlit": "عتليت", "Hatzor HaGlilit": "حتسور هجليليت", "Elad": "إلعاد", "Gan Yavne": "جان يفنه", "Omer": "عومر", "Abu Ghosh": "أبو غوش", "Binyamina": "بنيامينا", "Yeruham": "يروحام", "Etz Efraim": "عيتس إفرايم", "Rekhasim": "ريخسيم", "Beit Aryeh": "بيت أرييه", "Rosh Pina": "روش بينا"
   }
 };
