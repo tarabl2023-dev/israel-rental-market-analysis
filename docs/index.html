@@ -125,7 +125,24 @@
   .stepper button:disabled { background: var(--line); color: var(--ink-3); cursor: default; }
   .stepper output { min-width: 26px; text-align: center; font-weight: 800; font-size: 16px; font-variant-numeric: tabular-nums; }
   .f-rooms small { font-size: 11px; color: var(--ink-3); }
-  .f-budget { flex: 0 1 190px; }
+  .f-budget { flex: 0 1 200px; }
+  /* budget slider: the fill shows the budget, the marks show where each level starts here */
+  .slider { position: relative; }
+  .slider input[type="range"] {
+    -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 6px; margin: 8px 0 3px; border-radius: 3px; cursor: pointer;
+    background: linear-gradient(to right, var(--primary) var(--fill, 0%), var(--line) var(--fill, 0%));
+  }
+  [dir="rtl"] .slider input[type="range"] { background: linear-gradient(to left, var(--primary) var(--fill, 0%), var(--line) var(--fill, 0%)); }
+  .slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); border: 3px solid var(--primary); box-shadow: var(--shadow-sm); }
+  .slider input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 3px solid var(--primary); box-shadow: var(--shadow-sm); }
+  .slider input[type="range"]:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+  .slider input[type="range"]:disabled { opacity: .4; cursor: default; }
+  .slider .ticks { position: absolute; inset: 0; pointer-events: none; }
+  .slider .ticks i { position: absolute; top: -2px; width: 4px; height: 10px; margin-inline-start: -2px; border-radius: 2px; box-shadow: 0 0 0 2px var(--surface-2); }
+  .slider .ticks .budget { background: var(--teal); }
+  .slider .ticks .comfortable { background: var(--primary-deep); }
+  .slider .ticks .luxury { background: var(--accent); }
+  .slider-ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-3); }
   .f-budget .money { display: flex; align-items: center; gap: 4px; font-weight: 700; }
   .f-budget input { border: 0; background: transparent; width: 100%; font-weight: 700; font-size: 15px; padding: 0; }
   .f-budget input:focus { outline: none; }
@@ -462,7 +479,8 @@
   @media (max-width: 560px) {
     .data-chip { display: none; }
     .f-area { flex-basis: 100%; }
-    .f-rooms, .f-budget { flex: 1 1 0; }
+    .f-rooms { flex: 1 1 0; }
+    .f-budget { flex: 1 1 100%; }
     .nolimit { flex: 1 1 100%; height: 42px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -526,6 +544,11 @@
     <div class="f-box f-budget">
       <label for="budget" data-i18n>Max budget / month</label>
       <div class="money">₪<input type="number" id="budget" inputmode="numeric" min="0" step="100" placeholder="Any" data-i18n-ph></div>
+      <div class="slider">
+        <input type="range" id="budget-range" min="1000" max="20000" step="250" aria-label="Drag to set your budget" data-i18n-aria>
+        <div class="ticks" id="budget-ticks" aria-hidden="true"></div>
+      </div>
+      <div class="slider-ends" aria-hidden="true"><span>₪1k</span><span id="budget-max"></span></div>
     </div>
     <button type="button" class="nolimit" id="no-budget" aria-pressed="false" data-i18n>No budget limit</button>
   </div>
@@ -840,9 +863,9 @@
 <script src="market-data.js?v=1"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=3"></script>
-<script src="i18n-ru.js?v=4"></script>
-<script src="i18n-ar.js?v=3"></script>
+<script src="i18n-he.js?v=4"></script>
+<script src="i18n-ru.js?v=5"></script>
+<script src="i18n-ar.js?v=4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1822,6 +1845,23 @@
   }
   hoodSel.addEventListener("change", () => { state.hood = hoodSel.value; persist(); render(); });
 
+  // ---- Budget slider ----
+  // Drag it or type the amount: both set the same budget. The track runs a little past this
+  // place's luxury range, and the marks show where budget, comfortable and luxury sit here.
+  const rangeEl = $("budget-range");
+  function renderBudgetSlider(avg) {
+    const max = Math.max(5000, Math.ceil(Math.max(avg * TIERS.luxury.hi * 1.15, state.budget || 0) / 1000) * 1000);
+    const min = +rangeEl.min;
+    const pct = (v) => (Math.min(100, Math.max(0, (v - min) / (max - min) * 100))).toFixed(1) + "%";
+    rangeEl.max = max;
+    rangeEl.value = state.budget || max;   // no budget yet: the handle waits at the far end
+    rangeEl.disabled = state.noLimit;
+    rangeEl.style.setProperty("--fill", state.budget && !state.noLimit ? pct(state.budget) : "0%");
+    $("budget-max").textContent = "₪" + max / 1000 + "k";
+    $("budget-ticks").innerHTML = Object.entries(TIERS).map(([k, t]) =>
+      '<i class="' + k + '" style="inset-inline-start:' + pct(avg * t.mid) + '" title="' + esc(T(cap(k)) + " " + fmt(round50(avg * t.mid))) + '"></i>').join("");
+  }
+
   // ---- Main render ----
   function render() {
     const area = byName[state.area];
@@ -1838,6 +1878,7 @@
     renderHoodPicker(area);
     const avg = b.rent * (1 + areaAdj(currentHood(area.name)));
     renderHero(area, rooms, b);
+    renderBudgetSlider(avg);
     renderExtras();
     renderCosts(area, rooms, avg);
     renderGuide(area, rooms, avg);
@@ -1917,6 +1958,7 @@
   const budgetEl = $("budget");
   if (state.budget) budgetEl.value = state.budget;
   budgetEl.addEventListener("input", () => { const v = parseFloat(budgetEl.value); state.budget = v > 0 ? v : null; state.level = null; persist(); render(); });
+  rangeEl.addEventListener("input", () => { state.budget = +rangeEl.value; budgetEl.value = state.budget; state.level = null; persist(); render(); });
   $("no-budget").addEventListener("click", () => { state.noLimit = !state.noLimit; state.level = null; persist(); render(); if (!state.noLimit) budgetEl.focus(); });
   const sortEl = $("sort");
   sortEl.value = state.sort;

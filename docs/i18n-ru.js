@@ -230,6 +230,7 @@ window.I18N = window.I18N || {};
     "Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.":
       "Каждая цифра на этой странице взята из одного из этих источников. У каждого есть ссылка на оригинал и на файл данных в проекте, так что вы можете проверить сами.",
     // market rents, smaller towns, neighbourhoods and Shabbat hosting
+    "Drag to set your budget": "Перетащите, чтобы задать бюджет",
     "Median asking rent for {rooms} in {place}, adjusted to {hood} ({n} listings there), {date}": "Медианная запрашиваемая аренда ({rooms}), {place}, с поправкой на район {hood} ({n} объявл. там), {date}",
     "Typical {rooms} apartment in {place} · CBS average brought up to today's asking rents, {date}": "Типичная квартира ({rooms}), {place} · среднее ЦСБ, пересчитанное к сегодняшним ценам объявлений, {date}",
     "Typical {rooms} apartment in {place} · estimated from its other sizes (few listings right now), {date}": "Типичная квартира ({rooms}), {place} · оценка по другим размерам (сейчас мало объявлений), {date}",

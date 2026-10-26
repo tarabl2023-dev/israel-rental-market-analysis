@@ -230,6 +230,7 @@ window.I18N = window.I18N || {};
     "Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.":
       "כל מספר בעמוד הזה מגיע מאחד המקורות האלה. כל אחד מקשר למקור ולקובץ הנתונים המדויק ששמור בפרויקט, כך שאפשר לבדוק בעצמכם.",
     // market rents, smaller towns, neighbourhoods and Shabbat hosting
+    "Drag to set your budget": "גררו כדי לקבוע תקציב",
     "Median asking rent for {rooms} in {place}, adjusted to {hood} ({n} listings there), {date}": "חציון השכירות המבוקשת לדירת {rooms} ב{place}, מותאם ל{hood} ({n} מודעות שם), {date}",
     "Typical {rooms} apartment in {place} · CBS average brought up to today's asking rents, {date}": "דירת {rooms} טיפוסית ב{place} · ממוצע הלמ״ס מותאם למחירים המבוקשים היום, {date}",
     "Typical {rooms} apartment in {place} · estimated from its other sizes (few listings right now), {date}": "דירת {rooms} טיפוסית ב{place} · מוערך לפי גדלים אחרים (מעט מודעות כרגע), {date}",
