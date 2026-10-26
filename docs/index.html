@@ -329,6 +329,33 @@
   .cost-table .muted { color: var(--ink-3); font-weight: 600; }
   .cost-table tfoot td { border-bottom: 0; font-size: 15px; font-weight: 800; padding-top: 12px; }
   @media (max-width: 560px) { .cost-table .colb { display: none; } }
+  /* extras & treats */
+  .extras { margin: 4px 0 16px; border-radius: 14px; background: var(--surface-2); }
+  .extras-toggle { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 0; background: transparent;
+                   font-weight: 800; font-size: 15px; cursor: pointer; text-align: start; color: var(--ink); }
+  .extras-toggle .sum { margin-inline-start: auto; font-size: 13px; color: var(--accent); white-space: nowrap; }
+  .extras-toggle .chev2 { transition: transform .2s; color: var(--ink-3); flex: none; }
+  .extras-toggle[aria-expanded="true"] .chev2 { transform: rotate(180deg); }
+  .extras-body { padding: 0 14px 14px; }
+  .extras-body[hidden] { display: none; }
+  .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  @media (max-width: 640px) { .extras-grid { grid-template-columns: 1fr; } }
+  .extra { background: var(--surface); border-radius: 12px; border: 2px solid transparent; padding: 8px 10px; }
+  .extra.on { border-color: var(--accent); }
+  .extra-head { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; background: none; padding: 0; cursor: pointer; text-align: start; font-weight: 700; font-size: 14px; color: var(--ink); }
+  .extra-head .emo { font-size: 18px; }
+  .extra-head .tick { margin-inline-start: auto; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--line); display: grid; place-items: center; font-size: 12px; color: #fff; flex: none; }
+  .extra.on .extra-head .tick { background: var(--accent); border-color: var(--accent); }
+  .extra-edit { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 13px; color: var(--ink-2); }
+  .extra-edit input { width: 70px; padding: 4px 6px; border-radius: 8px; border: 2px solid var(--line); background: var(--surface-2); font-weight: 700; font-size: 14px; }
+  .extra-edit input:focus { outline: none; border-color: var(--primary); }
+  .extra-edit .tot { margin-inline-start: auto; font-weight: 800; color: var(--ink); }
+  .extra-del { border: 0; background: none; color: var(--ink-3); cursor: pointer; font-size: 16px; padding: 0 2px; }
+  .extra-add { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .extra-add input { padding: 7px 9px; border-radius: 10px; border: 2px solid var(--line); background: var(--surface); font-size: 14px; }
+  .extra-add input[type="text"] { flex: 1 1 160px; }
+  .extra-add input[type="number"] { width: 110px; }
+  .extra-add button { padding: 8px 14px; border-radius: 10px; border: 0; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
   .l-allin { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--accent); }
   .l-transit { color: var(--ink-2); }
 
@@ -594,6 +621,22 @@
                 <button type="button" data-meals="1" data-i18n>Friday night</button><button type="button" data-meals="2" data-i18n>Friday + lunch</button>
               </div></div>
           </div>
+          <div class="extras">
+            <button type="button" class="extras-toggle" id="extras-toggle" aria-expanded="false" aria-controls="extras-body">
+              <span>✨</span><span data-i18n>Add extras: nails, massages, a better gym…</span><span class="sum" id="extras-sum"></span>
+              <svg class="chev2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="extras-body" id="extras-body" hidden>
+              <p class="tip" data-i18n>These go on top of the average costs above. Prices are rough typical Israeli prices, so change them to match what you'd actually pay and how often.</p>
+              <div class="extras-grid" id="extras-grid"></div>
+              <div class="extra-add">
+                <input type="text" id="extra-name" maxlength="40" placeholder="Add your own, e.g. Hebrew lessons" data-i18n-ph>
+                <input type="number" id="extra-price" min="0" step="10" placeholder="₪ per time" data-i18n-ph>
+                <input type="number" id="extra-qty" min="0" step="1" placeholder="Times / month" data-i18n-ph>
+                <button type="button" id="extra-add" data-i18n>Add</button>
+              </div>
+            </div>
+          </div>
           <div class="cost-head">
             <div><div class="lbl" data-i18n>Total per month</div><div class="amt" id="ct-amount"></div><div class="sub" id="ct-sub"></div><div class="sh-badge" id="sh-badge"></div></div>
             <div class="vs" id="ct-vs"></div>
@@ -751,6 +794,7 @@
             <li>Ra'anana uses Kfar Saba's rents, and smaller towns use their district's, because CBS doesn't publish them.</li>
             <li>Areas in a city: which neighbourhoods are beach-side, pricier or cheaper is a local guide, not official data. Choosing one adjusts rent by about +15% (pricier, or by the beach), 0% (around average) or −10% (cheaper).</li>
             <li>Shabbat: a festive meal costs about three times an ordinary meal (≈₪37 per person). Family members add ≈₪25 per meal on top of their normal food, and guests add ≈₪37, over about 4.3 Shabbatot a month.</li>
+            <li>Extras & treats (nails, massages, a premium gym and so on): rough typical Israeli prices that you can change. They're added on top of the survey averages, which already include some spending on leisure and personal care.</li>
           </ul>
         </div>
       </section>
@@ -784,9 +828,9 @@
 <script src="living-data.js?v=3"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=1"></script>
-<script src="i18n-he.js?v=1"></script>
-<script src="i18n-ru.js?v=2"></script>
-<script src="i18n-ar.js?v=1"></script>
+<script src="i18n-he.js?v=2"></script>
+<script src="i18n-ru.js?v=3"></script>
+<script src="i18n-ar.js?v=2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -863,6 +907,9 @@
     shabbat: saved.shabbat === true,
     guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
     shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2,
+    // extras: { id: { price, qty } } for chosen catalogue items; custom: [{ name, price, qty }]
+    extras: saved.extras && typeof saved.extras === "object" && !Array.isArray(saved.extras) ? saved.extras : {},
+    custom: Array.isArray(saved.custom) ? saved.custom.filter((c) => c && c.name).slice(0, 12) : [],
     lang
   };
   if (state.town) state.area = LD.costs.otherTowns[state.town];
@@ -980,8 +1027,36 @@
     ["leisure", "Sport, fitness & entertainment", "#ff8fbf"],
     ["health", "Health (private insurance, dental)", "#6fd6cb"],
     ["clothing", "Clothing & personal care", "#b9b2cc"],
-    ["shabbat", "Shabbat meals & hosting", "#ffa94d"]
+    ["shabbat", "Shabbat meals & hosting", "#ffa94d"],
+    ["extras", "Extras & treats", "#ffd36b"]
   ];
+  // Extras & treats: rough typical Israeli prices (not official data), editable by the person
+  const EXTRAS = [
+    ["nails", "💅", "Manicure / nails", 130, 2],
+    ["massage", "💆", "Massage", 300, 1],
+    ["gym", "🏋️", "Premium gym or country club", 450, 1],
+    ["pilates", "🧘", "Pilates / yoga studio", 450, 1],
+    ["trainer", "💪", "Personal trainer session", 250, 4],
+    ["hair", "💇", "Hairdresser", 200, 1],
+    ["facial", "✨", "Facial / beauty treatment", 300, 1],
+    ["cleaner", "🧹", "Cleaner (3-hour visit)", 210, 4],
+    ["babysitter", "👶", "Babysitter (evening out)", 200, 2],
+    ["pet", "🐕", "Dog walker / pet care", 400, 1],
+    ["streaming", "📺", "Streaming & subscriptions", 120, 1],
+    ["coffee", "☕", "Café coffee", 15, 20]
+  ];
+  const num = (v, d) => { const n = parseFloat(v); return isFinite(n) && n >= 0 ? n : d; };
+  function extrasList() {
+    const out = [];
+    for (const [id, emo, label, price, qty] of EXTRAS) {
+      const e = state.extras[id];
+      if (e) out.push({ name: T(label), emo, price: num(e.price, price), qty: num(e.qty, qty) });
+    }
+    for (const c of state.custom) out.push({ name: c.name, emo: "⭐", price: num(c.price, 0), qty: num(c.qty, 1) });
+    return out;
+  }
+  const extrasTotal = () => extrasList().reduce((t, e) => t + e.price * e.qty, 0);
+
   function regionFor(areaName, town) {
     if (town) return LD.costs.otherTowns[town];
     const a = byName[areaName];
@@ -1021,6 +1096,7 @@
       leisure: R.leisure * sp * life,
       health: R.health * sp,
       clothing: R.clothing * sp * life,
+      extras: extrasTotal(),
       // Shabbat: extra Shabbat foods for the household (CBS, observant vs secular) + guests at hosted meals
       // Shabbat: every person at a festive meal costs about 3x an ordinary meal, so the household pays
       // the extra 2x on top of the groceries it already buys, and each guest costs the full 3x
@@ -1547,7 +1623,8 @@
         : "{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
         { people: state.adults + state.kids, guests: state.guests, meals: state.shabbatMeals, fam: Math.round(LD.costs.shabbat.personMeal * 2), guest: LD.costs.shabbat.guestMeal }),
       leisure: T("Gym, classes, events, outings"),
-      groceries: T("Supermarket food, fruit & veg")
+      groceries: T("Supermarket food, fruit & veg"),
+      extras: extrasList().map((e) => e.name + (e.qty !== 1 ? " ×" + e.qty : "")).join(", ")
     };
     $("cost-rows").innerHTML = COST_LINES.filter(([k]) => here[k] > 0 || there[k] > 0).map(([k, label, color]) => {
       const d = here[k] - there[k];
@@ -1563,6 +1640,76 @@
     $("cost-note").innerHTML = T("Everyday costs: typical spending in the {region} (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.",
       { region: esc(P(LD.costs.regionNames[region] || region)) });
   }
+
+  // ---- Extras panel ----
+  function extraRow(key, emo, name, price, qty, on, custom) {
+    return '<div class="extra' + (on ? " on" : "") + '" data-extra="' + esc(key) + '">' +
+      '<button type="button" class="extra-head" data-extra-toggle="' + esc(key) + '" aria-pressed="' + on + '"><span class="emo">' + emo + "</span>" +
+      "<span>" + esc(name) + "</span>" + (custom ? "" : '<span class="tick">' + (on ? "✓" : "") + "</span>") + "</button>" +
+      (on ? '<div class="extra-edit">₪<input type="number" min="0" step="10" value="' + price + '" data-extra-price="' + esc(key) + '" aria-label="' + esc(T("Price each time")) + '">' +
+        '×<input type="number" min="0" step="1" value="' + qty + '" data-extra-qty="' + esc(key) + '" aria-label="' + esc(T("Times per month")) + '"> ' + T("a month") +
+        '<span class="tot" data-extra-tot="' + esc(key) + '">' + fmt(price * qty) + "</span>" +
+        (custom ? '<button type="button" class="extra-del" data-extra-del="' + esc(key) + '" aria-label="' + esc(T("Remove {name}", { name })) + '">✕</button>' : "") + "</div>" : "") +
+      "</div>";
+  }
+  function renderExtras() {
+    $("extras-grid").innerHTML =
+      EXTRAS.map(([id, emo, label, price, qty]) => {
+        const e = state.extras[id];
+        return extraRow(id, emo, T(label), e ? num(e.price, price) : price, e ? num(e.qty, qty) : qty, !!e, false);
+      }).join("") +
+      state.custom.map((c, i) => extraRow("custom-" + i, "⭐", c.name, num(c.price, 0), num(c.qty, 1), true, true)).join("");
+    updateExtrasSum();
+  }
+  function updateExtrasSum() {
+    const n = extrasList().length;
+    $("extras-sum").textContent = n ? "+" + fmt(extrasTotal()) + " " + T("a month") : "";
+  }
+  // recompute the money without rebuilding the inputs (keeps the cursor where it is)
+  function refreshCosts() {
+    const area = byName[state.area], band = bandFor(state.rooms), b = bandOf(area, band);
+    renderCosts(area, band, b.rent);
+    renderFeed(band);
+    updateExtrasSum();
+  }
+  $("extras-toggle").addEventListener("click", () => {
+    const body = $("extras-body"), open = body.hidden;
+    body.hidden = !open; $("extras-toggle").setAttribute("aria-expanded", String(open));
+  });
+  $("extras-grid").addEventListener("click", (e) => {
+    const del = e.target.closest("[data-extra-del]");
+    if (del) {
+      state.custom.splice(+del.dataset.extraDel.split("-")[1], 1);
+      persist(); renderExtras(); refreshCosts(); return;
+    }
+    const t = e.target.closest("[data-extra-toggle]");
+    if (!t) return;
+    const key = t.dataset.extraToggle;
+    if (key.startsWith("custom-")) return;
+    if (state.extras[key]) delete state.extras[key];
+    else { const d = EXTRAS.find((x) => x[0] === key); state.extras[key] = { price: d[3], qty: d[4] }; }
+    persist(); renderExtras(); refreshCosts();
+  });
+  $("extras-grid").addEventListener("input", (e) => {
+    const el = e.target, key = el.dataset.extraPrice || el.dataset.extraQty;
+    if (!key) return;
+    const field = el.dataset.extraPrice ? "price" : "qty";
+    const target = key.startsWith("custom-") ? state.custom[+key.split("-")[1]] : state.extras[key];
+    if (!target) return;
+    target[field] = num(el.value, 0);
+    const tot = $("extras-grid").querySelector('[data-extra-tot="' + key + '"]');
+    if (tot) tot.textContent = fmt(num(target.price, 0) * num(target.qty, 0));
+    persist(); refreshCosts();
+  });
+  $("extra-add").addEventListener("click", () => {
+    const name = $("extra-name").value.trim();
+    if (!name) { $("extra-name").focus(); return; }
+    state.custom.push({ name: name.slice(0, 40), price: num($("extra-price").value, 0), qty: num($("extra-qty").value, 1) || 1 });
+    $("extra-name").value = $("extra-price").value = $("extra-qty").value = "";
+    persist(); renderExtras(); refreshCosts();
+    toast(T("Added {w}", { w: name }));
+  });
+  $("extra-name").addEventListener("keydown", (e) => { if (e.key === "Enter") $("extra-add").click(); });
 
   // ---- Area-in-city picker ----
   const hoodSel = $("hood");
@@ -1595,6 +1742,7 @@
 
     renderHoodPicker(area);
     renderHero(area, band, b);
+    renderExtras();
     renderCosts(area, band, b.rent);
     renderGuide(area, band, b.rent);
     renderSites(area);

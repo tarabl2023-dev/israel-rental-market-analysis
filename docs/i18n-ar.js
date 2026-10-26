@@ -200,6 +200,30 @@ window.I18N = window.I18N || {};
     "Added {w} to your search words": "أُضيف {w} إلى كلمات البحث", "Removed {w}": "أُزيل {w}",
     "Saved {name}": "تم حفظ {name}", "Removed {name}": "تمت إزالة {name}",
 
+    // ---- extras ----
+    "Add extras: nails, massages, a better gym…": "أضف إضافات: الأظافر، التدليك، نادٍ رياضي أفضل…",
+    "These go on top of the average costs above. Prices are rough typical Israeli prices, so change them to match what you'd actually pay and how often.": "تُضاف هذه فوق متوسط التكاليف أعلاه. الأسعار تقريبية ونموذجية في إسرائيل، فغيّرها لتطابق ما تدفعه فعلًا وعدد المرات.",
+    "Add your own, e.g. Hebrew lessons": "أضف شيئًا خاصًا، مثل دروس العبرية",
+    "₪ per time": "₪ للمرة",
+    "Times / month": "مرات / شهر",
+    "Add": "إضافة",
+    "Manicure / nails": "مانيكير / أظافر",
+    "Massage": "تدليك",
+    "Premium gym or country club": "نادٍ رياضي فاخر أو كانتري كلوب",
+    "Pilates / yoga studio": "استوديو بيلاتس / يوغا",
+    "Personal trainer session": "جلسة مدرب شخصي",
+    "Hairdresser": "مصفف الشعر",
+    "Facial / beauty treatment": "عناية بالوجه / تجميل",
+    "Cleaner (3-hour visit)": "عاملة تنظيف (3 ساعات)",
+    "Babysitter (evening out)": "جليسة أطفال (سهرة)",
+    "Dog walker / pet care": "تمشية الكلب / رعاية الحيوانات",
+    "Streaming & subscriptions": "البث والاشتراكات",
+    "Café coffee": "قهوة في المقهى",
+    "Extras & treats": "إضافات ورفاهيات",
+    "Price each time": "السعر للمرة",
+    "Times per month": "مرات في الشهر",
+    "Added {w}": "أُضيف {w}",
+
     // ---- method, sources, footer ----
     "How the estimates work": "كيف تُحسب التقديرات", "Data source, price levels and photo credits": "مصادر البيانات ومستويات الأسعار وحقوق الصور",
     "Sources & data": "المصادر والبيانات",
@@ -236,7 +260,7 @@ window.I18N = window.I18N || {};
       "<li>التعليم مع أطفال: ضعف متوسط المسح الذي يشمل أسرًا بلا أطفال.</li>" +
       "<li>رعنانا حسب كفار سابا، والبلدات الصغيرة حسب اللواء، لأن دائرة الإحصاء لا تنشرها.</li>" +
       "<li>مناطق المدينة: أيّ الأحياء قرب البحر أو أغلى أو أرخص هو تقدير محلي. اختيارها يغيّر الإيجار بحوالي ‎+15% (أغلى أو قرب البحر) أو 0% أو ‎−10% (أرخص).</li>" +
-      "<li>السبت: الوجبة الاحتفالية تكلّف نحو ثلاثة أضعاف الوجبة العادية (≈₪37 للشخص). أفراد الأسرة يضيفون ≈₪25 لكل وجبة والضيوف ≈₪37، في حوالي 4.3 سبت شهريًا.</li></ul>",
+      "<li>السبت: الوجبة الاحتفالية تكلّف نحو ثلاثة أضعاف الوجبة العادية (≈₪37 للشخص). أفراد الأسرة يضيفون ≈₪25 لكل وجبة والضيوف ≈₪37، في حوالي 4.3 سبت شهريًا.</li><li>الإضافات والرفاهيات (الأظافر، التدليك، النادي الفاخر وغيرها): أسعار تقريبية نموذجية في إسرائيل يمكنك تغييرها. تُضاف فوق متوسطات المسح التي تشمل أصلًا جزءًا من الإنفاق على الترفيه والعناية الشخصية.</li></ul>",
     "@footer": "البيانات: دائرة الإحصاء المركزية (الجدول 4.9؛ مسح إنفاق الأسر 2021). الخريطة والمحطات © مساهمو OpenStreetMap. جزء من مشروع <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R وTidyverse)."
   };
 })();

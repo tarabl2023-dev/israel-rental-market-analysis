@@ -200,6 +200,30 @@ window.I18N = window.I18N || {};
     "Added {w} to your search words": "{w} נוסף למילות החיפוש", "Removed {w}": "{w} הוסר",
     "Saved {name}": "{name} נשמרה", "Removed {name}": "{name} הוסרה",
 
+    // ---- extras ----
+    "Add extras: nails, massages, a better gym…": "הוספת תוספות: ציפורניים, עיסויים, חדר כושר טוב יותר…",
+    "These go on top of the average costs above. Prices are rough typical Israeli prices, so change them to match what you'd actually pay and how often.": "אלה מתווספים על ההוצאות הממוצעות שלמעלה. המחירים הם מחירים טיפוסיים משוערים בישראל, אז שנו אותם לפי מה שאתם באמת משלמים וכמה פעמים.",
+    "Add your own, e.g. Hebrew lessons": "הוסיפו משהו משלכם, למשל שיעורי עברית",
+    "₪ per time": "₪ לפעם",
+    "Times / month": "פעמים בחודש",
+    "Add": "הוספה",
+    "Manicure / nails": "מניקור / ציפורניים",
+    "Massage": "עיסוי",
+    "Premium gym or country club": "חדר כושר פרימיום או קאנטרי קלאב",
+    "Pilates / yoga studio": "סטודיו פילאטיס / יוגה",
+    "Personal trainer session": "אימון אישי",
+    "Hairdresser": "מספרה",
+    "Facial / beauty treatment": "טיפול פנים / טיפוח",
+    "Cleaner (3-hour visit)": "עוזרת בית (3 שעות)",
+    "Babysitter (evening out)": "בייביסיטר (ערב בחוץ)",
+    "Dog walker / pet care": "דוגווקר / טיפול בחיות",
+    "Streaming & subscriptions": "סטרימינג ומנויים",
+    "Café coffee": "קפה בבית קפה",
+    "Extras & treats": "תוספות ופינוקים",
+    "Price each time": "מחיר לפעם",
+    "Times per month": "פעמים בחודש",
+    "Added {w}": "{w} נוסף",
+
     // ---- method, sources, footer ----
     "How the estimates work": "איך מחושבות ההערכות", "Data source, price levels and photo credits": "מקורות הנתונים, רמות המחיר וקרדיט לתמונות",
     "Sources & data": "מקורות ונתונים",
@@ -236,7 +260,7 @@ window.I18N = window.I18N || {};
       "<li>חינוך עם ילדים: פי שניים מממוצע הסקר, שכולל משקי בית בלי ילדים.</li>" +
       "<li>רעננה לפי כפר סבא, ויישובים קטנים לפי המחוז, כי הלמ״ס לא מפרסמת אותם.</li>" +
       "<li>אזורים בעיר: אילו שכונות ליד הים, יקרות או זולות זו הערכה מקומית. בחירה בהן משנה את שכר הדירה בכ-15%+ (יקר או ליד הים), 0% או 10%- (זול).</li>" +
-      "<li>שבת: סעודה חגיגית עולה כפי שלושה מארוחה רגילה (≈₪37 לאדם). בני משפחה מוסיפים ≈₪25 לסעודה ואורחים ≈₪37, בכ-4.3 שבתות בחודש.</li></ul>",
+      "<li>שבת: סעודה חגיגית עולה כפי שלושה מארוחה רגילה (≈₪37 לאדם). בני משפחה מוסיפים ≈₪25 לסעודה ואורחים ≈₪37, בכ-4.3 שבתות בחודש.</li><li>תוספות ופינוקים (ציפורניים, עיסויים, חדר כושר פרימיום וכו׳): מחירים טיפוסיים משוערים בישראל שאפשר לשנות. הם מתווספים על ממוצעי הסקר, שכבר כוללים חלק מההוצאה על בילויים וטיפוח.</li></ul>",
     "@footer": "נתונים: הלשכה המרכזית לסטטיסטיקה (לוח 4.9; סקר הוצאות משק הבית 2021). מפה ותחנות © תורמי OpenStreetMap. חלק מהפרויקט <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R ו-Tidyverse)."
   };
 })();
