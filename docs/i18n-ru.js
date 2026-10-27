@@ -362,6 +362,19 @@ window.I18N = window.I18N || {};
     ", your choice in the range": ", ваш выбор в диапазоне",
     "{n} × a month, {spend} each time (your choice)": "Выходов в месяц: {n}, {spend} за раз (ваш выбор)",
     "No meals out (your choice)": "Без еды вне дома (ваш выбор)",
+    // ---- what you actually spend ----
+    "✎ Enter what you actually spend": "✎ Указать свои реальные расходы",
+    "✓ Done": "✓ Готово",
+    "Leave a box empty to use the estimate.": "Оставьте поле пустым, чтобы использовать оценку.",
+    "Using your own amount for 1 item.": "Ваша сумма используется в одной строке.",
+    "Using your own amounts for {n} items.": "Ваши суммы используются в строках: {n}.",
+    "Clear them": "Очистить",
+    "Type in what you really spend each month to replace the estimates.": "Введите, сколько вы на самом деле тратите в месяц, вместо оценок.",
+    "You spend": "Вы тратите",
+    "Your amount · estimate {price}": "Ваша сумма · оценка {price}",
+    "Yours": "Ваше",
+    "Your own amount, from the Monthly cost tab.": "Ваша сумма с вкладки «Расходы в месяц».",
+    "Using your own rent from the Monthly cost tab": "Используется ваша аренда с вкладки «Расходы в месяц»",
     "@footer": "Данные: объявления Realta (26.10.2026); Центральное статистическое бюро Израиля (таблица 4.9; обследование расходов домохозяйств 2021). Карта и станции © участники OpenStreetMap. Часть проекта <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R и Tidyverse)."
   };
 })();

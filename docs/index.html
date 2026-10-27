@@ -347,6 +347,20 @@
   .cost-table .muted { color: var(--ink-3); font-weight: 600; }
   .cost-table tfoot td { border-bottom: 0; font-size: 15px; font-weight: 800; padding-top: 12px; }
   @media (max-width: 560px) { .cost-table .colb { display: none; } }
+  /* what you actually spend */
+  .mine-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 14px 0 4px; }
+  .mine-btn { border: 2px solid var(--primary); background: var(--primary-soft); color: var(--primary); border-radius: 999px; padding: 8px 14px; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; }
+  .mine-btn[aria-pressed="true"] { background: var(--primary); color: #fff; }
+  .mine-note { font-size: 13px; color: var(--ink-3); }
+  .cost-table.editing th:nth-child(4) { display: none; }
+  .cost-table.editing .colb { display: table-cell !important; }
+  .cost-table .est { color: var(--ink-3); font-weight: 600; }
+  .cost-table .mine-in { display: inline-flex; align-items: center; gap: 3px; border: 2px solid var(--line); border-radius: 9px; padding: 3px 7px; background: var(--surface); font-weight: 700; color: var(--ink-3); }
+  .cost-table .mine-in:focus-within { border-color: var(--primary); }
+  .cost-table .mine-in.set { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
+  .cost-table .mine-in input { width: 72px; border: 0; background: transparent; font: inherit; font-weight: 800; font-size: 15px; text-align: end; outline: none; color: var(--ink); }
+  .cost-table .mine-in input::placeholder { color: var(--ink-3); font-weight: 600; }
+  .cost-table .yours { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--primary); border-radius: 4px; padding: 1px 5px; margin-inline-start: 6px; vertical-align: 1px; text-transform: uppercase; letter-spacing: .05em; }
   /* extras & treats */
   .extras { margin: 4px 0 16px; border-radius: 14px; background: var(--surface-2); }
   .extras-toggle { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 0; background: transparent;
@@ -530,6 +544,7 @@
   [dir="rtl"] .ls-range input[type="range"] { background: linear-gradient(to left, var(--c) var(--fill, 50%), var(--surface) var(--fill, 50%)); }
   .ls-range input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 4px solid var(--c); box-shadow: var(--shadow-sm); }
   .ls-range input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 4px solid var(--c); box-shadow: var(--shadow-sm); }
+  .ls-range input[type="range"]:disabled { opacity: .4; cursor: default; }
   .ls-range input[type="range"]:focus-visible { outline: 2px solid var(--c); outline-offset: 4px; }
   .ls-range-ends { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
   #ls-rent-where { text-align: center; font-weight: 700; color: var(--c); }
@@ -800,7 +815,8 @@
             <div class="vs" id="ct-vs"></div>
           </div>
           <div class="cost-bar" id="cost-bar" aria-hidden="true"></div>
-          <table class="cost-table">
+          <div class="mine-bar"><button type="button" class="mine-btn" id="mine-btn" aria-pressed="false"></button><span class="mine-note" id="mine-note"></span></div>
+          <table class="cost-table" id="cost-table">
             <thead><tr><th data-i18n>Monthly cost</th><th id="col-a"></th><th class="colb" id="col-b"></th><th data-i18n>Difference</th></tr></thead>
             <tbody id="cost-rows"></tbody>
             <tfoot><tr id="cost-foot"></tr></tfoot>
@@ -993,9 +1009,9 @@
 <script src="market-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=8"></script>
-<script src="i18n-ru.js?v=9"></script>
-<script src="i18n-ar.js?v=8"></script>
+<script src="i18n-he.js?v=9"></script>
+<script src="i18n-ru.js?v=10"></script>
+<script src="i18n-ar.js?v=9"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1136,6 +1152,13 @@
     }
     return out;
   };
+  // what the person told us they actually spend each month, by cost line (extras are already their own numbers)
+  const ACTUAL_KEYS = ["rent", "arnona", "utilities", "groceries", "eating_out", "transport", "education", "leisure", "health", "clothing", "shabbat"];
+  const cleanActual = (a) => {
+    const out = {};
+    for (const k of ACTUAL_KEYS) if (a && Number.isInteger(a[k]) && a[k] >= 0 && a[k] <= 999999) out[k] = a[k];
+    return out;
+  };
   const saved = (() => { try { return JSON.parse(localStorage.getItem("rent-calc") || "{}"); } catch (e) { return {}; } })();
   const state = {
     area: byName[saved.town] ? saved.town : byName[saved.area] ? saved.area : "Tel Aviv",   // "town" is from an older version
@@ -1163,6 +1186,7 @@
     extras: saved.extras && typeof saved.extras === "object" && !Array.isArray(saved.extras) ? saved.extras : {},
     custom: Array.isArray(saved.custom) ? saved.custom.filter((c) => c && c.name).slice(0, 12) : [],
     choices: cleanChoices(saved.choices),
+    actual: cleanActual(saved.actual),
     lang
   };
   state.hostDinners = Math.min(state.hostDinners, state.hostWeeks);
@@ -1340,7 +1364,8 @@
     return state.noLimit ? "luxury" : "comfortable";
   }
   // survey = true leaves out the choices made in the lifestyle panel
-  function costFor(areaName, rooms, level, hood = null, survey = false) {
+  // mine = true puts in the amounts the person typed under "Enter what you actually spend"
+  function costFor(areaName, rooms, level, hood = null, survey = false, mine = false) {
     const R = LD.costs.regions[regionFor(areaName)];
     const people = Math.min(9, state.adults + state.kids);
     const sp = STD_PERSONS[people];
@@ -1375,6 +1400,7 @@
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
+    if (mine) for (const k in state.actual) v[k] = state.actual[k];
     v.total = Object.values(v).reduce((a, b) => a + b, 0);
     Object.defineProperty(v, "eat", { value: eat });   // not a cost line, so it stays out of the total and the loops
     return v;
@@ -1848,10 +1874,14 @@
     [...cities, ...towns].sort((a, b) => P(a.name).localeCompare(P(b.name), lang)).forEach((c) => cmpSel.append(new Option(P(c.name), c.name)));
   }
   fillCompare();
+  let costEdit = false;   // the table is showing the "You spend" boxes
   function renderCosts(area, rooms, avg) {
     const level = currentLevel(avg);
     const hood = currentHood(area.name);
-    const here = costFor(area.name, rooms, level, hood);
+    const here = costFor(area.name, rooms, level, hood, false, true);
+    const est = costFor(area.name, rooms, level, hood);   // the estimate, without the amounts the person typed
+    const mine = (k) => state.actual[k] != null;
+    const nMine = Object.keys(state.actual).length;
     const cmpName = state.compare === area.name ? (area.name === "Israel" ? "Tel Aviv" : "Israel") : state.compare;
     const there = costFor(cmpName, rooms, level);
     const placeName = P(area.type === "National" ? "Israel" : area.name);
@@ -1902,15 +1932,34 @@
       groceries: T("Supermarket food, fruit & veg"),
       extras: extrasList().map((e) => e.name + (e.qty !== 1 ? " ×" + e.qty : "")).join(", ")
     };
-    $("cost-rows").innerHTML = COST_LINES.filter(([k]) => here[k] > 0 || there[k] > 0).map(([k, label, color]) => {
-      const d = here[k] - there[k];
-      const cls = Math.abs(d) < 20 ? "muted" : d > 0 ? "more" : "less";
-      return "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(T(label)) + (hint[k] ? "<small>" + esc(hint[k]) + "</small>" : "") + "</td>" +
-        "<td>" + fmt(here[k]) + '</td><td class="colb">' + fmt(there[k]) + '</td><td class="' + cls + '">' +
-        (Math.abs(d) < 20 ? T("≈ same") : (d > 0 ? "+" : "−") + fmt(Math.abs(d))) + "</td></tr>";
-    }).join("");
-    $("cost-foot").innerHTML = "<td>" + T("Total") + "</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
-      (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? T("≈ same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
+    $("cost-table").classList.toggle("editing", costEdit);
+    $("mine-btn").setAttribute("aria-pressed", String(costEdit));
+    $("mine-btn").textContent = costEdit ? T("✓ Done") : T("✎ Enter what you actually spend");
+    $("mine-note").innerHTML = costEdit ? T("Leave a box empty to use the estimate.")
+      : nMine ? T(nMine === 1 ? "Using your own amount for 1 item." : "Using your own amounts for {n} items.", { n: nMine }) + ' <button type="button" class="linkish" id="mine-clear">' + T("Clear them") + "</button>"
+      : T("Type in what you really spend each month to replace the estimates.");
+    if (costEdit) {
+      // estimate next to a box for each line; the comparison column makes way
+      $("col-a").textContent = T("Estimate"); $("col-b").textContent = T("You spend");
+      $("cost-rows").innerHTML = COST_LINES.filter(([k]) => ACTUAL_KEYS.includes(k) && (k !== "shabbat" || state.shabbat)).map(([k, label, color]) =>
+        "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(T(label)) + '</td><td class="est">' + fmt(est[k]) + "</td>" +
+        '<td class="colb"><span class="mine-in' + (mine(k) ? " set" : "") + '" dir="ltr">₪<input type="text" inputmode="numeric" maxlength="6" id="mine-' + k + '" data-mine="' + k + '" value="' +
+          (mine(k) ? state.actual[k] : "") + '" placeholder="' + est[k] + '" aria-label="' + esc(T("You spend") + ": " + T(label)) + '"></span></td></tr>').join("");
+      $("cost-foot").innerHTML = "<td>" + T("Total") + '</td><td class="est">' + fmt(est.total) + '</td><td class="colb">' + fmt(here.total) + "</td>";
+    } else {
+      $("cost-rows").innerHTML = COST_LINES.filter(([k]) => here[k] > 0 || there[k] > 0 || mine(k)).map(([k, label, color]) => {
+        const d = here[k] - there[k];
+        const cls = Math.abs(d) < 20 ? "muted" : d > 0 ? "more" : "less";
+        const note = mine(k) ? T("Your amount · estimate {price}", { price: fmt(est[k]) }) : hint[k];
+        return "<tr><td><span class=\"sw\" style=\"background:" + color + "\"></span>" + esc(T(label)) + (mine(k) ? '<span class="yours">' + esc(T("Yours")) + "</span>" : "") +
+          (note ? "<small>" + esc(note) + "</small>" : "") + "</td>" +
+          "<td>" + fmt(here[k]) + '</td><td class="colb">' + fmt(there[k]) + '</td><td class="' + cls + '">' +
+          (Math.abs(d) < 20 ? T("≈ same") : (d > 0 ? "+" : "−") + fmt(Math.abs(d))) + "</td></tr>";
+      }).join("");
+      $("cost-foot").innerHTML = "<td>" + T("Total") + "</td><td>" + fmt(here.total) + '</td><td class="colb">' + fmt(there.total) + '</td><td class="' +
+        (Math.abs(diff) < 20 ? "muted" : diff > 0 ? "more" : "less") + '">' + (Math.abs(diff) < 20 ? T("≈ same") : (diff > 0 ? "+" : "−") + fmt(Math.abs(diff))) + "</td>";
+    }
+    if ($("mine-clear")) $("mine-clear").onclick = () => { state.actual = {}; persist(); render(); };
 
     const region = regionFor(area.name);
     $("cost-note").innerHTML = T("Everyday costs: typical spending in the {region} (CBS Household Expenditure Survey 2021, at 2026 prices), scaled to your household. Estimates, not price quotes. See \u201cHow the estimates work\u201d.",
@@ -2095,6 +2144,16 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
   });
   $("auto-level").addEventListener("click", () => { state.level = null; persist(); render(); });
+  $("mine-btn").addEventListener("click", () => { costEdit = !costEdit; render(); if (costEdit) $("cost-table").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("cost-rows").addEventListener("input", (ev) => {
+    const box = ev.target, k = box.dataset.mine;
+    if (!k) return;
+    const at = box.selectionStart, digits = box.value.replace(/\D/g, "").slice(0, 6);
+    if (digits === "") delete state.actual[k]; else state.actual[k] = +digits;
+    persist(); render();
+    const again = $("mine-" + k);
+    if (again) { again.value = digits; again.focus(); again.setSelectionRange(Math.min(at, digits.length), Math.min(at, digits.length)); }
+  });
   document.querySelectorAll("[data-shabbat]").forEach((b) => b.addEventListener("click", () => {
     const on = b.dataset.shabbat === "1", was = state.shabbat;
     state.shabbat = on; persist(); render();
@@ -2298,13 +2357,14 @@
 
     function paint() {
       const all = {};
-      for (const k of LIFE_LEVELS) all[k] = costFor(area.name, rooms, k, hood);
+      for (const k of LIFE_LEVELS) all[k] = costFor(area.name, rooms, k, hood, false, true);
       const c = all[lvl], mid = costFor(area.name, rooms, "comfortable", hood, true);
       const eat = c.eat, r = c.rent;
       const pos = ch().pos == null ? (t.mid - t.lo) / (t.hi - t.lo) : ch().pos;
       slider.style.setProperty("--fill", (pos * 100).toFixed(1) + "%");
       $("ls-rent-out").textContent = fmt(r) + " " + T("/mo");
-      $("ls-rent-where").textContent = T(pos < 0.3 ? "Lower end: smaller, older or further out" : pos > 0.7 ? "Top end: a nicer building or street" : "Typical for this level");
+      slider.disabled = state.actual.rent != null;
+      $("ls-rent-where").textContent = slider.disabled ? T("Using your own rent from the Monthly cost tab") : T(pos < 0.3 ? "Lower end: smaller, older or further out" : pos > 0.7 ? "Top end: a nicer building or street" : "Typical for this level");
       const max = Math.max(...LIFE_LEVELS.map((k) => all[k].total));
       // eating out: the survey's amount described as outings, or the person's own outings and spend
       const vars = { n: eat.times, what: T(L.what), spend: ltr(fmt(eat.spend)) };
@@ -2343,6 +2403,8 @@
           '<span class="br" style="width:' + (all[k].total / max * 100).toFixed(1) + '%"></span></button>').join("") + "</div>" +
         '<div class="ls-title">' + T("What this looks like each month") + (c.total === mid.total ? "" : ' <span class="ls-note">' + T("· tags show the difference from a typical comfortable month") + "</span>") + "</div>" +
         '<ul class="ls-rows">' + rows.map(([em, lb, ds, keys, control]) => {
+          // a line the person typed their own amount for in the Monthly cost tab
+          if (keys.some((x) => state.actual[x] != null)) { ds = T("Your own amount, from the Monthly cost tab."); control = ""; }
           const d = keys.reduce((s, x) => s + c[x] - mid[x], 0);
           const dl = Math.abs(d) < 20 ? "" : '<span class="dl" dir="ltr">' + (d > 0 ? "+" : "−") + fmt(Math.abs(d)) + "</span>";
           // ds is plain text except the eating-out line, which carries the <bdi> amount
@@ -2362,11 +2424,10 @@
       };
       if ($("ls-reset")) $("ls-reset").onclick = () => { setChoice(lvl, "pos", null); slider.value = costFor(area.name, rooms, lvl, hood).rent; update(); };
       const eatBy = (d) => { setChoice(lvl, "eat", Math.min(MAX_EAT, Math.max(0, eat.times + d))); update(); };
-      $("ls-eat-down").onclick = () => eatBy(-1);
-      $("ls-eat-up").onclick = () => eatBy(1);
+      if ($("ls-eat-down")) { $("ls-eat-down").onclick = () => eatBy(-1); $("ls-eat-up").onclick = () => eatBy(1); }
       if ($("ls-eat-reset")) $("ls-eat-reset").onclick = () => { setChoice(lvl, "eat", null); setChoice(lvl, "spend", null); update(); };
       // typing redraws the panel, so put the cursor back where it was
-      $("ls-eat-spend").oninput = (ev) => {
+      if ($("ls-eat-spend")) $("ls-eat-spend").oninput = (ev) => {
         const box = ev.target, at = box.selectionStart, digits = box.value.replace(/\D/g, "").slice(0, 5);
         setChoice(lvl, "spend", digits === "" ? 0 : +digits);
         update();

@@ -362,6 +362,19 @@ window.I18N = window.I18N || {};
     ", your choice in the range": "، اختيارك ضمن النطاق",
     "{n} × a month, {spend} each time (your choice)": "عدد المرات في الشهر: {n}، {spend} في كل مرة (اختيارك)",
     "No meals out (your choice)": "لا أكل خارج البيت (اختيارك)",
+    // ---- what you actually spend ----
+    "✎ Enter what you actually spend": "✎ أدخل ما تنفقه فعلًا",
+    "✓ Done": "✓ تم",
+    "Leave a box empty to use the estimate.": "اترك الخانة فارغة لاستخدام التقدير.",
+    "Using your own amount for 1 item.": "يُستخدم مبلغك في بند واحد.",
+    "Using your own amounts for {n} items.": "عدد البنود التي تستخدم مبالغك: {n}.",
+    "Clear them": "مسحها",
+    "Type in what you really spend each month to replace the estimates.": "اكتب ما تنفقه فعلًا كل شهر بدلًا من التقديرات.",
+    "You spend": "ما تنفقه",
+    "Your amount · estimate {price}": "مبلغك · التقدير {price}",
+    "Yours": "لك",
+    "Your own amount, from the Monthly cost tab.": "مبلغك من تبويب التكلفة الشهرية.",
+    "Using your own rent from the Monthly cost tab": "يُستخدم إيجارك من تبويب التكلفة الشهرية",
     "@footer": "البيانات: إعلانات Realta (26.10.2026)؛ دائرة الإحصاء المركزية (الجدول 4.9؛ مسح إنفاق الأسر 2021). الخريطة والمحطات © مساهمو OpenStreetMap. جزء من مشروع <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R وTidyverse)."
   };
 })();

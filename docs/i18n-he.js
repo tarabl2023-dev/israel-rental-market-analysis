@@ -362,6 +362,19 @@ window.I18N = window.I18N || {};
     ", your choice in the range": ", הבחירה שלכם בטווח",
     "{n} × a month, {spend} each time (your choice)": "{n} פעמים בחודש, {spend} בכל פעם (הבחירה שלכם)",
     "No meals out (your choice)": "בלי אוכל בחוץ (הבחירה שלכם)",
+    // ---- what you actually spend ----
+    "✎ Enter what you actually spend": "✎ הזינו כמה אתם באמת מוציאים",
+    "✓ Done": "✓ סיום",
+    "Leave a box empty to use the estimate.": "השאירו תיבה ריקה כדי להשתמש בהערכה.",
+    "Using your own amount for 1 item.": "משתמשים בסכום שלכם בסעיף אחד.",
+    "Using your own amounts for {n} items.": "משתמשים בסכומים שלכם ב-{n} סעיפים.",
+    "Clear them": "ניקוי",
+    "Type in what you really spend each month to replace the estimates.": "הקלידו כמה אתם באמת מוציאים בכל חודש במקום ההערכות.",
+    "You spend": "אתם מוציאים",
+    "Your amount · estimate {price}": "הסכום שלכם · הערכה {price}",
+    "Yours": "שלכם",
+    "Your own amount, from the Monthly cost tab.": "הסכום שלכם, מלשונית ההוצאה החודשית.",
+    "Using your own rent from the Monthly cost tab": "לפי שכר הדירה שהזנתם בלשונית ההוצאה החודשית",
     "@footer": "נתונים: מודעות Realta (26.10.2026); הלשכה המרכזית לסטטיסטיקה (לוח 4.9; סקר הוצאות משק הבית 2021). מפה ותחנות © תורמי OpenStreetMap. חלק מהפרויקט <a href=\"https://github.com/tarabl2023-dev/israel-rental-market-analysis\">Israel Rental Market Analysis</a> (R ו-Tidyverse)."
   };
 })();
