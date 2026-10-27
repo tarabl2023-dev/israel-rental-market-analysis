@@ -483,6 +483,117 @@
     .f-budget { flex: 1 1 100%; }
     .nolimit { flex: 1 1 100%; height: 42px; }
   }
+
+  /* ===== tabbed layout ===== */
+  .search-sum { display: none; }
+  .life-sheet { margin-top: 12px; border-radius: 14px; border: 2px solid var(--c); background: var(--surface); padding: 14px 16px 12px; position: relative; }
+  .life-sheet.budget { --c: var(--teal); --soft: var(--teal-soft); }
+  .life-sheet.comfortable { --c: var(--primary); --soft: var(--primary-soft); }
+  .life-sheet.luxury { --c: var(--accent); --soft: var(--accent-soft); }
+  .ls-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .ls-kicker { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+  .ls-total { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.15; }
+  .ls-total small { font-size: 14px; color: var(--ink-3); font-weight: 600; }
+  .ls-sub { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+  .ls-close { border: 0; background: var(--soft); color: var(--c); width: 32px; height: 32px; border-radius: 50%; font-size: 18px; font-weight: 800; cursor: pointer; flex: none; }
+  .ls-levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 12px 0 4px; }
+  .ls-levels button { border: 2px solid var(--line); background: var(--surface-2); border-radius: 10px; padding: 6px 8px 7px; font: inherit; text-align: start; cursor: pointer; color: var(--ink); }
+  .ls-levels button[aria-pressed="true"] { border-color: var(--c); background: var(--soft); }
+  .ls-levels .nm { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+  .ls-levels .am { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .ls-levels .br { display: block; height: 5px; border-radius: 3px; margin-top: 4px; }
+  .ls-levels [data-ls="budget"] .br { background: var(--teal); }
+  .ls-levels [data-ls="comfortable"] .br { background: var(--primary); }
+  .ls-levels [data-ls="luxury"] .br { background: var(--accent); }
+  .ls-title { font-size: 13px; font-weight: 800; margin: 12px 0 2px; color: var(--ink-2); }
+  .ls-rows { list-style: none; margin: 0; padding: 0; }
+  .ls-rows li { display: grid; grid-template-columns: 26px 1fr auto; gap: 2px 8px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line); }
+  .ls-rows li:first-child { border-top: 0; }
+  .ls-rows .em { font-size: 17px; line-height: 1.3; }
+  .ls-rows .lb { font-weight: 700; font-size: 14px; }
+  .ls-rows .ds { grid-column: 2; font-size: 13px; color: var(--ink-2); }
+  .ls-rows .am { grid-row: 1; grid-column: 3; font-weight: 800; font-variant-numeric: tabular-nums; text-align: end; font-size: 14px; }
+  .ls-rows .dl { display: inline-block; margin-inline-start: 6px; font-size: 11px; font-weight: 800; color: var(--c); background: var(--soft); border-radius: 999px; padding: 1px 7px; vertical-align: 1px; white-space: nowrap; }
+  .ls-range { margin: 12px 0 2px; background: var(--soft); border-radius: 12px; padding: 10px 12px 8px; }
+  .ls-range-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .ls-range-top output { font-size: 20px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ls-range input[type="range"] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 8px; border-radius: 4px; margin: 12px 0 8px; cursor: pointer;
+    background: linear-gradient(to right, var(--c) var(--fill, 50%), var(--surface) var(--fill, 50%)); }
+  [dir="rtl"] .ls-range input[type="range"] { background: linear-gradient(to left, var(--c) var(--fill, 50%), var(--surface) var(--fill, 50%)); }
+  .ls-range input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 4px solid var(--c); box-shadow: var(--shadow-sm); }
+  .ls-range input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 4px solid var(--c); box-shadow: var(--shadow-sm); }
+  .ls-range input[type="range"]:focus-visible { outline: 2px solid var(--c); outline-offset: 4px; }
+  .ls-range-ends { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  #ls-rent-where { text-align: center; font-weight: 700; color: var(--c); }
+  .ls-note { font-weight: 600; color: var(--ink-3); }
+  .ls-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .ls-actions button { border: 0; border-radius: 999px; padding: 9px 14px; font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; background: var(--c); color: #fff; }
+  .ls-actions button.ghost { background: var(--soft); color: var(--c); }
+  .ls-foot { font-size: 12px; color: var(--ink-3); margin: 8px 0 0; }
+  @media (max-width: 640px) { .life-sheet { padding: 12px; } .ls-total { font-size: 26px; } }
+  .note { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+  .note.open { display: block; }
+  .verdict { margin-top: 10px; }
+  .hero-media { aspect-ratio: auto !important; height: 190px; }
+  @media (max-width: 640px) { .hero-media { height: 120px; } }
+  @media (max-width: 640px) {
+    .brand-sub { display: none; }
+    .search-sum { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: calc(100% - 32px); margin: 0 16px 12px;
+      border: 2px solid var(--line); background: var(--surface-2); border-radius: 12px; padding: 11px 14px; font: inherit; font-weight: 700; font-size: 14px;
+      color: var(--ink); text-align: start; cursor: pointer; }
+    .search-sum b { color: var(--primary); flex: none; }
+    body:not(.filters-open) .filters { display: none; }
+    body.filters-open .search-sum b { visibility: hidden; }
+    .metrics { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+    .hero-addr { font-size: 13px; }
+    .hero-adj { font-size: 13px; }
+    .note { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+    .note.open { display: block; }
+  }
+  /* a shorter photo so the price and the three levels fit on the first screen */
+  @media (max-width: 640px) {
+    .hero-media { aspect-ratio: auto; height: 120px; }
+    .hero-body { padding: 14px; }
+    .tiers { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .tier { padding: 10px 8px; }
+    .tier .t-desc, .tier .ill, .tier .t-range { display: none; }
+    .tier .t-price { font-size: 17px; }
+    .tier .t-price small { display: none; }
+    .tier .t-name { font-size: 12px; }
+    .tier .t-sel { display: none !important; }      /* the highlighted border shows the chosen level */
+    .tier .t-fit:not([hidden]) { display: block; width: fit-content; margin-top: 4px; font-size: 10px; }
+    .metrics { margin-top: 8px; }
+  }
+  /* tabs: one section at a time instead of one long page */
+  .tabs { position: sticky; top: 0; z-index: 900; display: flex; gap: 6px; margin: 16px -4px 0; padding: 8px 4px;
+    background: var(--bg); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { flex: 1 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 2px solid var(--line);
+    background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 9px 14px; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; white-space: nowrap; }
+  .tabs button[aria-selected="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .tabs button .tab-sub { font-weight: 600; opacity: .8; }
+  .list-inner > [data-tab]:not(.tab-on) { display: none !important; }
+  /* inside a tab the section is always open, so its header is a plain title */
+  .list-inner > details[data-tab].tab-fixed > summary { cursor: default; pointer-events: none; }
+  .list-inner > details[data-tab].tab-fixed > summary .chev { display: none; }
+  .sub-details { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 4px; }
+  .sub-details > summary { cursor: pointer; font-weight: 800; padding: 10px 0; list-style: none; display: flex; align-items: center; gap: 8px; }
+  .sub-details > summary::-webkit-details-marker { display: none; }
+  .sub-details > summary::before { content: "▸"; color: var(--primary); transition: transform .2s; }
+  .sub-details[open] > summary::before { transform: rotate(90deg); }
+  .sub-details > summary small { font-weight: 500; color: var(--ink-3); }
+  /* compare cities: compact rows instead of big photo cards */
+  .feed { grid-template-columns: 1fr !important; gap: 8px; }
+  .listing { display: grid; grid-template-columns: 76px 1fr; align-items: center; }
+  .listing .media { aspect-ratio: 1; height: 76px; }
+  .listing .media::after, .listing .tags, .listing .l-allin { display: none; }
+  .listing .fav { top: 4px; inset-inline-end: 4px; width: 26px; height: 26px; }
+  .listing .fav svg { width: 14px; height: 14px; }
+  .listing .body { padding: 8px 12px; display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: center; }
+  .listing .l-addr { grid-row: 1; grid-column: 1; font-weight: 800; color: var(--ink); font-size: 15px; margin: 0; }
+  .listing .l-price { grid-row: 1 / span 2; grid-column: 2; font-size: 19px; }
+  .listing .l-metrics { grid-row: 2; grid-column: 1; margin: 2px 0 0; font-size: 11px; }
+  .listing .l-bar { grid-row: 3; grid-column: 1 / span 2; margin-top: 6px; }
   @media (prefers-reduced-motion: reduce) {
     .listing, .listing.in, .listing .media img { transition: none !important; }
     .listing { opacity: 1; transform: none; }
@@ -513,7 +624,8 @@
       <span class="data-chip"><i></i><span id="data-chip">Official CBS data</span></span>
     </div>
   </div>
-  <div class="filters" role="search" aria-label="Your search">
+  <button type="button" class="search-sum" id="search-sum" aria-expanded="false" aria-controls="filters-box"><span id="search-sum-text"></span><b data-i18n>Edit ✎</b></button>
+  <div class="filters" id="filters-box" role="search" aria-label="Your search">
     <div class="f-box f-area">
       <label for="area" data-i18n>Where</label>
       <input id="area" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="area-list"
@@ -609,14 +721,22 @@
             </div>
           </div>
 
-          <div class="tier-hint"><span data-i18n>Tap a level to use it for your costs and search.</span>
+          <div class="life-sheet" id="life-sheet" hidden aria-live="polite"></div>
+          <div class="tier-hint"><span data-i18n>Tap a level to see what that lifestyle costs a month and roughly what it looks like.</span>
             <button type="button" class="linkish" id="auto-level" hidden data-i18n>Match my budget again</button></div>
           <div class="verdict" id="verdict" hidden></div>
           <div class="note" id="note"></div>
         </div>
       </article>
 
-      <details class="panel" id="cost-panel" open>
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Sections" data-i18n-aria>
+        <button type="button" role="tab" data-tab-btn="find" aria-selected="true">🔎 <span data-i18n>Find a flat</span></button>
+        <button type="button" role="tab" data-tab-btn="cost" aria-selected="false">💰 <span data-i18n>Monthly cost</span> <span class="tab-sub" id="tab-cost-sum"></span></button>
+        <button type="button" role="tab" data-tab-btn="compare" aria-selected="false">🏙 <span data-i18n>Compare cities</span></button>
+        <button type="button" role="tab" data-tab-btn="about" aria-selected="false">📚 <span data-i18n>Sources</span></button>
+      </nav>
+
+      <details class="panel tab-fixed" id="cost-panel" data-tab="cost" open>
         <summary>
           <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18M7 6V4h10v2"/></svg></span>
           <span><span id="cost-title">What it will really cost</span><small data-i18n>Rent plus everyday living costs for your household</small></span>
@@ -681,7 +801,7 @@
         </div>
       </details>
 
-      <details class="panel" open>
+      <details class="panel tab-fixed" data-tab="find" open>
         <summary>
           <span class="ico" style="background:var(--primary-soft);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
           <span><span id="guide-title">How to search</span><small data-i18n>Copy-and-paste searches and filters for Israeli rental sites</small></span>
@@ -696,6 +816,7 @@
               </div>
               <p class="go-note" id="go-note"></p><p class="go-incl" id="go-incl"></p></div>
           </div>
+          <details class="sub-details"><summary><span data-i18n>Search phrases, filters &amp; Hebrew keywords</span> <small data-i18n>· for searching inside the sites</small></summary>
           <div class="step">
             <div class="step-num" style="background:var(--primary)">1</div>
             <div class="step-body"><h3 data-i18n>Then narrow it down: search for</h3><div id="guide-phrases"></div></div>
@@ -710,10 +831,11 @@
               <p class="tip" data-i18n-html="@kwTip">Tap words to add them to your search. Ones marked "filter" are also ticked for you on the sites that support them when you open the links above. Your browser can translate listings (right-click → Translate). <bdi dir="rtl" lang="he">תיווך</bdi> means an agent, who may charge a fee.</p>
             </div>
           </div>
+          </details>
         </div>
       </details>
 
-      <details class="panel">
+      <details class="panel" data-tab="find">
         <summary>
           <span class="ico" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
           <span><span data-i18n>Where to look</span><small data-i18n>Rental sites and groups worth checking</small></span>
@@ -722,7 +844,7 @@
         <div class="panel-body"><div class="site-grid" id="site-list"></div></div>
       </details>
 
-      <div class="feed-head">
+      <div class="feed-head" data-tab="compare">
         <div>
           <h2 id="feed-title">Compare cities</h2>
           <p id="feed-sub"></p>
@@ -738,10 +860,10 @@
           </select>
         </label>
       </div>
-      <div class="feed" id="feed"></div>
-      <div class="feed-end" id="feed-end"></div>
+      <div class="feed" id="feed" data-tab="compare"></div>
+      <div class="feed-end" id="feed-end" data-tab="compare"></div>
 
-      <details class="panel">
+      <details class="panel" data-tab="about">
         <summary>
           <span class="ico" style="background:var(--teal-soft);color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></span>
           <span><span data-i18n>How the estimates work</span><small data-i18n>Data source, price levels and photo credits</small></span>
@@ -765,7 +887,7 @@
         </div>
       </details>
 
-      <section class="sources" id="sources" aria-labelledby="sources-title">
+      <section class="sources" id="sources" aria-labelledby="sources-title" data-tab="about">
         <h2 id="sources-title"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></span><span data-i18n>Sources &amp; data</span></h2>
         <p data-i18n>Every number on this page comes from one of these sources. Each one links to the original and to the exact data file saved in the project, so you can check it yourself.</p>
         <ul class="src-list" data-i18n-html="@sources">
@@ -863,9 +985,9 @@
 <script src="market-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=6"></script>
-<script src="i18n-ru.js?v=7"></script>
-<script src="i18n-ar.js?v=6"></script>
+<script src="i18n-he.js?v=7"></script>
+<script src="i18n-ru.js?v=8"></script>
+<script src="i18n-ar.js?v=7"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1888,6 +2010,9 @@
     renderSites(area);
     renderFeed(rooms);
     updatePins(rooms);
+    renderLifeSheet(area, rooms);
+    if ($("search-sum-text")) $("search-sum-text").textContent = "📍 " + [placeLabel(), currentHood(area.name) && hoodName(currentHood(area.name)), roomsText(rooms),
+      state.noLimit ? T("No budget limit") : state.budget ? T("up to {price}/month", { price: fmt(state.budget) }) : T("Any budget")].filter(Boolean).join(" · ");
   }
 
   function select(name, opts = {}) {
@@ -2062,6 +2187,146 @@
 
   initMap();
   setLang(lang);
+  // ---- Tabs: one section at a time ----
+  let tab = new URLSearchParams(location.search).get("tab") || (() => { try { return localStorage.getItem("rent-tab") || "find"; } catch (e) { return "find"; } })();
+  function showTab(t, scroll) {
+    tab = t;
+    try { localStorage.setItem("rent-tab", t); } catch (e) {}
+    document.querySelectorAll("[data-tab-btn]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tabBtn === t)));
+    document.querySelectorAll(".list-inner > [data-tab]").forEach((el) => el.classList.toggle("tab-on", el.dataset.tab === t));
+    if (t === "compare") document.querySelectorAll(".listing").forEach((el) => el.classList.add("in"));
+    if (scroll) { const nav = $("tabs"); window.scrollTo({ top: nav.getBoundingClientRect().top + window.scrollY - 4, behavior: "smooth" }); }
+  }
+  document.querySelectorAll("[data-tab-btn]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tabBtn, true)));
+  document.querySelectorAll(".list-inner > details.tab-fixed").forEach((d) => d.addEventListener("toggle", () => { if (!d.open) d.open = true; }));
+  $("allin").addEventListener("click", (e) => { e.stopImmediatePropagation(); showTab("cost", true); }, true);
+  // the total cost on the tab, so people see it without opening the tab
+  new MutationObserver(() => { $("tab-cost-sum").textContent = "· " + $("ct-amount").textContent.replace(/\s*\/.*$/, ""); })
+    .observe($("ct-amount"), { childList: true, characterData: true, subtree: true });
+  showTab(tab, false);
+
+  // ---- Tap a level to see that lifestyle ----
+  // var, not const: render() first runs from setLang() above, before this block
+  var LIFE_LEVELS = ["budget", "comfortable", "luxury"];
+  // The amounts are the same estimates as the Monthly cost tab; the descriptions turn them into
+  // everyday terms using rough typical prices (a meal out a head: about 55 / 90 / 150 shekels)
+  var lifeParam = new URLSearchParams(location.search).get("life");
+  var lifeOpen = LIFE_LEVELS.includes(lifeParam) ? lifeParam : null;
+  var lifePos = {};   // where in each level's rent range the person put the slider (0 = bottom, 1 = top)
+  var LIFE = {
+    budget: { meal: 55, what: "falafel, shawarma or coffee",
+      leisure: "Free beaches, parks and community events, maybe a basic gym.",
+      clothing: "Chain stores and sales, a cheap haircut now and then.", pick: "Choose your rent in the budget range" },
+    comfortable: { meal: 90, what: "cafés and casual restaurants",
+      leisure: "A gym or class membership plus a film, match or show now and then.",
+      clothing: "Regular shopping each season and a haircut every month or two.", pick: "Choose your rent in the comfortable range" },
+    luxury: { meal: 150, what: "restaurant dinners",
+      leisure: "A premium gym or studio classes, regular concerts and shows, nights away.",
+      clothing: "New-season clothes and regular salon or barber visits.", pick: "Choose your rent in the luxury range" }
+  };
+  function renderLifeSheet(area, rooms) {
+    const el = $("life-sheet");
+    if (!lifeOpen) { el.hidden = true; return; }
+    const lvl = lifeOpen, L = LIFE[lvl], t = TIERS[lvl];
+    const hood = currentHood(area.name);
+    const all = {};
+    for (const k of LIFE_LEVELS) all[k] = costFor(area.name, rooms, k, hood);
+    const c = all[lvl], mid = all.comfortable;
+    const people = state.adults + state.kids;
+    const place = (hood ? hoodName(hood) + ", " : "") + P(area.type === "National" ? "Israel" : area.name);
+    // the level's rent range, with the same neighbourhood and transport adjustments as its middle price
+    const base = rentOf(area, rooms).rent * (1 + areaAdj(hood)) * (1 + RENT_ADJ[state.transport]);
+    const lo = round50(base * t.lo), hi = round50(base * t.hi);
+    const ltr = (x) => '<bdi dir="ltr">' + x + "</bdi>";   // keeps "₪8,600" in order inside Arabic and Hebrew
+    const rentNow = () => (lifePos[lvl] == null ? c.rent : round50(lo + lifePos[lvl] * (hi - lo)));
+    // outings for the whole household; the survey's eating-out average is low, so say so when it is
+    const outings = c.eating_out / (L.meal * people);
+    const n = Math.round(outings);
+    const vars = { n, people, what: T(L.what), price: L.meal };
+    const mealsText = T((outings < 0.75 ? "Less than once a month" : n === 1 ? "About once a month" : "About {n} times a month") +
+      (people > 1 ? " for the {people} of you" : "") + " ({what}, about ₪{price} a head).", vars) +
+      (outings < 2 ? " " + T("The survey average is low. If you eat out more, add it under Extras.") : "");
+    const tierDesc = $("tier-" + lvl).querySelector(".t-desc").textContent;
+    const adjNote = RENT_ADJ[state.transport] ? " " + T(RENT_ADJ[state.transport] > 0 ? "(+5% near a station)" : "(−5% further out)") : "";
+
+    el.className = "life-sheet " + lvl;
+    el.hidden = false;
+    el.innerHTML = '<div id="ls-head"></div>' +
+      '<div class="ls-range"><div class="ls-range-top"><label for="ls-rent">' + esc(T(L.pick)) + esc(adjNote) + '</label><output id="ls-rent-out"></output></div>' +
+        '<input type="range" id="ls-rent" min="' + lo + '" max="' + hi + '" step="50" value="' + rentNow() + '">' +
+        '<div class="ls-range-ends"><span>' + fmt(lo) + '</span><span id="ls-rent-where"></span><span>' + fmt(hi) + "</span></div></div>" +
+      '<div id="ls-dyn"></div>';
+    const slider = $("ls-rent");
+
+    function paint() {
+      const r = rentNow();
+      const cc = Object.assign({}, c, { rent: r, total: c.total - c.rent + r });
+      const pos = hi > lo ? (r - lo) / (hi - lo) : 0.5;
+      slider.style.setProperty("--fill", (pos * 100).toFixed(1) + "%");
+      $("ls-rent-out").textContent = fmt(r) + " " + T("/mo");
+      $("ls-rent-where").textContent = T(pos < 0.3 ? "Lower end: smaller, older or further out" : pos > 0.7 ? "Top end: a nicer building or street" : "Typical for this level");
+      const totals = { budget: all.budget.total, comfortable: all.comfortable.total, luxury: all.luxury.total, [lvl]: cc.total };
+      const max = Math.max(totals.budget, totals.comfortable, totals.luxury);
+      const rows = [
+        ["🏠", "Home", tierDesc + " " + roomsText(rooms).replace(/\.?$/, "."), ["rent"]],
+        ["🍽", "Eating out", mealsText, ["eating_out"]],
+        ["🎭", "Fun & fitness", T(L.leisure), ["leisure"]],
+        ["👕", "Clothes & looks", T(L.clothing), ["clothing"]],
+        ["🛒", "Groceries", T("The same weekly supermarket shop at every level."), ["groceries"]],
+        [state.transport === "car" ? "🚗" : "🚌", "Getting around", T(state.transport === "car" ? "Running a car: fuel, insurance and upkeep." : "A Rav-Kav monthly pass for each adult."), ["transport"]],
+        ["💡", "Bills & tax", T("Arnona, electricity, water, gas, phone and health insurance. These hardly change with lifestyle."), ["arnona", "utilities", "health"]]
+      ];
+      if (cc.education) rows.push(["🎒", "Children", T("Schools, kindergarten and after-school activities."), ["education"]]);
+      if (cc.shabbat) rows.push(["🕯", "Shabbat", T("Your festive meals and the guests you host."), ["shabbat"]]);
+      if (cc.extras) rows.push(["✨", "Your extras", extrasList().map((e) => e.name).join(", "), ["extras"]]);
+      $("ls-head").innerHTML = '<div class="ls-head"><div><div class="ls-kicker">' + esc(T(cap(lvl) + " lifestyle")) + " · " + esc(place) + "</div>" +
+          '<div class="ls-total">≈ ' + fmt(cc.total) + " <small>" + T("/ month all-in") + "</small></div>" +
+          '<div class="ls-sub">' + T("Rent {rent} + living costs {living}", { rent: ltr(fmt(r)), living: ltr(fmt(cc.total - r)) }) + " · " +
+            (people === 1 ? T("1 person") : T("{n} people", { n: people })) + "</div></div>" +
+          '<button type="button" class="ls-close" id="ls-close" aria-label="' + esc(T("Close")) + '">×</button></div>';
+      $("ls-dyn").innerHTML =
+        '<div class="ls-levels">' + LIFE_LEVELS.map((k) =>
+          '<button type="button" data-ls="' + k + '" aria-pressed="' + (k === lvl) + '"><span class="nm">' + esc(T(cap(k))) + '</span><br><span class="am">' + fmt(totals[k]) + "</span>" +
+          '<span class="br" style="width:' + (totals[k] / max * 100).toFixed(1) + '%"></span></button>').join("") + "</div>" +
+        '<div class="ls-title">' + T("What this looks like each month") + (lvl === "comfortable" && r === mid.rent ? "" : ' <span class="ls-note">' + T("· tags show the difference from comfortable") + "</span>") + "</div>" +
+        '<ul class="ls-rows">' + rows.map(([em, lb, ds, keys]) => {
+          const d = keys.reduce((s, x) => s + cc[x] - mid[x], 0);
+          const dl = Math.abs(d) < 20 ? "" : '<span class="dl" dir="ltr">' + (d > 0 ? "+" : "−") + fmt(Math.abs(d)) + "</span>";
+          return '<li><span class="em" aria-hidden="true">' + em + '</span><span class="lb">' + esc(T(lb)) + dl + '</span><span class="am">' + fmt(keys.reduce((s, x) => s + cc[x], 0)) + '</span><span class="ds">' + esc(ds) + "</span></li>";
+        }).join("") + "</ul>" +
+        '<div class="ls-actions"><button type="button" id="ls-listings">' + T("Flats up to {price} →", { price: fmt(r) }) + '</button><button type="button" class="ghost" id="ls-breakdown">' + T("Full breakdown & household →") + "</button>" +
+          (lifePos[lvl] != null ? '<button type="button" class="ghost" id="ls-reset">' + T("Back to typical") + "</button>" : "") + "</div>" +
+        '<p class="ls-foot">' + T("Approximate: typical spending from the CBS Household Expenditure Survey, with eating out, fun and clothes ×0.75 for budget and ×1.5 for luxury. Add things like a cleaner or nails under Extras in the Monthly cost tab. The Monthly cost tab uses the middle of the range.") + "</p>";
+      $("ls-close").onclick = () => { lifeOpen = null; el.hidden = true; };
+      el.querySelectorAll("[data-ls]").forEach((b) => (b.onclick = () => $("tier-" + b.dataset.ls).click()));
+      $("ls-breakdown").onclick = () => showTab("cost", true);
+      // the listing links take the chosen rent as the maximum price
+      $("ls-listings").onclick = () => {
+        state.budget = r; state.noLimit = false; $("budget").value = r; persist(); render();
+        showTab("find", false); $("go-row").scrollIntoView({ behavior: "smooth", block: "center" });
+        toast(T("Listings now show flats up to {price}", { price: fmt(r) }));
+      };
+      if ($("ls-reset")) $("ls-reset").onclick = () => { delete lifePos[lvl]; slider.value = c.rent; paint(); };
+    }
+    slider.addEventListener("input", () => { lifePos[lvl] = hi > lo ? (+slider.value - lo) / (hi - lo) : 0.5; paint(); });
+    paint();
+  }
+  document.querySelectorAll(".tier[data-level]").forEach((t) => {
+    const open = () => {
+      const lvl = t.dataset.level;
+      const reopen = lifeOpen !== lvl || $("life-sheet").hidden;
+      lifeOpen = reopen ? lvl : null;
+      renderLifeSheet(byName[state.area], state.rooms);
+      if (reopen) $("life-sheet").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+    t.addEventListener("click", open);
+    t.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(); });
+  });
+  if (lifeOpen) { state.level = lifeOpen; render(); }
+  $("tab-cost-sum").textContent = "· " + $("ct-amount").textContent.replace(/\s*\/.*$/, "");
+  $("search-sum").addEventListener("click", () => { const on = document.body.classList.toggle("filters-open"); $("search-sum").setAttribute("aria-expanded", String(on)); });
+  $("note").addEventListener("click", () => $("note").classList.toggle("open"));
+
   if (state.showStations || state.transport === "rail") toggleStations(true);
   flyToArea(byName[state.area]);
 })();
