@@ -512,6 +512,14 @@
   .ls-rows .em { font-size: 17px; line-height: 1.3; }
   .ls-rows .lb { font-weight: 700; font-size: 14px; }
   .ls-rows .ds { grid-column: 2; font-size: 13px; color: var(--ink-2); }
+  .ls-eat { grid-column: 2 / span 2; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .ls-eat .ls-step { width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--c); color: #fff; font: inherit; font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer; }
+  .ls-eat .ls-step:disabled { opacity: .35; cursor: default; }
+  .ls-eat output { min-width: 24px; text-align: center; font-size: 16px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ls-eat .ls-price { display: inline-flex; align-items: center; gap: 4px; border: 2px solid var(--line); background: var(--surface); border-radius: 10px; padding: 3px 8px; }
+  .ls-eat .ls-price:focus-within { border-color: var(--c); }
+  .ls-eat .ls-price input { width: 64px; border: 0; background: transparent; font: inherit; font-size: 16px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; outline: none; }
+  .ls-eat .ls-break { flex-basis: 100%; height: 0; }
   .ls-rows .am { grid-row: 1; grid-column: 3; font-weight: 800; font-variant-numeric: tabular-nums; text-align: end; font-size: 14px; }
   .ls-rows .dl { display: inline-block; margin-inline-start: 6px; font-size: 11px; font-weight: 800; color: var(--c); background: var(--soft); border-radius: 999px; padding: 1px 7px; vertical-align: 1px; white-space: nowrap; }
   .ls-range { margin: 12px 0 2px; background: var(--soft); border-radius: 12px; padding: 10px 12px 8px; }
@@ -985,9 +993,9 @@
 <script src="market-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=7"></script>
-<script src="i18n-ru.js?v=8"></script>
-<script src="i18n-ar.js?v=7"></script>
+<script src="i18n-he.js?v=8"></script>
+<script src="i18n-ru.js?v=9"></script>
+<script src="i18n-ar.js?v=8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1113,6 +1121,21 @@
   }
 
   // ---- State, remembered per viewer ----
+  // choices made in a level's lifestyle panel: { budget: { pos, eat, spend }, ... } where pos is where the
+  // rent sits in the level's range (0-1), eat is outings a month and spend is shekels per outing for the household
+  const cleanChoices = (c) => {
+    const out = {};
+    for (const k of ["budget", "comfortable", "luxury"]) {
+      const x = c && c[k];
+      if (!x || typeof x !== "object") continue;
+      const o = {};
+      if (x.pos >= 0 && x.pos <= 1) o.pos = x.pos;
+      if (Number.isInteger(x.eat) && x.eat >= 0 && x.eat <= 30) o.eat = x.eat;
+      if (Number.isInteger(x.spend) && x.spend >= 0 && x.spend <= 99999) o.spend = x.spend;
+      if (Object.keys(o).length) out[k] = o;
+    }
+    return out;
+  };
   const saved = (() => { try { return JSON.parse(localStorage.getItem("rent-calc") || "{}"); } catch (e) { return {}; } })();
   const state = {
     area: byName[saved.town] ? saved.town : byName[saved.area] ? saved.area : "Tel Aviv",   // "town" is from an older version
@@ -1139,6 +1162,7 @@
     // extras: { id: { price, qty } } for chosen catalogue items; custom: [{ name, price, qty }]
     extras: saved.extras && typeof saved.extras === "object" && !Array.isArray(saved.extras) ? saved.extras : {},
     custom: Array.isArray(saved.custom) ? saved.custom.filter((c) => c && c.name).slice(0, 12) : [],
+    choices: cleanChoices(saved.choices),
     lang
   };
   state.hostDinners = Math.min(state.hostDinners, state.hostWeeks);
@@ -1253,6 +1277,7 @@
   // ---- Cost of living model ----
   const STD_PERSONS = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6];   // CBS equivalence scale
   const LIFESTYLE = { budget: 0.75, comfortable: 1, luxury: 1.5 };           // applied to eating out, leisure, clothing
+  const MEAL_OUT = { budget: 55, comfortable: 90, luxury: 150 };             // rough price of a meal out a head (not official data)
   const COST_LINES = [
     ["rent", "Rent", "#6c3cf0"],
     ["arnona", "Arnona (municipal tax)", "#9b7bff"],
@@ -1314,12 +1339,21 @@
     if (B) return ["luxury", "comfortable", "budget"].find((k) => B >= round50(avg * TIERS[k].mid)) || "budget";
     return state.noLimit ? "luxury" : "comfortable";
   }
-  function costFor(areaName, rooms, level, hood = null) {
+  // survey = true leaves out the choices made in the lifestyle panel
+  function costFor(areaName, rooms, level, hood = null, survey = false) {
     const R = LD.costs.regions[regionFor(areaName)];
     const people = Math.min(9, state.adults + state.kids);
     const sp = STD_PERSONS[people];
     const life = LIFESTYLE[level];
-    const rent = rentOf(byName[areaName], rooms).rent * TIERS[level].mid * (1 + RENT_ADJ[state.transport]) * (1 + areaAdj(hood));
+    const ch = (!survey && state.choices[level]) || {};
+    const t = TIERS[level];
+    const share = ch.pos == null ? t.mid : t.lo + ch.pos * (t.hi - t.lo);   // where in the level's range the rent sits
+    const rent = rentOf(byName[areaName], rooms).rent * share * (1 + RENT_ADJ[state.transport]) * (1 + areaAdj(hood));
+    // eating out: the survey's amount, or the outings a month and spend per outing chosen in the panel
+    const typical = Math.round(MEAL_OUT[level] * people / 10) * 10;       // one outing for the whole household
+    const surveyRaw = R.eating_out * sp * life / typical;                // the survey's amount as outings a month
+    const eat = { chosen: ch.eat != null || ch.spend != null, surveyRaw,
+      times: ch.eat != null ? ch.eat : Math.round(surveyRaw), spend: ch.spend != null ? ch.spend : typical };
     const sh = LD.costs.shabbat;
     const car = state.transport === "car";
     const v = {
@@ -1327,7 +1361,7 @@
       arnona: R.arnona,
       utilities: R.utilities * sp,
       groceries: R.groceries * sp,
-      eating_out: R.eating_out * sp * life,
+      eating_out: eat.chosen ? eat.times * eat.spend : R.eating_out * sp * life,
       transport: car ? R.car : LD.costs.passes.national * state.adults,
       education: state.kids ? R.education * sp * 2 : 0,
       leisure: R.leisure * sp * life,
@@ -1342,6 +1376,7 @@
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
     v.total = Object.values(v).reduce((a, b) => a + b, 0);
+    Object.defineProperty(v, "eat", { value: eat });   // not a cost line, so it stays out of the total and the loops
     return v;
   }
 
@@ -1854,7 +1889,9 @@
     $("col-a").textContent = placeName; $("col-b").textContent = cmpLabel;
     const hint = {
       rent: T(cap(level) + " level") + (RENT_ADJ[state.transport] ? T(RENT_ADJ[state.transport] > 0 ? ", +5% near a station" : ", −5% further out") : "") +
-        (Math.abs(areaAdj(hood)) >= 0.03 ? T(", {pct} for {area}", { pct: pctText(areaAdj(hood)), area: hoodName(hood) }) : ""),
+        (Math.abs(areaAdj(hood)) >= 0.03 ? T(", {pct} for {area}", { pct: pctText(areaAdj(hood)), area: hoodName(hood) }) : "") +
+        (state.choices[level] && state.choices[level].pos != null ? T(", your choice in the range") : ""),
+      eating_out: here.eat.chosen ? (here.eat.times ? T("{n} × a month, {spend} each time (your choice)", { n: here.eat.times, spend: fmt(here.eat.spend) }) : T("No meals out (your choice)")) : "",
       transport: state.transport === "car" ? T("Typical car costs: fuel, insurance, upkeep") : T("{n} × Rav-Kav nationwide monthly pass (₪{price})", { n: state.adults, price: LD.costs.passes.national }),
       education: T("Schools, kindergarten, after-school activities"),
       shabbat: T("{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
@@ -2208,44 +2245,42 @@
   // ---- Tap a level to see that lifestyle ----
   // var, not const: render() first runs from setLang() above, before this block
   var LIFE_LEVELS = ["budget", "comfortable", "luxury"];
-  // The amounts are the same estimates as the Monthly cost tab; the descriptions turn them into
-  // everyday terms using rough typical prices (a meal out a head: about 55 / 90 / 150 shekels)
+  // The amounts come from costFor(), so they match the Monthly cost tab; the descriptions turn them
+  // into everyday terms
   var lifeParam = new URLSearchParams(location.search).get("life");
   var lifeOpen = LIFE_LEVELS.includes(lifeParam) ? lifeParam : null;
-  var lifePos = {};   // where in each level's rent range the person put the slider (0 = bottom, 1 = top)
   var LIFE = {
-    budget: { meal: 55, what: "falafel, shawarma or coffee",
+    budget: { what: "falafel, shawarma or coffee",
       leisure: "Free beaches, parks and community events, maybe a basic gym.",
       clothing: "Chain stores and sales, a cheap haircut now and then.", pick: "Choose your rent in the budget range" },
-    comfortable: { meal: 90, what: "cafés and casual restaurants",
+    comfortable: { what: "cafés and casual restaurants",
       leisure: "A gym or class membership plus a film, match or show now and then.",
       clothing: "Regular shopping each season and a haircut every month or two.", pick: "Choose your rent in the comfortable range" },
-    luxury: { meal: 150, what: "restaurant dinners",
+    luxury: { what: "restaurant dinners",
       leisure: "A premium gym or studio classes, regular concerts and shows, nights away.",
       clothing: "New-season clothes and regular salon or barber visits.", pick: "Choose your rent in the luxury range" }
   };
+  const MAX_EAT = 30;
+  // set or clear one of a level's panel choices (rent position, outings, spend), keeping state tidy
+  function setChoice(lvl, key, val) {
+    const ch = Object.assign({}, state.choices[lvl]);
+    if (val == null) delete ch[key]; else ch[key] = val;
+    if (Object.keys(ch).length) state.choices[lvl] = ch; else delete state.choices[lvl];
+    persist();
+  }
   function renderLifeSheet(area, rooms) {
     const el = $("life-sheet");
     if (!lifeOpen) { el.hidden = true; return; }
     const lvl = lifeOpen, L = LIFE[lvl], t = TIERS[lvl];
     const hood = currentHood(area.name);
-    const all = {};
-    for (const k of LIFE_LEVELS) all[k] = costFor(area.name, rooms, k, hood);
-    const c = all[lvl], mid = all.comfortable;
     const people = state.adults + state.kids;
     const place = (hood ? hoodName(hood) + ", " : "") + P(area.type === "National" ? "Israel" : area.name);
-    // the level's rent range, with the same neighbourhood and transport adjustments as its middle price
+    // the level's rent range, with the same neighbourhood and transport adjustments as costFor()
     const base = rentOf(area, rooms).rent * (1 + areaAdj(hood)) * (1 + RENT_ADJ[state.transport]);
     const lo = round50(base * t.lo), hi = round50(base * t.hi);
+    const avg = rentOf(area, rooms).rent * (1 + areaAdj(hood));
     const ltr = (x) => '<bdi dir="ltr">' + x + "</bdi>";   // keeps "₪8,600" in order inside Arabic and Hebrew
-    const rentNow = () => (lifePos[lvl] == null ? c.rent : round50(lo + lifePos[lvl] * (hi - lo)));
-    // outings for the whole household; the survey's eating-out average is low, so say so when it is
-    const outings = c.eating_out / (L.meal * people);
-    const n = Math.round(outings);
-    const vars = { n, people, what: T(L.what), price: L.meal };
-    const mealsText = T((outings < 0.75 ? "Less than once a month" : n === 1 ? "About once a month" : "About {n} times a month") +
-      (people > 1 ? " for the {people} of you" : "") + " ({what}, about ₪{price} a head).", vars) +
-      (outings < 2 ? " " + T("The survey average is low. If you eat out more, add it under Extras.") : "");
+    const ch = () => state.choices[lvl] || {};
     const tierDesc = $("tier-" + lvl).querySelector(".t-desc").textContent;
     const adjNote = RENT_ADJ[state.transport] ? " " + T(RENT_ADJ[state.transport] > 0 ? "(+5% near a station)" : "(−5% further out)") : "";
 
@@ -2253,50 +2288,69 @@
     el.hidden = false;
     el.innerHTML = '<div id="ls-head"></div>' +
       '<div class="ls-range"><div class="ls-range-top"><label for="ls-rent">' + esc(T(L.pick)) + esc(adjNote) + '</label><output id="ls-rent-out"></output></div>' +
-        '<input type="range" id="ls-rent" min="' + lo + '" max="' + hi + '" step="50" value="' + rentNow() + '">' +
+        '<input type="range" id="ls-rent" min="' + lo + '" max="' + hi + '" step="50" value="' + costFor(area.name, rooms, lvl, hood).rent + '">' +
         '<div class="ls-range-ends"><span>' + fmt(lo) + '</span><span id="ls-rent-where"></span><span>' + fmt(hi) + "</span></div></div>" +
       '<div id="ls-dyn"></div>';
     const slider = $("ls-rent");
 
+    // the rest of the page that shows these costs: the Monthly cost tab and the city list
+    const refreshOthers = () => { renderCosts(area, rooms, avg); renderFeed(rooms); };
+
     function paint() {
-      const r = rentNow();
-      const cc = Object.assign({}, c, { rent: r, total: c.total - c.rent + r });
-      const pos = hi > lo ? (r - lo) / (hi - lo) : 0.5;
+      const all = {};
+      for (const k of LIFE_LEVELS) all[k] = costFor(area.name, rooms, k, hood);
+      const c = all[lvl], mid = costFor(area.name, rooms, "comfortable", hood, true);
+      const eat = c.eat, r = c.rent;
+      const pos = ch().pos == null ? (t.mid - t.lo) / (t.hi - t.lo) : ch().pos;
       slider.style.setProperty("--fill", (pos * 100).toFixed(1) + "%");
       $("ls-rent-out").textContent = fmt(r) + " " + T("/mo");
       $("ls-rent-where").textContent = T(pos < 0.3 ? "Lower end: smaller, older or further out" : pos > 0.7 ? "Top end: a nicer building or street" : "Typical for this level");
-      const totals = { budget: all.budget.total, comfortable: all.comfortable.total, luxury: all.luxury.total, [lvl]: cc.total };
-      const max = Math.max(totals.budget, totals.comfortable, totals.luxury);
+      const max = Math.max(...LIFE_LEVELS.map((k) => all[k].total));
+      // eating out: the survey's amount described as outings, or the person's own outings and spend
+      const vars = { n: eat.times, what: T(L.what), spend: ltr(fmt(eat.spend)) };
+      const mealsText = !eat.chosen
+        ? T((eat.surveyRaw < 0.75 ? "Less than once a month" : eat.times === 1 ? "About once a month" : "About {n} times a month") + " ({what}, about {spend} each time).", vars) +
+          (eat.surveyRaw < 2 ? " " + T("The survey average is low. Choose how often you really eat out.") : "")
+        : eat.times ? T((eat.times === 1 ? "Once a month" : "{n} times a month") + " ({what}, {spend} each time).", vars) : T("No meals out.");
+      const eatControl = '<span class="ls-eat"><span>' + T("Times you eat out a month") + "</span>" +
+        '<button type="button" class="ls-step" id="ls-eat-down" aria-label="' + esc(T("Eat out less often")) + '"' + (eat.times <= 0 ? " disabled" : "") + ">−</button>" +
+        '<output id="ls-eat-n">' + eat.times + "</output>" +
+        '<button type="button" class="ls-step" id="ls-eat-up" aria-label="' + esc(T("Eat out more often")) + '"' + (eat.times >= MAX_EAT ? " disabled" : "") + ">+</button>" +
+        '<span class="ls-break"></span><label for="ls-eat-spend">' + T(people === 1 ? "You spend each time you go out" : "You spend each time you all go out") + "</label>" +
+        '<span class="ls-price" dir="ltr">₪<input type="text" inputmode="numeric" id="ls-eat-spend" maxlength="5" value="' + eat.spend + '"></span>' +
+        (eat.chosen ? '<button type="button" class="linkish" id="ls-eat-reset">' + T("Survey average") + "</button>" : "") + "</span>";
       const rows = [
         ["🏠", "Home", tierDesc + " " + roomsText(rooms).replace(/\.?$/, "."), ["rent"]],
-        ["🍽", "Eating out", mealsText, ["eating_out"]],
+        ["🍽", "Eating out", mealsText, ["eating_out"], eatControl],
         ["🎭", "Fun & fitness", T(L.leisure), ["leisure"]],
         ["👕", "Clothes & looks", T(L.clothing), ["clothing"]],
         ["🛒", "Groceries", T("The same weekly supermarket shop at every level."), ["groceries"]],
         [state.transport === "car" ? "🚗" : "🚌", "Getting around", T(state.transport === "car" ? "Running a car: fuel, insurance and upkeep." : "A Rav-Kav monthly pass for each adult."), ["transport"]],
         ["💡", "Bills & tax", T("Arnona, electricity, water, gas, phone and health insurance. These hardly change with lifestyle."), ["arnona", "utilities", "health"]]
       ];
-      if (cc.education) rows.push(["🎒", "Children", T("Schools, kindergarten and after-school activities."), ["education"]]);
-      if (cc.shabbat) rows.push(["🕯", "Shabbat", T("Your festive meals and the guests you host."), ["shabbat"]]);
-      if (cc.extras) rows.push(["✨", "Your extras", extrasList().map((e) => e.name).join(", "), ["extras"]]);
+      if (c.education) rows.push(["🎒", "Children", T("Schools, kindergarten and after-school activities."), ["education"]]);
+      if (c.shabbat) rows.push(["🕯", "Shabbat", T("Your festive meals and the guests you host."), ["shabbat"]]);
+      if (c.extras) rows.push(["✨", "Your extras", extrasList().map((e) => e.name).join(", "), ["extras"]]);
       $("ls-head").innerHTML = '<div class="ls-head"><div><div class="ls-kicker">' + esc(T(cap(lvl) + " lifestyle")) + " · " + esc(place) + "</div>" +
-          '<div class="ls-total">≈ ' + fmt(cc.total) + " <small>" + T("/ month all-in") + "</small></div>" +
-          '<div class="ls-sub">' + T("Rent {rent} + living costs {living}", { rent: ltr(fmt(r)), living: ltr(fmt(cc.total - r)) }) + " · " +
+          '<div class="ls-total">≈ ' + fmt(c.total) + " <small>" + T("/ month all-in") + "</small></div>" +
+          '<div class="ls-sub">' + T("Rent {rent} + living costs {living}", { rent: ltr(fmt(r)), living: ltr(fmt(c.total - r)) }) + " · " +
             (people === 1 ? T("1 person") : T("{n} people", { n: people })) + "</div></div>" +
           '<button type="button" class="ls-close" id="ls-close" aria-label="' + esc(T("Close")) + '">×</button></div>';
+      // the differences are against a typical comfortable month, without anyone's choices
       $("ls-dyn").innerHTML =
         '<div class="ls-levels">' + LIFE_LEVELS.map((k) =>
-          '<button type="button" data-ls="' + k + '" aria-pressed="' + (k === lvl) + '"><span class="nm">' + esc(T(cap(k))) + '</span><br><span class="am">' + fmt(totals[k]) + "</span>" +
-          '<span class="br" style="width:' + (totals[k] / max * 100).toFixed(1) + '%"></span></button>').join("") + "</div>" +
-        '<div class="ls-title">' + T("What this looks like each month") + (lvl === "comfortable" && r === mid.rent ? "" : ' <span class="ls-note">' + T("· tags show the difference from comfortable") + "</span>") + "</div>" +
-        '<ul class="ls-rows">' + rows.map(([em, lb, ds, keys]) => {
-          const d = keys.reduce((s, x) => s + cc[x] - mid[x], 0);
+          '<button type="button" data-ls="' + k + '" aria-pressed="' + (k === lvl) + '"><span class="nm">' + esc(T(cap(k))) + '</span><br><span class="am">' + fmt(all[k].total) + "</span>" +
+          '<span class="br" style="width:' + (all[k].total / max * 100).toFixed(1) + '%"></span></button>').join("") + "</div>" +
+        '<div class="ls-title">' + T("What this looks like each month") + (c.total === mid.total ? "" : ' <span class="ls-note">' + T("· tags show the difference from a typical comfortable month") + "</span>") + "</div>" +
+        '<ul class="ls-rows">' + rows.map(([em, lb, ds, keys, control]) => {
+          const d = keys.reduce((s, x) => s + c[x] - mid[x], 0);
           const dl = Math.abs(d) < 20 ? "" : '<span class="dl" dir="ltr">' + (d > 0 ? "+" : "−") + fmt(Math.abs(d)) + "</span>";
-          return '<li><span class="em" aria-hidden="true">' + em + '</span><span class="lb">' + esc(T(lb)) + dl + '</span><span class="am">' + fmt(keys.reduce((s, x) => s + cc[x], 0)) + '</span><span class="ds">' + esc(ds) + "</span></li>";
+          // ds is plain text except the eating-out line, which carries the <bdi> amount
+          return '<li><span class="em" aria-hidden="true">' + em + '</span><span class="lb">' + esc(T(lb)) + dl + '</span><span class="am">' + fmt(keys.reduce((s, x) => s + c[x], 0)) + '</span><span class="ds">' + (control ? ds : esc(ds)) + "</span>" + (control || "") + "</li>";
         }).join("") + "</ul>" +
         '<div class="ls-actions"><button type="button" id="ls-listings">' + T("Flats up to {price} →", { price: fmt(r) }) + '</button><button type="button" class="ghost" id="ls-breakdown">' + T("Full breakdown & household →") + "</button>" +
-          (lifePos[lvl] != null ? '<button type="button" class="ghost" id="ls-reset">' + T("Back to typical") + "</button>" : "") + "</div>" +
-        '<p class="ls-foot">' + T("Approximate: typical spending from the CBS Household Expenditure Survey, with eating out, fun and clothes ×0.75 for budget and ×1.5 for luxury. Add things like a cleaner or nails under Extras in the Monthly cost tab. The Monthly cost tab uses the middle of the range.") + "</p>";
+          (ch().pos != null ? '<button type="button" class="ghost" id="ls-reset">' + T("Back to typical") + "</button>" : "") + "</div>" +
+        '<p class="ls-foot">' + T("Approximate: typical spending from the CBS Household Expenditure Survey, with eating out, fun and clothes ×0.75 for budget and ×1.5 for luxury. Add things like a cleaner or nails under Extras in the Monthly cost tab. Your rent and eating-out choices here are used in the Monthly cost tab too.") + "</p>";
       $("ls-close").onclick = () => { lifeOpen = null; el.hidden = true; };
       el.querySelectorAll("[data-ls]").forEach((b) => (b.onclick = () => $("tier-" + b.dataset.ls).click()));
       $("ls-breakdown").onclick = () => showTab("cost", true);
@@ -2306,9 +2360,22 @@
         showTab("find", false); $("go-row").scrollIntoView({ behavior: "smooth", block: "center" });
         toast(T("Listings now show flats up to {price}", { price: fmt(r) }));
       };
-      if ($("ls-reset")) $("ls-reset").onclick = () => { delete lifePos[lvl]; slider.value = c.rent; paint(); };
+      if ($("ls-reset")) $("ls-reset").onclick = () => { setChoice(lvl, "pos", null); slider.value = costFor(area.name, rooms, lvl, hood).rent; update(); };
+      const eatBy = (d) => { setChoice(lvl, "eat", Math.min(MAX_EAT, Math.max(0, eat.times + d))); update(); };
+      $("ls-eat-down").onclick = () => eatBy(-1);
+      $("ls-eat-up").onclick = () => eatBy(1);
+      if ($("ls-eat-reset")) $("ls-eat-reset").onclick = () => { setChoice(lvl, "eat", null); setChoice(lvl, "spend", null); update(); };
+      // typing redraws the panel, so put the cursor back where it was
+      $("ls-eat-spend").oninput = (ev) => {
+        const box = ev.target, at = box.selectionStart, digits = box.value.replace(/\D/g, "").slice(0, 5);
+        setChoice(lvl, "spend", digits === "" ? 0 : +digits);
+        update();
+        const again = $("ls-eat-spend");
+        again.value = digits; again.focus(); again.setSelectionRange(Math.min(at, digits.length), Math.min(at, digits.length));
+      };
     }
-    slider.addEventListener("input", () => { lifePos[lvl] = hi > lo ? (+slider.value - lo) / (hi - lo) : 0.5; paint(); });
+    const update = () => { paint(); refreshOthers(); };
+    slider.addEventListener("input", () => { setChoice(lvl, "pos", hi > lo ? (+slider.value - lo) / (hi - lo) : 0.5); update(); });
     paint();
   }
   document.querySelectorAll(".tier[data-level]").forEach((t) => {
