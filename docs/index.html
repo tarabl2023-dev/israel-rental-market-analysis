@@ -315,6 +315,10 @@
   .cost-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
   .cc { background: var(--surface-2); border-radius: 12px; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
   .cc > span { font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .cc .sh-price { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; color: var(--ink-3); }
+  .cc .sh-price input { width: 70px; border: 2px solid var(--line); border-radius: 8px; background: var(--surface); padding: 3px 6px; font: inherit; font-weight: 800; font-size: 16px; color: var(--ink); }
+  .cc .sh-price input:focus { outline: none; border-color: var(--primary); }
+  .cc .sh-price input::placeholder { color: var(--ink-3); font-weight: 600; }
   .cc select { border: 0; background: transparent; font-weight: 700; cursor: pointer; padding: 0; }
   .seg { display: inline-flex; background: var(--surface); border-radius: 10px; padding: 3px; gap: 2px; }
   .seg button { border: 0; background: transparent; border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink-2); }
@@ -780,10 +784,12 @@
               <div class="seg" role="group" aria-labelledby="shabbat-label">
                 <button type="button" data-shabbat="0" data-i18n>Not included</button><button type="button" data-shabbat="1" data-i18n>I keep Shabbat</button>
               </div></div>
-            <div class="cc" id="cc-meals"><span id="meals-label" data-i18n>Your own Shabbat meals</span>
-              <div class="seg" role="group" aria-labelledby="meals-label">
-                <button type="button" data-meals="1" data-i18n>Friday night</button><button type="button" data-meals="2" data-i18n>Friday + lunch</button>
-              </div></div>
+            <div class="cc" id="cc-own-dinners"><span id="ownDinners-label" data-i18n>Your Friday night dinners a month</span>
+              <div class="stepper" role="group" aria-labelledby="ownDinners-label"><button type="button" id="ownDinners-down" aria-label="Fewer Friday dinners" data-i18n-aria>&minus;</button><output id="ownDinners-value">4</output><button type="button" id="ownDinners-up" aria-label="More Friday dinners" data-i18n-aria>+</button></div></div>
+            <div class="cc" id="cc-own-lunches"><span id="ownLunches-label" data-i18n>Your Shabbat lunches a month</span>
+              <div class="stepper" role="group" aria-labelledby="ownLunches-label"><button type="button" id="ownLunches-down" aria-label="Fewer Shabbat lunches" data-i18n-aria>&minus;</button><output id="ownLunches-value">4</output><button type="button" id="ownLunches-up" aria-label="More Shabbat lunches" data-i18n-aria>+</button></div></div>
+            <div class="cc" id="cc-sh-price"><span><label for="sh-price" data-i18n>Shabbat meal cost per person</label></span>
+              <span class="sh-price" dir="ltr">₪<input type="text" inputmode="numeric" id="sh-price" maxlength="4"></span></div>
             <div class="cc" id="cc-host"><span id="hostWeeks-label" data-i18n>Shabbatot you host a month</span>
               <div class="stepper" role="group" aria-labelledby="hostWeeks-label"><button type="button" id="hostWeeks-down" aria-label="Fewer Shabbatot" data-i18n-aria>&minus;</button><output id="hostWeeks-value">2</output><button type="button" id="hostWeeks-up" aria-label="More Shabbatot" data-i18n-aria>+</button></div></div>
             <div class="cc" id="cc-dinners"><span id="hostDinners-label" data-i18n>Friday dinners with guests</span>
@@ -905,7 +911,7 @@
           <p><strong>Neighbourhoods.</strong> You can pick any neighbourhood with listings on Realta (about 1,000 across 94 towns). Each one's average asking rent is compared with its town's, and that ratio moves every price on the page. A neighbourhood with only a few ads is pulled towards the town average, so one unusual listing can't swing it. Neighbourhood averages mix all flat sizes, so an area full of small (or very large) flats can read a little low (or high). Which neighbourhoods count as "by the beach" is my local guide.</p>
           <p><strong>Public transport.</strong> Station counts are train stations, light-rail stops and Haifa's Carmelit underground stations inside each city's boundary, from OpenStreetMap. Stations named after a city but just over its border (such as Kfar Saba–Nordau) count for that city. There's no official Israeli data on how rents change near stations. Studies of <em>sale</em> prices find homes near Tel Aviv's light rail rose faster (<a href="https://en.globes.co.il/en/article-1001503910" target="_blank" rel="noopener noreferrer">Globes</a>), so the transport choice applies a rule of thumb: about +5% rent within walking distance of a station, and about −5% further out if you drive.</p>
           <p><strong>What it will really cost.</strong> Everyday costs come from the CBS Household Expenditure Survey 2021 (Table 10), which reports what households spend in each sub-district. They're scaled to your household size with the CBS "standard persons" scale and brought to 2026 prices with the CBS price index for each group of goods. Every town uses its own sub-district (Herzliya uses Tel Aviv's, Ra'anana Sharon's, Givat Shmuel Petah Tikva's, and so on). Some survey cells are based on few households, and missing ones use the national average. Without a car, transport is the Rav-Kav nationwide monthly pass (₪315 per adult; a ₪139 bus-only pass exists for the periphery, see <a href="https://ravkavonline.co.il/en/ravkav-monthly-seasonal-contract" target="_blank" rel="noopener noreferrer">Rav-Kav Online</a>). The survey's education average includes households without children, so with children it's doubled as a rough guide. Budget and luxury lifestyles scale eating out, leisure and clothing by 0.75 and 1.5. These are estimates of typical spending, not price quotes.</p>
-          <p><strong>Shabbat.</strong> Each festive meal is costed at about three times an ordinary meal of groceries (an ordinary person-meal is about ₪12, from CBS national grocery spending ÷ 90 meals a month). Your household already buys its ordinary food, so the extra is about ₪25 per family member per festive meal, every week: Friday night, or Friday night and lunch, over about 4.3 Shabbatot a month. Each guest adds about ₪37 per meal at the meals you host. You choose how many Shabbatot a month you host, and how many Friday dinners and Shabbat lunches have guests. For context, the CBS survey (Table 13) shows households that keep Shabbat spend only about ₪27 more per person a month on Shabbat foods <em>on average</em>, partly because they eat out much less. That's an average over all households, so this page uses the per-meal estimate instead.</p>
+          <p><strong>Shabbat.</strong> A Shabbat meal is priced per person: about ₪45 at the budget level, ₪70 comfortable and ₪100 luxury, or the price you type in. These are my estimates. A basic supermarket Friday dinner (two challot, wine, a chicken, potatoes, salad, hummus, tahini, cola and a cake) cost ₪181–₪219 for 4–6 people in April 2026, depending on the chain (<a href="https://oshek.co.il/blog/shabbat-dinner-basket-comparison" target="_blank" rel="noopener noreferrer">Oshek</a>), and a fuller table with fish, soup, meat and desserts costs more; a ready-made Friday meal is about ₪120 a person. Your household already buys its ordinary food, so each family member adds the Shabbat price minus an ordinary meal (about ₪12, from CBS national grocery spending ÷ 90 meals a month) for each Friday dinner and Shabbat lunch you count. Each guest adds the full price at the meals you host. For context, the CBS survey (Table 13) shows households that keep Shabbat spend only about ₪27 more per person a month on Shabbat foods <em>on average</em>, partly because they eat out much less. That's an average over all households, so this page uses per-meal prices instead.</p>
           <p>Rent figures exclude arnona (municipal tax), building committee fees (va'ad bayit) and utilities, which the cost breakdown adds separately.</p>
           <p><strong>Photo credits</strong> (Wikimedia Commons): <span id="credits"></span></p>
         </div>
@@ -973,7 +979,7 @@
             <li>Lifestyle: eating out, leisure and clothing ×0.75 (budget) or ×1.5 (luxury).</li>
             <li>Education with children: twice the survey average, which includes households without children.</li>
             <li>Neighbourhoods: prices move with each neighbourhood's average asking rent compared with its town's, pulled towards the town average when it has few ads. Which neighbourhoods are by the beach is my local guide.</li>
-            <li>Shabbat: a festive meal costs about three times an ordinary meal (≈₪37 per person). Family members add ≈₪25 per meal on top of their normal food every week, and each guest adds ≈₪37 at the dinners and lunches you host.</li>
+            <li>Shabbat: about ₪45, ₪70 or ₪100 a person a meal for budget, comfortable and luxury (or your own price). Family members add that minus an ordinary meal (≈₪12), and each guest adds the full price.</li>
             <li>Extras & treats (nails, massages, a premium gym and so on): rough typical Israeli prices that you can change. They're added on top of the survey averages, which already include some spending on leisure and personal care.</li>
           </ul>
         </div>
@@ -1009,9 +1015,9 @@
 <script src="market-data.js?v=2"></script>
 <script src="city-media.js?v=1"></script>
 <script src="i18n-places.js?v=2"></script>
-<script src="i18n-he.js?v=9"></script>
-<script src="i18n-ru.js?v=10"></script>
-<script src="i18n-ar.js?v=9"></script>
+<script src="i18n-he.js?v=10"></script>
+<script src="i18n-ru.js?v=11"></script>
+<script src="i18n-ar.js?v=10"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function () {
@@ -1178,7 +1184,10 @@
     hood: typeof saved.hood === "string" ? saved.hood : "",          // "" = anywhere, "__beach" = by the beach, else neighbourhood slug
     shabbat: saved.shabbat === true,
     guests: saved.guests >= 0 && saved.guests <= 12 ? saved.guests : 0,
-    shabbatMeals: saved.shabbatMeals === 1 ? 1 : 2,                 // the household's own festive meals each week
+    // the household's own festive meals a month (an older version saved shabbatMeals: 1 or 2 meals a week)
+    ownDinners: Number.isInteger(saved.ownDinners) && saved.ownDinners >= 0 && saved.ownDinners <= 5 ? saved.ownDinners : 4,
+    shabbatPrice: Number.isInteger(saved.shabbatPrice) && saved.shabbatPrice >= 0 && saved.shabbatPrice <= 9999 ? saved.shabbatPrice : null,   // typed price a person a meal
+    ownLunches: Number.isInteger(saved.ownLunches) && saved.ownLunches >= 0 && saved.ownLunches <= 5 ? saved.ownLunches : saved.shabbatMeals === 1 ? 0 : 4,
     hostWeeks: saved.hostWeeks >= 0 && saved.hostWeeks <= 5 ? saved.hostWeeks : 2,      // Shabbatot a month with guests
     hostDinners: saved.hostDinners >= 0 && saved.hostDinners <= 5 ? saved.hostDinners : 2,
     hostLunches: saved.hostLunches >= 0 && saved.hostLunches <= 5 ? saved.hostLunches : 1,
@@ -1301,6 +1310,9 @@
   // ---- Cost of living model ----
   const STD_PERSONS = [0, 1.25, 2, 2.65, 3.2, 3.75, 4.25, 4.75, 5.2, 5.6];   // CBS equivalence scale
   const LIFESTYLE = { budget: 0.75, comfortable: 1, luxury: 1.5 };           // applied to eating out, leisure, clothing
+  // a Shabbat meal a person at each level, rough 2026 prices (see "How the estimates work"), unless the person typed their own
+  const SHABBAT_MEAL = { budget: 45, comfortable: 70, luxury: 100 };
+  const shabbatPrice = (level) => (state.shabbatPrice != null ? state.shabbatPrice : SHABBAT_MEAL[level]);
   const MEAL_OUT = { budget: 55, comfortable: 90, luxury: 150 };             // rough price of a meal out a head (not official data)
   const COST_LINES = [
     ["rent", "Rent", "#6c3cf0"],
@@ -1393,10 +1405,11 @@
       health: R.health * sp,
       clothing: R.clothing * sp * life,
       extras: extrasTotal(),
-      // Shabbat: every person at a festive meal costs about 3x an ordinary meal, so the household pays
-      // the extra 2x on top of the groceries it already buys (every week), and each guest costs the
-      // full 3x at the dinners and lunches it hosts in a month
-      shabbat: state.shabbat ? people * 2 * sh.personMeal * state.shabbatMeals * 4.33 + state.guests * sh.guestMeal * hostedMeals() : 0
+      // Shabbat: the household already buys an ordinary meal's groceries, so each family member adds the
+      // Shabbat price minus that for every Friday dinner and Shabbat lunch it counts; each guest costs the
+      // full price at the meals it hosts
+      shabbat: state.shabbat ? people * Math.max(0, shabbatPrice(level) - sh.personMeal) * (state.ownDinners + state.ownLunches) +
+        state.guests * shabbatPrice(level) * hostedMeals() : 0
     };
     for (const k in v) v[k] = Math.round(v[k] / 10) * 10;
     v.rent = round50(rent);   // same rounding as the rent shown in the hero
@@ -1896,10 +1909,11 @@
 
     $("cost-title").textContent = T("What it will really cost in {place}", { place: (hood ? hoodName(hood) + ", " : "") + placeName });
     document.querySelectorAll("[data-shabbat]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.shabbat === "1") === state.shabbat)));
-    document.querySelectorAll("[data-meals]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.meals === state.shabbatMeals)));
-    $("cc-meals").hidden = $("cc-host").hidden = !state.shabbat;
+    $("cc-own-dinners").hidden = $("cc-own-lunches").hidden = $("cc-sh-price").hidden = $("cc-host").hidden = !state.shabbat;
+    $("sh-price").placeholder = SHABBAT_MEAL[level];
+    if (document.activeElement !== $("sh-price")) $("sh-price").value = state.shabbatPrice != null ? state.shabbatPrice : "";
     $("cc-dinners").hidden = $("cc-lunches").hidden = $("cc-guests").hidden = !state.shabbat || !state.hostWeeks;
-    for (const [k, max] of [["guests", 12], ["hostWeeks", 5], ["hostDinners", state.hostWeeks], ["hostLunches", state.hostWeeks]]) {
+    for (const [k, max] of [["ownDinners", 5], ["ownLunches", 5], ["guests", 12], ["hostWeeks", 5], ["hostDinners", state.hostWeeks], ["hostLunches", state.hostWeeks]]) {
       $(k + "-value").textContent = state[k];
       $(k + "-down").disabled = state[k] <= 0; $(k + "-up").disabled = state[k] >= max;
     }
@@ -1924,10 +1938,11 @@
       eating_out: here.eat.chosen ? (here.eat.times ? T("{n} × a month, {spend} each time (your choice)", { n: here.eat.times, spend: fmt(here.eat.spend) }) : T("No meals out (your choice)")) : "",
       transport: state.transport === "car" ? T("Typical car costs: fuel, insurance, upkeep") : T("{n} × Rav-Kav nationwide monthly pass (₪{price})", { n: state.adults, price: LD.costs.passes.national }),
       education: T("Schools, kindergarten, after-school activities"),
-      shabbat: T("{people} of you × {meals} festive meals a week (₪{fam} extra per family member), about 4.3 Shabbatot a month",
-        { people: state.adults + state.kids, meals: state.shabbatMeals, fam: Math.round(LD.costs.shabbat.personMeal * 2) }) +
+      shabbat: T(state.shabbatPrice != null ? "{people} of you × {d} Friday dinners and {l} Shabbat lunches a month, at your price of ₪{price} a person a meal"
+          : "{people} of you × {d} Friday dinners and {l} Shabbat lunches a month, at about ₪{price} a person a meal",
+        { people: state.adults + state.kids, d: state.ownDinners, l: state.ownLunches, price: shabbatPrice(level) }) +
         (state.guests && hostedMeals() ? "; " + T("hosted each month: {d} × Friday dinner, {l} × Shabbat lunch, {guests} guests each time (₪{guest} per guest per meal)",
-          { guests: state.guests, d: state.hostDinners, l: state.hostLunches, guest: LD.costs.shabbat.guestMeal }) : ""),
+          { guests: state.guests, d: state.hostDinners, l: state.hostLunches, guest: shabbatPrice(level) }) : ""),
       leisure: T("Gym, classes, events, outings"),
       groceries: T("Supermarket food, fruit & veg"),
       extras: extrasList().map((e) => e.name + (e.qty !== 1 ? " ×" + e.qty : "")).join(", ")
@@ -2159,7 +2174,15 @@
     state.shabbat = on; persist(); render();
     if (on && !was) toast(T(state.guests ? "Shabbat meals added to your costs" : "Shabbat meals added to your costs. Add guests to include hosting."));
   }));
-  document.querySelectorAll("[data-meals]").forEach((b) => b.addEventListener("click", () => { state.shabbatMeals = +b.dataset.meals; persist(); render(); }));
+  $("sh-price").addEventListener("input", () => {
+    const digits = $("sh-price").value.replace(/\D/g, "").slice(0, 4);
+    $("sh-price").value = digits;
+    state.shabbatPrice = digits === "" ? null : +digits; persist(); render();
+  });
+  for (const k of ["ownDinners", "ownLunches"]) {
+    $(k + "-down").addEventListener("click", () => bump(k, -1, 0, 5));
+    $(k + "-up").addEventListener("click", () => bump(k, 1, 0, 5));
+  }
   document.querySelectorAll("[data-linkmode]").forEach((b) => b.addEventListener("click", () => { state.linkMode = b.dataset.linkmode; persist(); render(); }));
   $("guests-down").addEventListener("click", () => bump("guests", -1, 0, 12));
   $("guests-up").addEventListener("click", () => bump("guests", 1, 0, 12));
